@@ -1,7 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:main="clr-namespace:LibraryManagement.ViewModel">
+                    xmlns:main="clr-namespace:LibraryManagement.ViewModel"
+                    xmlns:importbook="clr-namespace:LibraryManagement.ViewModel.ImportBookVM"
+                    xmlns:bookmanage="clr-namespace:LibraryManagement.ViewModel.BookManagementVM">
 
     <main:MainWindowViewModel x:Key="MainWindowVM" />
-
+    <importbook:ImportBookViewModel x:Key="ImportBookVM" />
+    <bookmanage:BookManagementViewModel x:Key="BookManagementVM" />
+    
 </ResourceDictionary>

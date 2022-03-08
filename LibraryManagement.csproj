@@ -134,7 +134,18 @@
     </Compile>
     <Compile Include="Utils\Constant.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\BookManagementVM\BookManagementViewModel.cs" />
+    <Compile Include="ViewModels\ImportBookVM\ImportBookViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="Views\BookManagement\BookManagementPage.xaml.cs">
+      <DependentUpon>BookManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ImportBook\ImportBookWindow.xaml.cs">
+      <DependentUpon>ImportBookWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ImportBook\MainImportBookPage.xaml.cs">
+      <DependentUpon>MainImportBookPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -155,6 +166,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ResourceXAML\Scrollbar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BookManagement\BookManagementPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ImportBook\ImportBookWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ImportBook\MainImportBookPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
