@@ -158,7 +158,7 @@
                 <Grid>
                     <TreeView Foreground="#1B48BA"
                               HorizontalAlignment="Left">
-                        <TreeViewItem IsExpanded="True">
+                        <TreeViewItem>
 
                             <TreeViewItem.Header>
                                 <StackPanel Orientation="Horizontal">
@@ -167,12 +167,44 @@
                                                              Height="20"
                                                              Margin="0 0 10 0"
                                                              VerticalAlignment="Center" />
-                                    <TextBlock Text="Báo cáo"
+                                    <TextBlock Text="Thống kê"
                                                Foreground="#1B48BA"
                                                FontSize="20"
                                                FontWeight="Bold" />
                                 </StackPanel>
                             </TreeViewItem.Header>
+
+                            <TreeViewItem>
+                                <TreeViewItem.Header>
+                                    <TextBlock Text="Thể loại"
+                                               Foreground="#4C14EA"
+                                               FontSize="20"
+                                               FontWeight="SemiBold">
+                                            <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                <i:InvokeCommandAction Command="{Binding OpenGenreStatisticPageCM}"
+                                                                       CommandParameter="{Binding ElementName=mainFrame}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBlock>
+                                </TreeViewItem.Header>
+                            </TreeViewItem>
+
+                            <TreeViewItem>
+                                <TreeViewItem.Header>
+                                    <TextBlock Text="Sách trễ hạn"
+                                               Foreground="#4C14EA"
+                                               FontSize="20"
+                                               FontWeight="SemiBold">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                <i:InvokeCommandAction Command="{Binding OpenLateStatisticPageCM}"
+                                                                       CommandParameter="{Binding ElementName=mainFrame}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBlock>
+                                </TreeViewItem.Header>
+                            </TreeViewItem>
 
                         </TreeViewItem>
                     </TreeView>
@@ -192,7 +224,14 @@
                                     <TextBlock Text="Cài đặt"
                                                Foreground="#1B48BA"
                                                FontSize="20"
-                                               FontWeight="Bold" />
+                                               FontWeight="Bold">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                <i:InvokeCommandAction Command="{Binding OpenSettingPageCM}"
+                                                                       CommandParameter="{Binding ElementName=mainFrame}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBlock>
                                 </StackPanel>
                             </TreeViewItem.Header>
 
