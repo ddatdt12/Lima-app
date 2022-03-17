@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace LibraryManagement.DTOs
 {
-    class Class1
+    public class AuthorDTO
     {
+        public int id { get; set; }
+        public string name { get; set; }
     }
 }

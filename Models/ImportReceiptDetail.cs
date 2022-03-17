@@ -12,13 +12,14 @@ namespace LibraryManagement.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class RoleDetail
+    public partial class ImportReceiptDetail
     {
-        public int roleId { get; set; }
-        public int permissionId { get; set; }
-        public bool isPermitted { get; set; }
+        public string importReceiptId { get; set; }
+        public string bookId { get; set; }
+        public int unitPrice { get; set; }
+        public int quantity { get; set; }
     
-        public virtual Permission Permission { get; set; }
-        public virtual Role Role { get; set; }
+        public virtual Book Book { get; set; }
+        public virtual ImportReceipt ImportReceipt { get; set; }
     }
 }

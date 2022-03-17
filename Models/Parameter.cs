@@ -16,6 +16,6 @@ namespace LibraryManagement.Models
     {
         public int id { get; set; }
         public string name { get; set; }
-        public Nullable<short> value { get; set; }
+        public short value { get; set; }
     }
 }
