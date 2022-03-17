@@ -32,11 +32,11 @@
         <EntityTypeShape EntityType="LibraryManagementModel.Book" Width="1.5" PointX="3.75" PointY="1.625" />
         <AssociationConnector Association="LibraryManagementModel.FK__ImportRec__bookI__4CA06362" />
         <AssociationConnector Association="LibraryManagementModel.FK_BOOKINFO_BOOK" />
-        <EntityTypeShape EntityType="LibraryManagementModel.Author" Width="1.5" PointX="1.5" PointY="3.5" />
         <EntityTypeShape EntityType="LibraryManagementModel.Genre" Width="1.5" PointX="1.5" PointY="1.125" />
         <EntityTypeShape EntityType="LibraryManagementModel.Parameter" Width="1.5" PointX="9.5" PointY="3.125" />
-        <AssociationConnector Association="LibraryManagementModel.FK_AUTHORID" />
         <AssociationConnector Association="LibraryManagementModel.FK_GENREID" />
+        <EntityTypeShape EntityType="LibraryManagementModel.Author" Width="1.5" PointX="0.75" PointY="3.875" />
+        <AssociationConnector Association="LibraryManagementModel.FK_AUTHORID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

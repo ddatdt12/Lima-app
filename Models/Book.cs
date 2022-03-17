@@ -34,7 +34,7 @@ namespace LibraryManagement.Models
         public virtual ICollection<ImportReceiptDetail> ImportReceiptDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BookInfo> BookInfoes { get; set; }
-        public virtual Author Author { get; set; }
         public virtual Genre Genre { get; set; }
+        public virtual Author Author { get; set; }
     }
 }

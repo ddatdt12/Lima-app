@@ -16,18 +16,18 @@ namespace LibraryManagement.ViewModel
 
         public MainWindowViewModel()
         {
-            var author = new AuthorDTO { name = "Hemingway", birthDate = DateTime.Now, nationality = "Mỹ" };
+            var author = new AuthorDTO { name = "Hemingway", birthDate = DateTime.Now, };
             List<AuthorDTO> authorList = new List<AuthorDTO>()
             {
-                new AuthorDTO { name= "J.R.R.Tolkien", birthDate = DateTime.Now, nationality="Mỹ" },
-                new AuthorDTO { name= "Franz Kafka" , birthDate = DateTime.Now, nationality="Nga"},
-                new AuthorDTO { name= "Harper Lee" , birthDate = DateTime.Now, nationality="Mỹ"},
-                new AuthorDTO { name= "Vũ Phương Thanh" , birthDate = DateTime.Now, nationality="Việt Nam"},
-                new AuthorDTO { name= "William Shakespeare", birthDate = DateTime.Now, nationality="Mỹ" },
-                new AuthorDTO { name= "Nguyễn Nhật Ánh" , birthDate = DateTime.Now, nationality="Việt Nam"},
-                new AuthorDTO { name= "Stephenie Meyer" ,birthDate = DateTime.Now, nationality="Mỹ"},
-                new AuthorDTO { name= "Robert M. Pirsig" , birthDate = DateTime.Now, nationality="Mỹ"},
-                new AuthorDTO { name="Đạt ĐT", birthDate = DateTime.Now, nationality="Việt Nam"},
+                new AuthorDTO { name= "J.R.R.Tolkien", birthDate = DateTime.Now,  },
+                new AuthorDTO { name= "Franz Kafka" , birthDate = DateTime.Now, },
+                new AuthorDTO { name= "Harper Lee" , birthDate = DateTime.Now, },
+                new AuthorDTO { name= "Vũ Phương Thanh" , birthDate = DateTime.Now, },
+                new AuthorDTO { name= "William Shakespeare", birthDate = DateTime.Now,  },
+                new AuthorDTO { name= "Nguyễn Nhật Ánh" , birthDate = DateTime.Now, },
+                new AuthorDTO { name= "Stephenie Meyer" ,birthDate = DateTime.Now, },
+                new AuthorDTO { name= "Robert M. Pirsig" , birthDate = DateTime.Now, },
+                new AuthorDTO { name="Đạt ĐT", birthDate = DateTime.Now, },
             };
             (bool isSuccessAuthor, string messageAuthor) = AuthorService.Ins.CreateNewAuthor(author);
             authorList.ForEach(a =>

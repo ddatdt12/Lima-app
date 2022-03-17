@@ -56,7 +56,6 @@ namespace LibraryManagement.Services
                 {
                     name = author.name,
                     birthDate = author.birthDate,
-                    nationality = author.nationality,
                 };
                 context.Authors.Add(newAuthor);
                 context.SaveChanges();

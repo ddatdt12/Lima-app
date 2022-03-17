@@ -12,7 +12,6 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="birthDate" Type="date" Nullable="false" />
-          <Property Name="nationality" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Book">
           <Key>
@@ -827,15 +826,15 @@
             <End Role="Book" EntitySet="Books" />
             <End Role="BookInfo" EntitySet="BookInfoes" />
           </AssociationSet>
-          <EntitySet Name="Authors" EntityType="LibraryManagementModel.Author" />
           <EntitySet Name="Genres" EntityType="LibraryManagementModel.Genre" />
           <EntitySet Name="Parameters" EntityType="LibraryManagementModel.Parameter" />
-          <AssociationSet Name="FK_AUTHORID" Association="LibraryManagementModel.FK_AUTHORID">
-            <End Role="Author" EntitySet="Authors" />
-            <End Role="Book" EntitySet="Books" />
-          </AssociationSet>
           <AssociationSet Name="FK_GENREID" Association="LibraryManagementModel.FK_GENREID">
             <End Role="Genre" EntitySet="Genres" />
+            <End Role="Book" EntitySet="Books" />
+          </AssociationSet>
+          <EntitySet Name="Authors" EntityType="LibraryManagementModel.Author" />
+          <AssociationSet Name="FK_AUTHORID" Association="LibraryManagementModel.FK_AUTHORID">
+            <End Role="Author" EntitySet="Authors" />
             <End Role="Book" EntitySet="Books" />
           </AssociationSet>
         </EntityContainer>
@@ -853,8 +852,8 @@
           <Property Name="isDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ImportReceiptDetails" Relationship="LibraryManagementModel.FK__ImportRec__bookI__4CA06362" FromRole="Book" ToRole="ImportReceiptDetail" />
           <NavigationProperty Name="BookInfoes" Relationship="LibraryManagementModel.FK_BOOKINFO_BOOK" FromRole="Book" ToRole="BookInfo" />
-          <NavigationProperty Name="Author" Relationship="LibraryManagementModel.FK_AUTHORID" FromRole="Book" ToRole="Author" />
           <NavigationProperty Name="Genre" Relationship="LibraryManagementModel.FK_GENREID" FromRole="Book" ToRole="Genre" />
+          <NavigationProperty Name="Author" Relationship="LibraryManagementModel.FK_AUTHORID" FromRole="Book" ToRole="Author" />
         </EntityType>
         <Association Name="FK__ImportRec__bookI__4CA06362">
           <End Type="LibraryManagementModel.Book" Role="Book" Multiplicity="1" />
@@ -880,16 +879,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Author">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="birthDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="nationality" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Books" Relationship="LibraryManagementModel.FK_AUTHORID" FromRole="Author" ToRole="Book" />
-        </EntityType>
         <EntityType Name="Genre">
           <Key>
             <PropertyRef Name="id" />
@@ -905,18 +894,6 @@
           <Property Name="id" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="value" Type="Int16" Nullable="false" />
         </EntityType>
-        <Association Name="FK_AUTHORID">
-          <End Type="LibraryManagementModel.Author" Role="Author" Multiplicity="1" />
-          <End Type="LibraryManagementModel.Book" Role="Book" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Author">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Book">
-              <PropertyRef Name="authorId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_GENREID">
           <End Type="LibraryManagementModel.Genre" Role="Genre" Multiplicity="1" />
           <End Type="LibraryManagementModel.Book" Role="Book" Multiplicity="*" />
@@ -926,6 +903,27 @@
             </Principal>
             <Dependent Role="Book">
               <PropertyRef Name="genreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Author">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="birthDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Books" Relationship="LibraryManagementModel.FK_AUTHORID" FromRole="Author" ToRole="Book" />
+        </EntityType>
+        <Association Name="FK_AUTHORID">
+          <End Type="LibraryManagementModel.Author" Role="Author" Multiplicity="1" />
+          <End Type="LibraryManagementModel.Book" Role="Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Author">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="authorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1076,16 +1074,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Authors">
-            <EntityTypeMapping TypeName="LibraryManagementModel.Author">
-              <MappingFragment StoreEntitySet="Author">
-                <ScalarProperty Name="nationality" ColumnName="nationality" />
-                <ScalarProperty Name="birthDate" ColumnName="birthDate" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Genres">
             <EntityTypeMapping TypeName="LibraryManagementModel.Genre">
               <MappingFragment StoreEntitySet="Genre">
@@ -1098,6 +1086,15 @@
             <EntityTypeMapping TypeName="LibraryManagementModel.Parameter">
               <MappingFragment StoreEntitySet="Parameter">
                 <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Authors">
+            <EntityTypeMapping TypeName="LibraryManagementModel.Author">
+              <MappingFragment StoreEntitySet="Author">
+                <ScalarProperty Name="birthDate" ColumnName="birthDate" />
+                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

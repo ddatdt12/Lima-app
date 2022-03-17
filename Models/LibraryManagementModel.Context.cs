@@ -37,8 +37,8 @@ namespace LibraryManagement.Models
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<RoleDetail> RoleDetails { get; set; }
         public virtual DbSet<Book> Books { get; set; }
-        public virtual DbSet<Author> Authors { get; set; }
         public virtual DbSet<Genre> Genres { get; set; }
         public virtual DbSet<Parameter> Parameters { get; set; }
+        public virtual DbSet<Author> Authors { get; set; }
     }
 }
