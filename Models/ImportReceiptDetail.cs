@@ -19,7 +19,7 @@ namespace LibraryManagement.Models
         public int unitPrice { get; set; }
         public int quantity { get; set; }
     
-        public virtual Book Book { get; set; }
         public virtual ImportReceipt ImportReceipt { get; set; }
+        public virtual Book Book { get; set; }
     }
 }

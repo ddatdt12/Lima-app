@@ -14,8 +14,7 @@ namespace LibraryManagement.Models
     
     public partial class Parameter
     {
-        public int id { get; set; }
-        public string name { get; set; }
+        public string id { get; set; }
         public short value { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace LibraryManagement.DTOs
         public string name { get; set; }
         public int genreId { get; set; }
         public int authorId { get; set; }
-        public string yearOfPublication { get; set; }
+        public int yearOfPublication { get; set; }
         public string publisher { get; set; }
         public int quantity { get; set; }
 

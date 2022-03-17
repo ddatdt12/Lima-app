@@ -5,8 +5,234 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LibraryManagement.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="20"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="#FFFFFF"
+        ResizeMode="CanMinimize"
+        WindowStyle="ToolWindow"
+        FontFamily="{StaticResource NunitoSans_Regular}"
+        WindowStartupLocation="CenterScreen"
+        Height="816"
+        Width="1440"
+        DataContext="{StaticResource MainWindowVM}">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="312" />
+            <ColumnDefinition Width="1128" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0">
+
+            <!--AVATAR-->
+            <StackPanel Margin="0 24 0 0"
+                        HorizontalAlignment="Center"
+                        Orientation="Vertical"
+                        Width="280">
+                <Grid Width="80"
+                      Height="80"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Top">
+                    <Border BorderThickness="3"
+                            BorderBrush="#0B69F5"
+                            CornerRadius="90">
+                    </Border>
+                </Grid>
+                <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Top">
+                    <TextBlock Text="Nguyễn Ngọc Trinh"
+                               FontSize="22"
+                               Foreground="#000000"
+                               HorizontalAlignment="Center"
+                               LineHeight="22"
+                               FontFamily="{StaticResource PatrickHand_Regular}" />
+                    <TextBlock Text="Admin"
+                               Foreground="#0B69F5"
+                               HorizontalAlignment="Center"
+                               FontSize="14"
+                               LineHeight="19"
+                               FontWeight="Bold" />
+                </StackPanel>
+                <Grid Width="260"
+                      Height="10"
+                      VerticalAlignment="Bottom"
+                      HorizontalAlignment="Center">
+                    <Border BorderThickness="0 0 0 1"
+                            BorderBrush="#BFBABA" />
+                </Grid>
+            </StackPanel>
+
+            <!--MENU-->
+            <StackPanel Width="280">
+                <StackPanel Width="280"
+                            Height="60"
+                            Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Home"
+                                             Width="20"
+                                             Height="20"
+                                             Margin="37 0 10 0"
+                                             VerticalAlignment="Center"
+                                             Foreground="#1B48BA" />
+                    <TextBlock Text="Trang chủ"
+                               Foreground="#1B48BA"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               FontSize="20"
+                               FontWeight="Bold" />
+                </StackPanel>
+
+                <Grid>
+                    <TreeView Foreground="#1B48BA"
+                              HorizontalAlignment="Left">
+                        <TreeViewItem IsExpanded="True">
+
+                            <TreeViewItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="FolderOpen"
+                                                             Width="20"
+                                                             Height="20"
+                                                             Margin="0 0 10 0"
+                                                             VerticalAlignment="Center" />
+                                    <TextBlock Text="Quản lý"
+                                               Foreground="#1B48BA"
+                                               FontWeight="Bold"
+                                               FontSize="20" />
+                                </StackPanel>
+                            </TreeViewItem.Header>
+
+                            <TreeViewItem>
+                                <TreeViewItem.Header>
+                                    <TextBlock Text="Sách"
+                                               FontSize="20"
+                                               Foreground="#4C14EA"
+                                               FontWeight="SemiBold">
+                                            <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                <i:InvokeCommandAction Command="{Binding OpenBookManagementPageCM}"
+                                                                       CommandParameter="{Binding ElementName=mainFrame}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBlock>
+                                </TreeViewItem.Header>
+                            </TreeViewItem>
+                            <TreeViewItem>
+                                <TreeViewItem.Header>
+                                    <TextBlock Text="Tiếp nhận sách"
+                                               Foreground="#4C14EA"
+                                               FontSize="20"
+                                               FontWeight="SemiBold">
+                                            <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                <i:InvokeCommandAction Command="{Binding OpenImportBookPage}"
+                                                                       CommandParameter="{Binding ElementName=mainFrame}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBlock>
+                                </TreeViewItem.Header>
+                            </TreeViewItem>
+                            <TreeViewItem>
+                                <TreeViewItem.Header>
+                                    <TextBlock Text="Độc giả"
+                                               Foreground="#4C14EA"
+                                               FontSize="20"
+                                               FontWeight="SemiBold" />
+                                </TreeViewItem.Header>
+                            </TreeViewItem>
+                            <TreeViewItem>
+                                <TreeViewItem.Header>
+                                    <TextBlock Text="Phiếu"
+                                               Foreground="#4C14EA"
+                                               FontSize="20"
+                                               FontWeight="SemiBold" />
+                                </TreeViewItem.Header>
+                            </TreeViewItem>
+
+                        </TreeViewItem>
+                    </TreeView>
+
+                </Grid>
+                <Grid>
+                    <TreeView Foreground="#1B48BA"
+                              HorizontalAlignment="Left">
+                        <TreeViewItem IsExpanded="True">
+
+                            <TreeViewItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="FileChart"
+                                                             Width="20"
+                                                             Height="20"
+                                                             Margin="0 0 10 0"
+                                                             VerticalAlignment="Center" />
+                                    <TextBlock Text="Báo cáo"
+                                               Foreground="#1B48BA"
+                                               FontSize="20"
+                                               FontWeight="Bold" />
+                                </StackPanel>
+                            </TreeViewItem.Header>
+
+                        </TreeViewItem>
+                    </TreeView>
+                </Grid>
+                <Grid>
+                    <TreeView Foreground="#1B48BA"
+                              HorizontalAlignment="Left">
+                        <TreeViewItem IsExpanded="True">
+
+                            <TreeViewItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Cog"
+                                                             Width="20"
+                                                             Height="20"
+                                                             Margin="0 0 10 0"
+                                                             VerticalAlignment="Center" />
+                                    <TextBlock Text="Cài đặt"
+                                               Foreground="#1B48BA"
+                                               FontSize="20"
+                                               FontWeight="Bold" />
+                                </StackPanel>
+                            </TreeViewItem.Header>
+
+                        </TreeViewItem>
+                    </TreeView>
+                </Grid>
+
+            </StackPanel>
+
+            <Grid Width="260"
+                  Height="10">
+                <Border BorderThickness="0 0 0 1"
+                        BorderBrush="#BFBABA" />
+            </Grid>
+
+            <!--SIGN OUT-->
+            <StackPanel Margin="0,20,10,0"
+                        Orientation="Horizontal"
+                        FlowDirection="RightToLeft">
+                <materialDesign:PackIcon Kind="Power"
+                                         Width="20"
+                                         Height="20"
+                                         VerticalAlignment="Center"
+                                         Foreground="#1B48BA"
+                                         Margin="0,0,10,0" />
+                <TextBlock Text="Đăng xuất"
+                           TextAlignment="Center"
+                           Foreground="#1B48BA"
+                           FontWeight="Bold"
+                           FontSize="20" />
+
+            </StackPanel>
+
+        </StackPanel>
+
+        <Frame Grid.Column="1"
+               x:Name="mainFrame"
+               Background="#F5FDFE"
+               Width="1128"
+               Height="800"
+               NavigationUIVisibility="Hidden" />
     </Grid>
 </Window>

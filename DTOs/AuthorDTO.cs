@@ -10,5 +10,7 @@ namespace LibraryManagement.DTOs
     {
         public int id { get; set; }
         public string name { get; set; }
+        public DateTime birthDate { get; set; }
+        public string nationality { get; set; }
     }
 }

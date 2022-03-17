@@ -25,8 +25,8 @@ namespace LibraryManagement.Models
         public bool status { get; set; }
         public bool isDeleted { get; set; }
     
-        public virtual Book Book { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BorrowingCard> BorrowingCards { get; set; }
+        public virtual Book Book { get; set; }
     }
 }
