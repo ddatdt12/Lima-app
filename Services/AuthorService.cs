@@ -9,31 +9,31 @@ using System.Linq;
 
 namespace LibraryManagement.Services
 {
-    public class GenreService
+    public class AuthorService
     {
-        private GenreService() { }
-        private static GenreService _ins;
-        public static GenreService Ins
+        private AuthorService() { }
+        private static AuthorService _ins;
+        public static AuthorService Ins
         {
             get
             {
                 if (_ins == null)
                 {
-                    _ins = new GenreService();
+                    _ins = new AuthorService();
                 }
                 return _ins;
             }
             private set => _ins = value;
         }
 
-        public List<GenreDTO> GetAllGenre()
+        public List<AuthorDTO> GetAllAuthor()
         {
             try
             {
-                List<GenreDTO> genres;
-                genres = (from s in DataProvider.Ins.DB.Genres
-                          select new GenreDTO { id = s.id, name = s.name }).ToList();
-                return genres;
+                List<AuthorDTO> authors;
+                authors = (from s in DataProvider.Ins.DB.Authors
+                           select new AuthorDTO { id = s.id, name = s.name }).ToList();
+                return authors;
             }
             catch (Exception e)
             {
@@ -42,25 +42,25 @@ namespace LibraryManagement.Services
 
         }
 
-        public (bool, string message) CreateNewGenre(GenreDTO genre)
+        public (bool, string message) CreateNewAuthor(AuthorDTO author)
         {
             try
             {
                 LibraryManagementEntities context = DataProvider.Ins.DB;
-                var genreInDB = context.Genres.Where(g => g.name == genre.name).FirstOrDefault();
-                if (genreInDB != null)
+                var authorInDB = context.Authors.Where(g => g.name == author.name).FirstOrDefault();
+                if (authorInDB != null)
                 {
-                    return (false, "Thể loại sách này đã tồn tại");
+                    return (false, "Tác giả này đã tồn tại");
                 }
-                var newGenre = new Genre
+                var newAuthor = new Author
                 {
-                    name = genre.name,
+                    name = author.name,
+                    birthDate = author.birthDate,
                 };
-                context.Genres.Add(newGenre);
+                context.Authors.Add(newAuthor);
                 context.SaveChanges();
-
-                genre.id = newGenre.id;
-                return (true, "Thêm thể loại thành công");
+                author.id = newAuthor.id;
+                return (true, "Thêm tác giả thành công");
             }
             catch (DbEntityValidationException e)
             {
@@ -73,17 +73,20 @@ namespace LibraryManagement.Services
             }
         }
 
-        public (bool, string message) EditGenre(GenreDTO updatedGenre)
+        public (bool, string message) EditAuthor(AuthorDTO updatedAuthor)
         {
             try
             {
                 var context = DataProvider.Ins.DB;
-                var genre = context.Genres.Where(g => g.id == updatedGenre.id).FirstOrDefault();
-                if (genre is null)
+                var author = context.Authors.Where(g => g.id == updatedAuthor.id).FirstOrDefault();
+                if (author is null)
                 {
                     return (false, "Thể loại không tồn tại");
                 }
-                genre.name = updatedGenre.name;
+                author.name = updatedAuthor.name;
+                author.birthDate = updatedAuthor.birthDate;
+                author.nationality = updatedAuthor.nationality;
+
                 context.SaveChanges();
                 return (true, "");
             }
@@ -99,22 +102,22 @@ namespace LibraryManagement.Services
 
         }
 
-        public (bool, string message) DeleteGenre(int genreId)
+        public (bool, string message) DeleteAuthor(int authorId)
         {
             try
             {
                 var context = DataProvider.Ins.DB;
-                var related = context.Books.Where(b => b.genreId == genreId).Any();
+                var related = context.Books.Where(b => b.authorId == authorId).Any();
                 if (related)
                 {
-                    return (false, "Đã có thể loại sách thuộc thể loại này không thể xóa");
+                    return (false, "Đã có sách của tác giả này. Không thể xóa!");
                 }
-                var genre = context.Genres.Where(g => g.id == genreId).FirstOrDefault();
+                var genre = context.Authors.Where(g => g.id == authorId).FirstOrDefault();
                 if (genre is null)
                 {
-                    return (false, "Genre don't exist");
+                    return (false, "Tác giả không tồn tại");
                 }
-                context.Genres.Remove(genre);
+                context.Authors.Remove(genre);
                 context.SaveChanges();
                 return (true, "Xóa thể loại thành công");
             }

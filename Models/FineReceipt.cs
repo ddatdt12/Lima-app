@@ -15,8 +15,12 @@ namespace LibraryManagement.Models
     public partial class FineReceipt
     {
         public string id { get; set; }
+        public int amount { get; set; }
+        public System.DateTime createdAt { get; set; }
+        public string employeeId { get; set; }
         public string readerCardId { get; set; }
-        public Nullable<int> amount { get; set; }
-        public Nullable<int> remainingDebt { get; set; }
+    
+        public virtual Employee Employee { get; set; }
+        public virtual ReaderCard ReaderCard { get; set; }
     }
 }

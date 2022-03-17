@@ -12,22 +12,22 @@ namespace LibraryManagement.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class ImportReceipt
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Role()
+        public ImportReceipt()
         {
-            this.Employees = new HashSet<Employee>();
-            this.RoleDetails = new HashSet<RoleDetail>();
+            this.ImportReceiptDetails = new HashSet<ImportReceiptDetail>();
         }
     
-        public int id { get; set; }
-        public string position { get; set; }
-        public bool isDeleted { get; set; }
+        public string id { get; set; }
+        public string supplier { get; set; }
+        public int totalPrice { get; set; }
+        public System.DateTime createdAt { get; set; }
+        public string employeeId { get; set; }
     
+        public virtual Employee Employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee> Employees { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RoleDetail> RoleDetails { get; set; }
+        public virtual ICollection<ImportReceiptDetail> ImportReceiptDetails { get; set; }
     }
 }
