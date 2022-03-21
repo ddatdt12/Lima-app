@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -11,21 +13,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace LibraryManagement.Views.ImportBook
+namespace LibraryManagement.Views.BookManagement
 {
     /// <summary>
-    /// Interaction logic for ImportBookWindow.xaml
+    /// Interaction logic for BookInforWindow.xaml
     /// </summary>
-    public partial class ImportBookWindow : Window
+    public partial class BookInforWindow : Window
     {
-        public ImportBookWindow()
+        public BookInforWindow()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
 
         private static readonly Regex _regex = new Regex("[^0-9]"); //regex that matches disallowed text
@@ -38,12 +35,9 @@ namespace LibraryManagement.Views.ImportBook
             e.Handled = !IsTextAllowed(e.Text);
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            TextBox sd = sender as TextBox;
-
-            if (sd.Text.Length <= 0)
-                sd.Text = "1";
+            this.Close();
         }
     }
 }

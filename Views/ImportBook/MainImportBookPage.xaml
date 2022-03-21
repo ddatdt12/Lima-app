@@ -8,18 +8,16 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d"
-      Height="780"
-      Width="1110"
-      VerticalAlignment="Top"
-      HorizontalAlignment="Left"
+      Height="800"
+      Width="1128"
       DataContext="{StaticResource ImportBookVM}"
       FontFamily="{StaticResource NunitoSans_Regular}">
 
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="54" />
-            <RowDefinition Height="746" />
+            <RowDefinition Height="7*" />
+            <RowDefinition Height="93*" />
         </Grid.RowDefinitions>
 
 
@@ -33,8 +31,10 @@
             <Button Width="145"
                     Height="42"
                     Margin="0,0,20,0"
-                    Content="Thêm sách mới"
-                    Background="#37B634"
+                    Content="+ Thêm mới"
+                    FontWeight="Bold"
+                    FontSize="16"
+                    Background="#0266FD"
                     BorderBrush="Transparent"
                     BorderThickness="0"
                     materialDesign:ButtonAssist.CornerRadius="12"
@@ -71,7 +71,7 @@
                             <StackPanel Orientation="Horizontal"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Center">
-                                <TextBlock Text="2" />
+                                <TextBlock Text="{Binding TotalQuantity,Mode=OneWay}" />
                                 <TextBlock Text=" Sách"
                                            Margin="0,0,10,0" />
                             </StackPanel>
@@ -107,7 +107,7 @@
                                     <GridViewColumn Header="Mã sách">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="Book's ID"
+                                                <TextBlock Text="{Binding Id}"
                                                            Margin="15,0,0,0" />
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
@@ -125,7 +125,7 @@
                                     <GridViewColumn Header="Tác giả">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="Author"
+                                                <TextBlock Text="{Binding Author.name}"
                                                            Margin="15,0,0,0" />
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
@@ -249,209 +249,200 @@
 
                     </StackPanel>
                 </Border>
-                <Border Height="282"
-                        Width="724"
+                <Border Width="724"
                         Margin="0,20,0,0"
                         Background="White"
-                        CornerRadius="12">
+                        CornerRadius="12"
+                        Height="282">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="20*" />
                             <RowDefinition Height="80*" />
                         </Grid.RowDefinitions>
 
-                        <TextBlock Text="Thông tin phiếu nhập sách"
-                                   FontSize="20"
-                                   FontWeight="Bold"
-                                   Foreground="#1B48BA"
-                                   Margin="10"
-                                   Grid.Row="0" />
+                        <StackPanel Grid.Row="0"
+                                    Orientation="Horizontal">
+                            <TextBlock Text="Danh sách sách"
+                                       FontSize="20"
+                                       FontWeight="Bold"
+                                       Foreground="#1B48BA"
+                                       Margin="20,10,10,10" />
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="230,0,0,0">
 
-                        <Grid Grid.Row="1"
-                              Margin="20,0,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
+                                <materialDesign:PackIcon Kind="Search"
+                                                         Width="25"
+                                                         Height="25"
+                                                         HorizontalAlignment="Center"
+                                                         VerticalAlignment="Center"
+                                                         Foreground="#0266FD">
 
-                            <StackPanel Grid.Column="0">
-                                <Grid>
-                                    <TextBlock Text="Mã phiếu"
-                                               Foreground="#5C5959"
-                                               FontSize="18"
-                                               FontWeight="Bold" />
-                                    <TextBlock Text="PN0001"
-                                               Foreground="#5C5959"
-                                               FontSize="18"
-                                               HorizontalAlignment="Right" />
-                                </Grid>
-                                <Grid Margin="0,30,0,0">
-                                    <TextBlock Text="Đơn vị cung cấp"
-                                               Foreground="#5C5959"
-                                               FontSize="18"
-                                               FontWeight="Bold" />
-                                    <TextBox MinWidth="100"
-                                             Foreground="#5C5959"
-                                             FontSize="18"
-                                             HorizontalAlignment="Right"
-                                             Padding="0,0,0,-5" />
-                                </Grid>
-                                <Grid Margin="0,30,0,0">
-                                    <TextBlock Text="Thời gian nhập"
-                                               Foreground="#5C5959"
-                                               FontSize="18"
-                                               FontWeight="Bold" />
-                                    <TextBlock Text="{Binding Source={x:Static sys:DateTime.Now}, StringFormat=HH:mm dd/MM/yyyy}"
-                                               Foreground="#5C5959"
-                                               FontSize="18"
-                                               HorizontalAlignment="Right" />
-
-                                </Grid>
-                            </StackPanel>
-
-                            <StackPanel Grid.Column="1"
-                                        Margin="20,0,20,0">
-
-                                <Grid>
-                                    <TextBlock Text="Tổng số lượng"
-                                               Foreground="#5C5959"
-                                               FontSize="18"
-                                               FontWeight="Bold" />
-                                    <TextBlock Text="22"
-                                               Foreground="#5C5959"
-                                               FontSize="18"
-                                               HorizontalAlignment="Right" />
-                                </Grid>
-                                <Grid Margin="0,30,0,0">
-                                    <TextBlock Text="Tổng tiền"
-                                               Foreground="#5C5959"
-                                               FontSize="18"
-                                               FontWeight="Bold" />
-                                    <TextBlock Text="2,000,000"
-                                               Foreground="#5C5959"
-                                               FontSize="18"
-                                               HorizontalAlignment="Right" />
-                                </Grid>
-                                <Button Margin="0,100,0,0"
-                                        Content="Nhập sách"
-                                        Width="145"
-                                        Height="42"
-                                        materialDesign:ButtonAssist.CornerRadius="12"
-                                        Background="#0266FD" />
-
+                                </materialDesign:PackIcon>
+                                <TextBox FontSize="16"
+                                         Width="273"
+                                         Height="25"
+                                         materialDesign:HintAssist.Hint="Tìm kiếm tên sách"
+                                         materialDesign:HintAssist.IsFloating="False"
+                                         Padding="0"
+                                         BorderBrush="#0266FD"
+                                         BorderThickness="0,0,0,1"
+                                         TextChanged="TextBox_TextChanged"
+                                         x:Name="searchBox">
+                                </TextBox>
 
                             </StackPanel>
+                        </StackPanel>
 
-                        </Grid>
+                        <Border BorderThickness="1"
+                                Grid.Row="1"
+                                BorderBrush="#BFBABA"
+                                Margin="20,0,20,5"
+                                CornerRadius="2">
+                            <ListView Name="searchList"
+                                      Margin="0,-30,0,0">
+                                <ListView.View>
+                                    <GridView>
+
+                                        <GridViewColumn>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding name}" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+
+                                        <GridViewColumn>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding genre.name}" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+
+                                        <GridViewColumn>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding author.name}" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+
+                                        <GridViewColumn>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding publisher}" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+
+                                        <GridViewColumn>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding yearOfPublication}" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+
+                                        <GridViewColumn>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Border Background="Transparent">
+                                                        <materialDesign:PackIcon Kind="PlusThick"
+                                                                                 Foreground="Green" />
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                                <i:InvokeCommandAction Command="{Binding ElementName=searchList, Path=DataContext.AddBookFromSearchCM}"
+                                                                                       CommandParameter="{Binding ElementName=searchList}" />
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </Border>
+
                     </Grid>
                 </Border>
 
             </StackPanel>
 
             <Border Grid.Column="1"
-                    Width="370"
                     Height="718"
                     Background="White"
                     CornerRadius="12"
-                    VerticalAlignment="Top">
-                <StackPanel>
-
+                    VerticalAlignment="Top"
+                    Margin="6,0,10,0">
+                <StackPanel Margin="10,0,10,0">
+                    <TextBlock Text="Thông tin phiếu nhập sách"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Foreground="#1B48BA"
+                               Margin="10" />
                     <Grid>
-                        <TextBlock Text="Tìm kiếm sách"
-                                   FontSize="20"
-                                   FontWeight="Bold"
-                                   Foreground="#1B48BA"
-                                   Margin="10" />
+                        <TextBlock Text="Mã phiếu"
+                                   Foreground="#5C5959"
+                                   FontSize="18"
+                                   FontWeight="Bold" />
+                        <TextBlock Text=""
+                                   Foreground="#5C5959"
+                                   FontSize="18"
+                                   HorizontalAlignment="Right" />
                     </Grid>
-
-                    <Grid Width="332"
-                          HorizontalAlignment="Left"
-                          Margin="10,0,0,0">
-
-                        <Border Width="322"
-                                Height="28"
-                                HorizontalAlignment="Left"
-                                CornerRadius="12 0 0 12"
-                                Background="#EFF4F4"
-                                Padding="5,2,0,0">
-                            <TextBox FontSize="16"
-                                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                     BorderBrush="Transparent"
-                                     materialDesign:HintAssist.Hint="Tìm kiếm tên sách"
-                                     materialDesign:HintAssist.IsFloating="False"
-                                     Padding="0">
-
-                            </TextBox>
-                        </Border>
-                        <Border Background="#0266FD"
-                                Width="30"
-                                Height="30"
-                                CornerRadius="15"
-                                HorizontalAlignment="Right">
-                            <materialDesign:PackIcon Kind="Search"
-                                                     Width="18"
-                                                     Height="18"
-                                                     HorizontalAlignment="Center"
-                                                     VerticalAlignment="Center"
-                                                     Foreground="White" />
-
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseLeftButtonDown">
-                                    <i:InvokeCommandAction />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Border>
+                    <Grid Margin="0,30,0,0">
+                        <TextBlock Text="Nhà cung cấp"
+                                   Foreground="#5C5959"
+                                   FontSize="18"
+                                   FontWeight="Bold" />
+                        <TextBox MinWidth="100"
+                                 Foreground="#5C5959"
+                                 FontSize="18"
+                                 HorizontalAlignment="Right"
+                                 Padding="0,0,0,-5"
+                                 Text="còn thiếu bind"/>
                     </Grid>
+                    <Grid Margin="0,30,0,0">
+                        <TextBlock Text="Thời gian nhập"
+                                   Foreground="#5C5959"
+                                   FontSize="18"
+                                   FontWeight="Bold" />
+                        <TextBlock Text="{Binding Source={x:Static sys:DateTime.Now}, StringFormat=HH:mm dd/MM/yyyy}"
+                                   Foreground="#5C5959"
+                                   FontSize="18"
+                                   HorizontalAlignment="Right" />
 
-                    <ListView Margin="0,10,0,0"
-                              Height="635"
-                              ItemsSource="{Binding ImportBookList}"
-                              Name="searchList">
-                        <ListView.View>
-                            <GridView>
-
-                                <GridViewColumn>
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="Mã sách" />
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-
-                                <GridViewColumn>
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="Tên sách" />
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-
-                                <GridViewColumn>
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="Tác giả" />
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-
-                                <GridViewColumn>
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Border Background="Transparent">
-                                                <materialDesign:PackIcon Kind="PlusThick"
-                                                                         Foreground="Green" />
-                                                <i:Interaction.Triggers>
-                                                    <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                        <i:InvokeCommandAction Command="{Binding ElementName=searchList, Path=DataContext.AddBookFromSearchCM}" />
-                                                    </i:EventTrigger>
-                                                </i:Interaction.Triggers>
-                                            </Border>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                    </Grid>
+                    <Grid Margin="0,30,0,0">
+                        <TextBlock Text="Tổng số lượng"
+                                   Foreground="#5C5959"
+                                   FontSize="18"
+                                   FontWeight="Bold" />
+                        <TextBlock Text="{Binding TotalQuantity,Mode=OneWay}"
+                                   Foreground="#5C5959"
+                                   FontSize="18"
+                                   HorizontalAlignment="Right" />
+                    </Grid>
+                    <Grid Margin="0,30,0,0">
+                        <TextBlock Text="Tổng tiền"
+                                   Foreground="#5C5959"
+                                   FontSize="18"
+                                   FontWeight="Bold" />
+                        <TextBlock Text=""
+                                   Foreground="#5C5959"
+                                   FontSize="18"
+                                   HorizontalAlignment="Right" />
+                    </Grid>
+                    <Button Margin="0,100,0,0"
+                            Content="Nhập sách"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            Width="145"
+                            Height="42"
+                            materialDesign:ButtonAssist.CornerRadius="12"
+                            Background="#0266FD"
+                            Command="{Binding ImportBookCM}"/>
                 </StackPanel>
             </Border>
         </Grid>
