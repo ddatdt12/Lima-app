@@ -81,6 +81,8 @@
     <Compile Include="DTOs\BookDTO.cs" />
     <Compile Include="DTOs\AuthorDTO.cs" />
     <Compile Include="DTOs\BookInfoDTO.cs" />
+    <Compile Include="DTOs\RoleDetailsDTO.cs" />
+    <Compile Include="DTOs\RoleDTO.cs" />
     <Compile Include="DTOs\GenreDTO.cs" />
     <Compile Include="Models\Author.cs">
       <DependentUpon>LibraryManagementModel.tt</DependentUpon>
@@ -143,6 +145,8 @@
     <Compile Include="Models\RoleDetail.cs">
       <DependentUpon>LibraryManagementModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\AuthService.cs" />
+    <Compile Include="Services\RoleService.cs" />
     <Compile Include="Services\ParameterService.cs" />
     <Compile Include="Services\BookService.cs" />
     <Compile Include="Services\AuthorService.cs" />

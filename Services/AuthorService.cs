@@ -85,7 +85,6 @@ namespace LibraryManagement.Services
                 }
                 author.name = updatedAuthor.name;
                 author.birthDate = updatedAuthor.birthDate;
-                author.nationality = updatedAuthor.nationality;
 
                 context.SaveChanges();
                 return (true, "");
