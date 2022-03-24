@@ -32,8 +32,8 @@ namespace LibraryManagement.Services
         {
             try
             {
-                var param = DataProvider.Ins.DB.Parameters.Find(RULES.Value);
-                return param.value;
+                var param = DataProvider.Ins.DB.Parameters.Find(RULES.Name);
+                return param?.value ?? 0;
             }
             catch (Exception e)
             {
@@ -45,8 +45,16 @@ namespace LibraryManagement.Services
         {
             try
             {
-                var param = DataProvider.Ins.DB.Parameters.Find(RULES.Value);
-                param.value = (short)value;
+                var param = DataProvider.Ins.DB.Parameters.Find(RULES.Name);
+                if (param != null)
+                {
+                    param.value = (short)value;
+                }
+                else
+                {
+                    param = new Parameter{ id = RULES.Name, value = (short)value };
+                    DataProvider.Ins.DB.Parameters.Add(param);
+                }
 
                 DataProvider.Ins.DB.SaveChanges();
                 return true;
