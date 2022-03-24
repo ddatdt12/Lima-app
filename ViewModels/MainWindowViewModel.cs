@@ -1,7 +1,4 @@
-using LibraryManagement.ViewModels;
-using LibraryManagement.Views.SettingManagement;
-using LibraryManagement.Views.StatisticalManagement;
-using LibraryManagement.DTOs;
+﻿using LibraryManagement.DTOs;
 using LibraryManagement.Services;
 using LibraryManagement.Utils;
 using LibraryManagement.ViewModels;
@@ -17,28 +14,8 @@ namespace LibraryManagement.ViewModel
     public class MainWindowViewModel : BaseViewModel
     {
 
-        public ICommand OpenGenreStatisticPageCM { get; set; }
-        public ICommand OpenLateStatisticPageCM { get; set; }
-        public ICommand OpenSettingPageCM { get; set; }
-
-
-
         public MainWindowViewModel()
         {
-
-            OpenGenreStatisticPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
-            {
-                p.Content = new GenreStatisticPage();
-            });
-            OpenLateStatisticPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
-            {
-                p.Content = new LateStatisticPage();
-            });
-            OpenSettingPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
-            {
-                p.Content = new MainSettingPage();
-            });
-
             //var author = new AuthorDTO { name = "Hemingway", birthDate = DateTime.Now, };
             //List<AuthorDTO> authorList = new List<AuthorDTO>()
             //{
@@ -136,6 +113,49 @@ namespace LibraryManagement.ViewModel
             ////});
             //var bookList = BookService.Ins.GetAllBook();
 
+
+            var role = new RoleDTO
+            {
+                id = 1,
+                position = "Thủ thư",
+                roleDetaislList = new List<RoleDetailsDTO>
+                {
+                    new RoleDetailsDTO
+                    {
+                    permission = 0,
+                    isPermitted = true
+                    },
+                     new RoleDetailsDTO
+                     {
+                    permission = 1,
+                    isPermitted = true
+                    },
+                    new RoleDetailsDTO{
+                    permission = 2,
+                    isPermitted = false
+                    },
+                             new RoleDetailsDTO{
+                    permission = 3,
+                    isPermitted = true
+                    },
+                                new RoleDetailsDTO{
+                    permission = 4,
+                    isPermitted = true
+                    },
+                                   new RoleDetailsDTO{
+                    permission = 5,
+                    isPermitted = false
+                    },
+                                      new RoleDetailsDTO{
+                    permission = 6,
+                    isPermitted = false
+                    },
+
+                },
+            };
+
+            (bool success, string message) = RoleService.Ins.CreateNewRole(role);
+            var roleList = RoleService.Ins.GetAllRoles();
         }
 
 
