@@ -20,7 +20,7 @@
             <RowDefinition Height="93*" />
         </Grid.RowDefinitions>
 
-
+        <!--HEADER-->
         <DockPanel Grid.Row="0">
             <TextBlock Text="Tiếp nhận sách"
                        FontSize="32"
@@ -51,6 +51,7 @@
                 <ColumnDefinition Width="370*" />
             </Grid.ColumnDefinitions>
 
+            <!---LEFT-->
             <StackPanel Grid.Column="0">
 
                 <Border CornerRadius="12"
@@ -77,175 +78,179 @@
                             </StackPanel>
 
                         </Grid>
+                        <Border CornerRadius="2"
+                                BorderThickness="1"
+                                BorderBrush="#BFBABA"
+                                Margin="10">
+                            <ListView x:Name="listview"
+                                      ItemsSource="{Binding ImportBookList}"
+                                      SelectedItem="{Binding SelectedItem}"
+                                      Height="352"
+                                      FontSize="16">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
 
-                        <ListView x:Name="listview"
-                                  ItemsSource="{Binding ImportBookList}"
-                                  SelectedItem="{Binding SelectedItem}"
-                                  Height="372"
-                                  FontSize="16">
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="ListViewItem">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver"
+                                                     Value="True">
+                                                <Setter Property="Background"
+                                                        Value="Transparent" />
+                                            </Trigger>
+                                            <Trigger Property="IsSelected"
+                                                     Value="True">
+                                                <Setter Property="Background"
+                                                        Value="Transparent" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
 
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver"
-                                                 Value="True">
-                                            <Setter Property="Background"
-                                                    Value="Transparent" />
-                                        </Trigger>
-                                        <Trigger Property="IsSelected"
-                                                 Value="True">
-                                            <Setter Property="Background"
-                                                    Value="Transparent" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </ListView.ItemContainerStyle>
+                                <ListView.View>
+                                    <GridView>
 
-                            <ListView.View>
-                                <GridView>
+                                        <GridViewColumn Header="Mã sách">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Id}"
+                                                               Margin="15,0,0,0" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
 
-                                    <GridViewColumn Header="Mã sách">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding Id}"
-                                                           Margin="15,0,0,0" />
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
+                                        <GridViewColumn Header="Tên sách">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Name}"
+                                                               Margin="15,0,0,0" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
 
-                                    <GridViewColumn Header="Tên sách">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding Name}"
-                                                           Margin="15,0,0,0" />
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
+                                        <GridViewColumn Header="Tác giả">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Author.name}"
+                                                               Margin="15,0,0,0" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
 
-                                    <GridViewColumn Header="Tác giả">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding Author.name}"
-                                                           Margin="15,0,0,0" />
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
+                                        <GridViewColumn Header="Số lượng">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Border Width="{Binding Width,ElementName=quantitybox}"
+                                                            Height="30"
+                                                            CornerRadius="5"
+                                                            BorderThickness="1"
+                                                            BorderBrush="#BFBABA"
+                                                            Margin="15,0,0,0">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition />
+                                                                <ColumnDefinition />
+                                                            </Grid.ColumnDefinitions>
 
-                                    <GridViewColumn Header="Số lượng">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Border Width="{Binding Width,ElementName=quantitybox}"
-                                                        Height="30"
-                                                        CornerRadius="5"
-                                                        BorderThickness="1"
-                                                        BorderBrush="#BFBABA"
-                                                        Margin="15,0,0,0">
-                                                    <Grid>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition />
-                                                            <ColumnDefinition />
-                                                        </Grid.ColumnDefinitions>
+                                                            <!---QUANTITY-->
 
-                                                        <!---QUANTITY-->
-
-                                                        <TextBox Name="quantitybox"
-                                                                 Grid.Column="0"
-                                                                 Text="{Binding SL,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                                                 Style="{x:Null}"
-                                                                 BorderThickness="0"
-                                                                 Background="Transparent"
-                                                                 Margin="5,5,5,0"
-                                                                 TextChanged="quantitybox_TextChanged"
-                                                                 PreviewTextInput="quantitybox_PreviewTextInput">
-                                                            <i:Interaction.Triggers>
-                                                                <i:EventTrigger EventName="TextChanged">
-                                                                    <i:InvokeCommandAction Command="{Binding ElementName=listview, Path=DataContext.QuantityChangedCM}"
-                                                                                           CommandParameter="{Binding ElementName=quantitybox}" />
-                                                                </i:EventTrigger>
-                                                            </i:Interaction.Triggers>
-                                                        </TextBox>
-
-                                                        <StackPanel Grid.Column="1">
-                                                            <!--INCREASE-->
-                                                            <Border CornerRadius="0 4 0 0"
-                                                                    Width="32"
-                                                                    Height="14"
-                                                                    BorderThickness="1"
-                                                                    BorderBrush="#0266FD"
-                                                                    Background="#0266FD">
-                                                                <materialDesign:PackIcon Kind="MenuUp"
-                                                                                         HorizontalAlignment="Center" />
+                                                            <TextBox Name="quantitybox"
+                                                                     Grid.Column="0"
+                                                                     Text="{Binding SL,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                                     Style="{x:Null}"
+                                                                     BorderThickness="0"
+                                                                     Background="Transparent"
+                                                                     Margin="5,5,5,0"
+                                                                     TextChanged="quantitybox_TextChanged"
+                                                                     PreviewTextInput="quantitybox_PreviewTextInput">
                                                                 <i:Interaction.Triggers>
-                                                                    <i:EventTrigger EventName="MouseLeftButtonUp">
-                                                                        <i:InvokeCommandAction Command="{Binding ElementName=listview, Path=DataContext.IncreaseQuantityCM}" />
+                                                                    <i:EventTrigger EventName="TextChanged">
+                                                                        <i:InvokeCommandAction Command="{Binding ElementName=listview, Path=DataContext.QuantityChangedCM}"
+                                                                                               CommandParameter="{Binding ElementName=quantitybox}" />
                                                                     </i:EventTrigger>
                                                                 </i:Interaction.Triggers>
-                                                            </Border>
-                                                            <!--DECREASE-->
-                                                            <Border CornerRadius="0 0 4 0"
-                                                                    Width="32"
-                                                                    Height="14"
-                                                                    BorderThickness="1"
-                                                                    BorderBrush="#0266FD"
-                                                                    Background="#0266FD">
-                                                                <materialDesign:PackIcon Kind="MenuDown"
-                                                                                         HorizontalAlignment="Center" />
-                                                                <i:Interaction.Triggers>
-                                                                    <i:EventTrigger EventName="MouseLeftButtonUp">
-                                                                        <i:InvokeCommandAction Command="{Binding ElementName=listview, Path=DataContext.DecreaseQuantityCM}" />
-                                                                    </i:EventTrigger>
-                                                                </i:Interaction.Triggers>
-                                                            </Border>
-                                                        </StackPanel>
+                                                            </TextBox>
 
-                                                    </Grid>
-                                                </Border>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
+                                                            <StackPanel Grid.Column="1">
+                                                                <!--INCREASE-->
+                                                                <Border CornerRadius="0 4 0 0"
+                                                                        Width="32"
+                                                                        Height="14"
+                                                                        BorderThickness="1"
+                                                                        BorderBrush="#0266FD"
+                                                                        Background="#0266FD">
+                                                                    <materialDesign:PackIcon Kind="MenuUp"
+                                                                                             HorizontalAlignment="Center" />
+                                                                    <i:Interaction.Triggers>
+                                                                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                                            <i:InvokeCommandAction Command="{Binding ElementName=listview, Path=DataContext.IncreaseQuantityCM}" />
+                                                                        </i:EventTrigger>
+                                                                    </i:Interaction.Triggers>
+                                                                </Border>
+                                                                <!--DECREASE-->
+                                                                <Border CornerRadius="0 0 4 0"
+                                                                        Width="32"
+                                                                        Height="14"
+                                                                        BorderThickness="1"
+                                                                        BorderBrush="#0266FD"
+                                                                        Background="#0266FD">
+                                                                    <materialDesign:PackIcon Kind="MenuDown"
+                                                                                             HorizontalAlignment="Center" />
+                                                                    <i:Interaction.Triggers>
+                                                                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                                            <i:InvokeCommandAction Command="{Binding ElementName=listview, Path=DataContext.DecreaseQuantityCM}" />
+                                                                        </i:EventTrigger>
+                                                                    </i:Interaction.Triggers>
+                                                                </Border>
+                                                            </StackPanel>
 
-                                    <GridViewColumn Header="Trị giá">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding Price}"
-                                                           Margin="15,0,0,0" />
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
+                                                        </Grid>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
 
-                                    <GridViewColumn Header="Thành tiền">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding Total}"
-                                                           Margin="15,0,0,0" />
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
+                                        <GridViewColumn Header="Trị giá">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Price}"
+                                                               Margin="15,0,0,0" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
 
-                                    <GridViewColumn>
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Border Background="Transparent"
-                                                        Width="30"
-                                                        Height="30">
-                                                    <materialDesign:PackIcon Kind="Delete"
-                                                                             Width="30"
-                                                                             Height="30"
-                                                                             Foreground="#DC1B1B" />
+                                        <GridViewColumn Header="Thành tiền">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Total}"
+                                                               Margin="15,0,0,0" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
 
-                                                    <i:Interaction.Triggers>
-                                                        <i:EventTrigger EventName="MouseLeftButtonUp">
-                                                            <i:InvokeCommandAction Command="{Binding ElementName=listview, Path=DataContext.DeleteSelectedBookCM}" />
-                                                        </i:EventTrigger>
-                                                    </i:Interaction.Triggers>
-                                                </Border>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
+                                        <GridViewColumn>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Border Background="Transparent"
+                                                            Width="30"
+                                                            Height="30">
+                                                        <materialDesign:PackIcon Kind="Delete"
+                                                                                 Width="30"
+                                                                                 Height="30"
+                                                                                 Foreground="#DC1B1B" />
 
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                                <i:InvokeCommandAction Command="{Binding ElementName=listview, Path=DataContext.DeleteSelectedBookCM}" />
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </Border>
 
                     </StackPanel>
                 </Border>
@@ -368,7 +373,8 @@
                 </Border>
 
             </StackPanel>
-
+            
+            <!---RIGHT-->
             <Border Grid.Column="1"
                     Height="718"
                     Background="White"
@@ -401,7 +407,7 @@
                                  FontSize="18"
                                  HorizontalAlignment="Right"
                                  Padding="0,0,0,-5"
-                                 Text="còn thiếu bind"/>
+                                 Text="còn thiếu bind" />
                     </Grid>
                     <Grid Margin="0,30,0,0">
                         <TextBlock Text="Thời gian nhập"
@@ -442,7 +448,7 @@
                             Height="42"
                             materialDesign:ButtonAssist.CornerRadius="12"
                             Background="#0266FD"
-                            Command="{Binding ImportBookCM}"/>
+                            Command="{Binding ImportBookCM}" />
                 </StackPanel>
             </Border>
         </Grid>

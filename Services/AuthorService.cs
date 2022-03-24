@@ -87,7 +87,7 @@ namespace LibraryManagement.Services
                 author.birthDate = updatedAuthor.birthDate;
 
                 context.SaveChanges();
-                return (true, "");
+                return (true, "Cập nhật tác giả thành công");
             }
             catch (DbEntityValidationException e)
             {

@@ -115,7 +115,6 @@ namespace LibraryManagement.ViewModel.BookManagementVM
         public ICommand DeleteBookInforCM { get; set; }
         public ICommand UpdateBookCM { get; set; }
         public ICommand OpenEditBookCM { get; set; }
-        //public ICommand OpenAuthorManageCM { get; set; }
         #endregion
 
 
@@ -258,12 +257,6 @@ namespace LibraryManagement.ViewModel.BookManagementVM
                 w.ShowDialog();
 
             });
-
-
-            //OpenAuthorManageCM = new RelayCommand<object>((p) => { return true; }, (p) =>
-            //{
-
-            //});
         }
 
     }

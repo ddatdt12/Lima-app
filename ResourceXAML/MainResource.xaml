@@ -2,10 +2,12 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:main="clr-namespace:LibraryManagement.ViewModel"
                     xmlns:importbook="clr-namespace:LibraryManagement.ViewModel.ImportBookVM"
-                    xmlns:bookmanage="clr-namespace:LibraryManagement.ViewModel.BookManagementVM">
+                    xmlns:bookmanage="clr-namespace:LibraryManagement.ViewModel.BookManagementVM"
+                    xmlns:genreauthormanage="clr-namespace:LibraryManagement.ViewModels.Genre_AuthorManagementVM">
 
     <main:MainWindowViewModel x:Key="MainWindowVM" />
     <importbook:ImportBookViewModel x:Key="ImportBookVM" />
     <bookmanage:BookManagementViewModel x:Key="BookManagementVM" />
-    
+    <genreauthormanage:Genre_AuthorManagementViewModel x:Key="Genre_AuthorManagementVM" />
+
 </ResourceDictionary>

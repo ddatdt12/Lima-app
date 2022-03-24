@@ -11,6 +11,7 @@ using LibraryManagement.Views.ImportBook;
 using LibraryManagement.DTOs;
 using LibraryManagement.Services;
 using System.Windows.Data;
+using LibraryManagement.Views.Genre_AuthorManagement;
 
 namespace LibraryManagement.ViewModel.ImportBookVM
 {
@@ -260,32 +261,9 @@ namespace LibraryManagement.ViewModel.ImportBookVM
             });
             AddNewAuthorCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                try
-                {
-                    if (string.IsNullOrEmpty(TxtAuthor)) return;
-
-                    if (MessageBox.Show("Bạn có muốn thêm tác giả này không?", "Thêm tác giả", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                    {
-                        AuthorDTO newAu = new AuthorDTO { name = TxtAuthor, birthDate = DateTime.Now };
-                        (bool isS, string mes) = AuthorService.Ins.CreateNewAuthor(newAu);
-                        if (isS)
-                        {
-                            ListAuthor.Add(newAu);
-                            Author = newAu;
-                        }
-                        MessageBox.Show(mes);
-                    }
-                    else
-                    {
-                        return;
-                    }
-
-                }
-                catch (Exception e)
-                {
-
-                    MessageBox.Show(e.Message);
-                }
+                AddAuthorWindow w = new AddAuthorWindow();
+                w.authorname.Text = TxtAuthor;
+                w.ShowDialog();
             });
             ImportBookCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {

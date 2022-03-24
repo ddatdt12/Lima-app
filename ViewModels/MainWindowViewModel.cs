@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Input;
-
+using LibraryManagement.Views.Genre_AuthorManagement;
 
 namespace LibraryManagement.ViewModel
 {
@@ -20,6 +20,7 @@ namespace LibraryManagement.ViewModel
 
         public ICommand OpenImportBookPage { get; set; }
         public ICommand OpenBookManagementPageCM { get; set; }
+        public ICommand OpenGenreAuthorManagementPage { get; set; }
 
 
         public MainWindowViewModel()
@@ -33,6 +34,10 @@ namespace LibraryManagement.ViewModel
             OpenBookManagementPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new BookManagementPage();
+            });
+            OpenGenreAuthorManagementPage = new RelayCommand<Frame>((p) => { return true; }, (p) =>
+            {
+                p.Content = new MainManagementPage();
             });
 
             //var author = new AuthorDTO { name = "Hemingway", birthDate = DateTime.Now, };

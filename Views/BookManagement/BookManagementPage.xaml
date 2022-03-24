@@ -27,10 +27,8 @@
                            Foreground="#1B48BA"
                            FontWeight="Bold"
                            Margin="32 10 50 0" />
-                <!--<Button Content="Quản lý tác giả"
-                        Command="{Binding OpenAuthorManageCM}"/>-->
             </StackPanel>
-            
+
 
             <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                  materialDesign:ShadowAssist.ShadowEdges="Bottom,Right"
@@ -48,7 +46,7 @@
                                                      VerticalAlignment="Bottom"
                                                      Foreground="#0266FD" />
 
-                            <TextBox FontSize="16"
+                            <TextBox FontSize="18"
                                      TextChanged="TextBox_TextChanged"
                                      Name="searchBox"
                                      Width="350"
@@ -56,17 +54,8 @@
                                      VerticalAlignment="Bottom"
                                      materialDesign:HintAssist.Hint="Tìm kiếm"
                                      BorderBrush="#0266FD"
+                                     Padding="0"
                                      BorderThickness="0,0,0,1">
-                                <TextBox.Style>
-                                    <Style TargetType="TextBox">
-                                        <Setter Property="BorderThickness"
-                                                Value="0" />
-                                        <Setter Property="BorderBrush"
-                                                Value="Transparent" />
-                                        <Setter Property="Background"
-                                                Value="Transparent" />
-                                    </Style>
-                                </TextBox.Style>
                             </TextBox>
 
                         </StackPanel>

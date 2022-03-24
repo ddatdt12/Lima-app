@@ -151,6 +151,7 @@
     <Compile Include="Utils\Constant.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\BookManagementVM\BookManagementViewModel.cs" />
+    <Compile Include="ViewModels\Genre_AuthorManagementVM\Genre_AuthorManagementViewModel.cs" />
     <Compile Include="ViewModels\ImportBookVM\ImportBookViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\BookManagement\BookInforWindow.xaml.cs">
@@ -158,6 +159,21 @@
     </Compile>
     <Compile Include="Views\BookManagement\BookManagementPage.xaml.cs">
       <DependentUpon>BookManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Genre_AuthorManagement\AddAuthorWindow.xaml.cs">
+      <DependentUpon>AddAuthorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Genre_AuthorManagement\AddGenreWindow.xaml.cs">
+      <DependentUpon>AddGenreWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Genre_AuthorManagement\EditAuthorWindow.xaml.cs">
+      <DependentUpon>EditAuthorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Genre_AuthorManagement\EditGenreWindow.xaml.cs">
+      <DependentUpon>EditGenreWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Genre_AuthorManagement\MainManagementPage.xaml.cs">
+      <DependentUpon>MainManagementPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ImportBook\ImportBookWindow.xaml.cs">
       <DependentUpon>ImportBookWindow.xaml</DependentUpon>
@@ -195,6 +211,26 @@
     <Page Include="Views\BookManagement\BookManagementPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Genre_AuthorManagement\AddAuthorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Genre_AuthorManagement\AddGenreWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Genre_AuthorManagement\EditAuthorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Genre_AuthorManagement\EditGenreWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Genre_AuthorManagement\MainManagementPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ImportBook\ImportBookWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
