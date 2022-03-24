@@ -1,7 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:main="clr-namespace:LibraryManagement.ViewModel">
+                    xmlns:main="clr-namespace:LibraryManagement.ViewModel"
+                    xmlns:readerCardPage="clr-namespace:LibraryManagement.ViewModel.ReaderCardVM">
 
     <main:MainWindowViewModel x:Key="MainWindowVM" />
+    <readerCardPage:ReaderCardViewModel x:Key="ReaderCardVM" />
 
 </ResourceDictionary>

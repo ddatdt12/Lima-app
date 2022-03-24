@@ -135,8 +135,16 @@
     <Compile Include="Utils\Constant.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\ReaderCardVM\AddReaderCardViewModel.cs" />
+    <Compile Include="ViewModels\ReaderCardVM\ReaderCardViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReaderCard\AddReaderCardWindow.xaml.cs">
+      <DependentUpon>AddReaderCardWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReaderCard\ReaderCardPage.xaml.cs">
+      <DependentUpon>ReaderCardPage.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -161,6 +169,14 @@
     <Page Include="Views\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReaderCard\AddReaderCardWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ReaderCard\ReaderCardPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

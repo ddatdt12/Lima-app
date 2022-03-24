@@ -14,13 +14,8 @@
                 <ResourceDictionary Source="/ResourceXAML/MainResource.xaml" />
                 <ResourceDictionary Source="/ResourceXAML/Scrollbar.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-
-
-
             <FontFamily x:Key="NunitoSans_Regular">/LibraryManagement;component/Assets/Fonts/NunitoSans-Regular.ttf#Nunito Sans</FontFamily>
             <FontFamily x:Key="PatrickHand_Regular">/LibraryManagement;component/Assets/Fonts/PatrickHand-Regular.ttf#Patrick Hand</FontFamily>
-
         </ResourceDictionary>
     </Application.Resources>
 </Application>
