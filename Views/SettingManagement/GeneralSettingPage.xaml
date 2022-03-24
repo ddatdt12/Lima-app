@@ -167,15 +167,8 @@
                         materialDesign:ButtonAssist.CornerRadius="12"
                         FontSize="20"
                         FontWeight="Bold"
-                        Command="{Binding SaveGeneralSettingCM}"/>
-                <Button Content="Đặt lại"
-                        Background="#0266FD"
-                        Width="160"
-                        Height="50"
-                        materialDesign:ButtonAssist.CornerRadius="12"
-                        FontSize="20"
-                        Margin="30,0,50,0"
-                        FontWeight="Bold"/>
+                        Margin="0,0,50,0"
+                        Command="{Binding SaveGeneralSettingCM}" />
             </StackPanel>
         </StackPanel>
     </Grid>

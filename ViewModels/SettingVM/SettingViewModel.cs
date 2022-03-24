@@ -16,6 +16,7 @@ namespace LibraryManagement.ViewModels.SettingVM
         public ICommand OpenRoleSettingPageCM { get; set; }
         public ICommand OpenGeneralSettingPageCM { get; set; }
         public ICommand GeneralFirstLoadCM { get; set; }
+        public ICommand SaveGeneralSettingCM { get; set; }
 
         public SettingViewModel()
         {
@@ -43,6 +44,9 @@ namespace LibraryManagement.ViewModels.SettingVM
             DeleteRoleCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
 
+            });
+            SaveGeneralSettingCM = new RelayCommand<object>((p) => { return true; },(p)=>{
+                SaveGeneralSettingFunc();
             });
         }
     }

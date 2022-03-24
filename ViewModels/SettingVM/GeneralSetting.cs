@@ -1,8 +1,11 @@
-﻿using System;
+﻿using LibraryManagement.Services;
+using LibraryManagement.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace LibraryManagement.ViewModels.SettingVM
 {
@@ -43,8 +46,8 @@ namespace LibraryManagement.ViewModels.SettingVM
             set { returnDate = value; OnPropertyChanged(); }
         }
 
-        private double finesAmount;
-        public double FinesAmount
+        private int finesAmount;
+        public int FinesAmount
         {
             get { return finesAmount; }
             set { finesAmount = value; OnPropertyChanged(); }
@@ -60,13 +63,25 @@ namespace LibraryManagement.ViewModels.SettingVM
 
         public void GeneralFirstLoadFunc()
         {
-            MinAge = 5;
-            MaxAge = 65;
-            ExpiredDay = 6;
-            MaxRent = 5;
-            ReturnDate = 7;
-            FinesAmount = 1000;
-            PublishYear = 8;
+            MinAge = ParameterService.Ins.GetRuleValue(Rules.MIN_AGE);
+            MaxAge = ParameterService.Ins.GetRuleValue(Rules.MAX_AGE);
+            ExpiredDay = 7;
+            MaxRent = ParameterService.Ins.GetRuleValue(Rules.ALLOWED_BOOK_MAXIMUM);
+            ReturnDate = ParameterService.Ins.GetRuleValue(Rules.MAXIMUM_NUMBER_OF_DAYS_TO_BORROW);
+            FinesAmount = ParameterService.Ins.GetRuleValue(Rules.FINE);
+            PublishYear = ParameterService.Ins.GetRuleValue(Rules.YEAR_PUBLICATION_PERIOD);
+        }
+
+        public void SaveGeneralSettingFunc()
+        {
+            ParameterService.Ins.SetRuleValue(Rules.MIN_AGE, MinAge);
+            ParameterService.Ins.SetRuleValue(Rules.MAX_AGE, MaxAge);
+            ParameterService.Ins.SetRuleValue(Rules.ALLOWED_BOOK_MAXIMUM, MaxRent);
+            ParameterService.Ins.SetRuleValue(Rules.MAXIMUM_NUMBER_OF_DAYS_TO_BORROW, ReturnDate);
+            ParameterService.Ins.SetRuleValue(Rules.FINE, FinesAmount);
+            ParameterService.Ins.SetRuleValue(Rules.YEAR_PUBLICATION_PERIOD, PublishYear);
+
+            MessageBox.Show("Cập nhật thành công");
         }
 
     }
