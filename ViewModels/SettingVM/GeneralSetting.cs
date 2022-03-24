@@ -65,7 +65,7 @@ namespace LibraryManagement.ViewModels.SettingVM
         {
             MinAge = ParameterService.Ins.GetRuleValue(Rules.MIN_AGE);
             MaxAge = ParameterService.Ins.GetRuleValue(Rules.MAX_AGE);
-            ExpiredDay = 7;
+            ExpiredDay = ParameterService.Ins.GetRuleValue(Rules.VALIDITY_PERIOD_OF_CARD);
             MaxRent = ParameterService.Ins.GetRuleValue(Rules.ALLOWED_BOOK_MAXIMUM);
             ReturnDate = ParameterService.Ins.GetRuleValue(Rules.MAXIMUM_NUMBER_OF_DAYS_TO_BORROW);
             FinesAmount = ParameterService.Ins.GetRuleValue(Rules.FINE);
@@ -76,6 +76,7 @@ namespace LibraryManagement.ViewModels.SettingVM
         {
             ParameterService.Ins.SetRuleValue(Rules.MIN_AGE, MinAge);
             ParameterService.Ins.SetRuleValue(Rules.MAX_AGE, MaxAge);
+            ParameterService.Ins.SetRuleValue(Rules.VALIDITY_PERIOD_OF_CARD, ExpiredDay);
             ParameterService.Ins.SetRuleValue(Rules.ALLOWED_BOOK_MAXIMUM, MaxRent);
             ParameterService.Ins.SetRuleValue(Rules.MAXIMUM_NUMBER_OF_DAYS_TO_BORROW, ReturnDate);
             ParameterService.Ins.SetRuleValue(Rules.FINE, FinesAmount);

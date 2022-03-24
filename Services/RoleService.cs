@@ -54,76 +54,77 @@ namespace LibraryManagement.Services
             }
 
         }
-        public (bool, string message) CreateNewRole(RoleDTO role)
-        {
-            var context = DataProvider.Ins.DB;
-
-            try
-            {
-                var isExist = context.Roles.Where(g => g.position == role.position).Any();
-                if (isExist)
-                {
-                    return (false, "Vai trò này đã tồn tại");
-                }
-                var newRole = new Role
-                {
-                    position = role.position,
-                };
-
-                context.Roles.Add(newRole);
-                context.SaveChanges();
-
-                role.id = newRole.id;
-                return (true, "Thêm vai trò mới thành công");
-            }
-            catch (Exception e)
-            {
-                return (false, "Lỗi hệ thống");
-            }
-
-        }
         //public (bool, string message) CreateNewRole(RoleDTO role)
         //{
         //    var context = DataProvider.Ins.DB;
-        //    using (DbContextTransaction transaction = context.Database.BeginTransaction())
+
+        //    try
         //    {
-        //        try
+        //        var isExist = context.Roles.Where(g => g.position == role.position).Any();
+        //        if (isExist)
         //        {
-        //            var isExist = context.Roles.Where(g => g.position == role.position).Any();
-        //            if (isExist)
-        //            {
-        //                return (false, "Vai trò này đã tồn tại");
-        //            }
-        //            var newRole = new Role
-        //            {
-        //                position = role.position,
-        //            };
-
-        //            context.Roles.Add(newRole);
-        //            context.SaveChanges();
-
-        //            role.roleDetaislList.ForEach((per) =>
-        //            {
-        //                context.RoleDetails.Add(new RoleDetail
-        //                { roleId = newRole.id, isPermitted = per.isPermitted, permission = per.permission }
-        //                );
-        //            });
-
-
-        //            context.SaveChanges();
-        //            transaction.Commit();
-
-        //            role.id = newRole.id;
-        //            return (true, "Thêm vai trò mới thành công");
+        //            return (false, "Vai trò này đã tồn tại");
         //        }
-        //        catch (Exception e)
+        //        var newRole = new Role
         //        {
-        //            transaction.Rollback();
-        //            return (false, "Lỗi hệ thống");
-        //        }
+        //            position = role.position,
+
+        //        };
+
+        //        context.Roles.Add(newRole);
+        //        context.SaveChanges();
+
+        //        role.id = newRole.id;
+        //        return (true, "Thêm vai trò mới thành công");
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return (false, "Lỗi hệ thống");
         //    }
 
         //}
+        public (bool, string message) CreateNewRole(RoleDTO role)
+        {
+            var context = DataProvider.Ins.DB;
+            using (DbContextTransaction transaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var isExist = context.Roles.Where(g => g.position == role.position).Any();
+                    if (isExist)
+                    {
+                        return (false, "Vai trò này đã tồn tại");
+                    }
+                    var newRole = new Role
+                    {
+                        position = role.position,
+                    };
+
+                    context.Roles.Add(newRole);
+                    context.SaveChanges();
+
+                    role.roleDetaislList.ForEach((per) =>
+                    {
+                        context.RoleDetails.Add(new RoleDetail
+                        { roleId = newRole.id, isPermitted = per.isPermitted, permission = per.permission }
+                        );
+                    });
+
+
+                    context.SaveChanges();
+                    transaction.Commit();
+
+                    role.id = newRole.id;
+                    return (true, "Thêm vai trò mới thành công");
+                }
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                    return (false, "Lỗi hệ thống");
+                }
+            }
+
+        }
         public (bool, string message) EditRole(RoleDTO role)
         {
             try

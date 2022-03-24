@@ -32,16 +32,28 @@
                           Margin="0,20,0,0"
                           ItemsSource="{Binding RoleList}"
                           x:Name="rolelistview"
-                          SelectedItem="{Binding SelectedRole}"
-                          SelectionChanged="rolelistview_SelectionChanged">
+                          SelectedItem="{Binding SelectedRole}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding DisableRoleStackCM}"
+                                                   CommandParameter="{Binding ElementName=roleChkbox}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                     <ListView.View>
                         <GridView>
-
-                            <GridViewColumn Header="Tên"
-                                            Width="320">
+                            <GridViewColumn Header="Mã">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="admin"
+                                        <TextBlock Text="{Binding id}"
+                                                   Margin="20,0,0,0" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Tên"
+                                            Width="280">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding position}"
                                                    Margin="20,0,0,0" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -56,7 +68,7 @@
                                                                      Height="30" />
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                    <i:InvokeCommandAction Command="{Binding ElementName=rolelistview, Path=DataContext.EditRoleCM}"
+                                                    <i:InvokeCommandAction Command="{Binding ElementName=rolelistview, Path=DataContext.EnableRoleStackCM}"
                                                                            CommandParameter="{Binding ElementName=roleChkbox}" />
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
@@ -117,32 +129,32 @@
                     <CheckBox Content="Quản lý sách"
                               FontSize="18"
                               Margin="0,20,0,20"
-                              IsChecked="{Binding IsBookManagement}"
+                              IsChecked="{Binding IsBookManagement,Mode=TwoWay}"
                               materialDesign:CheckBoxAssist.CheckBoxSize="25" />
                     <CheckBox Content="Tiếp nhận sách"
                               Margin="0,0,0,20"
                               FontSize="18"
-                              IsChecked="{Binding IsImportBook}"
+                              IsChecked="{Binding IsImportBook,Mode=TwoWay}"
                               materialDesign:CheckBoxAssist.CheckBoxSize="25" />
                     <CheckBox Content="Quản lý độc giả"
                               Margin="0,0,0,20"
                               FontSize="18"
-                              IsChecked="{Binding IsReaderManagement}"
+                              IsChecked="{Binding IsReaderManagement,Mode=TwoWay}"
                               materialDesign:CheckBoxAssist.CheckBoxSize="25" />
                     <CheckBox Content="Quản lý nhân viên"
                               Margin="0,0,0,20"
                               FontSize="18"
-                              IsChecked="{Binding IsStaffManagement}"
+                              IsChecked="{Binding IsStaffManagement,Mode=TwoWay}"
                               materialDesign:CheckBoxAssist.CheckBoxSize="25" />
                     <CheckBox Content="Thống kê"
                               Margin="0,0,0,20"
                               FontSize="18"
-                              IsChecked="{Binding IsStatictis}"
+                              IsChecked="{Binding IsStatictis,Mode=TwoWay}"
                               materialDesign:CheckBoxAssist.CheckBoxSize="25" />
                     <CheckBox Content="Cài đặt"
                               Margin="0,0,0,20"
                               FontSize="18"
-                              IsChecked="{Binding IsSetting}"
+                              IsChecked="{Binding IsSetting,Mode=TwoWay}"
                               materialDesign:CheckBoxAssist.CheckBoxSize="25" />
                 </StackPanel>
             </Border>
@@ -156,7 +168,8 @@
                     materialDesign:ButtonAssist.CornerRadius="12"
                     HorizontalAlignment="Right"
                     Margin="0,10,10,0"
-                    Command="{Binding ApplyChangeRoleCM}" />
+                    Command="{Binding ApplyChangeRoleCM}" 
+                    CommandParameter="{Binding ElementName=roleChkbox}"/>
         </StackPanel>
 
     </Grid>

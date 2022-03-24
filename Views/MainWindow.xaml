@@ -110,7 +110,7 @@
                                                FontSize="20"
                                                Foreground="#4C14EA"
                                                FontWeight="SemiBold">
-                                            <i:Interaction.Triggers>
+                                        <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="MouseLeftButtonDown">
                                                 <i:InvokeCommandAction Command="{Binding OpenBookManagementPageCM}"
                                                                        CommandParameter="{Binding ElementName=mainFrame}" />
