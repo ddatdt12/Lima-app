@@ -125,9 +125,24 @@
                                                Foreground="#4C14EA"
                                                FontSize="20"
                                                FontWeight="SemiBold">
-                                            <i:Interaction.Triggers>
+                                        <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="MouseLeftButtonDown">
                                                 <i:InvokeCommandAction Command="{Binding OpenImportBookPage}"
+                                                                       CommandParameter="{Binding ElementName=mainFrame}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBlock>
+                                </TreeViewItem.Header>
+                            </TreeViewItem>
+                            <TreeViewItem>
+                                <TreeViewItem.Header>
+                                    <TextBlock Text="Thể loại - Tác giả"
+                                               Foreground="#4C14EA"
+                                               FontSize="20"
+                                               FontWeight="SemiBold">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                <i:InvokeCommandAction Command="{Binding OpenGenreAuthorManagementPage}"
                                                                        CommandParameter="{Binding ElementName=mainFrame}" />
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
