@@ -1,0 +1,58 @@
+﻿<Page x:Class="LibraryManagement.Views.SettingManagement.MainSettingPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:LibraryManagement.Views.SettingManagement"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      mc:Ignorable="d"
+      Height="780"
+      Width="1110"
+      DataContext="{StaticResource SettingVM}"
+      FontFamily="{StaticResource NunitoSans_Regular}">
+
+    <Grid>
+        <StackPanel>
+            <TextBlock Text="Cài đặt"
+                       Foreground="#1B48BA"
+                       FontSize="32"
+                       Margin="32,10,0,0"
+                       FontWeight="Bold" />
+            <StackPanel Orientation="Horizontal"
+                        Margin="20,10,0,0">
+                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
+                             Width="200"
+                             IsChecked="True"
+                             Content="Phân quyền"
+                             FontSize="18"
+                             FontWeight="Bold"
+                             Command="{Binding OpenRoleSettingPageCM}"
+                             CommandParameter="{Binding ElementName=mainFrame}" />
+                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
+                             Foreground="#1B48BA"
+                             IsChecked="False"
+                             Content="Cài đặt chung"
+                             FontSize="18"
+                             Width="200"
+                             FontWeight="Bold"
+                             Command="{Binding OpenGeneralSettingPageCM}"
+                             CommandParameter="{Binding ElementName=mainFrame}" />
+            </StackPanel>
+            <Frame x:Name="mainFrame"
+                   Margin="20,0,20,0"
+                   Height="650"
+                   BorderThickness="0.5"
+                   BorderBrush="#BFBABA"
+                   NavigationUIVisibility="Hidden">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded">
+                        <i:InvokeCommandAction Command="{Binding OpenRoleSettingPageCM}"
+                                               CommandParameter="{Binding ElementName=mainFrame}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Frame>
+
+
+        </StackPanel>
+    </Grid>
+</Page>

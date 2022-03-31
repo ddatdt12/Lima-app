@@ -1,0 +1,207 @@
+﻿<Window  xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+         x:Class="LibraryManagement.Views.ImportBook.ImportBookWindow"
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:local="clr-namespace:LibraryManagement.Views.ImportBook"
+         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+         mc:Ignorable="d"
+         Height="560"
+         Width="820"
+         WindowStyle="None"
+         ResizeMode="NoResize"
+         AllowsTransparency="True"
+         Background="Transparent"
+         WindowStartupLocation="CenterScreen"
+         FontFamily="{StaticResource NunitoSans_Regular}"
+         DataContext="{StaticResource ImportBookVM}"
+         Name="this">
+    <Border Margin="10">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="5"
+                              ShadowDepth="2"
+                              Opacity="1"
+                              Color="Gray"
+                              Direction="-45" />
+        </Border.Effect>
+
+        <StackPanel Background="White">
+
+            <TextBlock Text="THÊM SÁCH MỚI"
+                       FontSize="32"
+                       FontWeight="Bold"
+                       Foreground="#1B48BA"
+                       Height="100"
+                       Padding="50,40,50,0"
+                       Background="#FBFBFD" />
+
+            <StackPanel Margin="50,0,50,0">
+
+                <!---NAME AND GENRE-->
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Width="250">
+                        <TextBlock Text="Tên sách"
+                                   FontSize="20"
+                                   FontWeight="Bold"
+                                   Foreground="#0266FD" />
+                        <TextBox Text="{Binding Name,Mode=TwoWay}"
+                                 Height="25"
+                                 FontSize="18"
+                                 Padding="0"
+                                 materialDesign:HintAssist.Hint="Nhập tên sách" />
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Left"
+                                Margin="30,0,0,0">
+                        <TextBlock Text="Thể loại"
+                                   FontSize="18"
+                                   FontWeight="Bold"
+                                   Foreground="#0266FD"
+                                   VerticalAlignment="Bottom"
+                                   Padding="0" />
+                        <StackPanel Orientation="Horizontal">
+                            <ComboBox IsEditable="True"
+                                      Text="{Binding TxtGenre}"
+                                      ItemsSource="{Binding ListGenre}"
+                                      SelectedItem="{Binding Genre}"
+                                      DisplayMemberPath="name"
+                                      Height="28"
+                                      Width="135"
+                                      FontSize="18"
+                                      materialDesign:HintAssist.Hint="Chọn thể loại"
+                                      Padding="0,2,0,0" />
+                            <Border VerticalAlignment="Bottom">
+                                <materialDesign:PackIcon Kind="PlusCircleOutline"
+                                                         Foreground="Green"
+                                                         Width="25"
+                                                         Height="25" />
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                        <i:InvokeCommandAction Command="{Binding AddNewGenreCM}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+
+                <!--AUTHOR-->
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,32,0,0">
+                    <StackPanel Width="250"
+                                HorizontalAlignment="Left">
+                        <TextBlock Text="Tác giả  "
+                                   FontWeight="Bold"
+                                   FontSize="20"
+                                   Foreground="#0266FD"
+                                   VerticalAlignment="Bottom" />
+                        <StackPanel Orientation="Horizontal">
+                            <ComboBox Width="225"
+                                      IsEditable="True"
+                                      Text="{Binding TxtAuthor}"
+                                      ItemsSource="{Binding ListAuthor}"
+                                      SelectedItem="{Binding Author}"
+                                      DisplayMemberPath="name"
+                                      materialDesign:HintAssist.Hint="Nhập tên tác giả"
+                                      FontSize="18"
+                                      Padding="0,5,0,0" />
+                            <Border VerticalAlignment="Bottom">
+                                <materialDesign:PackIcon Kind="PlusCircleOutline"
+                                                         Foreground="Green"
+                                                         Width="25"
+                                                         Height="25" />
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                        <i:InvokeCommandAction Command="{Binding AddNewAuthorCM}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Border>
+                        </StackPanel>
+
+                    </StackPanel>
+                    <StackPanel Margin="30,0,0,0">
+                        <TextBlock Text="Nhà xuất bản"
+                                   FontSize="20"
+                                   Foreground="#0266FD"
+                                   FontWeight="Bold" />
+                        <TextBox HorizontalAlignment="Left"
+                                 Width="250"
+                                 Text="{Binding Publisher}"
+                                 materialDesign:HintAssist.Hint="Nhập tên nhà xuất bản"
+                                 FontSize="18" />
+                    </StackPanel>
+                    <StackPanel Margin="30,0,0,0">
+                        <TextBlock Text="Năm xuất bản"
+                                   FontSize="20"
+                                   Foreground="#0266FD"
+                                   FontWeight="Bold" />
+                        <TextBox Width="135"
+                                 FontSize="18"
+                                 HorizontalAlignment="Right"
+                                 PreviewTextInput="TextBox_PreviewTextInput"
+                                 Text="{Binding YearPublish}"
+                                 FlowDirection="RightToLeft"
+                                 materialDesign:HintAssist.Hint="Nhập năm" />
+                    </StackPanel>
+                </StackPanel>
+
+                <!---PRICE-->
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,32,0,0">
+                    <StackPanel HorizontalAlignment="Left">
+                        <TextBlock Text="Trị giá"
+                                   FontSize="20"
+                                   Foreground="#0266FD"
+                                   FontWeight="Bold" />
+                        <TextBox Width="250"
+                                 PreviewTextInput="TextBox_PreviewTextInput"
+                                 TextChanged="TextBox_TextChanged"
+                                 FlowDirection="RightToLeft"
+                                 Text="{Binding Price}"
+                                 materialDesign:HintAssist.Hint="Nhập trị giá sách"
+                                 FontSize="18" />
+                    </StackPanel>
+                    <StackPanel Margin="30,0,0,0">
+                        <TextBlock Text="Số lượng"
+                                   FontSize="20"
+                                   Foreground="#0266FD"
+                                   FontWeight="Bold" />
+                        <TextBox Width="135"
+                                 HorizontalAlignment="Right"
+                                 PreviewTextInput="TextBox_PreviewTextInput"
+                                 TextChanged="TextBox_TextChanged"
+                                 FlowDirection="RightToLeft"
+                                 Text="{Binding Quantity}"
+                                 FontSize="18"
+                                 materialDesign:HintAssist.Hint="Nhập số lượng" />
+                    </StackPanel>
+                </StackPanel>
+
+                <!---BUTTON-->
+                <Grid Margin="0,100,0,0"
+                      Width="400">
+                    <Button FontSize="20"
+                            Width="160"
+                            Height="51"
+                            Background="Transparent"
+                            Content="Huỷ bỏ"
+                            Foreground="#0266FD"
+                            BorderBrush="#0266FD"
+                            materialDesign:ButtonAssist.CornerRadius="12"
+                            HorizontalAlignment="Left"
+                            Click="Button_Click" />
+                    <Button FontSize="20"
+                            Width="160"
+                            Height="51"
+                            Background="#0266FD"
+                            Foreground="White"
+                            Content="Hoàn thành"
+                            materialDesign:ButtonAssist.CornerRadius="12"
+                            HorizontalAlignment="Right"
+                            Command="{Binding AddBookCM}"
+                            CommandParameter="{Binding ElementName=this}" />
+                </Grid>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</Window>

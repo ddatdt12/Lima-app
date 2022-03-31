@@ -81,13 +81,13 @@ namespace LibraryManagement.Services
                 var author = context.Authors.Where(g => g.id == updatedAuthor.id).FirstOrDefault();
                 if (author is null)
                 {
-                    return (false, "Thể loại không tồn tại");
+                    return (false, "Tác giả không tồn tại");
                 }
                 author.name = updatedAuthor.name;
                 author.birthDate = updatedAuthor.birthDate;
 
                 context.SaveChanges();
-                return (true, "");
+                return (true, "Cập nhật tác giả thành công");
             }
             catch (DbEntityValidationException e)
             {
@@ -118,7 +118,7 @@ namespace LibraryManagement.Services
                 }
                 context.Authors.Remove(genre);
                 context.SaveChanges();
-                return (true, "Xóa thể loại thành công");
+                return (true, "Xóa tác giả thành công");
             }
             catch (DbEntityValidationException e)
             {

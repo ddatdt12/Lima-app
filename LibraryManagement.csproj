@@ -153,9 +153,62 @@
     <Compile Include="Services\GenreService.cs" />
     <Compile Include="Utils\Constant.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\BookManagementVM\BookManagementViewModel.cs" />
+    <Compile Include="ViewModels\Genre_AuthorManagementVM\Genre_AuthorManagementViewModel.cs" />
+    <Compile Include="ViewModels\ImportBookVM\ImportBookViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\SettingVM\GeneralSetting.cs" />
+    <Compile Include="ViewModels\SettingVM\RoleSetting.cs" />
+    <Compile Include="ViewModels\SettingVM\SettingViewModel.cs" />
+    <Compile Include="ViewModels\StatisticalVM\StatisticalViewModel.cs" />
+    <Compile Include="Views\BookManagement\BookInforWindow.xaml.cs">
+      <DependentUpon>BookInforWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BookManagement\BookManagementPage.xaml.cs">
+      <DependentUpon>BookManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Converter\BookStatusConverter.cs" />
+    <Compile Include="Views\Genre_AuthorManagement\AddAuthorWindow.xaml.cs">
+      <DependentUpon>AddAuthorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Genre_AuthorManagement\AddGenreWindow.xaml.cs">
+      <DependentUpon>AddGenreWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Genre_AuthorManagement\EditAuthorWindow.xaml.cs">
+      <DependentUpon>EditAuthorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Genre_AuthorManagement\EditGenreWindow.xaml.cs">
+      <DependentUpon>EditGenreWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Genre_AuthorManagement\MainManagementPage.xaml.cs">
+      <DependentUpon>MainManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ImportBook\ImportBookWindow.xaml.cs">
+      <DependentUpon>ImportBookWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ImportBook\MainImportBookPage.xaml.cs">
+      <DependentUpon>MainImportBookPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingManagement\AddRoleWindow.xaml.cs">
+      <DependentUpon>AddRoleWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingManagement\GeneralSettingPage.xaml.cs">
+      <DependentUpon>GeneralSettingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingManagement\MainSettingPage.xaml.cs">
+      <DependentUpon>MainSettingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingManagement\RoleSettingPage.xaml.cs">
+      <DependentUpon>RoleSettingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatisticalManagement\GenreStatisticPage.xaml.cs">
+      <DependentUpon>GenreStatisticPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatisticalManagement\LateStatisticPage.xaml.cs">
+      <DependentUpon>LateStatisticPage.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -177,7 +230,67 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\BookManagement\BookInforWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BookManagement\BookManagementPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Genre_AuthorManagement\AddAuthorWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Genre_AuthorManagement\AddGenreWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Genre_AuthorManagement\EditAuthorWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Genre_AuthorManagement\EditGenreWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Genre_AuthorManagement\MainManagementPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ImportBook\ImportBookWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ImportBook\MainImportBookPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingManagement\AddRoleWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingManagement\GeneralSettingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingManagement\MainSettingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingManagement\RoleSettingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatisticalManagement\GenreStatisticPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatisticalManagement\LateStatisticPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
