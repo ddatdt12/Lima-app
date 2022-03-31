@@ -211,8 +211,10 @@
                                         <GridViewColumn Header="Trị giá">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding Price}"
-                                                               Margin="15,0,0,0" />
+                                                    <TextBox Text="{Binding Price,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                             PreviewTextInput="quantitybox_PreviewTextInput"
+                                                             TextChanged="quantitybox_TextChanged"
+                                                             Margin="15,0,0,0" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -273,7 +275,7 @@
                                        Foreground="#1B48BA"
                                        Margin="20,10,10,10" />
                             <StackPanel Orientation="Horizontal"
-                                        Margin="230,0,0,0">
+                                        Margin="210,0,0,0">
 
                                 <materialDesign:PackIcon Kind="Search"
                                                          Width="25"
@@ -294,7 +296,19 @@
                                          TextChanged="TextBox_TextChanged"
                                          x:Name="searchBox">
                                 </TextBox>
-
+                                <Border VerticalAlignment="Center"
+                                        x:Name="BtnImportWindow2">
+                                    <materialDesign:PackIcon Kind="PlusCircleOutline"
+                                                             Foreground="Green"
+                                                             Width="25"
+                                                             Height="25" />
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding OpenImportWindowCM2}"
+                                                                   CommandParameter="{Binding ElementName=searchBox}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Border>
                             </StackPanel>
                         </StackPanel>
 
@@ -373,7 +387,7 @@
                 </Border>
 
             </StackPanel>
-            
+
             <!---RIGHT-->
             <Border Grid.Column="1"
                     Height="718"
@@ -407,7 +421,7 @@
                                  FontSize="18"
                                  HorizontalAlignment="Right"
                                  Padding="0,0,0,-5"
-                                 Text="còn thiếu bind" />
+                                 Text="{Binding Supplier,Mode=TwoWay}" />
                     </Grid>
                     <Grid Margin="0,30,0,0">
                         <TextBlock Text="Thời gian nhập"

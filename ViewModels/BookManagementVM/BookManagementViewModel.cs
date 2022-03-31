@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
 using System.Windows.Input;
 using MessageBox = System.Windows.MessageBox;
 
@@ -115,6 +114,7 @@ namespace LibraryManagement.ViewModel.BookManagementVM
         public ICommand DeleteBookInforCM { get; set; }
         public ICommand UpdateBookCM { get; set; }
         public ICommand OpenEditBookCM { get; set; }
+        public ICommand CloseWindowCM { get; set; }
         #endregion
 
 
@@ -122,7 +122,6 @@ namespace LibraryManagement.ViewModel.BookManagementVM
         {
 
             BookList = new ObservableCollection<BookDTO>(BookService.Ins.GetAllBook());
-
 
             FirstLoadCM = new RelayCommand<System.Windows.Controls.ComboBox>((p) => { return true; }, (p) =>
             {
@@ -257,7 +256,12 @@ namespace LibraryManagement.ViewModel.BookManagementVM
                 w.ShowDialog();
 
             });
-        }
+            CloseWindowCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                BookList = new ObservableCollection<BookDTO>(BookService.Ins.GetAllBook());
+                p.Close();
+            });
 
+        }
     }
 }

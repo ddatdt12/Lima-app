@@ -1,19 +1,11 @@
 ﻿using LibraryManagement.DTOs;
 using LibraryManagement.Services;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace LibraryManagement.Views.ImportBookPage
 {
@@ -64,7 +56,9 @@ namespace LibraryManagement.Views.ImportBookPage
             view.Filter = Filter;
 
             if (searchBox.Text.Length == 0)
+            {
                 searchList.ItemsSource = null;
+            }
         }
         private bool Filter(object item)
         {

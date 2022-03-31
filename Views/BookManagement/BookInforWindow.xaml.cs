@@ -34,10 +34,5 @@ namespace LibraryManagement.Views.BookManagement
         {
             e.Handled = !IsTextAllowed(e.Text);
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
     }
 }

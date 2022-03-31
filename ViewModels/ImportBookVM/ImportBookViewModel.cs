@@ -3,14 +3,12 @@ using LibraryManagement.Views.ImportBookPage;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using LibraryManagement.Views.ImportBook;
 using LibraryManagement.DTOs;
 using LibraryManagement.Services;
-using System.Windows.Data;
 using LibraryManagement.Views.Genre_AuthorManagement;
 
 namespace LibraryManagement.ViewModel.ImportBookVM
@@ -86,6 +84,14 @@ namespace LibraryManagement.ViewModel.ImportBookVM
             set { yearPublish = value; OnPropertyChanged(); }
         }
         private int quantity;
+
+        private string supplier;
+        public string Supplier
+        {
+            get { return supplier; }
+            set { supplier = value; OnPropertyChanged(); }
+        }
+
         public int Quantity
         {
             get { return quantity; }
@@ -125,6 +131,7 @@ namespace LibraryManagement.ViewModel.ImportBookVM
         public ICommand DeleteSelectedBookCM { get; set; }
         public ICommand QuantityChangedCM { get; set; }
         public ICommand OpenImportWindowCM { get; set; }
+        public ICommand OpenImportWindowCM2 { get; set; }
         public ICommand AddBookCM { get; set; }
         public ICommand AddBookFromSearchCM { get; set; }
         public ICommand AddNewGenreCM { get; set; }
@@ -183,6 +190,20 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                 w.ShowDialog();
 
             });
+            OpenImportWindowCM2 = new RelayCommand<TextBox>((p) => { return true; }, (p) =>
+            {
+                Name = p.Text;
+                Genre = null;
+                Author = null;
+                Price = "1";
+                Quantity = 1;
+                Publisher = null;
+                YearPublish = DateTime.Now.Year;
+
+                ImportBookWindow w = new ImportBookWindow();
+                w.ShowDialog();
+
+            });
             AddBookCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
                 if (!IsValidData())
@@ -190,7 +211,11 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                     MessageBox.Show("Vui lòng điền đủ thông tin");
                     return;
                 }
-
+                if ((DateTime.Now.Year - YearPublish) > ParameterService.Ins.GetRuleValue(Utils.Rules.YEAR_PUBLICATION_PERIOD))
+                {
+                    MessageBox.Show("Năm xuất bản sách không thoả quy định");
+                    return;
+                }
                 Books newBook = new Books
                 {
                     Name = Name,
@@ -199,6 +224,7 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                     Author = Author,
                     YearPublish = YearPublish,
                     GenreId = Genre.id,
+                    Price = int.Parse(Price),
                     IsNew = true,
                 };
 
@@ -267,6 +293,17 @@ namespace LibraryManagement.ViewModel.ImportBookVM
             });
             ImportBookCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
+                if (ImportBookList.Count == 0)
+                {
+                    MessageBox.Show("Danh sách nhập trống!");
+                    return;
+                }
+                if (string.IsNullOrEmpty(Supplier))
+                {
+                    MessageBox.Show("Vui lòng nhập thông tin nhà cung cấp");
+                    return;
+                }
+
                 List<BookDTO> importList = new List<BookDTO>();
 
                 foreach (var item in ImportBookList)
@@ -281,6 +318,7 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                         genreId = item.GenreId,
                         id = item.Id,
                         isNew = item.IsNew,
+                        //UnitPrice = item.Price,
                     };
 
                     importList.Add(tempBook);
@@ -294,6 +332,7 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                     {
                         ImportBookList.Clear();
                         MainImportBookPage.AllBookList = new ObservableCollection<BookDTO>(BookService.Ins.GetAllBook());
+                        PrintImportReiceipt();
                     }
                     MessageBox.Show(mes);
                 }
@@ -316,6 +355,10 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                 !string.IsNullOrEmpty(Price.Trim()) &&
                 !string.IsNullOrEmpty(Quantity.ToString().Trim()) &&
                 !string.IsNullOrEmpty(YearPublish.ToString().Trim());
+        }
+        public void PrintImportReiceipt()
+        {
+
         }
         public class Books : BaseViewModel
         {
@@ -345,7 +388,7 @@ namespace LibraryManagement.ViewModel.ImportBookVM
             public int Price
             {
                 get { return price; }
-                set { price = value; }
+                set { price = value; OnPropertyChanged(); CalculateTotal(); }
             }
 
             private AuthorDTO author;
@@ -392,13 +435,6 @@ namespace LibraryManagement.ViewModel.ImportBookVM
             }
 
             public Books() { }
-            public Books(string id, string name, AuthorDTO author, int sl)
-            {
-                this.id = id;
-                this.name = name;
-                this.author = author;
-                this.sl = sl;
-            }
 
             public void CalculateTotal()
             {

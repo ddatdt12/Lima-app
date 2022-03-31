@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LibraryManagement.Views.ImportBook"
+        xmlns:cvt="clr-namespace:LibraryManagement.Views.Converter"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
@@ -18,7 +19,10 @@
         DataContext="{StaticResource BookManagementVM}"
         Name="this">
 
-
+    <Window.Resources>
+        <cvt:BookStatusConverter x:Key="BookStatusConverter" />
+    </Window.Resources>
+    
     <Border Margin="10">
         <Border.Effect>
             <DropShadowEffect BlurRadius="5"
@@ -124,7 +128,7 @@
                                     <GridViewColumn Header="Tình trạng">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding status}"
+                                                <TextBlock Text="{Binding status,Converter={StaticResource BookStatusConverter}}"
                                                            Margin="15,0,0,0"
                                                            FontSize="18" />
                                             </DataTemplate>
@@ -164,7 +168,8 @@
                                 BorderBrush="#0266FD"
                                 FontWeight="Bold"
                                 FontSize="20"
-                                Click="Button_Click" />
+                                Command="{Binding CloseWindowCM}"
+                                CommandParameter="{Binding ElementName=this}"/>
                         <Button Margin="80,0,0,0"
                                 Width="160"
                                 Height="50"
