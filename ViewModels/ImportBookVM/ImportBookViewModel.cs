@@ -53,37 +53,41 @@ namespace LibraryManagement.ViewModel.ImportBookVM
             get { return name; }
             set { name = value; OnPropertyChanged(); }
         }
+
         private string price;
         public string Price
         {
             get { return price; }
             set { price = value; OnPropertyChanged(); }
         }
+
         private string txtGenre;
         public string TxtGenre
         {
             get { return txtGenre; }
             set { txtGenre = value; OnPropertyChanged(); }
         }
+
         private GenreDTO genre;
         public GenreDTO Genre
         {
             get { return genre; }
             set { genre = value; OnPropertyChanged(); }
         }
+
         private string publisher;
         public string Publisher
         {
             get { return publisher; }
             set { publisher = value; OnPropertyChanged(); }
         }
+
         private int yearPublish;
         public int YearPublish
         {
             get { return yearPublish; }
             set { yearPublish = value; OnPropertyChanged(); }
         }
-        private int quantity;
 
         private string supplier;
         public string Supplier
@@ -92,17 +96,20 @@ namespace LibraryManagement.ViewModel.ImportBookVM
             set { supplier = value; OnPropertyChanged(); }
         }
 
+        private int quantity;
         public int Quantity
         {
             get { return quantity; }
             set { quantity = value; OnPropertyChanged(); }
         }
+
         private string txtAuthor;
         public string TxtAuthor
         {
             get { return txtAuthor; }
             set { txtAuthor = value; OnPropertyChanged(); }
         }
+
         private AuthorDTO author;
         public AuthorDTO Author
         {
@@ -153,20 +160,27 @@ namespace LibraryManagement.ViewModel.ImportBookVM
             IncreaseQuantityCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 SelectedItem.SL++;
-                TotalQuantity++;
                 SelectedItem.CalculateTotal();
             });
             DecreaseQuantityCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 if (SelectedItem.SL != 0)
+                {
                     SelectedItem.SL--;
-                TotalQuantity--;
+                }
                 SelectedItem.CalculateTotal();
             });
             QuantityChangedCM = new RelayCommand<TextBox>((p) => { return true; }, (p) =>
             {
                 if (SelectedItem != null)
+                {
                     SelectedItem.CalculateTotal();
+                    TotalQuantity = 0;
+                    foreach (var item in ImportBookList)
+                    {
+                        TotalQuantity += item.SL;
+                    }
+                }
             });
             DeleteSelectedBookCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -368,7 +382,6 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                 get { return id; }
                 set { id = value; OnPropertyChanged(); }
             }
-
 
             private string name;
             public string Name

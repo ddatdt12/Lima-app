@@ -54,11 +54,11 @@
             <!---LEFT-->
             <StackPanel Grid.Column="0">
 
-                <Border CornerRadius="12"
-                        BorderBrush="White"
-                        Background="White"
-                        Height="416"
-                        Width="724">
+                <materialDesign:Card UniformCornerRadius="4"
+                                     BorderBrush="White"
+                                     Background="White"
+                                     Height="416"
+                                     Width="724">
                     <StackPanel>
 
                         <Grid>
@@ -255,12 +255,12 @@
                         </Border>
 
                     </StackPanel>
-                </Border>
-                <Border Width="724"
-                        Margin="0,20,0,0"
-                        Background="White"
-                        CornerRadius="12"
-                        Height="282">
+                </materialDesign:Card>
+                <materialDesign:Card Width="724"
+                                     Margin="0,20,0,0"
+                                     Background="White"
+                                     UniformCornerRadius="4"
+                                     Height="282">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="20*" />
@@ -384,17 +384,17 @@
                         </Border>
 
                     </Grid>
-                </Border>
+                </materialDesign:Card>
 
             </StackPanel>
 
             <!---RIGHT-->
-            <Border Grid.Column="1"
-                    Height="718"
-                    Background="White"
-                    CornerRadius="12"
-                    VerticalAlignment="Top"
-                    Margin="6,0,10,0">
+            <materialDesign:Card Grid.Column="1"
+                                 Height="718"
+                                 Background="White"
+                                 UniformCornerRadius="4"
+                                 VerticalAlignment="Top"
+                                 Margin="6,0,10,0">
                 <StackPanel Margin="10,0,10,0">
                     <TextBlock Text="Thông tin phiếu nhập sách"
                                FontSize="20"
@@ -464,7 +464,7 @@
                             Background="#0266FD"
                             Command="{Binding ImportBookCM}" />
                 </StackPanel>
-            </Border>
+            </materialDesign:Card>
         </Grid>
     </Grid>
 </Page>
