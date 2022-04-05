@@ -65,6 +65,22 @@ namespace LibraryManagement.Services
                                               publisher = s.publisher,
                                               yearOfPublication = s.yearOfPublication,
                                               baseBookId = s.baseBookId,
+                                              baseBook = new BaseBookDTO
+                                              {
+                                                  id = s.id,
+                                                  name = s.BaseBook.name,
+                                                  genre = new GenreDTO
+                                                  {
+                                                      id = s.BaseBook.Genre.id,
+                                                      name = s.BaseBook.Genre.name,
+                                                  },
+                                                  authors = s.BaseBook.Authors.Select(x => new AuthorDTO
+                                                  {
+                                                      id = x.id,
+                                                      name = x.name,
+                                                      birthDate = x.birthDate ?? DateTime.Now
+                                                  }).ToList(),
+                                              },
                                               bookInfoes = s.BookInfoes
                                               .Where(bI => !bI.isDeleted)
                                               .Select(bI =>
@@ -112,14 +128,18 @@ namespace LibraryManagement.Services
 
                 bookList.ForEach(book =>
                 {
-                   var isExist = context.Books.Where(b => b.baseBookId == book.baseBookId && b.yearOfPublication == book.yearOfPublication && b.publisher == book.publisher).Any();
-
-
-                    string statusMessage = "Sách lần xuất bản này đã tồn tại!";
-                    int statusCode = 400;
-                    var ex = new Exception($"{statusMessage} - {statusCode}");
-                    ex.Data.Add(statusCode, statusMessage);  // store "3" and "Invalid Parameters"
-                    throw ex;
+                    var isExist = context.Books
+                     .Where(b => b.baseBookId == book.baseBookId
+                     && b.yearOfPublication == book.yearOfPublication
+                     && b.publisher == book.publisher).Any();
+                    if (isExist)
+                    {
+                        string statusMessage = "Sách lần xuất bản này đã tồn tại!";
+                        int statusCode = 400;
+                        var ex = new Exception($"{statusMessage} - {statusCode}");
+                        ex.Data.Add(statusCode, statusMessage);
+                        throw ex;
+                    }
                 });
                 //Create new book and list book info depend on book quantity
                 var newBookList = bookList.Where(b => b.isNew).Select(b => new Book
@@ -142,14 +162,6 @@ namespace LibraryManagement.Services
                         CreateBookInfoList(context, bookId, newBookList[i].quantity);
                         maxBookId = bookId;
                     }
-                    //newBookList.ForEach((b) =>
-                    //{
-                    //    string bookId = CreateBookId(maxBookId);
-                    //    b.id = bookId;
-                    //    context.Books.Add(b);
-                    //    CreateBookInfoList(context, bookId, b.quantity);
-                    //    maxBookId = bookId;
-                    //});
                 }
 
                 //Update book quantity and create list book info depend on book quantity

@@ -20,7 +20,7 @@ namespace LibraryManagement.DTOs
 
         public List<BookInfoDTO> bookInfoes { get; set; }
         public string baseBookId { get; set; }
-        public BaseBookDTO BaseBook { get; set; }
+        public BaseBookDTO baseBook { get; set; }
 
         public bool isNew { get; set; }
     }
