@@ -1,6 +1,7 @@
 ﻿using LibraryManagement.DTOs;
 using LibraryManagement.Services;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
@@ -18,7 +19,6 @@ namespace LibraryManagement.Views.ImportBookPage
             get { return allBookList; }
             set { allBookList = value; }
         }
-
 
         public MainImportBookPage()
         {
@@ -64,7 +64,11 @@ namespace LibraryManagement.Views.ImportBookPage
         {
             if (String.IsNullOrEmpty(searchBox.Text))
                 return true;
-            return ((item as BookDTO).name.IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+
+            BookDTO it = item as BookDTO;
+            BaseBookDTO bb = BaseBookService.Ins.GetBookDetail(it.baseBookId);
+
+            return (bb.name.IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
         }
     }
 }

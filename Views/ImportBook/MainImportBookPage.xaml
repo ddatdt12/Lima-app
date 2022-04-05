@@ -60,7 +60,6 @@
                                      Height="416"
                                      Width="724">
                     <StackPanel>
-
                         <Grid>
                             <TextBlock Text="Sách đang chọn"
                                        FontSize="20"
@@ -108,15 +107,6 @@
                                 <ListView.View>
                                     <GridView>
 
-                                        <GridViewColumn Header="Mã sách">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock Text="{Binding Id}"
-                                                               Margin="15,0,0,0" />
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-
                                         <GridViewColumn Header="Tên sách">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
@@ -125,11 +115,20 @@
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-
-                                        <GridViewColumn Header="Tác giả">
+                                        
+                                        <GridViewColumn Header="NXB">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding Author.name}"
+                                                    <TextBlock Text="{Binding Publisher}"
+                                                               Margin="15,0,0,0" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        
+                                        <GridViewColumn Header="Năm XB">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding YearPublish}"
                                                                Margin="15,0,0,0" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
@@ -208,7 +207,7 @@
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
 
-                                        <GridViewColumn Header="Trị giá">
+                                        <GridViewColumn Header="Đơn giá">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBox Text="{Binding Price,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
@@ -325,23 +324,7 @@
                                         <GridViewColumn>
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding name}" />
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-
-                                        <GridViewColumn>
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock Text="{Binding genre.name}" />
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-
-                                        <GridViewColumn>
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock Text="{Binding author.name}" />
+                                                    <TextBlock Text="{Binding BaseBook.name}" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -424,7 +407,7 @@
                                  Text="{Binding Supplier,Mode=TwoWay}" />
                     </Grid>
                     <Grid Margin="0,30,0,0">
-                        <TextBlock Text="Thời gian nhập"
+                        <TextBlock Text="Ngày nhập"
                                    Foreground="#5C5959"
                                    FontSize="18"
                                    FontWeight="Bold" />
@@ -455,7 +438,7 @@
                                    HorizontalAlignment="Right" />
                     </Grid>
                     <Button Margin="0,100,0,0"
-                            Content="Nhập sách"
+                            Content="Xác nhận"
                             FontSize="16"
                             FontWeight="Bold"
                             Width="145"

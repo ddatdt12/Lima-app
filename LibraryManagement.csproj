@@ -196,6 +196,7 @@
       <DependentUpon>BookManagementPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Converter\BookStatusConverter.cs" />
+    <Compile Include="Views\Converter\ListToStringConverter.cs" />
     <Compile Include="Views\Genre_AuthorManagement\AddAuthorWindow.xaml.cs">
       <DependentUpon>AddAuthorWindow.xaml</DependentUpon>
     </Compile>

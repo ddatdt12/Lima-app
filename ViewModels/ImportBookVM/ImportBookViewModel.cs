@@ -144,6 +144,7 @@ namespace LibraryManagement.ViewModel.ImportBookVM
         public ICommand AddNewGenreCM { get; set; }
         public ICommand AddNewAuthorCM { get; set; }
         public ICommand ImportBookCM { get; set; }
+        public ICommand OpenAddBaseBookPageCM { get; set; }
 
         #endregion
 
@@ -247,28 +248,28 @@ namespace LibraryManagement.ViewModel.ImportBookVM
 
                 p.Close();
             });
-            AddBookFromSearchCM = new RelayCommand<ListView>((p) => { return true; }, (p) =>
-            {
-                if (p.SelectedItem is null) return;
+            //AddBookFromSearchCM = new RelayCommand<ListView>((p) => { return true; }, (p) =>
+            //{
+            //    if (p.SelectedItem is null) return;
 
-                BookDTO SelectedBook = p.SelectedItem as BookDTO;
+            //    BookDTO SelectedBook = p.SelectedItem as BookDTO;
 
-                foreach (var item in ImportBookList)
-                    if (item.Id == SelectedBook.id)
-                        return;
+            //    foreach (var item in ImportBookList)
+            //        if (item.Id == SelectedBook.id)
+            //            return;
 
-                Books importselectedBook = new Books
-                {
-                    Id = SelectedBook.id,
-                    Name = SelectedBook.name,
-                    Author = SelectedBook.author,
-                    SL = 1,
-                    IsNew = false,
-                };
-                ImportBookList.Add(importselectedBook);
-                TotalQuantity++;
+            //    Books importselectedBook = new Books
+            //    {
+            //        Id = SelectedBook.id,
+            //        Name = SelectedBook.name,
+            //        Author = SelectedBook.author,
+            //        SL = 1,
+            //        IsNew = false,
+            //    };
+            //    ImportBookList.Add(importselectedBook);
+            //    TotalQuantity++;
 
-            });
+            //});
             AddNewGenreCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 try
@@ -307,54 +308,54 @@ namespace LibraryManagement.ViewModel.ImportBookVM
             });
             ImportBookCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                if (ImportBookList.Count == 0)
-                {
-                    MessageBox.Show("Danh sách nhập trống!");
-                    return;
-                }
-                if (string.IsNullOrEmpty(Supplier))
-                {
-                    MessageBox.Show("Vui lòng nhập thông tin nhà cung cấp");
-                    return;
-                }
+                //if (ImportBookList.Count == 0)
+                //{
+                //    MessageBox.Show("Danh sách nhập trống!");
+                //    return;
+                //}
+                //if (string.IsNullOrEmpty(Supplier))
+                //{
+                //    MessageBox.Show("Vui lòng nhập thông tin nhà cung cấp");
+                //    return;
+                //}
 
-                List<BookDTO> importList = new List<BookDTO>();
+                //List<BookDTO> importList = new List<BookDTO>();
 
-                foreach (var item in ImportBookList)
-                {
-                    BookDTO tempBook = new BookDTO
-                    {
-                        name = item.Name,
-                        publisher = item.Publisher,
-                        quantity = item.SL,
-                        authorId = item.Author.id,
-                        yearOfPublication = item.YearPublish,
-                        genreId = item.GenreId,
-                        id = item.Id,
-                        isNew = item.IsNew,
-                        //UnitPrice = item.Price,
-                    };
+                //foreach (var item in ImportBookList)
+                //{
+                //    BookDTO tempBook = new BookDTO
+                //    {
+                //        name = item.Name,
+                //        publisher = item.Publisher,
+                //        quantity = item.SL,
+                //        authorId = item.Author.id,
+                //        yearOfPublication = item.YearPublish,
+                //        genreId = item.GenreId,
+                //        id = item.Id,
+                //        isNew = item.IsNew,
+                //        //UnitPrice = item.Price,
+                //    };
 
-                    importList.Add(tempBook);
-                }
+                //    importList.Add(tempBook);
+                //}
 
-                try
-                {
-                    (bool isS, string mes) = BookService.Ins.ImportBooks(importList);
+                //try
+                //{
+                //    (bool isS, string mes) = BookService.Ins.ImportBooks(importList);
 
-                    if (isS)
-                    {
-                        ImportBookList.Clear();
-                        MainImportBookPage.AllBookList = new ObservableCollection<BookDTO>(BookService.Ins.GetAllBook());
-                        PrintImportReiceipt();
-                    }
-                    MessageBox.Show(mes);
-                }
-                catch (Exception e)
-                {
+                //    if (isS)
+                //    {
+                //        ImportBookList.Clear();
+                //        MainImportBookPage.AllBookList = new ObservableCollection<BookDTO>(BookService.Ins.GetAllBook());
+                //        PrintImportReiceipt();
+                //    }
+                //    MessageBox.Show(mes);
+                //}
+                //catch (Exception e)
+                //{
 
-                    MessageBox.Show(e.Message);
-                }
+                //    MessageBox.Show(e.Message);
+                //}
 
             });
         }

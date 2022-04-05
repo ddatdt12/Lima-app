@@ -2,6 +2,8 @@
 using LibraryManagement.Services;
 using LibraryManagement.Utils;
 using LibraryManagement.ViewModels;
+using LibraryManagement.Views.BookManagement;
+using LibraryManagement.Views.ImportBookPage;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,9 +15,20 @@ namespace LibraryManagement.ViewModel
 {
     public class MainWindowViewModel : BaseViewModel
     {
+        public ICommand OpenBookManagementPageCM { get; set; }
+        public ICommand OpenImportBookPage { get; set; }
 
         public MainWindowViewModel()
         {
+
+            OpenBookManagementPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
+            {
+                p.Content = new BookManagementPage();
+            });
+            OpenImportBookPage = new RelayCommand<Frame>((p) => { return true; }, (p) =>
+            {
+                p.Content = new MainImportBookPage();
+            });
             //var author = new AuthorDTO { name = "Hemingway", birthDate = DateTime.Now, };
             //List<AuthorDTO> authorList = new List<AuthorDTO>()
             //{

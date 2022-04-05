@@ -88,46 +88,46 @@ namespace LibraryManagement.ViewModels.SettingVM
             if (SelectedRole is null) return;
 
 
-            List<RoleDetailsDTO> listDetail = new List<RoleDetailsDTO>
-            {
-                 new RoleDetailsDTO
-                        {
-                        permission = 0,
-                        isPermitted = IsBookManagement
-                        },
-                         new RoleDetailsDTO
-                         {
-                        permission = 1,
-                        isPermitted = IsImportBook
-                        },
-                        new RoleDetailsDTO{
-                        permission = 2,
-                        isPermitted = IsReaderManagement
-                        },
-                        new RoleDetailsDTO{
-                        permission = 3,
-                        isPermitted = IsStatictis
-                        },
-                        new RoleDetailsDTO{
-                        permission = 4,
-                        isPermitted = IsStaffManagement
-                        },
-                        new RoleDetailsDTO{
-                        permission = 5,
-                        isPermitted = IsSetting
-                        }
-            };
+            //List<RoleDetailsDTO> listDetail = new List<RoleDetailsDTO>
+            //{
+            //     new RoleDetailsDTO
+            //            {
+            //            permission = 0,
+            //            isPermitted = IsBookManagement
+            //            },
+            //             new RoleDetailsDTO
+            //             {
+            //            permission = 1,
+            //            isPermitted = IsImportBook
+            //            },
+            //            new RoleDetailsDTO{
+            //            permission = 2,
+            //            isPermitted = IsReaderManagement
+            //            },
+            //            new RoleDetailsDTO{
+            //            permission = 3,
+            //            isPermitted = IsStatictis
+            //            },
+            //            new RoleDetailsDTO{
+            //            permission = 4,
+            //            isPermitted = IsStaffManagement
+            //            },
+            //            new RoleDetailsDTO{
+            //            permission = 5,
+            //            isPermitted = IsSetting
+            //            }
+            //};
 
             try
             {
-                (bool IsS, string mes) = RoleService.Ins.EditRolePermission(SelectedRole.id, listDetail);
-                if (IsS)
-                {
-                    RoleList = new ObservableCollection<RoleDTO>(RoleService.Ins.GetAllRoles());
-                    p.IsEnabled = false;
-                }
+                //(bool IsS, string mes) = RoleService.Ins.EditRolePermission(SelectedRole.id, listDetail);
+                //if (IsS)
+                //{
+                //    RoleList = new ObservableCollection<RoleDTO>(RoleService.Ins.GetAllRoles());
+                //    p.IsEnabled = false;
+                //}
 
-                MessageBox.Show(mes);
+                //MessageBox.Show(mes);
 
             }
             catch (Exception e)
@@ -166,57 +166,57 @@ namespace LibraryManagement.ViewModels.SettingVM
         }
         public void AddRoleFunc(Window p)
         {
-            RoleDTO role = new RoleDTO
-            {
-                position = TxtRole,
-                roleDetaislList = new List<RoleDetailsDTO>
-                {
-                    new RoleDetailsDTO
-                    {
-                    permission = 0,
-                    isPermitted = false
-                    },
-                     new RoleDetailsDTO
-                     {
-                    permission = 1,
-                    isPermitted = false
-                    },
-                    new RoleDetailsDTO{
-                    permission = 2,
-                    isPermitted = false
-                    },
-                             new RoleDetailsDTO{
-                    permission = 3,
-                    isPermitted = false
-                    },
-                                new RoleDetailsDTO{
-                    permission = 4,
-                    isPermitted = false
-                    },
-                                   new RoleDetailsDTO{
-                    permission = 5,
-                    isPermitted = false
-                    },
+            //RoleDTO role = new RoleDTO
+            //{
+            //    position = TxtRole,
+            //    roleDetaislList = new List<RoleDetailsDTO>
+            //    {
+            //        new RoleDetailsDTO
+            //        {
+            //        permission = 0,
+            //        isPermitted = false
+            //        },
+            //         new RoleDetailsDTO
+            //         {
+            //        permission = 1,
+            //        isPermitted = false
+            //        },
+            //        new RoleDetailsDTO{
+            //        permission = 2,
+            //        isPermitted = false
+            //        },
+            //                 new RoleDetailsDTO{
+            //        permission = 3,
+            //        isPermitted = false
+            //        },
+            //                    new RoleDetailsDTO{
+            //        permission = 4,
+            //        isPermitted = false
+            //        },
+            //                       new RoleDetailsDTO{
+            //        permission = 5,
+            //        isPermitted = false
+            //        },
 
-                },
-            };
-            try
-            {
-                (bool success, string message) = RoleService.Ins.CreateNewRole(role);
-                if (success)
-                {
-                    RoleList.Add(role);
-                    MessageBox.Show(message);
-                    p.Close();
-                    return;
-                }
-                MessageBox.Show(message);
-            }
-            catch (Exception e)
-            {
+            //    },
+            //};
+            //try
+            //{
+            //    (bool success, string message) = RoleService.Ins.CreateNewRole(role);
+            //    if (success)
+            //    {
+            //        RoleList.Add(role);
+            //        MessageBox.Show(message);
+            //        p.Close();
+            //        return;
+            //    }
+            //    MessageBox.Show(message);
+            //}
+            //catch (Exception e)
+            //{
 
-                MessageBox.Show(e.Message);
-            }
+            //    MessageBox.Show(e.Message);
+            //}
 
         }
 

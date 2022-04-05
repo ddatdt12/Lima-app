@@ -83,7 +83,7 @@ namespace LibraryManagement.Services
                                               name = a.name,
                                               birthDate = a.birthDate ?? DateTime.Now,
                                           }).ToList(),
-                                            books = s.Books.Select(b => new BookDTO
+                                            books = s.Books.Where(b => !b.isDeleted).Select(b => new BookDTO
                                             {
                                                 id = b.id,
                                                 quantity = b.quantity,
@@ -145,9 +145,9 @@ namespace LibraryManagement.Services
                 var context = DataProvider.Ins.DB;
                 var baseBook = context.BaseBooks.Find(updatedBaseBook.id);
 
-                if(baseBook == null)
+                if (baseBook == null)
                 {
-                    return (false, "Sách không tồn tại!");
+                    return (false, "Đầu sách không tồn tại!");
                 }
 
 
@@ -161,7 +161,7 @@ namespace LibraryManagement.Services
                 }
 
                 context.SaveChanges();
-                return (true, "Thêm sách mới thành công!");
+                return (true, "Cập nhật đầu sách thành công!");
             }
             catch (Exception)
             {
@@ -182,7 +182,7 @@ namespace LibraryManagement.Services
                 }
                 baseBook.isDeleted = true;
                 context.SaveChanges();
-                return (true, "Thêm sách mới thành công!");
+                return (true, "Xoá đầu sách thành công!");
             }
             catch (Exception)
             {

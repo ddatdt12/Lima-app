@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:LibraryManagement.Views.BookManagement"
+      xmlns:cvt="clr-namespace:LibraryManagement.Views.Converter"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d"
@@ -18,6 +19,10 @@
                                    CommandParameter="{Binding ElementName=genreBox}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
+
+    <Page.Resources>
+        <cvt:ListToStringConverter x:Key="ListToStringConverter" />
+    </Page.Resources>
 
     <Grid>
         <StackPanel>
@@ -102,7 +107,7 @@
                             </ComboBox>
                         </Border>
 
-                        <Border BorderBrush="#BFBABA"
+                        <!--<Border BorderBrush="#BFBABA"
                                 BorderThickness="1"
                                 Width="145"
                                 Height="33"
@@ -115,7 +120,7 @@
                                       materialDesign:HintAssist.HintOpacity="1">
 
                             </ComboBox>
-                        </Border>
+                        </Border>-->
 
                     </StackPanel>
 
@@ -128,7 +133,7 @@
 
                         <ListView Width="1032"
                                   Height="550"
-                                  ItemsSource="{Binding BookList}"
+                                  ItemsSource="{Binding BaseBookList}"
                                   x:Name="listview"
                                   SelectedItem="{Binding SelectedItem}">
                             <ListView.View>
@@ -162,16 +167,17 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn Header="Tác giả">
+                                    <GridViewColumn Header="Tác giả"
+                                                    Width="300">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding author.name}"
+                                                <TextBlock Text="{Binding authors,Converter={StaticResource ListToStringConverter}}"
                                                            FontSize="18"
                                                            Margin="15,0,0,0" />
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn Header="Nhà xuất bản">
+                                    <!--<GridViewColumn Header="Nhà xuất bản">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding publisher}"
@@ -179,8 +185,8 @@
                                                            Margin="15,0,0,0" />
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                    <GridViewColumn Header="Năm XB">
+                                    </GridViewColumn>-->
+                                    <!--<GridViewColumn Header="Năm XB">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding yearOfPublication}"
@@ -188,8 +194,8 @@
                                                            Margin="15,0,0,0" />
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                    <GridViewColumn Header="Số lượng"
+                                    </GridViewColumn>-->
+                                    <!--<GridViewColumn Header="Số lượng"
                                                     Width="120">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
@@ -198,7 +204,7 @@
                                                            Margin="15,0,0,0" />
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
+                                    </GridViewColumn>-->
                                     <GridViewColumn>
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
@@ -222,7 +228,7 @@
                                                                          Height="20">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                            <i:InvokeCommandAction Command="{Binding ElementName=listview, Path=DataContext.DeleteBookCM}"
+                                                            <i:InvokeCommandAction Command="{Binding ElementName=listview, Path=DataContext.DeleteBaseBookCM}"
                                                                                    CommandParameter="{Binding ElementName=listview}" />
                                                         </i:EventTrigger>
                                                     </i:Interaction.Triggers>
