@@ -12,21 +12,18 @@ namespace LibraryManagement.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Genre
+    public partial class Permission
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Genre()
+        public Permission()
         {
-            this.BaseBooks = new HashSet<BaseBook>();
-            this.BorrowedGenreReportDetails = new HashSet<BorrowedGenreReportDetail>();
+            this.RoleDetails = new HashSet<RoleDetail>();
         }
     
         public int id { get; set; }
         public string name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BaseBook> BaseBooks { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BorrowedGenreReportDetail> BorrowedGenreReportDetails { get; set; }
+        public virtual ICollection<RoleDetail> RoleDetails { get; set; }
     }
 }

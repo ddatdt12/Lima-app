@@ -9,17 +9,17 @@ using System.Linq;
 
 namespace LibraryManagement.Services
 {
-    public class GenreService
+    public class ReceiptService
     {
-        private GenreService() { }
-        private static GenreService _ins;
-        public static GenreService Ins
+        private ReceiptService() { }
+        private static ReceiptService _ins;
+        public static ReceiptService Ins
         {
             get
             {
                 if (_ins == null)
                 {
-                    _ins = new GenreService();
+                    _ins = new ReceiptService();
                 }
                 return _ins;
             }
@@ -42,11 +42,11 @@ namespace LibraryManagement.Services
 
         }
 
-        public (bool, string message) CreateNewGenre(GenreDTO genre)
+        public (bool, string message) CreateBookImportReceipt(GenreDTO genre)
         {
             try
             {
-                LibraryManagementEntities context = DataProvider.Ins.DB;
+                var context = DataProvider.Ins.DB;
                 var genreInDB = context.Genres.Where(g => g.name == genre.name).FirstOrDefault();
                 if (genreInDB != null)
                 {

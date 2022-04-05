@@ -12,13 +12,13 @@ namespace LibraryManagement.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class RoleDetail
+    public partial class BorrowedGenreReportDetail
     {
-        public int roleId { get; set; }
-        public int permissionId { get; set; }
-        public bool isPermitted { get; set; }
+        public int borrowedGenreReportId { get; set; }
+        public int genreId { get; set; }
+        public int NumberOfBorrowings { get; set; }
     
-        public virtual Permission Permission { get; set; }
-        public virtual Role Role { get; set; }
+        public virtual BorrowedGenreReport BorrowedGenreReport { get; set; }
+        public virtual Genre Genre { get; set; }
     }
 }

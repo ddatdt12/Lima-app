@@ -78,13 +78,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DTOs\BaseBookDTO.cs" />
+    <Compile Include="DTOs\ImportReceiptDetailDTO.cs" />
+    <Compile Include="DTOs\ImportReceiptDTO.cs" />
     <Compile Include="DTOs\BookDTO.cs" />
     <Compile Include="DTOs\AuthorDTO.cs" />
     <Compile Include="DTOs\BookInfoDTO.cs" />
+    <Compile Include="DTOs\EmployeeDTO.cs" />
+    <Compile Include="DTOs\PermissionDTO.cs" />
     <Compile Include="DTOs\RoleDetailsDTO.cs" />
     <Compile Include="DTOs\RoleDTO.cs" />
     <Compile Include="DTOs\GenreDTO.cs" />
     <Compile Include="Models\Author.cs">
+      <DependentUpon>LibraryManagementModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BaseBook.cs">
       <DependentUpon>LibraryManagementModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Book.cs">
@@ -96,10 +104,22 @@
     <Compile Include="Models\BookReturnCard.cs">
       <DependentUpon>LibraryManagementModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BorrowedGenreReport.cs">
+      <DependentUpon>LibraryManagementModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BorrowedGenreReportDetail.cs">
+      <DependentUpon>LibraryManagementModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\BorrowingCard.cs">
       <DependentUpon>LibraryManagementModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DataProvider.cs" />
+    <Compile Include="Models\DelayReturnBookReport.cs">
+      <DependentUpon>LibraryManagementModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DelayReturnBookReportDetail.cs">
+      <DependentUpon>LibraryManagementModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Employee.cs">
       <DependentUpon>LibraryManagementModel.tt</DependentUpon>
     </Compile>
@@ -133,6 +153,9 @@
     <Compile Include="Models\Parameter.cs">
       <DependentUpon>LibraryManagementModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Permission.cs">
+      <DependentUpon>LibraryManagementModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ReaderCard.cs">
       <DependentUpon>LibraryManagementModel.tt</DependentUpon>
     </Compile>
@@ -145,13 +168,18 @@
     <Compile Include="Models\RoleDetail.cs">
       <DependentUpon>LibraryManagementModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\BaseBookService.cs" />
+    <Compile Include="Services\ImportService.cs" />
     <Compile Include="Services\AuthService.cs" />
+    <Compile Include="Services\EmployeeService.cs" />
+    <Compile Include="Services\ReceiptService.cs" />
     <Compile Include="Services\RoleService.cs" />
     <Compile Include="Services\ParameterService.cs" />
     <Compile Include="Services\BookService.cs" />
     <Compile Include="Services\AuthorService.cs" />
     <Compile Include="Services\GenreService.cs" />
     <Compile Include="Utils\Constant.cs" />
+    <Compile Include="Utils\Helper.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
