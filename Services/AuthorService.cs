@@ -32,7 +32,7 @@ namespace LibraryManagement.Services
             {
                 List<AuthorDTO> authors;
                 authors = (from s in DataProvider.Ins.DB.Authors
-                           select new AuthorDTO { id = s.id, name = s.name }).ToList();
+                           select new AuthorDTO { id = s.id, name = s.name, birthDate = (DateTime)s.birthDate }).ToList();
                 return authors;
             }
             catch (Exception e)

@@ -27,13 +27,13 @@
         </Border.Effect>
 
         <StackPanel Background="White">
-            
+
             <TextBlock Text="Thêm tác giả"
                        FontSize="32"
                        FontWeight="Bold"
                        Margin="30,20,0,0"
                        Foreground="#1B48BA" />
-            
+
             <StackPanel Margin="30,20,0,0">
                 <TextBlock Text="Họ và tên"
                            Foreground="#0266FD"
@@ -44,19 +44,20 @@
                          Width="300"
                          Text="{Binding TxtAuthor,Mode=OneWayToSource}"
                          HorizontalAlignment="Left"
-                         x:Name="authorname"/>
+                         x:Name="authorname" />
             </StackPanel>
-            
+
             <StackPanel Margin="30,20,0,0">
                 <TextBlock Text="Ngày sinh"
                            Foreground="#0266FD"
                            FontSize="20"
                            FontWeight="Bold" />
                 <DatePicker materialDesign:HintAssist.Hint="Nhập ngày sinh"
-                         FontSize="18"
-                         Width="160"
-                         SelectedDate="{Binding BirthDate,Mode=OneWayToSource,StringFormat=dd/MM/yyyy}"
-                         HorizontalAlignment="Left" />
+                            FontSize="18"
+                            Width="160"
+                            SelectedDate="{Binding BirthDate,Mode=OneWayToSource,StringFormat=dd/MM/yyyy}"
+                            HorizontalAlignment="Left"
+                            Focusable="False" />
             </StackPanel>
 
             <StackPanel Orientation="Horizontal"

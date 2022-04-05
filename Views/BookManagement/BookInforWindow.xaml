@@ -89,6 +89,7 @@
                                   Padding="0"
                                   FontSize="20"
                                   VerticalAlignment="Top"
+                                  IsEditable="True"
                                   Margin="10,0,0,0"
                                   ItemsSource="{Binding ListAuthor}"
                                   DisplayMemberPath="name"
@@ -371,7 +372,7 @@
                             </ListView.View>
                         </ListView>
                     </Border>
-                    
+
                     <!--BUTTON-->
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,15,0,0"

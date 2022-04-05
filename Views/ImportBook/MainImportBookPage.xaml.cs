@@ -65,10 +65,7 @@ namespace LibraryManagement.Views.ImportBookPage
             if (String.IsNullOrEmpty(searchBox.Text))
                 return true;
 
-            BookDTO it = item as BookDTO;
-            BaseBookDTO bb = BaseBookService.Ins.GetBookDetail(it.baseBookId);
-
-            return (bb.name.IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+            return ((item as BookDTO).baseBook.name.IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
         }
     }
 }

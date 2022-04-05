@@ -212,6 +212,12 @@
     <Compile Include="Views\Genre_AuthorManagement\MainManagementPage.xaml.cs">
       <DependentUpon>MainManagementPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ImportBook\AddBaseBookPage.xaml.cs">
+      <DependentUpon>AddBaseBookPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ImportBook\AddBookPage.xaml.cs">
+      <DependentUpon>AddBookPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ImportBook\ImportBookWindow.xaml.cs">
       <DependentUpon>ImportBookWindow.xaml</DependentUpon>
     </Compile>
@@ -286,6 +292,14 @@
     <Page Include="Views\Genre_AuthorManagement\MainManagementPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ImportBook\AddBaseBookPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ImportBook\AddBookPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ImportBook\ImportBookWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

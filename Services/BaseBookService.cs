@@ -131,7 +131,7 @@ namespace LibraryManagement.Services
                 context.BaseBooks.Add(newBaseBook);
                 context.SaveChanges();
                 baseBook.id = newBaseBook.id;
-                return (true, "Thêm sách mới thành công!");
+                return (true, "Thêm đầu sách thành công!");
             }
             catch (Exception)
             {

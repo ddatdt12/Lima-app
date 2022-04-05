@@ -13,19 +13,12 @@ using System.Windows.Shapes;
 
 namespace LibraryManagement.Views.ImportBook
 {
-    /// <summary>
-    /// Interaction logic for ImportBookWindow.xaml
-    /// </summary>
+
     public partial class ImportBookWindow : Window
     {
         public ImportBookWindow()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
 
         private static readonly Regex _regex = new Regex("[^0-9]"); //regex that matches disallowed text
@@ -44,6 +37,17 @@ namespace LibraryManagement.Views.ImportBook
 
             if (sd.Text.Length <= 0)
                 sd.Text = "1";
+        }
+
+
+        private void RadioButton_Click(object sender, RoutedEventArgs e)
+        {
+            headertxt.Text = "Thêm sách";
+        }
+
+        private void RadioButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            headertxt.Text = "Thêm đầu sách";
         }
     }
 }

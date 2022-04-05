@@ -1,0 +1,174 @@
+﻿<Page x:Class="LibraryManagement.Views.ImportBook.AddBookPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:LibraryManagement.Views.ImportBook"
+      xmlns:cvt="clr-namespace:LibraryManagement.Views.Converter"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      mc:Ignorable="d"
+      Width="800"
+      Height="450"
+      FontFamily="{StaticResource NunitoSans_Regular}"
+      DataContext="{StaticResource ImportBookVM}">
+
+    <Page.Resources>
+        <cvt:ListToStringConverter x:Key="ListToStringConverter" />
+    </Page.Resources>
+
+    <StackPanel Background="White">
+
+        <!---NAME GENRE-->
+        <StackPanel  Margin="40,20,0,0"
+                     Orientation="Horizontal">
+
+            <StackPanel>
+                <TextBlock Text="Tên đầu sách"
+                           FontWeight="Bold"
+                           FontSize="20"
+                           Foreground="#0266FD" />
+                <ComboBox materialDesign:HintAssist.Hint="Nhập tên đầu sách"
+                          FontSize="18"
+                          Width="380"
+                          x:Name="baseCBB"
+                          HorizontalAlignment="Left"
+                          ItemsSource="{Binding BaseBookList}"
+                          DisplayMemberPath="name">
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Left"
+                        Margin="40,0,0,0">
+                <TextBlock Text="Thể loại"
+                           FontSize="20"
+                           FontWeight="Bold"
+                           Foreground="#0266FD"
+                           Padding="0" />
+                <TextBlock FontSize="18"
+                           x:Name="Genre"
+                           Text="{Binding ElementName=baseCBB,Path=SelectedItem.genre.name}" />
+
+            </StackPanel>
+
+        </StackPanel>
+
+        <!---AUTHOR-->
+        <StackPanel Orientation="Horizontal"
+                    Margin="40,20,0,0">
+            <TextBlock Text="Tác giả: "
+                       FontWeight="Bold"
+                       FontSize="20"
+                       Foreground="#0266FD"
+                       VerticalAlignment="Bottom" />
+
+            <TextBlock FontSize="18"
+                       VerticalAlignment="Bottom"
+                       Text="{Binding ElementName=baseCBB,Path=SelectedItem.authors,Converter={StaticResource ListToStringConverter}}">
+            </TextBlock>
+        </StackPanel>
+
+        <!---PUBLISHER-->
+        <!---YEAR-->
+        <StackPanel Orientation="Horizontal"
+                    Margin="40,20,0,0">
+            <StackPanel>
+                <TextBlock Text="Nhà xuất bản"
+                           FontWeight="Bold"
+                           FontSize="20"
+                           Foreground="#0266FD" />
+                <TextBox Width="380"
+                         materialDesign:HintAssist.Hint="Nhập tên nhà xuất bản"
+                         FontSize="18"
+                         Padding="0,5,0,0"
+                         HorizontalAlignment="Left">
+                </TextBox>
+            </StackPanel>
+
+
+            <StackPanel Margin="40,0,0,0">
+                <TextBlock Text="Năm xuất bản"
+                           FontWeight="Bold"
+                           FontSize="20"
+                           Foreground="#0266FD" />
+                <TextBox Width="100"
+                         materialDesign:HintAssist.Hint="Nhập năm"
+                         FontSize="18"
+                         Padding="0,5,0,0"
+                         HorizontalAlignment="Left">
+                </TextBox>
+            </StackPanel>
+        </StackPanel>
+
+        <!--PRICE-->
+        <StackPanel Orientation="Horizontal"
+                    Margin="40,20,0,0">
+            <StackPanel>
+                <TextBlock Text="Giá nhập"
+                           FontWeight="Bold"
+                           FontSize="20"
+                           Foreground="#0266FD" />
+                <TextBox Width="150"
+                         materialDesign:HintAssist.Hint="Giá nhập sách"
+                         FontSize="18"
+                         Padding="0,5,0,0"
+                         HorizontalAlignment="Left">
+                </TextBox>
+            </StackPanel>
+
+
+            <StackPanel Margin="80,0,0,0">
+                <TextBlock Text="Trị giá"
+                           FontWeight="Bold"
+                           FontSize="20"
+                           Foreground="#0266FD" />
+                <TextBox Width="150"
+                         materialDesign:HintAssist.Hint="Nhập trị giá sách"
+                         FontSize="18"
+                         Padding="0,5,0,0"
+                         HorizontalAlignment="Left">
+                </TextBox>
+            </StackPanel>
+
+            <StackPanel Margin="40,0,0,0">
+                <TextBlock Text="Số lượng"
+                           FontWeight="Bold"
+                           FontSize="20"
+                           Foreground="#0266FD" />
+                <TextBox Width="150"
+                         materialDesign:HintAssist.Hint="Nhập số lượng"
+                         FontSize="18"
+                         Padding="0,5,0,0"
+                         HorizontalAlignment="Left">
+                </TextBox>
+            </StackPanel>
+        </StackPanel>
+
+
+        <!---BUTTON-->
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="0,100,0,0">
+
+            <Button FontSize="20"
+                    Width="160"
+                    Height="50"
+                    Background="Transparent"
+                    Content="Huỷ bỏ"
+                    Foreground="#0266FD"
+                    BorderBrush="#0266FD"
+                    materialDesign:ButtonAssist.CornerRadius="12"
+                    Command="{Binding CloseCM}"
+                    Margin="0,0,50,0" />
+            <Button FontSize="20"
+                    Width="160"
+                    Height="50"
+                    Background="#0266FD"
+                    Foreground="White"
+                    Content="Hoàn thành"
+                    materialDesign:ButtonAssist.CornerRadius="12"
+                    HorizontalAlignment="Right"
+                    Command="{Binding AddNewBaseBookCM}" />
+        </StackPanel>
+    </StackPanel>
+</Page>

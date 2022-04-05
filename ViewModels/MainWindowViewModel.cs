@@ -205,14 +205,14 @@ namespace LibraryManagement.ViewModel
             };
 
 
-            var imReceipt = new ImportReceiptDTO
-            {
-                supplier = "Thư viện UIT",
-                createdAt = DateTime.Now,
-                employeeId = "NV0001",
-                importReceiptDetailList = importReceiptDetailList,
-            };
-            (bool isImportSuccess, string message) = ImportSerivce.Ins.CreateNewBookImportReceipt(imReceipt);
+            //var imReceipt = new ImportReceiptDTO
+            //{
+            //    supplier = "Thư viện UIT",
+            //    createdAt = DateTime.Now,
+            //    employeeId = "NV0001",
+            //    importReceiptDetailList = importReceiptDetailList,
+            //};
+            //(bool isImportSuccess, string message) = ImportSerivce.Ins.CreateNewBookImportReceipt(imReceipt);
 
             var data = BaseBookService.Ins.GetAllBaseBook();
 

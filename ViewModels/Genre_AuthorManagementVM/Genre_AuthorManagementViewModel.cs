@@ -210,7 +210,7 @@ namespace LibraryManagement.ViewModels.Genre_AuthorManagementVM
 
                     if (MessageBox.Show("Bạn có muốn thêm tác giả này không?", "Thêm tác giả", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
-                        AuthorDTO newAu = new AuthorDTO { name = TxtAuthor, birthDate = DateTime.Now };
+                        AuthorDTO newAu = new AuthorDTO { name = TxtAuthor, birthDate = (DateTime)BirthDate };
                         (bool isS, string mes) = AuthorService.Ins.CreateNewAuthor(newAu);
                         if (isS)
                         {

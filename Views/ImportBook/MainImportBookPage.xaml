@@ -324,7 +324,7 @@
                                         <GridViewColumn>
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding BaseBook.name}" />
+                                                    <TextBlock Text="{Binding baseBook.name}" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
