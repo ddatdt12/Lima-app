@@ -1,4 +1,4 @@
-﻿using LibraryManagement.DTOs;
+﻿    using LibraryManagement.DTOs;
 using LibraryManagement.Services;
 using LibraryManagement.Utils;
 using LibraryManagement.ViewModels;
@@ -165,9 +165,7 @@ namespace LibraryManagement.ViewModel
                     quantity=10,
                     book=  new BookDTO()
                     {
-                        baseBookId = "BB0001",
-                        yearOfPublication = 1990,
-                        publisher = "Nhà xuất bản Trẻ",
+                        id = "BOOK0002",
                         isNew = true,
                     },
                 },
@@ -176,8 +174,8 @@ namespace LibraryManagement.ViewModel
                     quantity=15,
                     book=  new BookDTO()
                     {
-                        baseBookId = "BB0002",
-                        yearOfPublication = 2002,
+                        baseBookId = "BB0003",
+                        yearOfPublication = 2020,
                         publisher = "Nhà xuất bản Trẻ",
                         isNew = true,
                     },
@@ -187,10 +185,7 @@ namespace LibraryManagement.ViewModel
                     quantity=12,
                     book=  new BookDTO()
                     {
-                        baseBookId = "BB0003",
-                        yearOfPublication = 2020,
-                        publisher = "Nhà xuất bản Trẻ",
-                        isNew = true,
+                        id = "BOOK0001",
                     },
                 },
 

@@ -85,7 +85,7 @@ namespace LibraryManagement.Services
                 }
                 genre.name = updatedGenre.name;
                 context.SaveChanges();
-                return (true, "");
+                return (true, "Cập nhật thể loại thành công");
             }
             catch (DbEntityValidationException e)
             {

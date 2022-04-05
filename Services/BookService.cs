@@ -191,7 +191,7 @@ namespace LibraryManagement.Services
                 book.publisher = updatedBook.publisher;
                 book.yearOfPublication = updatedBook.yearOfPublication;
                 context.SaveChanges();
-                return (true, "Cập nhật sách!");
+                return (true, "Cập nhật sách thành công!");
 
             }
             catch (Exception e)
