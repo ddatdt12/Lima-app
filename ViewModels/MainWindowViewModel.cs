@@ -1,4 +1,4 @@
-﻿    using LibraryManagement.DTOs;
+﻿using LibraryManagement.DTOs;
 using LibraryManagement.Services;
 using LibraryManagement.Utils;
 using LibraryManagement.ViewModels;
@@ -119,12 +119,14 @@ namespace LibraryManagement.ViewModel
             //        new AuthorDTO{ id=2}},
             //});
 
+
+            // EMPLOYEEEE
             //var newEmployee = new EmployeeDTO()
             //{
-            //    username = "trankhoi",
+            //    username = "lephong",
             //    password = "123456",
-            //    name = "Trần Khôi",
-            //    phoneNumber = "0987512345",
+            //    name = "Lee Phong",
+            //    phoneNumber = "09875123444",
             //    birthDate = new DateTime(2002, 5, 26),
             //    gender = "Nam", //Nam or Nữ
             //    startingDate = DateTime.Now,
@@ -133,76 +135,83 @@ namespace LibraryManagement.ViewModel
             //};
 
             //(bool success, string message) = EmployeeService.Ins.CreateNewEmployee(newEmployee);
-            List<BookDTO> bookDTOs = new List<BookDTO>()
-            {
-                new BookDTO()
-                {
-                    baseBookId = "BB0003",
-                    yearOfPublication = 1990,
-                    publisher = "Nhà xuất bản Trẻ",
-                    quantity = 5,
-                    isNew = true,
-                 },
-                new BookDTO()
-                {
-                    baseBookId = "BB0003",
-                    yearOfPublication = 1990,
-                    publisher = "Nhà xuất bản Trẻ",
-                    quantity = 10,
-                    isNew = true,
-                 },
-                new BookDTO()
-                {
-                    baseBookId = "BB0003",
-                    yearOfPublication = 2008,
-                    publisher = "Nhà xuất bản Trẻ",
-                    quantity = 5,
-                    isNew = true,
-                 },
-                //new BookDTO()
-                //{
-                //    id = "BOOK0001",
-                //    quantity = 4,
-                // },
-                //new BookDTO()
-                //{
-                //    id = "BOOK0002",
-                //    quantity = 3,
-                //},
-             };
+            ////(bool uupdateSuccess, string updateMessage) = EmployeeService.Ins.UpdateEmployee(newEmployee);
+            //(bool deleteSuccess, string deleteMessage) = EmployeeService.Ins.DeleteEmployee("NV0003");
 
 
-            var importReceiptDetailList = new List<ImportReceiptDetailDTO> {
-                new ImportReceiptDetailDTO(){
-                    unitPrice=30000,
-                    quantity=10,
-                    book=  new BookDTO()
-                    {
-                        id = "BOOK0002",
-                        isNew = true,
-                    },
-                },
-                new ImportReceiptDetailDTO(){
-                    unitPrice=30000,
-                    quantity=15,
-                    book=  new BookDTO()
-                    {
-                        baseBookId = "BB0003",
-                        yearOfPublication = 2020,
-                        publisher = "Nhà xuất bản Trẻ",
-                        isNew = true,
-                    },
-                },
-                  new ImportReceiptDetailDTO(){
-                    unitPrice=30000,
-                    quantity=12,
-                    book=  new BookDTO()
-                    {
-                        id = "BOOK0001",
-                    },
-                },
 
+            List<ReaderTypeDTO> readerTypeList = new List<ReaderTypeDTO>(){
+                new ReaderTypeDTO
+                {
+                    name = "Độc giả A"
+                },
+                new ReaderTypeDTO
+                {
+                    name = "Độc giả B"
+                },
+                new ReaderTypeDTO
+                {
+                    name = "Độc giả C"
+                },
             };
+
+            readerTypeList.ForEach(r =>
+            {
+                ReaderTypeService.Ins.CreateReaderType(r);
+            });
+
+            var data = ReaderTypeService.Ins.GetAllReaderTypes();
+
+
+            //Reader Card
+            //int duration = ParameterService.Ins.GetRuleValue(Rules.VALIDITY_PERIOD_OF_CARD);
+            //var createdAt = DateTime.Now;
+            //var newReaderCard = new ReaderCardDTO()
+            //{
+            //    name = "Đạt ĐỖ",
+            //    address = "Kí túc xá khu A",
+            //    readerTypeId = 1,
+            //    identityCard = "215575330",
+            //    email = "datrumqn@gmail.com",
+            //    createdAt = createdAt,
+            //    expiryDate = createdAt.AddMonths(duration),
+            //    gender = "Nam",
+            //    birthDate = new DateTime(2002, 5, 12),
+            //    employeeId = "NV0001",
+            //};
+            //(bool isSuccess, string message) = ReaderService.Ins.CreateNewReaderCard(newReaderCard);
+            var a = "";
+            //var importReceiptDetailList = new List<ImportReceiptDetailDTO> {
+            //    new ImportReceiptDetailDTO(){
+            //        unitPrice=30000,
+            //        quantity=10,
+            //        book=  new BookDTO()
+            //        {
+            //            id = "BOOK0002",
+            //            isNew = true,
+            //        },
+            //    },
+            //    new ImportReceiptDetailDTO(){
+            //        unitPrice=30000,
+            //        quantity=15,
+            //        book=  new BookDTO()
+            //        {
+            //            baseBookId = "BB0003",
+            //            yearOfPublication = 2020,
+            //            publisher = "Nhà xuất bản Trẻ",
+            //            isNew = true,
+            //        },
+            //    },
+            //      new ImportReceiptDetailDTO(){
+            //        unitPrice=30000,
+            //        quantity=12,
+            //        book=  new BookDTO()
+            //        {
+            //            id = "BOOK0001",
+            //        },
+            //    },
+
+            //};
 
 
             //var imReceipt = new ImportReceiptDTO
@@ -214,7 +223,7 @@ namespace LibraryManagement.ViewModel
             //};
             //(bool isImportSuccess, string message) = ImportSerivce.Ins.CreateNewBookImportReceipt(imReceipt);
 
-            var data = BaseBookService.Ins.GetAllBaseBook();
+            //var data = BaseBookService.Ins.GetAllBaseBook();
 
 
             int minAge = ParameterService.Ins.GetRuleValue(Rules.MIN_AGE);
