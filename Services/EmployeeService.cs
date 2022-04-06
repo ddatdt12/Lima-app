@@ -54,8 +54,8 @@ namespace LibraryManagement.Services
                                                    roleId = e.Role.id,
                                                    birthDate = e.birthDate,
                                                    gender = e.gender,
-                                                   password = e.password,   
-                                                   username =e.username,
+                                                   password = e.password,
+                                                   username = e.username,
                                                    startingDate = e.startingDate,
                                                })
                                                .ToList();
@@ -73,7 +73,7 @@ namespace LibraryManagement.Services
             try
             {
                 LibraryManagementEntities context = DataProvider.Ins.DB;
-                var phoneNumberIsExist= context.Employees.Where(e => e.phoneNumber == employee.phoneNumber).Any();
+                var phoneNumberIsExist = context.Employees.Where(e => e.phoneNumber == employee.phoneNumber).Any();
                 if (phoneNumberIsExist)
                 {
                     return (false, "Số điện thoại đã đươc sử dụng");
@@ -82,7 +82,7 @@ namespace LibraryManagement.Services
                 var emailIsExist = context.Employees.Where(e => e.email == employee.email).Any();
                 if (phoneNumberIsExist)
                 {
-                    return (false, "email đã đươc sử dụng");
+                    return (false, "Email đã đươc sử dụng");
                 }
 
                 var usernameIsExist = context.Employees.Where(e => e.username == employee.username).Any();
@@ -121,19 +121,27 @@ namespace LibraryManagement.Services
             }
         }
 
-        public (bool, string message) EditGenre(GenreDTO updatedGenre)
+        public (bool, string message) UpdateEmployee(EmployeeDTO updatedEmployee)
         {
             try
             {
                 var context = DataProvider.Ins.DB;
-                var genre = context.Genres.Where(g => g.id == updatedGenre.id).FirstOrDefault();
-                if (genre is null)
+                var employee = context.Employees.Find(updatedEmployee.id);
+                if (employee is null)
                 {
-                    return (false, "Thể loại không tồn tại");
+                    return (false, "Nhân viên không tồn tại");
                 }
-                genre.name = updatedGenre.name;
+                employee.name = updatedEmployee.name;
+                employee.email = updatedEmployee.email;
+                employee.phoneNumber = updatedEmployee.phoneNumber;
+                employee.roleId = updatedEmployee.roleId;
+                employee.birthDate = updatedEmployee.birthDate;
+                employee.gender = updatedEmployee.gender;
+                employee.password = updatedEmployee.password;
+                employee.username = updatedEmployee.username;
+                employee.startingDate = updatedEmployee.startingDate;
                 context.SaveChanges();
-                return (true, "");
+                return (true, "Cập nhật thành công!");
             }
             catch (DbEntityValidationException e)
             {
@@ -147,24 +155,19 @@ namespace LibraryManagement.Services
 
         }
 
-        public (bool, string message) DeleteGenre(int genreId)
+        public (bool, string message) DeleteEmployee(string employeeId)
         {
             try
             {
                 var context = DataProvider.Ins.DB;
-                var related = context.BaseBooks.Where(b => b.genreId == genreId).Any();
-                if (related)
+                var employee = context.Employees.Find(employeeId);
+                if (employee is null)
                 {
-                    return (false, "Đã có thể loại sách thuộc thể loại này không thể xóa");
+                    return (false, "Nhân viên không tồn tại");
                 }
-                var genre = context.Genres.Where(g => g.id == genreId).FirstOrDefault();
-                if (genre is null)
-                {
-                    return (false, "Genre don't exist");
-                }
-                context.Genres.Remove(genre);
+                employee.isDeleted = true;
                 context.SaveChanges();
-                return (true, "Xóa thể loại thành công");
+                return (true, "Xóa nhân viên thành công");
             }
             catch (DbEntityValidationException e)
             {

@@ -6,7 +6,6 @@ using System.Linq;
 
 namespace LibraryManagement.Services
 {
-
     public class BaseBookService
     {
         private BaseBookService() { }

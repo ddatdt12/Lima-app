@@ -239,7 +239,6 @@ namespace LibraryManagement.Services
             {
                 var bookInfo = DataProvider.Ins.DB.BookInfoes.Find(bookInfoId);
 
-
                 var book = DataProvider.Ins.DB.Books.Find(bookInfo.bookId);
                 if (bookInfo is null || bookInfo.isDeleted)
                 {
