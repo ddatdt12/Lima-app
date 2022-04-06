@@ -18,22 +18,28 @@ namespace LibraryManagement.Models
         public ReaderCard()
         {
             this.BorrowingCards = new HashSet<BorrowingCard>();
+            this.FineReceipts = new HashSet<FineReceipt>();
         }
     
         public string id { get; set; }
         public string name { get; set; }
         public string address { get; set; }
         public string email { get; set; }
-        public Nullable<System.DateTime> birthDate { get; set; }
-        public Nullable<System.DateTime> createdAt { get; set; }
-        public Nullable<System.DateTime> expiryDate { get; set; }
+        public System.DateTime birthDate { get; set; }
         public string gender { get; set; }
         public string identityCard { get; set; }
+        public System.DateTime createdAt { get; set; }
+        public System.DateTime expiryDate { get; set; }
+        public bool isDeleted { get; set; }
         public Nullable<int> totalFine { get; set; }
         public int readerTypeId { get; set; }
+        public string employeeId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BorrowingCard> BorrowingCards { get; set; }
+        public virtual Employee Employee { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FineReceipt> FineReceipts { get; set; }
         public virtual ReaderType ReaderType { get; set; }
     }
 }

@@ -17,16 +17,21 @@ namespace LibraryManagement.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Book()
         {
-            this.BookReturnCards = new HashSet<BookReturnCard>();
-            this.BorrowingCards = new HashSet<BorrowingCard>();
+            this.ImportReceiptDetails = new HashSet<ImportReceiptDetail>();
+            this.BookInfoes = new HashSet<BookInfo>();
         }
     
         public string id { get; set; }
-        public string name { get; set; }
+        public string baseBookId { get; set; }
+        public int yearOfPublication { get; set; }
+        public string publisher { get; set; }
+        public int quantity { get; set; }
+        public bool isDeleted { get; set; }
     
+        public virtual BaseBook BaseBook { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BookReturnCard> BookReturnCards { get; set; }
+        public virtual ICollection<ImportReceiptDetail> ImportReceiptDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BorrowingCard> BorrowingCards { get; set; }
+        public virtual ICollection<BookInfo> BookInfoes { get; set; }
     }
 }

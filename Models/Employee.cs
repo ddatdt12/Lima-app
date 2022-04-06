@@ -14,6 +14,16 @@ namespace LibraryManagement.Models
     
     public partial class Employee
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Employee()
+        {
+            this.BookReturnCards = new HashSet<BookReturnCard>();
+            this.BorrowingCards = new HashSet<BorrowingCard>();
+            this.FineReceipts = new HashSet<FineReceipt>();
+            this.ImportReceipts = new HashSet<ImportReceipt>();
+            this.ReaderCards = new HashSet<ReaderCard>();
+        }
+    
         public string id { get; set; }
         public string username { get; set; }
         public string password { get; set; }
@@ -22,8 +32,20 @@ namespace LibraryManagement.Models
         public Nullable<System.DateTime> birthDate { get; set; }
         public string gender { get; set; }
         public Nullable<System.DateTime> startingDate { get; set; }
-        public Nullable<int> roleId { get; set; }
+        public int roleId { get; set; }
         public bool isDeleted { get; set; }
-        public string Email { get; set; }
+        public string email { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BookReturnCard> BookReturnCards { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BorrowingCard> BorrowingCards { get; set; }
+        public virtual Role Role { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FineReceipt> FineReceipts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ImportReceipt> ImportReceipts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ReaderCard> ReaderCards { get; set; }
     }
 }

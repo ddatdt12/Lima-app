@@ -1,0 +1,175 @@
+﻿<Page x:Class="LibraryManagement.Views.SettingManagement.GeneralSettingPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:LibraryManagement.Views.SettingManagement"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      mc:Ignorable="d"
+      Height="650"
+      Width="1070"
+      FontFamily="{StaticResource NunitoSans_Regular}"
+      DataContext="{StaticResource SettingVM}">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding GeneralFirstLoadCM}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid Background="White">
+
+        <StackPanel>
+
+            <StackPanel Orientation="Horizontal"
+                        Margin="12,12,0,0">
+                <TextBlock Text="Độc giả"
+                           FontSize="20"
+                           Foreground="#1B48BA"
+                           FontWeight="Bold" />
+                <Border BorderThickness="1"
+                        BorderBrush="#BFBABA"
+                        Width="980"
+                        Height="1"
+                        VerticalAlignment="Top"
+                        Margin="5,14,0,0" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Margin="12,45,0,0">
+                <TextBlock Text="Giới hạn độ tuổi từ"
+                           FontSize="20"
+                           FontWeight="SemiBold" />
+                <TextBox Text="{Binding MinAge,Mode=TwoWay}"
+                         Margin="20,0,0,0"
+                         FontSize="20"
+                         Width="60"
+                         Padding="0"
+                         PreviewTextInput="TextBox_PreviewTextInput"
+                         TextAlignment="Center" />
+                <TextBlock Text="tuổi đến"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           Margin="20,0,0,0" />
+                <TextBox Text="{Binding MaxAge,Mode=TwoWay}"
+                         Margin="20,0,0,0"
+                         FontSize="20"
+                         Width="60"
+                         PreviewTextInput="TextBox_PreviewTextInput"
+                         Padding="0"
+                         TextAlignment="Center" />
+                <TextBlock Text="tuổi"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           Margin="20,0,0,0" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Margin="12,38,0,0">
+                <TextBlock Text="Thời hạn giá trị thẻ độc giả"
+                           FontSize="20"
+                           FontWeight="SemiBold" />
+                <TextBox Text="{Binding ExpiredDay, Mode=TwoWay}"
+                         Margin="20,0,0,0"
+                         FontSize="20"
+                         Width="60"
+                         PreviewTextInput="TextBox_PreviewTextInput"
+                         Padding="0"
+                         TextAlignment="Center" />
+                <TextBlock Text="tháng"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           Margin="20,0,0,0" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal"
+                        Margin="12,55,0,0">
+                <TextBlock Text="Sách"
+                           FontSize="20"
+                           Foreground="#1B48BA"
+                           FontWeight="Bold" />
+                <Border BorderThickness="1"
+                        BorderBrush="#BFBABA"
+                        Width="1000"
+                        Height="1"
+                        VerticalAlignment="Top"
+                        Margin="5,14,0,0" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Margin="12,45,0,0">
+                <TextBlock Text="Số lượng sách mượn tối đa"
+                           FontSize="20"
+                           FontWeight="SemiBold" />
+                <TextBox Text="{Binding MaxRent,Mode=TwoWay}"
+                         Margin="20,0,0,0"
+                         FontSize="20"
+                         Width="60"
+                         Padding="0"
+                         TextAlignment="Center"
+                         PreviewTextInput="TextBox_PreviewTextInput" />
+                <TextBlock Text="sách, trong vòng"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           Margin="20,0,0,0" />
+                <TextBox Text="{Binding ReturnDate,Mode=TwoWay}"
+                         Margin="20,0,0,0"
+                         FontSize="20"
+                         Width="60"
+                         Padding="0"
+                         TextAlignment="Center"
+                         PreviewTextInput="TextBox_PreviewTextInput" />
+                <TextBlock Text="ngày"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           Margin="20,0,0,0" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Margin="12,38,0,0">
+                <TextBlock Text="Tiền phạt trả trễ"
+                           FontSize="20"
+                           FontWeight="SemiBold" />
+                <TextBox Text="{Binding FinesAmount,Mode=TwoWay}"
+                         Margin="20,0,0,0"
+                         FontSize="20"
+                         MinWidth="60"
+                         Padding="0"
+                         PreviewTextInput="TextBox_PreviewTextInput"
+                         TextAlignment="Center" />
+                <TextBlock Text="đồng/ngày"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           Margin="20,0,0,0" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Margin="12,38,0,0">
+                <TextBlock Text="Giới hạn năm xuất bản, trong vòng"
+                           FontSize="20"
+                           FontWeight="SemiBold" />
+                <TextBox Text="{Binding PublishYear, Mode=TwoWay}"
+                         Margin="20,0,0,0"
+                         FontSize="20"
+                         MinWidth="60"
+                         Padding="0"
+                         PreviewTextInput="TextBox_PreviewTextInput"
+                         TextAlignment="Center" />
+                <TextBlock Text="năm"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           Margin="20,0,0,0" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Margin="0,100,0,0">
+                <Button Content="Lưu thay đổi"
+                        Background="#0266FD"
+                        Width="160"
+                        Height="50"
+                        materialDesign:ButtonAssist.CornerRadius="12"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Margin="0,0,50,0"
+                        Command="{Binding SaveGeneralSettingCM}" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>
