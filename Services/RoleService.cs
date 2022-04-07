@@ -243,10 +243,10 @@ namespace LibraryManagement.Services
             try
             {
                 var context = DataProvider.Ins.DB;
-                var related = context.Employees.Where(b => b.roleId == roleId).Any();
+                var related = context.Accounts.Where(b => b.roleId == roleId).Any();
                 if (related)
                 {
-                    return (false, "Đã có nhân viên thuộc vai trò này, không thể xóa!");
+                    return (false, "Đã có tài khoản thuộc vai trò này, không thể xóa!");
                 }
                 var role = context.Roles.Find(roleId);
                 var roleDetails = context.RoleDetails.Where(r => r.roleId == role.id).ToList();

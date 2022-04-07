@@ -32,7 +32,7 @@ namespace LibraryManagement.Services
             {
                 return "READER0001";
             }
-            string newIdString = $"0000{int.Parse(maxId.Substring(4)) + 1}";
+            string newIdString = $"0000{int.Parse(maxId.Substring(6)) + 1}";
             return "READER" + newIdString.Substring(newIdString.Length - 4, 4);
         }
         public List<ReaderCardDTO> GetAllReaderCards()
@@ -50,7 +50,6 @@ namespace LibraryManagement.Services
                                                      readerTypeId = s.readerTypeId,
                                                      totalFine = s.totalFine ?? 0,
                                                      readerType = new ReaderTypeDTO { id = s.readerTypeId },
-                                                     identityCard = s.identityCard,
                                                      email = s.email,
                                                      createdAt = s.createdAt,
                                                      gender = s.gender,
@@ -86,13 +85,7 @@ namespace LibraryManagement.Services
                 {
                     return (false, "Email đã được sử dụng");
                 }
-                var identityCardExist = context.ReaderCards
-                    .Where(g => g.expiryDate > DateTime.Now && g.identityCard == readerCard.identityCard).Any();
 
-                if (identityCardExist)
-                {
-                    return (false, "CMND/CCCD đã được sử dụng");
-                }
                 string maxId = context.ReaderCards.Max(r => r.id);
 
                 var newReaderCard = new ReaderCard
@@ -103,7 +96,6 @@ namespace LibraryManagement.Services
                     employeeId = readerCard.employeeId,
                     readerTypeId = readerCard.readerTypeId,
                     totalFine = readerCard.totalFine,
-                    identityCard = readerCard.identityCard,
                     email = readerCard.email,
                     createdAt = readerCard.createdAt,
                     expiryDate = readerCard.expiryDate,
@@ -139,13 +131,6 @@ namespace LibraryManagement.Services
                 {
                     return (false, "Email đã được sử dụng");
                 }
-                var identityCardExist = context.ReaderCards
-                    .Where(g => g.expiryDate > DateTime.Now && g.id != updatedReaderCard.id && g.identityCard == updatedReaderCard.identityCard).Any();
-
-                if (identityCardExist)
-                {
-                    return (false, "CMND/CCCD đã được sử dụng");
-                }
 
                 var readerCard = context.ReaderCards.Find(updatedReaderCard.id);
 
@@ -154,7 +139,6 @@ namespace LibraryManagement.Services
                 readerCard.employeeId = updatedReaderCard.employeeId;
                 readerCard.readerTypeId = updatedReaderCard.readerTypeId;
                 readerCard.totalFine = updatedReaderCard.totalFine;
-                readerCard.identityCard = updatedReaderCard.identityCard;
                 readerCard.email = updatedReaderCard.email;
                 readerCard.createdAt = updatedReaderCard.createdAt;
                 readerCard.expiryDate = updatedReaderCard.expiryDate;

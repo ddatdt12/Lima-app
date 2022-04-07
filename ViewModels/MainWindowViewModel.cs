@@ -128,24 +128,28 @@ namespace LibraryManagement.ViewModel
 
 
             // EMPLOYEEEE
-            //var newEmployee = new EmployeeDTO()
-            //{
-            //    username = "lephong",
-            //    password = "123456",
-            //    name = "Lee Phong",
-            //    phoneNumber = "09875123444",
-            //    birthDate = new DateTime(2002, 5, 26),
-            //    gender = "Nam", //Nam or Nữ
-            //    startingDate = DateTime.Now,
-            //    roleId = 1,
-            //    email = "20520594@gm.uit.edu.vn",
-            //};
+            var newEmployee = new EmployeeDTO()
+            {
+                name = "Lee Phong new",
+                phoneNumber = "09875123444",
+                birthDate = new DateTime(2002, 5, 26),
+                gender = "Nam", //Nam or Nữ
+                startingDate = DateTime.Now,
+                email = "20521111@gm.uit.edu.vn",
+                account = new AccountDTO
+                {
+                    username = "lephong",
+                    password = "123456",
+                    roleId = 1,
+                }
+            };
 
             //(bool success, string message) = EmployeeService.Ins.CreateNewEmployee(newEmployee);
-            ////(bool uupdateSuccess, string updateMessage) = EmployeeService.Ins.UpdateEmployee(newEmployee);
+            //var employees = EmployeeService.Ins.GetAllEmployees();
+            //newEmployee.id = "NV0002";
+            //newEmployee.accountId = 3;
+            //(bool uupdateSuccess, string updateMessage) = EmployeeService.Ins.UpdateEmployee(newEmployee);
             //(bool deleteSuccess, string deleteMessage) = EmployeeService.Ins.DeleteEmployee("NV0003");
-
-
 
             List<ReaderTypeDTO> readerTypeList = new List<ReaderTypeDTO>(){
                 new ReaderTypeDTO
@@ -162,10 +166,10 @@ namespace LibraryManagement.ViewModel
                 },
             };
 
-            readerTypeList.ForEach(r =>
-            {
-                ReaderTypeService.Ins.CreateReaderType(r);
-            });
+            //readerTypeList.ForEach(r =>
+            //{
+            //    ReaderTypeService.Ins.CreateReaderType(r);
+            //});
 
             var data = ReaderTypeService.Ins.GetAllReaderTypes();
 
@@ -303,9 +307,6 @@ namespace LibraryManagement.ViewModel
             //};
             //(bool isSuccess, string message) = EmployeeService.Ins.CreateNewEmployee(newEmployee);
             //var employees = EmployeeService.Ins.GetAllEmployees();
-
-
-
 
             // Import Book
 

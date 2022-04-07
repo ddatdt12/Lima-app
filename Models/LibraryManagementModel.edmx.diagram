@@ -4,51 +4,54 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7897bf7a5b174d0eb0aed6ab228a9a9e" Name="Diagram1" ZoomLevel="97">
-        <EntityTypeShape EntityType="LibraryManagementModel.Author" Width="1.5" PointX="1.5" PointY="23.375" />
-        <EntityTypeShape EntityType="LibraryManagementModel.BaseBook" Width="1.5" PointX="1.5" PointY="19.375" />
-        <EntityTypeShape EntityType="LibraryManagementModel.Book" Width="1.5" PointX="3.75" PointY="19.25" />
-        <EntityTypeShape EntityType="LibraryManagementModel.BookInfo" Width="1.5" PointX="6" PointY="19.5" />
-        <EntityTypeShape EntityType="LibraryManagementModel.BookReturnCard" Width="1.5" PointX="10.5" PointY="13.5" />
-        <EntityTypeShape EntityType="LibraryManagementModel.BorrowedGenreReport" Width="1.5" PointX="1.5" PointY="29" />
-        <EntityTypeShape EntityType="LibraryManagementModel.BorrowedGenreReportDetail" Width="1.5" PointX="3.75" PointY="24.875" />
-        <EntityTypeShape EntityType="LibraryManagementModel.BorrowingCard" Width="1.5" PointX="8.25" PointY="13" />
-        <EntityTypeShape EntityType="LibraryManagementModel.DelayReturnBookReport" Width="1.5" PointX="8.25" PointY="9.75" />
-        <EntityTypeShape EntityType="LibraryManagementModel.DelayReturnBookReportDetail" Width="1.5" PointX="10.5" PointY="10.5" />
-        <EntityTypeShape EntityType="LibraryManagementModel.Employee" Width="1.5" PointX="3" PointY="12.5" />
-        <EntityTypeShape EntityType="LibraryManagementModel.FineReceipt" Width="1.5" PointX="5.25" PointY="13.375" />
-        <EntityTypeShape EntityType="LibraryManagementModel.Genre" Width="1.5" PointX="1.5" PointY="26" />
-        <EntityTypeShape EntityType="LibraryManagementModel.ImportReceipt" Width="1.5" PointX="5.25" PointY="28.375" />
-        <EntityTypeShape EntityType="LibraryManagementModel.ImportReceiptDetail" Width="1.5" PointX="7.5" PointY="28.5" />
+      <Diagram DiagramId="7897bf7a5b174d0eb0aed6ab228a9a9e" Name="Diagram1" ZoomLevel="93">
+        <EntityTypeShape EntityType="LibraryManagementModel.Account" Width="1.5" PointX="3" PointY="13.625" />
+        <EntityTypeShape EntityType="LibraryManagementModel.Author" Width="1.5" PointX="1.5" PointY="20.125" />
+        <EntityTypeShape EntityType="LibraryManagementModel.BaseBook" Width="1.5" PointX="3.75" PointY="18.625" />
+        <EntityTypeShape EntityType="LibraryManagementModel.Book" Width="1.5" PointX="6" PointY="18.375" />
+        <EntityTypeShape EntityType="LibraryManagementModel.BookInfo" Width="1.5" PointX="8.25" PointY="18.75" />
+        <EntityTypeShape EntityType="LibraryManagementModel.BookReturnCard" Width="1.5" PointX="7.5" PointY="13.75" />
+        <EntityTypeShape EntityType="LibraryManagementModel.BorrowedGenreReport" Width="1.5" PointX="1.5" PointY="23.625" />
+        <EntityTypeShape EntityType="LibraryManagementModel.BorrowedGenreReportDetail" Width="1.5" PointX="3.75" PointY="22.5" />
+        <EntityTypeShape EntityType="LibraryManagementModel.BorrowingCard" Width="1.5" PointX="10.5" PointY="13.25" />
+        <EntityTypeShape EntityType="LibraryManagementModel.DelayReturnBookReport" Width="1.5" PointX="10.5" PointY="18" />
+        <EntityTypeShape EntityType="LibraryManagementModel.DelayReturnBookReportDetail" Width="1.5" PointX="12.75" PointY="13.75" />
+        <EntityTypeShape EntityType="LibraryManagementModel.Employee" Width="1.5" PointX="5.25" PointY="12.875" />
+        <EntityTypeShape EntityType="LibraryManagementModel.FineReceipt" Width="1.5" PointX="9.75" PointY="9.875" />
+        <EntityTypeShape EntityType="LibraryManagementModel.Genre" Width="1.5" PointX="1.5" PointY="17.625" />
+        <EntityTypeShape EntityType="LibraryManagementModel.ImportReceipt" Width="1.5" PointX="7.5" PointY="29" />
+        <EntityTypeShape EntityType="LibraryManagementModel.ImportReceiptDetail" Width="1.5" PointX="9.75" PointY="29" />
         <EntityTypeShape EntityType="LibraryManagementModel.Parameter" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="LibraryManagementModel.Permission" Width="1.5" PointX="0.75" PointY="8" />
-        <EntityTypeShape EntityType="LibraryManagementModel.ReaderCard" Width="1.5" PointX="5.25" PointY="7.5" />
-        <EntityTypeShape EntityType="LibraryManagementModel.ReaderType" Width="1.5" PointX="3" PointY="5.75" />
-        <EntityTypeShape EntityType="LibraryManagementModel.Role" Width="1.5" PointX="0.75" PointY="10.875" />
-        <EntityTypeShape EntityType="LibraryManagementModel.RoleDetail" Width="1.5" PointX="3" PointY="8.875" />
-        <AssociationConnector Association="LibraryManagementModel.FK__Book__baseBookId__5DCAEF64" />
+        <EntityTypeShape EntityType="LibraryManagementModel.Permission" Width="1.5" PointX="0.75" PointY="8.25" />
+        <EntityTypeShape EntityType="LibraryManagementModel.ReaderType" Width="1.5" PointX="5.25" PointY="8.875" />
+        <EntityTypeShape EntityType="LibraryManagementModel.Role" Width="1.5" PointX="0.75" PointY="11.125" />
+        <EntityTypeShape EntityType="LibraryManagementModel.RoleDetail" Width="1.5" PointX="3" PointY="10.125" />
+        <AssociationConnector Association="LibraryManagementModel.FK__Account__roleId__31EC6D26" />
+        <AssociationConnector Association="LibraryManagementModel.FK__Employee__accoun__36B12243" />
+        <AssociationConnector Association="LibraryManagementModel.FK__Book__baseBookId__49C3F6B7" />
         <AssociationConnector Association="LibraryManagementModel.FK_GENREID" />
-        <AssociationConnector Association="LibraryManagementModel.FK__ImportRec__bookI__6E01572D" />
+        <AssociationConnector Association="LibraryManagementModel.FK__ImportRec__bookI__5812160E" />
         <AssociationConnector Association="LibraryManagementModel.FK_BOOKINFO_BOOK" />
-        <AssociationConnector Association="LibraryManagementModel.FK__Borrowing__bookI__656C112C" />
+        <AssociationConnector Association="LibraryManagementModel.FK__Borrowing__bookI__5DCAEF64" />
         <AssociationConnector Association="LibraryManagementModel.FK__BookRetur__borro__619B8048" />
-        <AssociationConnector Association="LibraryManagementModel.FK__BookRetur__emplo__628FA481" />
-        <AssociationConnector Association="LibraryManagementModel.FK__BorrowedG__borro__6383C8BA" />
-        <AssociationConnector Association="LibraryManagementModel.FK__BorrowedG__genre__6477ECF3" />
-        <AssociationConnector Association="LibraryManagementModel.FK__Borrowing__emplo__66603565" />
-        <AssociationConnector Association="LibraryManagementModel.FK__Borrowing__reade__6754599E" />
-        <AssociationConnector Association="LibraryManagementModel.FK__DelayRetu__borro__68487DD7" />
-        <AssociationConnector Association="LibraryManagementModel.FK__DelayRetu__delay__693CA210" />
-        <AssociationConnector Association="LibraryManagementModel.FK__Employee__roleId__6A30C649" />
-        <AssociationConnector Association="LibraryManagementModel.FK__FineRecei__emplo__6B24EA82" />
-        <AssociationConnector Association="LibraryManagementModel.FK__ImportRec__emplo__6D0D32F4" />
-        <AssociationConnector Association="LibraryManagementModel.FK__ReaderCar__emplo__6FE99F9F" />
-        <AssociationConnector Association="LibraryManagementModel.FK__FineRecei__reade__6C190EBB" />
-        <AssociationConnector Association="LibraryManagementModel.FK__ImportRec__impor__6EF57B66" />
-        <AssociationConnector Association="LibraryManagementModel.FK__RoleDetai__permi__71D1E811" />
-        <AssociationConnector Association="LibraryManagementModel.FK__ReaderCar__reade__70DDC3D8" />
-        <AssociationConnector Association="LibraryManagementModel.FK__RoleDetai__roleI__72C60C4A" />
+        <AssociationConnector Association="LibraryManagementModel.FK__BookRetur__emplo__60A75C0F" />
+        <AssociationConnector Association="LibraryManagementModel.FK__BorrowedG__borro__6FE99F9F" />
+        <AssociationConnector Association="LibraryManagementModel.FK__BorrowedG__genre__6EF57B66" />
+        <AssociationConnector Association="LibraryManagementModel.FK__Borrowing__emplo__5BE2A6F2" />
+        <AssociationConnector Association="LibraryManagementModel.FK__DelayRetu__borro__75A278F5" />
+        <AssociationConnector Association="LibraryManagementModel.FK__DelayRetu__delay__76969D2E" />
+        <AssociationConnector Association="LibraryManagementModel.FK__FineRecei__emplo__656C112C" />
+        <AssociationConnector Association="LibraryManagementModel.FK__ImportRec__emplo__5535A963" />
+        <AssociationConnector Association="LibraryManagementModel.FK__ImportRec__impor__59063A47" />
+        <AssociationConnector Association="LibraryManagementModel.FK__RoleDetai__permi__2B3F6F97" />
+        <AssociationConnector Association="LibraryManagementModel.FK__RoleDetai__roleI__2A4B4B5E" />
         <AssociationConnector Association="LibraryManagementModel.Book_Author" />
+        <EntityTypeShape EntityType="LibraryManagementModel.ReaderCard" Width="1.5" PointX="7.5" PointY="7.625" />
+        <AssociationConnector Association="LibraryManagementModel.FK__ReaderCar__accou__3C69FB99" />
+        <AssociationConnector Association="LibraryManagementModel.FK__Borrowing__reade__5CD6CB2B" />
+        <AssociationConnector Association="LibraryManagementModel.FK__ReaderCar__emplo__3D5E1FD2" />
+        <AssociationConnector Association="LibraryManagementModel.FK__FineRecei__reade__66603565" />
+        <AssociationConnector Association="LibraryManagementModel.FK__ReaderCar__reade__3E52440B" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

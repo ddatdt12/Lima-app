@@ -1,4 +1,5 @@
-﻿using LibraryManagement.DTOs;
+﻿using CinemaManagement.Utils;
+using LibraryManagement.DTOs;
 using LibraryManagement.Models;
 using System;
 using System.Collections.Generic;
@@ -46,17 +47,17 @@ namespace LibraryManagement.Services
                                                    name = e.name,
                                                    email = e.email,
                                                    phoneNumber = e.phoneNumber,
-                                                   Role = new RoleDTO
-                                                   {
-                                                       id = e.Role.id,
-                                                       name = e.Role.name,
-                                                   },
-                                                   roleId = e.Role.id,
                                                    birthDate = e.birthDate,
                                                    gender = e.gender,
-                                                   password = e.password,
-                                                   username = e.username,
                                                    startingDate = e.startingDate,
+                                                   accountId = e.accountId,
+                                                   account = new AccountDTO
+                                                   {
+                                                       roleId = e.Account.roleId,
+                                                       password = e.Account.password,
+                                                       username = e.Account.username,
+                                                       Role = new RoleDTO { id = e.Account.roleId, name = e.Account.Role.name }
+                                                   }
                                                })
                                                .ToList();
                 return employees;
@@ -80,30 +81,41 @@ namespace LibraryManagement.Services
                 }
 
                 var emailIsExist = context.Employees.Where(e => e.email == employee.email).Any();
-                if (phoneNumberIsExist)
+                if (emailIsExist)
                 {
                     return (false, "Email đã đươc sử dụng");
                 }
 
-                var usernameIsExist = context.Employees.Where(e => e.username == employee.username).Any();
+                var usernameIsExist = context.Accounts.Where(e => e.username == employee.account.username).Any();
                 if (usernameIsExist)
                 {
                     return (false, "Username đã đươc sử dụng");
                 }
-                var maxId = context.Employees.Max(e => e.id);
+                var maxEmployeeId = context.Employees.Max(e => e.id);
+
+
+                var newAccount = new Account
+                {
+                    roleId = employee.account.roleId,
+                    password = Helper.MD5Hash(employee.account.password),
+                    username = employee.account.username,
+                };
+
+                context.Accounts.Add(newAccount);
+                context.SaveChanges();
+
                 var newEmployee = new Employee
                 {
-                    id = CreateEmployeeId(maxId),
+                    id = CreateEmployeeId(maxEmployeeId),
                     name = employee.name,
                     email = employee.email,
                     phoneNumber = employee.phoneNumber,
-                    roleId = employee.roleId,
                     birthDate = employee.birthDate,
                     gender = employee.gender,
-                    password = employee.password,
-                    username = employee.username,
                     startingDate = employee.startingDate,
+                    accountId = newAccount.id
                 };
+
                 context.Employees.Add(newEmployee);
                 context.SaveChanges();
 
@@ -131,15 +143,32 @@ namespace LibraryManagement.Services
                 {
                     return (false, "Nhân viên không tồn tại");
                 }
+                var acc = context.Accounts.Find(employee.accountId);
+
+
+                var emailIsExist = context.Employees.Where(e => e.id != updatedEmployee.id && e.email == employee.email).Any();
+                if (emailIsExist)
+                {
+                    return (false, "Email đã đươc sử dụng");
+                }
+
+                var usernameIsExist = context.Accounts.Where(a => a.id != updatedEmployee.accountId && a.username == updatedEmployee.account.username).Any();
+                if (usernameIsExist)
+                {
+                    return (false, "Username đã đươc sử dụng");
+                }
+
                 employee.name = updatedEmployee.name;
                 employee.email = updatedEmployee.email;
                 employee.phoneNumber = updatedEmployee.phoneNumber;
-                employee.roleId = updatedEmployee.roleId;
                 employee.birthDate = updatedEmployee.birthDate;
                 employee.gender = updatedEmployee.gender;
-                employee.password = updatedEmployee.password;
-                employee.username = updatedEmployee.username;
                 employee.startingDate = updatedEmployee.startingDate;
+
+                acc.username = updatedEmployee.account.username;
+                acc.password = Helper.MD5Hash(updatedEmployee.account.password);
+                acc.roleId = updatedEmployee.account.roleId;
+
                 context.SaveChanges();
                 return (true, "Cập nhật thành công!");
             }
