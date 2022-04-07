@@ -27,7 +27,6 @@ namespace LibraryManagement.Models
         public string email { get; set; }
         public System.DateTime birthDate { get; set; }
         public string gender { get; set; }
-        public string identityCard { get; set; }
         public System.DateTime createdAt { get; set; }
         public System.DateTime expiryDate { get; set; }
         public bool isDeleted { get; set; }

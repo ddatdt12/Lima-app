@@ -14,7 +14,6 @@ namespace LibraryManagement.DTOs
         public string email { get; set; }
         public DateTime birthDate { get; set; }
         public string gender { get; set; }
-        public string identityCard { get; set; }
         public DateTime createdAt { get; set; }
         public DateTime expiryDate { get; set; }
         public bool isDeleted { get; set; }

@@ -139,9 +139,9 @@ namespace LibraryManagement.ViewModel
 
             //(bool success, string message) = EmployeeService.Ins.CreateNewEmployee(newEmployee);
             //var employees = EmployeeService.Ins.GetAllEmployees();
-            newEmployee.id = "NV0002";
-            newEmployee.accountId = 3;
-            (bool uupdateSuccess, string updateMessage) = EmployeeService.Ins.UpdateEmployee(newEmployee);
+            //newEmployee.id = "NV0002";
+            //newEmployee.accountId = 3;
+            //(bool uupdateSuccess, string updateMessage) = EmployeeService.Ins.UpdateEmployee(newEmployee);
             //(bool deleteSuccess, string deleteMessage) = EmployeeService.Ins.DeleteEmployee("NV0003");
 
             List<ReaderTypeDTO> readerTypeList = new List<ReaderTypeDTO>(){
