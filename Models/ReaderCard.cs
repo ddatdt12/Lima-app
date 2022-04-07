@@ -33,8 +33,10 @@ namespace LibraryManagement.Models
         public bool isDeleted { get; set; }
         public Nullable<int> totalFine { get; set; }
         public int readerTypeId { get; set; }
+        public int accountId { get; set; }
         public string employeeId { get; set; }
     
+        public virtual Account Account { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BorrowingCard> BorrowingCards { get; set; }
         public virtual Employee Employee { get; set; }

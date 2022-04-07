@@ -32,7 +32,7 @@ namespace LibraryManagement.Services
             {
                 return "READER0001";
             }
-            string newIdString = $"0000{int.Parse(maxId.Substring(4)) + 1}";
+            string newIdString = $"0000{int.Parse(maxId.Substring(6)) + 1}";
             return "READER" + newIdString.Substring(newIdString.Length - 4, 4);
         }
         public List<ReaderCardDTO> GetAllReaderCards()

@@ -92,6 +92,9 @@
     <Compile Include="DTOs\RoleDetailsDTO.cs" />
     <Compile Include="DTOs\RoleDTO.cs" />
     <Compile Include="DTOs\GenreDTO.cs" />
+    <Compile Include="Models\Account.cs">
+      <DependentUpon>LibraryManagementModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Author.cs">
       <DependentUpon>LibraryManagementModel.tt</DependentUpon>
     </Compile>
