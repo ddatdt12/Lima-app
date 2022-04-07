@@ -78,6 +78,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DTOs\ReturnCardDTO.cs" />
+    <Compile Include="DTOs\BorrowingCardDTO.cs" />
     <Compile Include="DTOs\ReaderTypeDTO.cs" />
     <Compile Include="DTOs\ReaderCardDTO.cs" />
     <Compile Include="DTOs\AccountDTO.cs" />
@@ -174,6 +176,7 @@
     <Compile Include="Models\RoleDetail.cs">
       <DependentUpon>LibraryManagementModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\BorrowingReturnService.cs" />
     <Compile Include="Services\ReaderTypeService.cs" />
     <Compile Include="Services\ReaderService.cs" />
     <Compile Include="Services\BaseBookService.cs" />

@@ -66,58 +66,6 @@ namespace LibraryManagement.ViewModel
             //    GenreService.Ins.CreateNewGenre(gen);
             //});
 
-            //BOOK IMPORT
-            //List<BaseBookDTO> baseBookDTOs = new List<BaseBookDTO>()
-            //{
-            //    new BaseBookDTO
-            //    {
-            //        name = "Cho tôi xin một vé đi tuổi thơ",
-            //        genreId=5,
-            //        authors = new List<AuthorDTO> {
-            //        new AuthorDTO{ id=7},
-            //        new AuthorDTO{ id=2},
-            //        new AuthorDTO{ id=3}},
-            //    },
-            //    new BaseBookDTO
-            //    {
-            //        name = "Tôi Thấy Hoa Vàng Trên Cỏ Xanh",
-            //        genreId=5,
-            //        authors = new List<AuthorDTO> {
-            //        new AuthorDTO{ id=7}
-            //        },
-            //    },
-            //    new BaseBookDTO
-            //    {
-            //        name = " Tâm lý học và đời sống",
-            //        genreId=5,
-            //        authors = new List<AuthorDTO> {
-            //        new AuthorDTO{ id=7}
-            //        },
-            //    },
-            //    new BaseBookDTO
-            //    {
-            //        name = "Đắc nhân tâm",
-            //        genreId=3,
-            //        authors = new List<AuthorDTO> {
-            //        new AuthorDTO{ id=3}
-            //        },
-            //    },
-            //};
-
-            //foreach (var item in baseBookDTOs)
-            //{
-            //    (bool isSucess, string message) = BaseBookService.Ins.CreateBaseBook(item);
-            //}
-            //(bool isSuccess, string message) = BaseBookService.Ins.UpdateBaseBook(new BaseBookDTO
-            //{
-            //    id = "BB0001",
-            //    name = "Cho tôi xin một vé đi tuổi thơ",
-            //    genreId = 4,
-            //    authors = new List<AuthorDTO> {
-            //        new AuthorDTO{ id=7},
-            //        new AuthorDTO{ id=1},
-            //        new AuthorDTO{ id=2}},
-            //});
 
 
             // EMPLOYEEEE
@@ -159,10 +107,10 @@ namespace LibraryManagement.ViewModel
                 },
             };
 
-            readerTypeList.ForEach(r =>
-            {
-                ReaderTypeService.Ins.CreateReaderType(r);
-            });
+            //readerTypeList.ForEach(r =>
+            //{
+            //    ReaderTypeService.Ins.CreateReaderType(r);
+            //});
 
             var data = ReaderTypeService.Ins.GetAllReaderTypes();
 
@@ -184,14 +132,90 @@ namespace LibraryManagement.ViewModel
             //};
             //(bool isSuccess, string message) = ReaderService.Ins.CreateNewReaderCard(newReaderCard);
             (AccountDTO user, string mesasage) = AuthService.Ins.Login("READER0001", "READER0001");
-            var a = "";
+
+
+            //BOOK IMPORT
+            List<BaseBookDTO> baseBookDTOs = new List<BaseBookDTO>()
+            {
+                //new BaseBookDTO
+                //{
+                //    name = "Cho tôi xin một vé đi tuổi thơ",
+                //    genreId=5,
+                //    authors = new List<AuthorDTO> {
+                //    new AuthorDTO{ id=7},
+                //    new AuthorDTO{ id=2},
+                //    new AuthorDTO{ id=3}},
+                //},
+                //new BaseBookDTO
+                //{
+                //    name = "Tôi Thấy Hoa Vàng Trên Cỏ Xanh",
+                //    genreId=5,
+                //    authors = new List<AuthorDTO> {
+                //    new AuthorDTO{ id=7}
+                //    },
+                //},
+                //new BaseBookDTO
+                //{
+                //    name = " Tâm lý học và đời sống",
+                //    genreId=5,
+                //    authors = new List<AuthorDTO> {
+                //    new AuthorDTO{ id=7}
+                //    },
+                //},
+                //new BaseBookDTO
+                //{
+                //    name = "Đắc nhân tâm",
+                //    genreId=3,
+                //    authors = new List<AuthorDTO> {
+                //    new AuthorDTO{ id=3}
+                //    },
+                //},
+                new BaseBookDTO
+                {
+                    name = "Đừng Làm Việc Chăm Chỉ Hãy Làm Việc Thông Minh",
+                    genreId=3,
+                    authors = new List<AuthorDTO> {
+                    new AuthorDTO{ id=3},
+                    new AuthorDTO{ id=2}
+                    },
+                },
+                new BaseBookDTO
+                {
+                    name = "Nghệ Thuật Từ Chối – Cách Nói Không Mà Vẫn Có Được Đồng Thuận",
+                    genreId=5,
+                    authors = new List<AuthorDTO> {
+                    new AuthorDTO{ id=3},
+                    new AuthorDTO{ id=1}
+                    },
+                },
+            };
+
+            //foreach (var item in baseBookDTOs)
+            //{
+            //    (bool isSucess, string messageBase) = BaseBookService.Ins.CreateBaseBook(item);
+            //}
+            //(bool isSuccess, string message) = BaseBookService.Ins.UpdateBaseBook(new BaseBookDTO
+            //{
+            //    id = "BB0001",
+            //    name = "Cho tôi xin một vé đi tuổi thơ",
+            //    genreId = 4,
+            //    authors = new List<AuthorDTO> {
+            //        new AuthorDTO{ id=7},
+            //        new AuthorDTO{ id=1},
+            //        new AuthorDTO{ id=2}},
+            //});
+
+
+
             //var importReceiptDetailList = new List<ImportReceiptDetailDTO> {
             //    new ImportReceiptDetailDTO(){
             //        unitPrice=30000,
             //        quantity=10,
             //        book=  new BookDTO()
             //        {
-            //            id = "BOOK0002",
+            //              baseBookId = "BB0001",
+            //              yearOfPublication = 2016,
+            //            publisher = "Nhà xuất bản Trẻ",
             //            isNew = true,
             //        },
             //    },
@@ -200,7 +224,7 @@ namespace LibraryManagement.ViewModel
             //        quantity=15,
             //        book=  new BookDTO()
             //        {
-            //            baseBookId = "BB0003",
+            //            baseBookId = "BB0002",
             //            yearOfPublication = 2020,
             //            publisher = "Nhà xuất bản Trẻ",
             //            isNew = true,
@@ -211,12 +235,14 @@ namespace LibraryManagement.ViewModel
             //        quantity=12,
             //        book=  new BookDTO()
             //        {
-            //            id = "BOOK0001",
+            //            baseBookId = "BB0003",
+            //            yearOfPublication = 2022,
+            //            publisher = "Nhà xuất bản Trẻ",
+            //            isNew = true,
             //        },
             //    },
 
             //};
-
 
             //var imReceipt = new ImportReceiptDTO
             //{
@@ -301,8 +327,27 @@ namespace LibraryManagement.ViewModel
             //(bool isSuccess, string message) = EmployeeService.Ins.CreateNewEmployee(newEmployee);
             //var employees = EmployeeService.Ins.GetAllEmployees();
 
-            // Import Book
 
+
+            // Borrowing/Return Service
+            //int duration = ParameterService.Ins.GetRuleValue(Rules.VALIDITY_PERIOD_OF_CARD);
+            //BorrowingCardDTO cardDTO = new BorrowingCardDTO()
+            //{
+            //    readerCardId = "READER0001",
+            //    borrowingDate = DateTime.Now,
+            //    dueDate = DateTime.Now.AddDays(duration),
+            //    employeeId = "NV0001",
+            //};
+            //var bookInfoIdList = new List<string>()
+            //{
+            //    "BOOK0001_001",
+            //    "BOOK0002_002",
+            //    "BOOK0003_002",
+            //};
+            //(bool success, string message) = BorrowingReturnService.Ins.CreateBorrowingCard(cardDTO, bookInfoIdList);
+
+            var borrowingCardDTOs = BorrowingReturnService.Ins.GetBorrowingCardsByReaderId("READER0001");
+            var a = "";
         }
 
 

@@ -98,6 +98,52 @@ namespace LibraryManagement.Services
                 throw e;
             }
         }
+        public List<BookDTO> GetAllAvailableBook()
+        {
+            try
+            {
+                List<BookDTO> bookList = (from s in DataProvider.Ins.DB.Books
+                                          where !s.isDeleted && s.BookInfoes.Any(b => b.status)
+                                          select new BookDTO
+                                          {
+                                              id = s.id,
+                                              quantity = s.quantity,
+                                              publisher = s.publisher,
+                                              yearOfPublication = s.yearOfPublication,
+                                              baseBookId = s.baseBookId,
+                                              baseBook = new BaseBookDTO
+                                              {
+                                                  id = s.id,
+                                                  name = s.BaseBook.name,
+                                                  genre = new GenreDTO
+                                                  {
+                                                      id = s.BaseBook.Genre.id,
+                                                      name = s.BaseBook.Genre.name,
+                                                  },
+                                                  authors = s.BaseBook.Authors.Select(x => new AuthorDTO
+                                                  {
+                                                      id = x.id,
+                                                      name = x.name,
+                                                      birthDate = x.birthDate ?? DateTime.Now
+                                                  }).ToList(),
+                                              },
+                                              bookInfoes = s.BookInfoes
+                                              .Where(bI => !bI.isDeleted && bI.status)
+                                              .Select(bI =>
+                                              new BookInfoDTO
+                                              {
+                                                  id = bI.id,
+                                                  BookId = bI.bookId,
+                                                  status = bI.status
+                                              }).ToList()
+                                          }).ToList();
+                return bookList;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
 
         public void CreateBookInfoList(LibraryManagementEntities context, string bookId, int quantity)
         {

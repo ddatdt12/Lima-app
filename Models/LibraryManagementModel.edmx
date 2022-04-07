@@ -67,6 +67,7 @@
           <Property Name="borrowingCardId" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="returnedDate" Type="datetime" Nullable="false" />
           <Property Name="employeeId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="fine" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="BorrowedGenreReport">
           <Key>
@@ -858,6 +859,7 @@
           <Property Name="employeeId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="BorrowingCard" Relationship="LibraryManagementModel.FK__BookRetur__borro__619B8048" FromRole="BookReturnCard" ToRole="BorrowingCard" />
           <NavigationProperty Name="Employee" Relationship="LibraryManagementModel.FK__BookRetur__emplo__60A75C0F" FromRole="BookReturnCard" ToRole="Employee" />
+          <Property Name="fine" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="BorrowedGenreReport">
           <Key>
@@ -1400,6 +1402,7 @@
           <EntitySetMapping Name="BookReturnCards">
             <EntityTypeMapping TypeName="LibraryManagementModel.BookReturnCard">
               <MappingFragment StoreEntitySet="BookReturnCard">
+                <ScalarProperty Name="fine" ColumnName="fine" />
                 <ScalarProperty Name="employeeId" ColumnName="employeeId" />
                 <ScalarProperty Name="returnedDate" ColumnName="returnedDate" />
                 <ScalarProperty Name="borrowingCardId" ColumnName="borrowingCardId" />

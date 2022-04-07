@@ -18,6 +18,7 @@ namespace LibraryManagement.Models
         public string borrowingCardId { get; set; }
         public System.DateTime returnedDate { get; set; }
         public string employeeId { get; set; }
+        public int fine { get; set; }
     
         public virtual BorrowingCard BorrowingCard { get; set; }
         public virtual Employee Employee { get; set; }

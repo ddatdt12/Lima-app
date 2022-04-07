@@ -53,7 +53,7 @@ namespace LibraryManagement.Services
                 {
                     return (false, "Loại độc giả đã tồn tại!");
                 }
-                var newReaderType = new ReaderType { id = readerType.id, name = readerType.name };
+                var newReaderType = new ReaderType { name = readerType.name };
                 context.ReaderTypes.Add(newReaderType);
                 context.SaveChanges();
                 readerType.id = newReaderType.id;
