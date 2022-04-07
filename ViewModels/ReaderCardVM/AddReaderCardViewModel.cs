@@ -1,6 +1,9 @@
-﻿using LibraryManagement.ViewModels;
+﻿using LibraryManagement.DTOs;
+using LibraryManagement.Services;
+using LibraryManagement.ViewModels;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace LibraryManagement.ViewModel.ReaderCardVM
 {
@@ -40,8 +43,8 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             set { _IdCard = value; OnPropertyChanged(); }
         }
 
-        private String _Birthday;
-        public String Birthday
+        private DateTime _Birthday;
+        public DateTime Birthday
         {
             get { return _Birthday; }
             set { _Birthday = value; OnPropertyChanged(); }
@@ -75,38 +78,29 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             set { _ReaderType = value; OnPropertyChanged(); }
         }
 
-        private ObservableCollection<String> _GenreList = new ObservableCollection<string>();
-
-        public ObservableCollection<String> GenreList
+        private string _Sex;
+        public string Sex
         {
-            get 
-            {
-
-                _GenreList.Add("Lê Hải Phong");
-                _GenreList.Add("Trần Đình Khôi");
-                _GenreList.Add("Đồ Thành Đạt");
-                _GenreList.Add("Kiều Bá Dương");
-                _GenreList.Add("Nguyễn Ngọc Trinh");
-                return _GenreList; 
-            }
-            set { _GenreList = value; OnPropertyChanged(); }
-        }
-
-        public void CreatGenreList()
-        {
-            GenreList = new ObservableCollection<String>();
+            get { return _Sex; }
+            set { _Sex = value; OnPropertyChanged(); }
         }
 
         public System.Threading.Tasks.Task OpenAddReaderWindow(System.Windows.Window p)
         {
-            ReaderCard reader = new ReaderCard();
-            reader.id = ReaderCode;
-            reader.name = Name;
-            reader.idCard = IdCard;
-            reader.type = ReaderType;
-            reader.registrationDate = StartDate.ToString();
-            reader.expirationDate = FinishDate.ToString();
-
+            ReaderCardDTO reader = new ReaderCardDTO();
+            reader.name = Name; 
+            reader.address = Adress;
+            reader.employeeId = "NV0001";
+            var findIdReader = ListGenre.FirstOrDefault(s => s.name == ReaderType);
+            reader.readerTypeId = ListGenre[ListGenre.IndexOf(findIdReader)].id;
+            reader.totalFine = 100;
+            reader.identityCard = IdCard;
+            reader.email = Email;
+            reader.createdAt = StartDate;
+            reader.expiryDate = FinishDate;
+            reader.gender = Sex;
+            reader.birthDate = Birthday;
+            (bool Successful, string message) = ReaderService.Ins.CreateNewReaderCard(reader);
             ListReaderCard.Add(reader);
             p.Close();
             return System.Threading.Tasks.Task.CompletedTask;

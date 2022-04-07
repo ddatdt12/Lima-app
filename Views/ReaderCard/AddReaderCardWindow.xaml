@@ -244,7 +244,7 @@
                                   x:Name="ReaderType"
                                   Margin="0,20,0,0"
                                   FontSize="15"
-                                  ItemsSource="{Binding GenreList}"
+                                  ItemsSource="{Binding ListReaderType}"
                                   materialDesign:HintAssist.Hint="Chọn loại độc giả"/>
                     </StackPanel>
                     <StackPanel Margin="233,20,0,0">

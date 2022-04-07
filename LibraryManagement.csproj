@@ -190,6 +190,8 @@
     <Compile Include="ViewModels\Genre_AuthorManagementVM\Genre_AuthorManagementViewModel.cs" />
     <Compile Include="ViewModels\ImportBookVM\ImportBookViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\ReaderCardVM\AddReaderCardViewModel.cs" />
+    <Compile Include="ViewModels\ReaderCardVM\ReaderCardViewModel.cs" />
     <Compile Include="ViewModels\SettingVM\GeneralSetting.cs" />
     <Compile Include="ViewModels\SettingVM\RoleSetting.cs" />
     <Compile Include="ViewModels\SettingVM\SettingViewModel.cs" />
@@ -231,6 +233,12 @@
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReaderCard\AddReaderCardWindow.xaml.cs">
+      <DependentUpon>AddReaderCardWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReaderCard\ReaderCardPage.xaml.cs">
+      <DependentUpon>ReaderCardPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingManagement\AddRoleWindow.xaml.cs">
       <DependentUpon>AddRoleWindow.xaml</DependentUpon>
@@ -318,6 +326,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ReaderCard\AddReaderCardWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ReaderCard\ReaderCardPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\SettingManagement\AddRoleWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -371,6 +387,39 @@
       <DependentUpon>LibraryManagementModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
+    <None Include="packages\EntityFramework.6.2.0\.signature.p7s" />
+    <None Include="packages\EntityFramework.6.2.0\content\net40\App.config.transform" />
+    <None Include="packages\EntityFramework.6.2.0\content\net40\Web.config.transform" />
+    <None Include="packages\EntityFramework.6.2.0\EntityFramework.6.2.0.nupkg" />
+    <None Include="packages\EntityFramework.6.2.0\tools\EntityFramework.psd1" />
+    <None Include="packages\EntityFramework.6.2.0\tools\EntityFramework.psm1" />
+    <None Include="packages\EntityFramework.6.2.0\tools\init.ps1" />
+    <None Include="packages\EntityFramework.6.2.0\tools\install.ps1" />
+    <None Include="packages\MaterialDesignColors.2.0.4\.signature.p7s" />
+    <None Include="packages\MaterialDesignColors.2.0.4\MaterialDesignColors.2.0.4.nupkg" />
+    <None Include="packages\MaterialDesignThemes.4.3.0\.signature.p7s" />
+    <None Include="packages\MaterialDesignThemes.4.3.0\build\MaterialDesignThemes.targets" />
+    <Resource Include="packages\MaterialDesignThemes.4.3.0\build\Resources\Roboto\Roboto-Black.ttf" />
+    <Resource Include="packages\MaterialDesignThemes.4.3.0\build\Resources\Roboto\Roboto-BlackItalic.ttf" />
+    <Resource Include="packages\MaterialDesignThemes.4.3.0\build\Resources\Roboto\Roboto-Bold.ttf" />
+    <Resource Include="packages\MaterialDesignThemes.4.3.0\build\Resources\Roboto\Roboto-BoldItalic.ttf" />
+    <Resource Include="packages\MaterialDesignThemes.4.3.0\build\Resources\Roboto\Roboto-Italic.ttf" />
+    <Resource Include="packages\MaterialDesignThemes.4.3.0\build\Resources\Roboto\Roboto-Light.ttf" />
+    <Resource Include="packages\MaterialDesignThemes.4.3.0\build\Resources\Roboto\Roboto-LightItalic.ttf" />
+    <Resource Include="packages\MaterialDesignThemes.4.3.0\build\Resources\Roboto\Roboto-Medium.ttf" />
+    <Resource Include="packages\MaterialDesignThemes.4.3.0\build\Resources\Roboto\Roboto-MediumItalic.ttf" />
+    <Resource Include="packages\MaterialDesignThemes.4.3.0\build\Resources\Roboto\Roboto-Regular.ttf" />
+    <Resource Include="packages\MaterialDesignThemes.4.3.0\build\Resources\Roboto\Roboto-Thin.ttf" />
+    <Resource Include="packages\MaterialDesignThemes.4.3.0\build\Resources\Roboto\Roboto-ThinItalic.ttf" />
+    <Resource Include="packages\MaterialDesignThemes.4.3.0\build\Resources\Roboto\RobotoCondensed-Bold.ttf" />
+    <Resource Include="packages\MaterialDesignThemes.4.3.0\build\Resources\Roboto\RobotoCondensed-BoldItalic.ttf" />
+    <Resource Include="packages\MaterialDesignThemes.4.3.0\build\Resources\Roboto\RobotoCondensed-Italic.ttf" />
+    <Resource Include="packages\MaterialDesignThemes.4.3.0\build\Resources\Roboto\RobotoCondensed-Light.ttf" />
+    <Resource Include="packages\MaterialDesignThemes.4.3.0\build\Resources\Roboto\RobotoCondensed-LightItalic.ttf" />
+    <Resource Include="packages\MaterialDesignThemes.4.3.0\build\Resources\Roboto\RobotoCondensed-Regular.ttf" />
+    <None Include="packages\MaterialDesignThemes.4.3.0\MaterialDesignThemes.4.3.0.nupkg" />
+    <None Include="packages\System.Windows.Interactivity.WPF.2.0.20525\.signature.p7s" />
+    <None Include="packages\System.Windows.Interactivity.WPF.2.0.20525\System.Windows.Interactivity.WPF.2.0.20525.nupkg" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -396,6 +445,35 @@
       <DependentUpon>LibraryManagementModel.edmx</DependentUpon>
       <LastGenOutput>LibraryManagementModel.cs</LastGenOutput>
     </Content>
+    <Content Include="packages\EntityFramework.6.2.0\lib\net40\EntityFramework.dll" />
+    <Content Include="packages\EntityFramework.6.2.0\lib\net40\EntityFramework.SqlServer.dll" />
+    <Resource Include="packages\EntityFramework.6.2.0\lib\net40\EntityFramework.SqlServer.xml" />
+    <Resource Include="packages\EntityFramework.6.2.0\lib\net40\EntityFramework.xml" />
+    <Content Include="packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll" />
+    <Content Include="packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll" />
+    <Resource Include="packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.xml" />
+    <Resource Include="packages\EntityFramework.6.2.0\lib\net45\EntityFramework.xml" />
+    <Resource Include="packages\EntityFramework.6.2.0\tools\about_EntityFramework.help.txt" />
+    <Content Include="packages\EntityFramework.6.2.0\tools\EntityFramework.PowerShell.dll" />
+    <Content Include="packages\EntityFramework.6.2.0\tools\EntityFramework.PowerShell.Utility.dll" />
+    <Content Include="packages\EntityFramework.6.2.0\tools\migrate.exe" />
+    <Resource Include="packages\MaterialDesignColors.2.0.4\images\MaterialDesignColors.Icon.png" />
+    <Content Include="packages\MaterialDesignColors.2.0.4\lib\net452\MaterialDesignColors.dll" />
+    <Content Include="packages\MaterialDesignColors.2.0.4\lib\net452\MaterialDesignColors.pdb" />
+    <Content Include="packages\MaterialDesignColors.2.0.4\lib\netcoreapp3.1\MaterialDesignColors.dll" />
+    <Content Include="packages\MaterialDesignColors.2.0.4\lib\netcoreapp3.1\MaterialDesignColors.pdb" />
+    <Resource Include="packages\MaterialDesignThemes.4.3.0\images\MaterialDesignThemes.Icon.png" />
+    <Content Include="packages\MaterialDesignThemes.4.3.0\lib\net452\MaterialDesignThemes.Wpf.dll" />
+    <Content Include="packages\MaterialDesignThemes.4.3.0\lib\net452\MaterialDesignThemes.Wpf.pdb" />
+    <Resource Include="packages\MaterialDesignThemes.4.3.0\lib\net452\MaterialDesignThemes.Wpf.xml" />
+    <Content Include="packages\MaterialDesignThemes.4.3.0\lib\netcoreapp3.1\MaterialDesignThemes.Wpf.dll" />
+    <Content Include="packages\MaterialDesignThemes.4.3.0\lib\netcoreapp3.1\MaterialDesignThemes.Wpf.pdb" />
+    <Resource Include="packages\MaterialDesignThemes.4.3.0\lib\netcoreapp3.1\MaterialDesignThemes.Wpf.xml" />
+    <Resource Include="packages\MaterialDesignThemes.4.3.0\tools\VisualStudioToolsManifest.xml" />
+    <Content Include="packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll" />
+    <Resource Include="packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.xml" />
+    <Content Include="packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll" />
+    <Resource Include="packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\MaterialDesignThemes.4.3.0\build\MaterialDesignThemes.targets" Condition="Exists('packages\MaterialDesignThemes.4.3.0\build\MaterialDesignThemes.targets')" />
