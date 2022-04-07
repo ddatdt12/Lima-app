@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using LibraryManagement.Views.ReaderCard;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace LibraryManagement.View.ReaderCard
@@ -17,6 +18,12 @@ namespace LibraryManagement.View.ReaderCard
         {
             AddReaderCardWindow addReaderCardWindow = new AddReaderCardWindow();
             addReaderCardWindow.ShowDialog();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            AddReaderTypeWindow addReaderTypeWindow = new AddReaderTypeWindow();
+            addReaderTypeWindow.ShowDialog();
         }
     }
 }

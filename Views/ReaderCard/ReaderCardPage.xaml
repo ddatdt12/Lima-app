@@ -65,7 +65,25 @@
                     </Border>
                 </Grid>
                 <StackPanel Orientation="Horizontal"
-                            Margin="300,0,0,0">
+                            Margin="130,0,0,0">
+                    <Button Margin="30,5,0,0"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                            Background="#0266FD"
+                            Foreground="White"
+                            Height="42"
+                            Width="148"
+                            FontSize="16"
+                            materialDesign:ButtonAssist.CornerRadius="15"
+                            Style="{StaticResource MaterialDesignFlatAccentBgButton}"
+                            Click="Button_Click_1">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Plus"
+                                                     Margin="0,0,5,0"
+                                                     Height="23"
+                                                     Width="23" />
+                            <TextBlock Text="Loại độc giả" />
+                        </StackPanel>
+                    </Button>
                     <Button Click="Button_Click"
                             Margin="30,5,0,0"
                             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
@@ -81,7 +99,7 @@
                                                      Margin="0,0,5,0"
                                                      Height="23"
                                                      Width="23" />
-                            <TextBlock Text="Tạo mới" />
+                            <TextBlock Text="Tạo thẻ" />
                         </StackPanel>
                     </Button>
                     <Button Margin="30,5,0,0"
@@ -145,16 +163,6 @@
                                     <TextBlock Text="{Binding birthDate}"
                                                FontSize="16"
                                                Margin="8,0,0,0" />
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="CMND/CCCD"
-                                        Width="145">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding identityCard}"
-                                               FontSize="16"
-                                               Margin="18,0,0,0" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

@@ -18,16 +18,6 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             set { _listReaderCard = value;OnPropertyChanged(); }
         }
 
-        private ObservableCollection<String> _ListReaderType;
-
-        public ObservableCollection<String> ListReaderType
-        {
-            get { return _ListReaderType; }
-            set { _ListReaderType = value; OnPropertyChanged(); }
-        }
-
-        private ObservableCollection<ReaderTypeDTO> ListGenre;
-
         #region
         public ICommand SelectedDateCM { get; set; }
         public ICommand AddReaderCard { get; set; }
@@ -36,12 +26,7 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
         public ReaderCardViewModel()
         {
             ListReaderCard = new ObservableCollection<ReaderCardDTO>(ReaderService.Ins.GetAllReaderCards());
-            ListGenre = new ObservableCollection<ReaderTypeDTO>(ReaderTypeService.Ins.GetAllReaderTypes());
-            ListReaderType = new ObservableCollection<String>();
-            foreach (ReaderTypeDTO readerType in ListGenre)
-            {
-                ListReaderType.Add(readerType.name);
-            }
+            ListReaderType = new ObservableCollection<ReaderTypeDTO>(ReaderTypeService.Ins.GetAllReaderTypes());
             StartDate = DateTime.Now;
             FinishDate = StartDate.AddDays(30);
             SelectedDateCM = new RelayCommand<object>((p) => { return true; },(p) =>
@@ -51,7 +36,7 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
 
             AddReaderCard = new RelayCommand<System.Windows.Window>((p) => { return true; }, async (p) =>
             {
-                await OpenAddReaderWindow(p);
+                await AddReader(p);
             });
 
 ;        }

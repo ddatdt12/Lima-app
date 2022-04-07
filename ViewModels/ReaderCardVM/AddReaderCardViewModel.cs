@@ -36,13 +36,6 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             set { _Name = value; OnPropertyChanged(); }
         }
 
-        private String _IdCard;
-        public String IdCard
-        {
-            get { return _IdCard; }
-            set { _IdCard = value; OnPropertyChanged(); }
-        }
-
         private DateTime _Birthday;
         public DateTime Birthday
         {
@@ -71,13 +64,6 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             set { _Adress = value; OnPropertyChanged(); }
         }
 
-        private string _ReaderType;
-        public string ReaderType
-        {
-            get { return _ReaderType; }
-            set { _ReaderType = value; OnPropertyChanged(); }
-        }
-
         private string _Sex;
         public string Sex
         {
@@ -85,16 +71,15 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             set { _Sex = value; OnPropertyChanged(); }
         }
 
-        public System.Threading.Tasks.Task OpenAddReaderWindow(System.Windows.Window p)
+        public System.Threading.Tasks.Task AddReader(System.Windows.Window p)
         {
             ReaderCardDTO reader = new ReaderCardDTO();
             reader.name = Name; 
             reader.address = Adress;
             reader.employeeId = "NV0001";
-            var findIdReader = ListGenre.FirstOrDefault(s => s.name == ReaderType);
-            reader.readerTypeId = ListGenre[ListGenre.IndexOf(findIdReader)].id;
+            var findIdReader = ListReaderType.FirstOrDefault(s => s.name == ReaderType);
+            reader.readerTypeId = ListReaderType[ListReaderType.IndexOf(findIdReader)].id;
             reader.totalFine = 100;
-            reader.identityCard = IdCard;
             reader.email = Email;
             reader.createdAt = StartDate;
             reader.expiryDate = FinishDate;

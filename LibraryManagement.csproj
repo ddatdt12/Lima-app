@@ -194,6 +194,7 @@
     <Compile Include="ViewModels\ImportBookVM\ImportBookViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\ReaderCardVM\AddReaderCardViewModel.cs" />
+    <Compile Include="ViewModels\ReaderCardVM\AddReaderTypeViewModel.cs" />
     <Compile Include="ViewModels\ReaderCardVM\ReaderCardViewModel.cs" />
     <Compile Include="ViewModels\SettingVM\GeneralSetting.cs" />
     <Compile Include="ViewModels\SettingVM\RoleSetting.cs" />
@@ -239,6 +240,9 @@
     </Compile>
     <Compile Include="Views\ReaderCard\AddReaderCardWindow.xaml.cs">
       <DependentUpon>AddReaderCardWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReaderCard\AddReaderTypeWindow.xaml.cs">
+      <DependentUpon>AddReaderTypeWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ReaderCard\ReaderCardPage.xaml.cs">
       <DependentUpon>ReaderCardPage.xaml</DependentUpon>
@@ -332,6 +336,10 @@
     <Page Include="Views\ReaderCard\AddReaderCardWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ReaderCard\AddReaderTypeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ReaderCard\ReaderCardPage.xaml">
       <Generator>MSBuild:Compile</Generator>
