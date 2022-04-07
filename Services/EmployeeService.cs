@@ -56,7 +56,7 @@ namespace LibraryManagement.Services
                                                        roleId = e.Account.roleId,
                                                        password = e.Account.password,
                                                        username = e.Account.username,
-                                                       Role = new RoleDTO { id = e.Account.roleId, name = e.Account.Role.name }
+                                                       role = new RoleDTO { id = e.Account.roleId, name = e.Account.Role.name }
                                                    }
                                                })
                                                .ToList();

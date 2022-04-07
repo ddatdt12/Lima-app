@@ -89,7 +89,7 @@
     <Compile Include="DTOs\BookInfoDTO.cs" />
     <Compile Include="DTOs\EmployeeDTO.cs" />
     <Compile Include="DTOs\PermissionDTO.cs" />
-    <Compile Include="DTOs\RoleDetailsDTO.cs" />
+    <Compile Include="DTOs\RoleDetailDTO.cs" />
     <Compile Include="DTOs\RoleDTO.cs" />
     <Compile Include="DTOs\GenreDTO.cs" />
     <Compile Include="Models\Account.cs">

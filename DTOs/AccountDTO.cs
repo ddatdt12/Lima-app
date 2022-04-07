@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibraryManagement.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,8 @@ namespace LibraryManagement.DTOs
         public string username { get; set; }
         public string password { get; set; }
         public int roleId { get; set; }
-        public RoleDTO Role { get; set; }
+        public AccountType type { get; set; } // "ReaderCard" or "Employee"
+        public RoleDTO role { get; set; }
+
     }
 }

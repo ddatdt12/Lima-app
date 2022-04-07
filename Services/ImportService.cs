@@ -2,8 +2,6 @@
 using LibraryManagement.Models;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Validation;
 using System.Linq;
 
 
@@ -114,11 +112,9 @@ namespace LibraryManagement.Services
             }
             catch (Exception e)
             {
-                var statusCode = e.Data.Keys.Cast<int>().Single();  // retrieves "3"
-                if (statusCode == 400)
+                var statusCode = e.Data.Keys.Cast<int>().Single(); 
                 {
-                    var statusMessage = e.Data[statusCode].ToString();  // retrieves "Invalid Parameters"
-
+                    var statusMessage = e.Data[statusCode].ToString(); 
                     return (false, statusMessage);
                 }
                 return (false, "Lỗi hệ thống");

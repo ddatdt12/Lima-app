@@ -23,5 +23,7 @@ namespace LibraryManagement.DTOs
 
         public EmployeeDTO employee { get; set; }
         public ReaderTypeDTO readerType { get; set; }
+        public AccountDTO account { get; set; }
+
     }
 }
