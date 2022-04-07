@@ -166,10 +166,10 @@ namespace LibraryManagement.ViewModel
                 },
             };
 
-            //readerTypeList.ForEach(r =>
-            //{
-            //    ReaderTypeService.Ins.CreateReaderType(r);
-            //});
+            readerTypeList.ForEach(r =>
+            {
+                ReaderTypeService.Ins.CreateReaderType(r);
+            });
 
             var data = ReaderTypeService.Ins.GetAllReaderTypes();
 
@@ -182,7 +182,6 @@ namespace LibraryManagement.ViewModel
             //    name = "Đạt ĐỖ",
             //    address = "Kí túc xá khu A",
             //    readerTypeId = 1,
-            //    identityCard = "215575330",
             //    email = "datrumqn@gmail.com",
             //    createdAt = createdAt,
             //    expiryDate = createdAt.AddMonths(duration),
@@ -191,6 +190,7 @@ namespace LibraryManagement.ViewModel
             //    employeeId = "NV0001",
             //};
             //(bool isSuccess, string message) = ReaderService.Ins.CreateNewReaderCard(newReaderCard);
+            (AccountDTO user, string mesasage) = AuthService.Ins.Login("READER0001", "READER0001");
             var a = "";
             //var importReceiptDetailList = new List<ImportReceiptDetailDTO> {
             //    new ImportReceiptDetailDTO(){

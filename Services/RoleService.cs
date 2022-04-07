@@ -39,7 +39,7 @@ namespace LibraryManagement.Services
                          id = s.id,
                          name = s.name,
                          roleDetaislList = s.RoleDetails.Select(rD =>
-                          new RoleDetailsDTO
+                          new RoleDetailDTO
                           {
                               roleId = rD.roleId,
                               isPermitted = rD.isPermitted,
@@ -121,14 +121,14 @@ namespace LibraryManagement.Services
                     {
                         if (role.roleDetaislList is null)
                         {
-                            role.roleDetaislList = new List<RoleDetailsDTO>();
+                            role.roleDetaislList = new List<RoleDetailDTO>();
                         }
                         permissionIds.ForEach(p =>
                         {
                             int isPermissionExist = role.roleDetaislList.FindIndex(rD => rD.permissionId == p);
                             if (isPermissionExist == -1)
                             {
-                                role.roleDetaislList.Add(new RoleDetailsDTO { permissionId = p, isPermitted = false, });
+                                role.roleDetaislList.Add(new RoleDetailDTO { permissionId = p, isPermitted = false, });
                             }
                         });
                     }
@@ -187,7 +187,7 @@ namespace LibraryManagement.Services
             }
 
         }
-        public (bool, string message) EditRolePermission(int roleId, List<RoleDetailsDTO> roleDetaislList)
+        public (bool, string message) EditRolePermission(int roleId, List<RoleDetailDTO> roleDetaislList)
         {
             try
             {
@@ -209,7 +209,7 @@ namespace LibraryManagement.Services
                         int isPermissionExist = roleDetaislList.FindIndex(rD => rD.permissionId == p);
                         if (isPermissionExist == -1)
                         {
-                            roleDetaislList.Add(new RoleDetailsDTO { permissionId = p, isPermitted = false });
+                            roleDetaislList.Add(new RoleDetailDTO { permissionId = p, isPermitted = false });
                         }
                     });
                 }

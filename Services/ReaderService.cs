@@ -1,4 +1,5 @@
-﻿using LibraryManagement.DTOs;
+﻿using CinemaManagement.Utils;
+using LibraryManagement.DTOs;
 using LibraryManagement.Models;
 using System;
 using System.Collections.Generic;
@@ -75,48 +76,66 @@ namespace LibraryManagement.Services
 
         public (bool, string message) CreateNewReaderCard(ReaderCardDTO readerCard)
         {
-            try
+            LibraryManagementEntities context = DataProvider.Ins.DB;
+            using (DbContextTransaction transaction = context.Database.BeginTransaction())
             {
-                LibraryManagementEntities context = DataProvider.Ins.DB;
-                var emailExist = context.ReaderCards
+                try
+                {
+                    var emailExist = context.ReaderCards
                     .Where(g => g.expiryDate > DateTime.Now && g.email == readerCard.email).Any();
 
-                if (emailExist)
-                {
-                    return (false, "Email đã được sử dụng");
+                    if (emailExist)
+                    {
+                        return (false, "Email đã được sử dụng");
+                    }
+
+                    string maxId = context.ReaderCards.Max(r => r.id);
+
+                    string readerCardId = CreateReaderCardId(maxId);
+
+                    var newAccount = new Account
+                    {
+                        roleId = 2, // Độc giả
+                        username = readerCardId,
+                        password = Helper.MD5Hash(readerCardId),
+                    };
+                    context.Accounts.Add(newAccount);
+                    context.SaveChanges();
+                    var newReaderCard = new ReaderCard
+                    {
+                        id = readerCardId,
+                        name = readerCard.name,
+                        address = readerCard.address,
+                        employeeId = readerCard.employeeId,
+                        readerTypeId = readerCard.readerTypeId,
+                        totalFine = readerCard.totalFine,
+                        email = readerCard.email,
+                        createdAt = readerCard.createdAt,
+                        expiryDate = readerCard.expiryDate,
+                        gender = readerCard.gender,
+                        birthDate = readerCard.birthDate,
+                        accountId = newAccount.id,
+                    };
+
+                    context.ReaderCards.Add(newReaderCard);
+                    context.SaveChanges();
+                    transaction.Commit();
+                    readerCard.id = newReaderCard.id;
+                    readerCard.account = new AccountDTO
+                    {
+                        roleId = 2, // Độc giả
+                        username = newAccount.username,
+                        type = Utils.AccountType.READER_CARD
+                    };
+                    return (true, "Thêm thẻ độc giả thành công");
                 }
-
-                string maxId = context.ReaderCards.Max(r => r.id);
-
-                var newReaderCard = new ReaderCard
+                catch (Exception e)
                 {
-                    id = CreateReaderCardId(maxId),
-                    name = readerCard.name,
-                    address = readerCard.address,
-                    employeeId = readerCard.employeeId,
-                    readerTypeId = readerCard.readerTypeId,
-                    totalFine = readerCard.totalFine,
-                    email = readerCard.email,
-                    createdAt = readerCard.createdAt,
-                    expiryDate = readerCard.expiryDate,
-                    gender = readerCard.gender,
-                    birthDate = readerCard.birthDate,
-                };
+                    transaction.Rollback();
+                    return (false, "Lỗi hệ thống");
+                }
+            }
 
-                context.ReaderCards.Add(newReaderCard);
-                context.SaveChanges();
-                readerCard.id = newReaderCard.id;
-                return (true, "Thêm tác giả thành công");
-            }
-            catch (DbEntityValidationException e)
-            {
-                return (false, e.Message);
-
-            }
-            catch (DbUpdateException e)
-            {
-                return (false, e?.InnerException.Message);
-            }
         }
 
         public (bool, string message) UpdateReaderCard(ReaderCardDTO updatedReaderCard)
