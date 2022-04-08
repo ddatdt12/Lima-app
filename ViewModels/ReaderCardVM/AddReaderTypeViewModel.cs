@@ -30,23 +30,13 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
 
         public ICommand AddReaderType { get; set; }
 
-        public System.Threading.Tasks.Task OpenAddReaderWindow(System.Windows.Window p)
+        public System.Threading.Tasks.Task AddGenre()
         {
-            ReaderCardDTO reader = new ReaderCardDTO();
-            reader.name = Name;
-            reader.address = Adress;
-            reader.employeeId = "NV0001";
-            var findIdReader = ListReaderType.FirstOrDefault(s => s.name == ReaderType);
-            reader.readerTypeId = ListReaderType[ListReaderType.IndexOf(findIdReader)].id;
-            reader.totalFine = 100;
-            reader.email = Email;
-            reader.createdAt = StartDate;
-            reader.expiryDate = FinishDate;
-            reader.gender = Sex;
-            reader.birthDate = Birthday;
-            (bool Successful, string message) = ReaderService.Ins.CreateNewReaderCard(reader);
-            ListReaderCard.Add(reader);
-            p.Close();
+            ReaderTypeDTO reader = new ReaderTypeDTO();
+            reader.id = 4;
+            reader.name = ReaderType;
+            (bool Successful, string message) = ReaderTypeService.Ins.CreateReaderType(reader);
+            ListReaderType.Add(reader);
             return System.Threading.Tasks.Task.CompletedTask;
         }
     }

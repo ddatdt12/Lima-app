@@ -71,14 +71,22 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             set { _Sex = value; OnPropertyChanged(); }
         }
 
+        private ObservableCollection<String> _ListGenre;
+
+        public ObservableCollection<String> ListGenre
+        {
+            get { return _ListGenre; }
+            set { _ListGenre = value; OnPropertyChanged(); }
+        }
+
+
         public System.Threading.Tasks.Task AddReader(System.Windows.Window p)
         {
             ReaderCardDTO reader = new ReaderCardDTO();
             reader.name = Name; 
             reader.address = Adress;
             reader.employeeId = "NV0001";
-            var findIdReader = ListReaderType.FirstOrDefault(s => s.name == ReaderType);
-            reader.readerTypeId = ListReaderType[ListReaderType.IndexOf(findIdReader)].id;
+            reader.readerTypeId = (ListReaderType.FirstOrDefault(s => s.name == ReaderType)).id;
             reader.totalFine = 100;
             reader.email = Email;
             reader.createdAt = StartDate;

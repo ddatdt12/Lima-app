@@ -94,6 +94,7 @@
                         Foreground="White"
                         FontSize="15"
                         FontWeight="ExtraBold"
+                        Command="{Binding AddReaderType}"
                         Style="{StaticResource MaterialDesignFlatAccentBgButton}" />
             </StackPanel>
         </StackPanel>

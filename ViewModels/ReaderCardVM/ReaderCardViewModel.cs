@@ -27,6 +27,11 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
         {
             ListReaderCard = new ObservableCollection<ReaderCardDTO>(ReaderService.Ins.GetAllReaderCards());
             ListReaderType = new ObservableCollection<ReaderTypeDTO>(ReaderTypeService.Ins.GetAllReaderTypes());
+            ListGenre = new ObservableCollection<string>();
+            foreach (ReaderTypeDTO type in ReaderTypeService.Ins.GetAllReaderTypes())
+            {
+                ListGenre.Add(type.name);
+            }
             StartDate = DateTime.Now;
             FinishDate = StartDate.AddDays(30);
             SelectedDateCM = new RelayCommand<object>((p) => { return true; },(p) =>
@@ -38,7 +43,10 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             {
                 await AddReader(p);
             });
-
+            AddReaderType = new RelayCommand<object>((p) => { return true; }, async (p) => 
+            {
+                await AddGenre();
+            });
 ;        }
     }
 }
