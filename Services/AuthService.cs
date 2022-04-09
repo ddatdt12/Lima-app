@@ -73,7 +73,7 @@ namespace LibraryManagement.Services
                 }
                 return (user, "Đăng nhập thành công!");
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return (null, "Lỗi hệ thống");
             }

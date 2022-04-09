@@ -116,22 +116,22 @@ namespace LibraryManagement.ViewModel
 
 
             //Reader Card
-            //int duration = ParameterService.Ins.GetRuleValue(Rules.VALIDITY_PERIOD_OF_CARD);
-            //var createdAt = DateTime.Now;
-            //var newReaderCard = new ReaderCardDTO()
-            //{
-            //    name = "Đạt ĐỖ",
-            //    address = "Kí túc xá khu A",
-            //    readerTypeId = 1,
-            //    email = "datrumqn@gmail.com",
-            //    createdAt = createdAt,
-            //    expiryDate = createdAt.AddMonths(duration),
-            //    gender = "Nam",
-            //    birthDate = new DateTime(2002, 5, 12),
-            //    employeeId = "NV0001",
-            //};
+            int duration = ParameterService.Ins.GetRuleValue(Rules.VALIDITY_PERIOD_OF_CARD);
+            var createdAt = DateTime.Now;
+            var newReaderCard = new ReaderCardDTO()
+            {
+                name = "Tesst",
+                address = "Kí túc xá khu A",
+                readerTypeId = 3,
+                email = "tesst123@gmail.com",
+                createdAt = createdAt,
+                expiryDate = createdAt.AddMonths(30),
+                gender = "Nữ",
+                birthDate = new DateTime(2002, 5, 26),
+                employeeId = "NV0002",
+            };
             //(bool isSuccess, string message) = ReaderService.Ins.CreateNewReaderCard(newReaderCard);
-            (AccountDTO user, string mesasage) = AuthService.Ins.Login("READER0001", "READER0001");
+            (AccountDTO user, string mesasage) = AuthService.Ins.Login("READER0002", "READER0002");
 
 
             //BOOK IMPORT
