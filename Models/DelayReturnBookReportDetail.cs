@@ -19,7 +19,7 @@ namespace LibraryManagement.Models
         public int borrowingDate { get; set; }
         public int numberOfDelayReturn { get; set; }
     
-        public virtual BorrowingCard BorrowingCard { get; set; }
+        public virtual Borrowing_ReturnCard Borrowing_ReturnCard { get; set; }
         public virtual DelayReturnBookReport DelayReturnBookReport { get; set; }
     }
 }

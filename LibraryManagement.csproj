@@ -78,6 +78,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DTOs\ReturnCardDTO.cs" />
+    <Compile Include="DTOs\BorrowingCardDTO.cs" />
     <Compile Include="DTOs\ReaderTypeDTO.cs" />
     <Compile Include="DTOs\ReaderCardDTO.cs" />
     <Compile Include="DTOs\AccountDTO.cs" />
@@ -90,6 +92,7 @@
     <Compile Include="DTOs\EmployeeDTO.cs" />
     <Compile Include="DTOs\PermissionDTO.cs" />
     <Compile Include="DTOs\RoleDetailDTO.cs" />
+    <Compile Include="DTOs\FineReceiptDTO.cs" />
     <Compile Include="DTOs\RoleDTO.cs" />
     <Compile Include="DTOs\GenreDTO.cs" />
     <Compile Include="Models\Account.cs">
@@ -107,16 +110,13 @@
     <Compile Include="Models\BookInfo.cs">
       <DependentUpon>LibraryManagementModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\BookReturnCard.cs">
-      <DependentUpon>LibraryManagementModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\BorrowedGenreReport.cs">
       <DependentUpon>LibraryManagementModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BorrowedGenreReportDetail.cs">
       <DependentUpon>LibraryManagementModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\BorrowingCard.cs">
+    <Compile Include="Models\Borrowing_ReturnCard.cs">
       <DependentUpon>LibraryManagementModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DataProvider.cs" />
@@ -174,6 +174,8 @@
     <Compile Include="Models\RoleDetail.cs">
       <DependentUpon>LibraryManagementModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\FineReceiptService.cs" />
+    <Compile Include="Services\BorrowingReturnService.cs" />
     <Compile Include="Services\ReaderTypeService.cs" />
     <Compile Include="Services\ReaderService.cs" />
     <Compile Include="Services\BaseBookService.cs" />

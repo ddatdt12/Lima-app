@@ -36,6 +36,57 @@ namespace LibraryManagement.Services
             string newIdString = $"0000{int.Parse(maxId.Substring(6)) + 1}";
             return "READER" + newIdString.Substring(newIdString.Length - 4, 4);
         }
+
+        public ReaderCardDTO GetReaderInfo(string readerId)
+        {
+            try
+            {
+
+                var context = DataProvider.Ins.DB;
+                ReaderCard reader = context.ReaderCards.Find(readerId);
+                if (reader is null || reader.isDeleted)
+                {
+                    return null;
+                }
+                var readerCard = new ReaderCardDTO
+                {
+                    id = reader.id,
+                    name = reader.name,
+                    birthDate = (DateTime)reader.birthDate,
+                    expiryDate = reader.expiryDate,
+                    employeeId = reader.employeeId,
+                    gender = reader.gender,
+                    readerTypeId = reader.readerTypeId,
+                    readerType = new ReaderTypeDTO
+                    {
+                        id = reader.ReaderType.id,
+                        name = reader.ReaderType.name
+                    },
+                    totalFine = reader.totalFine ?? 0,
+                    address = reader.address,
+                    email = reader.email,
+                    createdAt = reader.createdAt,
+                    employee = new EmployeeDTO
+                    {
+                        id = reader.employeeId,
+                        name = reader.Employee.name,
+                        phoneNumber = reader.Employee.phoneNumber,
+                        startingDate = reader.Employee.startingDate,
+                        email = reader.Employee.email,
+                        gender = reader.gender,
+                    },
+
+                };
+                readerCard.haveDelayBook = reader.Borrowing_ReturnCard.Count(b => b.returnedDate == null && b.dueDate < DateTime.Now) > 0;
+                readerCard.numberOfBorrowingBooks = reader.Borrowing_ReturnCard.Count(b => b.returnedDate == null);
+
+                return readerCard;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
         public List<ReaderCardDTO> GetAllReaderCards()
         {
             try
