@@ -35,6 +35,16 @@ namespace LibraryManagement.Services
             string newIdString = $"0000{int.Parse(maxId.Substring(4)) + 1}";
             return "BORC" + newIdString.Substring(newIdString.Length - 4, 4);
         }
+
+        private string CreateReturnCardId(string maxId)
+        {
+            if (maxId is null)
+            {
+                return "RECA0001";
+            }
+            string newIdString = $"0000{int.Parse(maxId.Substring(4)) + 1}";
+            return "RECA" + newIdString.Substring(newIdString.Length - 4, 4);
+        }
         private int GetBookInfoIndex(string bookInfoId)
         {
             if (bookInfoId is null)
@@ -45,65 +55,75 @@ namespace LibraryManagement.Services
 
             return index;
         }
-        public ReaderCardDTO GetReaderInfo(string readerId)
-        {
-            try
-            {
 
-                var context = DataProvider.Ins.DB;
-                ReaderCard reader = context.ReaderCards.Find(readerId);
-                if (reader is null)
-                {
-                    return null;
-                }
-                var readerCard = new ReaderCardDTO
-                {
-                    id = reader.id,
-                    name = reader.name,
-                    birthDate = (DateTime)reader.birthDate,
-                    expiryDate = reader.expiryDate,
-                };
-                readerCard.haveDelayBook = reader.BorrowingCards.Count(b => b.BookReturnCards.Count() == 0 && b.dueDate < DateTime.Now) > 0;
-                readerCard.numberOfBorrowingBooks = reader.BorrowingCards.Count(b => b.BookReturnCards.Count() == 0);
-
-                return readerCard;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-        }
         public List<BorrowingCardDTO> GetBorrowingCardsByReaderId(string readerId)
         {
             try
             {
                 var context = DataProvider.Ins.DB;
-                var borrowingCards = context.BorrowingCards.Where(b => b.readerCardId == readerId && b.BookReturnCards.Count() == 0)
+                var borrowingCards = context.Borrowing_ReturnCard.Where(b => b.readerCardId == readerId && b.returnedDate == null)
                     .Select(b => new BorrowingCardDTO
-                {
-                    id = b.id,
-                    bookInfoId = b.bookInfoId,
-                    borrowingDate = b.borrowingDate,
-                    dueDate = b.dueDate,
-                    employeeId = b.employeeId,
-                    readerCardId = b.readerCardId,
-                    bookInfo = new BookInfoDTO
                     {
-                        id = b.bookInfoId,
-                        Book = new BookDTO
+                        id = b.id,
+                        bookInfoId = b.bookInfoId,
+                        borrowingDate = b.borrowingDate,
+                        dueDate = b.dueDate,
+                        employeeId = b.borrowing_employeeId,
+                        readerCardId = b.readerCardId,
+                        bookInfo = new BookInfoDTO
                         {
-                            id = b.BookInfo.Book.id,
-                            publisher = b.BookInfo.Book.publisher,
-                            yearOfPublication = b.BookInfo.Book.yearOfPublication,
-                            baseBook = new BaseBookDTO
+                            id = b.bookInfoId,
+                            Book = new BookDTO
                             {
-                                id = b.BookInfo.Book.BaseBook.id,
-                                name = b.BookInfo.Book.BaseBook.name,
+                                id = b.BookInfo.Book.id,
+                                publisher = b.BookInfo.Book.publisher,
+                                yearOfPublication = b.BookInfo.Book.yearOfPublication,
+                                baseBook = new BaseBookDTO
+                                {
+                                    id = b.BookInfo.Book.BaseBook.id,
+                                    name = b.BookInfo.Book.BaseBook.name,
+                                }
                             }
                         }
-                    }
-                }).ToList();
+                    }).ToList();
+
+                return borrowingCards;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public List<BorrowingCardDTO> GetDelayBorrowingCardsByReaderId(string readerId)
+        {
+            try
+            {
+                var context = DataProvider.Ins.DB;
+                var borrowingCards = context.Borrowing_ReturnCard.Where(b => b.readerCardId == readerId && b.returnedDate == null && b.dueDate < DateTime.Now)
+                    .Select(b => new BorrowingCardDTO
+                    {
+                        id = b.id,
+                        bookInfoId = b.bookInfoId,
+                        borrowingDate = b.borrowingDate,
+                        dueDate = b.dueDate,
+                        employeeId = b.borrowing_employeeId,
+                        readerCardId = b.readerCardId,
+                        bookInfo = new BookInfoDTO
+                        {
+                            id = b.bookInfoId,
+                            Book = new BookDTO
+                            {
+                                id = b.BookInfo.Book.id,
+                                publisher = b.BookInfo.Book.publisher,
+                                yearOfPublication = b.BookInfo.Book.yearOfPublication,
+                                baseBook = new BaseBookDTO
+                                {
+                                    id = b.BookInfo.Book.BaseBook.id,
+                                    name = b.BookInfo.Book.BaseBook.name,
+                                }
+                            }
+                        }
+                    }).ToList();
 
                 return borrowingCards;
             }
@@ -117,7 +137,7 @@ namespace LibraryManagement.Services
             try
             {
                 var context = DataProvider.Ins.DB;
-                var readerCard = GetReaderInfo(cardInfo.readerCardId);
+                var readerCard = ReaderService.Ins.GetReaderInfo(cardInfo.readerCardId);
                 if (readerCard is null)
                 {
                     return (false, "Độc giả không tồn tại");
@@ -129,11 +149,13 @@ namespace LibraryManagement.Services
                     return (false, "Độc giả không đủ điều kiện để mượn sách");
                 }
 
-                var bookInfoList = context.BookInfoes.Where(b => bookInfoIdList.Contains(b.id)).ToList();
-
-                List<BorrowingCard> borrowingCards = new List<BorrowingCard>();
-                string maxId = context.BorrowingCards.Max(b => b.id);
+                //
+                List<Borrowing_ReturnCard> borrowingCards = new List<Borrowing_ReturnCard>();
+                string maxId = context.Borrowing_ReturnCard.Max(b => b.id);
                 string nextId = CreateBorrowingCardId(maxId);
+
+                //Cập nhật sách đã được mượn
+                var bookInfoList = context.BookInfoes.Where(b => bookInfoIdList.Contains(b.id)).ToList();
 
                 foreach (var b in bookInfoList)
                 {
@@ -143,22 +165,23 @@ namespace LibraryManagement.Services
                     }
 
                     b.status = false;
-                    var borrowingCard = new BorrowingCard()
+                    var borrowingCard = new Borrowing_ReturnCard()
                     {
                         id = nextId,
                         bookInfoId = b.id,
                         borrowingDate = cardInfo.borrowingDate,
                         dueDate = cardInfo.dueDate,
-                        employeeId = cardInfo.employeeId,
+                        borrowing_employeeId = cardInfo.employeeId,
                         readerCardId = cardInfo.readerCardId
                     };
 
-                    context.BorrowingCards.Add(borrowingCard);
+                    borrowingCards.Add(borrowingCard);
                     nextId = CreateBorrowingCardId(nextId);
                 }
 
+                context.Borrowing_ReturnCard.AddRange(borrowingCards);
                 context.SaveChanges();
-                return (true, "Thêm tác giả thành công");
+                return (true, "Mượn sách thành công");
             }
             catch (DbEntityValidationException e)
             {
@@ -171,51 +194,59 @@ namespace LibraryManagement.Services
             }
         }
 
-        //public (bool, string message) CreateReturnCardList(List<ReturnCardDTO> returnCardList)
-        //{
-        //    try
-        //    {
-        //        var context = DataProvider.Ins.DB;
+        public (bool, string message) CreateReturnCardList(List<ReturnCardDTO> returnCardList)
+        {
+            try
+            {
+                var context = DataProvider.Ins.DB;
 
-        //        List<BorrowingCard> borrowingCards = new List<BorrowingCard>();
-        //        string maxId = context.BorrowingCards.Max(b => b.id);
-        //        string nextId = CreateBorrowingCardId(maxId);
+                var borrowingCardIdList = returnCardList.Select(r => r.borrowingCardId).ToList();
+                var returnCardDictionary = returnCardList.ToDictionary(r => r.id, r => r);
 
-        //        var borrowingCardIdList = context.BorrowingCards.Where(b => b.id == nextId).ToList();
-        //        foreach (var b in returnCardList)
-        //        {
-        //            if (!b.b)
-        //            {
-        //                return (false, $"{b.Book.BaseBook.name} đã được mượn!");
-        //            }
+                var borrowingCardQuery = context.Borrowing_ReturnCard.Where(b => borrowingCardIdList.Contains(b.id) && b.returnedDate == null);
 
-        //            b.status = false;
-        //            var borrowingCard = new BorrowingCard()
-        //            {
-        //                id = nextId,
-        //                bookInfoId = b.id,
-        //                borrowingDate = cardInfo.borrowingDate,
-        //                dueDate = cardInfo.dueDate,
-        //                employeeId = cardInfo.employeeId,
-        //                readerCardId = cardInfo.readerCardId
-        //            };
+                if (borrowingCardQuery.Count() == 0)
+                {
+                    return (false, "Danh sách sách trả không được rỗng");
+                }
 
-        //            context.BorrowingCards.Add(borrowingCard);
-        //            nextId = CreateBorrowingCardId(nextId);
-        //        }
+                var readerCardId = borrowingCardQuery.FirstOrDefault().readerCardId;
+                var bookInfoIdList = borrowingCardQuery.Select(bC => bC.bookInfoId).ToList();
 
-        //        context.SaveChanges();
-        //        return (true, "Thêm tác giả thành công");
-        //    }
-        //    catch (DbEntityValidationException e)
-        //    {
-        //        return (false, e.Message);
+                int totalFine = 0;
+                foreach (var returnCard in borrowingCardQuery)
+                {
+                    if (returnCardDictionary.ContainsKey(returnCard.id))
+                    {
+                        var data = returnCardDictionary[returnCard.id];
+                        totalFine += data.fine;
+                        returnCard.returnedDate = data.returnedDate;
+                        returnCard.fine = data.fine;
+                        returnCard.return_employeeId = data.employeeId;
+                    }
+                }
 
-        //    }
-        //    catch (DbUpdateException e)
-        //    {
-        //        return (false, e?.InnerException.Message);
-        //    }
-        //}
+                var bookInfoes = context.BookInfoes.Where(b => bookInfoIdList.Contains(b.id)).ToList();
+                foreach (var bI in bookInfoes)
+                {
+                    bI.status = true;
+                }
+                context.ReaderCards.Find(readerCardId).totalFine += totalFine;
+
+                context.SaveChanges();
+                return (true, "Trả sách thành công");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (false, e.Message);
+
+            }
+            catch (DbUpdateException e)
+            {
+                return (false, e?.InnerException.Message);
+            }
+        }
+
+
     }
 }

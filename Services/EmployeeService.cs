@@ -57,7 +57,7 @@ namespace LibraryManagement.Services
                                                        password = e.Account.password,
                                                        username = e.Account.username,
                                                        role = new RoleDTO { id = e.Account.roleId, name = e.Account.Role.name }
-                                                   }
+                                                   },
                                                })
                                                .ToList();
                 return employees;
@@ -66,7 +66,6 @@ namespace LibraryManagement.Services
             {
                 throw e;
             }
-
         }
 
         public (bool, string message) CreateNewEmployee(EmployeeDTO employee)
@@ -93,7 +92,6 @@ namespace LibraryManagement.Services
                 }
                 var maxEmployeeId = context.Employees.Max(e => e.id);
 
-
                 var newAccount = new Account
                 {
                     roleId = employee.account.roleId,
@@ -113,7 +111,7 @@ namespace LibraryManagement.Services
                     birthDate = employee.birthDate,
                     gender = employee.gender,
                     startingDate = employee.startingDate,
-                    accountId = newAccount.id
+                    accountId = newAccount.id,
                 };
 
                 context.Employees.Add(newEmployee);
@@ -181,7 +179,6 @@ namespace LibraryManagement.Services
             {
                 return (false, e.Message);
             }
-
         }
 
         public (bool, string message) DeleteEmployee(string employeeId)

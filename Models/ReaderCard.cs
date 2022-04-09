@@ -17,7 +17,7 @@ namespace LibraryManagement.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ReaderCard()
         {
-            this.BorrowingCards = new HashSet<BorrowingCard>();
+            this.Borrowing_ReturnCard = new HashSet<Borrowing_ReturnCard>();
             this.FineReceipts = new HashSet<FineReceipt>();
         }
     
@@ -37,7 +37,7 @@ namespace LibraryManagement.Models
     
         public virtual Account Account { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BorrowingCard> BorrowingCards { get; set; }
+        public virtual ICollection<Borrowing_ReturnCard> Borrowing_ReturnCard { get; set; }
         public virtual Employee Employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FineReceipt> FineReceipts { get; set; }

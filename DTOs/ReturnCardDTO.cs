@@ -1,9 +1,5 @@
-﻿using LibraryManagement.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+
 
 namespace LibraryManagement.DTOs
 {
@@ -11,7 +7,7 @@ namespace LibraryManagement.DTOs
     {
         public string id { get; set; }
         public string borrowingCardId { get; set; }
-        public System.DateTime returnedDate { get; set; }
+        public DateTime returnedDate { get; set; }
         public string employeeId { get; set; }
         public int fine { get; set; }
 

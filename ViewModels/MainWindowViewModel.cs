@@ -271,6 +271,7 @@ namespace LibraryManagement.ViewModel
             //    publisher = "Nhà xuất bản Trẻ",
             //});
             var bookList = BookService.Ins.GetAllBook();
+            var availableBookList = BookService.Ins.GetAllAvailableBook();
 
 
             //var role = new RoleDTO
@@ -330,12 +331,15 @@ namespace LibraryManagement.ViewModel
 
 
             // Borrowing/Return Service
-            //int duration = ParameterService.Ins.GetRuleValue(Rules.VALIDITY_PERIOD_OF_CARD);
+            int borrowingDuration = ParameterService.Ins.GetRuleValue(Rules.MAXIMUM_NUMBER_OF_DAYS_TO_BORROW);
+            int max = ParameterService.Ins.GetRuleValue(Rules.ALLOWED_BOOK_MAXIMUM);
+            int fineDaily = ParameterService.Ins.GetRuleValue(Rules.FINE);
+            //Check số sách tối đa có thể mượn
             //BorrowingCardDTO cardDTO = new BorrowingCardDTO()
             //{
             //    readerCardId = "READER0001",
             //    borrowingDate = DateTime.Now,
-            //    dueDate = DateTime.Now.AddDays(duration),
+            //    dueDate = DateTime.Now.AddDays(borrowingDuration),
             //    employeeId = "NV0001",
             //};
             //var bookInfoIdList = new List<string>()
@@ -346,7 +350,47 @@ namespace LibraryManagement.ViewModel
             //};
             //(bool success, string message) = BorrowingReturnService.Ins.CreateBorrowingCard(cardDTO, bookInfoIdList);
 
-            var borrowingCardDTOs = BorrowingReturnService.Ins.GetBorrowingCardsByReaderId("READER0001");
+            //var borrowingCardDTOs = BorrowingReturnService.Ins.GetBorrowingCardsByReaderId("READER0001");
+
+            ////////Return card
+            //var returnCardList = new List<ReturnCardDTO>();
+
+            //borrowingCardDTOs.ForEach(b =>
+            //{
+
+            //    int days = DateTime.Now.Subtract(b.dueDate).Days;
+            //    int fine = b.dueDate >= DateTime.Now ? 0 : fineDaily * days;
+            //    var card = new ReturnCardDTO()
+            //    {
+            //        id = b.id,
+            //        borrowingCardId = b.id,
+            //        returnedDate = DateTime.Now,
+            //        employeeId = "NV0001",
+            //        fine = fine,
+            //    };
+            //    returnCardList.Add(card);
+            //});
+            ////var borrowingCardDTOs = BorrowingReturnService.Ins.GetBorrowingCardsByReaderId("READER0001");
+            //(bool success, string message) = BorrowingReturnService.Ins.CreateReturnCardList(returnCardList);
+
+
+
+            ////FINE RECEIPT
+            ///
+
+            var fineReceipt = new FineReceiptDTO()
+            {
+                amount = 3000,
+                createdAt = DateTime.Now,
+                employeeId = "NV0001",
+                readerCardId = "READER0001",
+            };
+
+            //(bool isSucc, string message) = FineReceiptService.Ins.CreateFineReceipt(fineReceipt);
+
+
+            var books = BookService.Ins.GetAllAvailableBook();
+            var delayBorrowingCards = BorrowingReturnService.Ins.GetDelayBorrowingCardsByReaderId("READER0001");
             var a = "";
         }
 
