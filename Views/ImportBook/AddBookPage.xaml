@@ -32,6 +32,7 @@
                           FontSize="18"
                           Width="380"
                           x:Name="baseCBB"
+                          SelectedItem="{Binding SelectedBaseBook}"
                           HorizontalAlignment="Left"
                           ItemsSource="{Binding BaseBookList}"
                           DisplayMemberPath="name">
@@ -64,6 +65,9 @@
 
             <TextBlock FontSize="18"
                        VerticalAlignment="Bottom"
+                       TextWrapping="Wrap"
+                       MaxWidth="600"
+                       MaxHeight="70"
                        Text="{Binding ElementName=baseCBB,Path=SelectedItem.authors,Converter={StaticResource ListToStringConverter}}">
             </TextBlock>
         </StackPanel>
@@ -78,6 +82,7 @@
                            FontSize="20"
                            Foreground="#0266FD" />
                 <TextBox Width="380"
+                         Text="{Binding Publisher}"
                          materialDesign:HintAssist.Hint="Nhập tên nhà xuất bản"
                          FontSize="18"
                          Padding="0,5,0,0"
@@ -92,10 +97,13 @@
                            FontSize="20"
                            Foreground="#0266FD" />
                 <TextBox Width="100"
+                         Text="{Binding YearPublish}"
                          materialDesign:HintAssist.Hint="Nhập năm"
                          FontSize="18"
                          Padding="0,5,0,0"
-                         HorizontalAlignment="Left">
+                         HorizontalAlignment="Left"
+                         PreviewTextInput="TextBox_PreviewTextInput"
+                         TextChanged="TextBox_TextChanged">
                 </TextBox>
             </StackPanel>
         </StackPanel>
@@ -112,7 +120,10 @@
                          materialDesign:HintAssist.Hint="Giá nhập sách"
                          FontSize="18"
                          Padding="0,5,0,0"
-                         HorizontalAlignment="Left">
+                         Text="{Binding UnitPrice}"
+                         HorizontalAlignment="Left"
+                         PreviewTextInput="TextBox_PreviewTextInput"
+                         TextChanged="TextBox_TextChanged">
                 </TextBox>
             </StackPanel>
 
@@ -125,8 +136,11 @@
                 <TextBox Width="150"
                          materialDesign:HintAssist.Hint="Nhập trị giá sách"
                          FontSize="18"
+                         Text="{Binding Price}"
                          Padding="0,5,0,0"
-                         HorizontalAlignment="Left">
+                         HorizontalAlignment="Left"
+                         PreviewTextInput="TextBox_PreviewTextInput"
+                         TextChanged="TextBox_TextChanged">
                 </TextBox>
             </StackPanel>
 
@@ -139,7 +153,10 @@
                          materialDesign:HintAssist.Hint="Nhập số lượng"
                          FontSize="18"
                          Padding="0,5,0,0"
-                         HorizontalAlignment="Left">
+                         HorizontalAlignment="Left"
+                         PreviewTextInput="TextBox_PreviewTextInput"
+                         TextChanged="TextBox_TextChanged"
+                         Text="{Binding Quantity}">
                 </TextBox>
             </StackPanel>
         </StackPanel>
@@ -148,7 +165,7 @@
         <!---BUTTON-->
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center"
-                    Margin="0,100,0,0">
+                    Margin="0,50,0,0">
 
             <Button FontSize="20"
                     Width="160"
@@ -168,7 +185,7 @@
                     Content="Hoàn thành"
                     materialDesign:ButtonAssist.CornerRadius="12"
                     HorizontalAlignment="Right"
-                    Command="{Binding AddNewBaseBookCM}" />
+                    Command="{Binding AddBookCM}" />
         </StackPanel>
     </StackPanel>
 </Page>

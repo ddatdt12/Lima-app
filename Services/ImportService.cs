@@ -114,13 +114,17 @@ namespace LibraryManagement.Services
             }
             catch (Exception e)
             {
-                var statusCode = e.Data.Keys.Cast<int>().Single();  // retrieves "3"
-                if (statusCode == 400)
+                if (e.Data.Keys.Count != 0)
                 {
-                    var statusMessage = e.Data[statusCode].ToString();  // retrieves "Invalid Parameters"
+                    var statusCode = e.Data.Keys.Cast<int>().Single();  // retrieves "3"
+                    if (statusCode == 400)
+                    {
+                        var statusMessage = e.Data[statusCode].ToString();  // retrieves "Invalid Parameters"
 
-                    return (false, statusMessage);
+                        return (false, statusMessage);
+                    }
                 }
+              
                 return (false, "Lỗi hệ thống");
 
             }

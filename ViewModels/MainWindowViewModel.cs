@@ -4,6 +4,7 @@ using LibraryManagement.Utils;
 using LibraryManagement.ViewModels;
 using LibraryManagement.Views.BookManagement;
 using LibraryManagement.Views.ImportBookPage;
+using LibraryManagement.Views.SettingManagement;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -179,7 +180,6 @@ namespace LibraryManagement.ViewModel
                     book=  new BookDTO()
                     {
                         id = "BOOK0002",
-                        isNew = true,
                     },
                 },
                 new ImportReceiptDetailDTO(){
@@ -205,14 +205,14 @@ namespace LibraryManagement.ViewModel
             };
 
 
-            //var imReceipt = new ImportReceiptDTO
-            //{
-            //    supplier = "Thư viện UIT",
-            //    createdAt = DateTime.Now,
-            //    employeeId = "NV0001",
-            //    importReceiptDetailList = importReceiptDetailList,
-            //};
-            //(bool isImportSuccess, string message) = ImportSerivce.Ins.CreateNewBookImportReceipt(imReceipt);
+            var imReceipt = new ImportReceiptDTO
+            {
+                supplier = "Thư viện UIT",
+                createdAt = DateTime.Now,
+                employeeId = "NV0001",
+                importReceiptDetailList = importReceiptDetailList,
+            };
+            (bool isImportSuccess, string message) = ImportSerivce.Ins.CreateNewBookImportReceipt(imReceipt);
 
             var data = BaseBookService.Ins.GetAllBaseBook();
 
