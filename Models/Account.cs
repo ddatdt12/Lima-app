@@ -12,22 +12,24 @@ namespace LibraryManagement.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class Account
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Role()
+        public Account()
         {
-            this.Accounts = new HashSet<Account>();
-            this.RoleDetails = new HashSet<RoleDetail>();
+            this.Employees = new HashSet<Employee>();
+            this.ReaderCards = new HashSet<ReaderCard>();
         }
     
         public int id { get; set; }
-        public string name { get; set; }
-        public bool isDeleted { get; set; }
+        public string username { get; set; }
+        public string password { get; set; }
+        public int roleId { get; set; }
     
+        public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Account> Accounts { get; set; }
+        public virtual ICollection<Employee> Employees { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RoleDetail> RoleDetails { get; set; }
+        public virtual ICollection<ReaderCard> ReaderCards { get; set; }
     }
 }

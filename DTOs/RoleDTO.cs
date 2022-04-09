@@ -8,6 +8,6 @@ namespace LibraryManagement.DTOs
         public string name{ get; set; }
         public bool isDeleted { get; set; }
 
-        public List<RoleDetailsDTO> roleDetaislList { get; set; }
+        public List<RoleDetailDTO> roleDetaislList { get; set; }
     }
 }
