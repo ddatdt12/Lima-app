@@ -150,7 +150,7 @@ namespace LibraryManagement.ViewModel
                 //{
                 //    name = "Tôi Thấy Hoa Vàng Trên Cỏ Xanh",
                 //    genreId=5,
-                //    authors = new List<AuthorDTO> {
+                //    authors = new List<AuthorDTO> {   
                 //    new AuthorDTO{ id=7}
                 //    },
                 //},
@@ -270,9 +270,10 @@ namespace LibraryManagement.ViewModel
             //    yearOfPublication = 1990,
             //    publisher = "Nhà xuất bản Trẻ",
             //});
+            var allImportReceipt = ImportService.Ins.GetAllImportReceipt();
+            var importReceiptDetails = ImportService.Ins.GetImportReceiptDetail("IPR0002");
             var bookList = BookService.Ins.GetAllBook();
             var availableBookList = BookService.Ins.GetAllAvailableBook();
-
 
             //var role = new RoleDTO
             //{

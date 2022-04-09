@@ -7,17 +7,17 @@ using System.Linq;
 
 namespace LibraryManagement.Services
 {
-    public class ImportSerivce
+    public class ImportService
     {
-        private ImportSerivce() { }
-        private static ImportSerivce _ins;
-        public static ImportSerivce Ins
+        private ImportService() { }
+        private static ImportService _ins;
+        public static ImportService Ins
         {
             get
             {
                 if (_ins == null)
                 {
-                    _ins = new ImportSerivce();
+                    _ins = new ImportService();
                 }
                 return _ins;
             }
@@ -41,6 +41,35 @@ namespace LibraryManagement.Services
             {
                 var context = DataProvider.Ins.DB;
                 var importReceiptList = context.ImportReceipts.Select(imR => new ImportReceiptDTO
+                {
+                    id = imR.id,
+                    totalPrice = imR.totalPrice,
+                    supplier = imR.supplier,
+                    employee = new EmployeeDTO
+                    {
+                        id = imR.Employee.id,
+                        email = imR.Employee.email,
+                        name = imR.Employee.name,
+                        phoneNumber = imR.Employee.phoneNumber,
+                    },
+                    createdAt = imR.createdAt,
+                    employeeId = imR.employeeId,
+                }).ToList();
+
+                return importReceiptList;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw e;
+            }
+        }
+        public ImportReceiptDTO GetImportReceiptDetail(string importReceiptId)
+        {
+            try
+            {
+                var context = DataProvider.Ins.DB;
+                var importReceiptList = context.ImportReceipts.Where(iR => iR.id == importReceiptId).Select(imR => new ImportReceiptDTO
                 {
                     id = imR.id,
                     totalPrice = imR.totalPrice,
@@ -84,7 +113,7 @@ namespace LibraryManagement.Services
                             },
                         }
                     }).ToList()
-                }).ToList();
+                }).FirstOrDefault();
 
                 return importReceiptList;
             }
