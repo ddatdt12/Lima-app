@@ -41,11 +41,11 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
 
             AddReaderCard = new RelayCommand<System.Windows.Window>((p) => { return true; }, async (p) =>
             {
-                await AddReader(p);
+                AddReader(p);
             });
             AddReaderType = new RelayCommand<object>((p) => { return true; }, async (p) => 
             {
-                await AddGenre();
+                AddGenre();
             });
 ;        }
     }

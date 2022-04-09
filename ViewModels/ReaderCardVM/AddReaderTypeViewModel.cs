@@ -30,14 +30,12 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
 
         public ICommand AddReaderType { get; set; }
 
-        public System.Threading.Tasks.Task AddGenre()
+        public void AddGenre()
         {
             ReaderTypeDTO reader = new ReaderTypeDTO();
-            reader.id = 4;
             reader.name = ReaderType;
             (bool Successful, string message) = ReaderTypeService.Ins.CreateReaderType(reader);
             ListReaderType.Add(reader);
-            return System.Threading.Tasks.Task.CompletedTask;
         }
     }
 }

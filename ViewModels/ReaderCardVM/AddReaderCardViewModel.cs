@@ -80,23 +80,25 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
         }
 
 
-        public System.Threading.Tasks.Task AddReader(System.Windows.Window p)
+        public void AddReader(System.Windows.Window p)
         {
-            ReaderCardDTO reader = new ReaderCardDTO();
-            reader.name = Name; 
-            reader.address = Adress;
-            reader.employeeId = "NV0001";
-            reader.readerTypeId = (ListReaderType.FirstOrDefault(s => s.name == ReaderType)).id;
-            reader.totalFine = 100;
-            reader.email = Email;
-            reader.createdAt = StartDate;
-            reader.expiryDate = FinishDate;
-            reader.gender = Sex;
-            reader.birthDate = Birthday;
+            ReaderCardDTO reader = new ReaderCardDTO()
+            {
+                name = Name,
+                address = Adress,
+                employeeId = "NV0001",
+                readerTypeId = (ListReaderType.FirstOrDefault(s => s.name == ReaderType)).id,
+                totalFine = 100,
+                email = Email,
+                createdAt = StartDate,
+                expiryDate = FinishDate,
+                gender = "Nam",
+                birthDate = Birthday,
+            };
+
             (bool Successful, string message) = ReaderService.Ins.CreateNewReaderCard(reader);
             ListReaderCard.Add(reader);
             p.Close();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
     }
 }
