@@ -10,6 +10,7 @@
       mc:Ignorable="d"
       Width="800"
       Height="450"
+      x:Name="this"
       FontFamily="{StaticResource NunitoSans_Regular}"
       DataContext="{StaticResource ImportBookVM}">
 

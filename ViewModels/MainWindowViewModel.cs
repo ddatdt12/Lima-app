@@ -3,8 +3,10 @@ using LibraryManagement.Services;
 using LibraryManagement.Utils;
 using LibraryManagement.ViewModels;
 using LibraryManagement.Views.BookManagement;
+using LibraryManagement.Views.Genre_AuthorManagement;
 using LibraryManagement.Views.ImportBookPage;
 using LibraryManagement.Views.SettingManagement;
+using LibraryManagement.Views.StatisticalManagement;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,6 +20,10 @@ namespace LibraryManagement.ViewModel
     {
         public ICommand OpenBookManagementPageCM { get; set; }
         public ICommand OpenImportBookPage { get; set; }
+        public ICommand OpenGenreAuthorManagementPage { get; set; }
+        public ICommand OpenGenreStatisticPageCM { get; set; }
+        public ICommand OpenLateStatisticPageCM { get; set; }
+        public ICommand OpenSettingPageCM { get; set; }
 
         public MainWindowViewModel()
         {
@@ -29,6 +35,22 @@ namespace LibraryManagement.ViewModel
             OpenImportBookPage = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new MainImportBookPage();
+            });
+            OpenGenreAuthorManagementPage = new RelayCommand<Frame>((p) => { return true; }, (p) =>
+            {
+                p.Content = new MainManagementPage();
+            });
+            OpenGenreStatisticPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
+            {
+                p.Content = new GenreStatisticPage();
+            });
+            OpenLateStatisticPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
+            {
+                p.Content = new LateStatisticPage();
+            });
+            OpenSettingPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
+            {
+                p.Content = new MainSettingPage();
             });
             //var author = new AuthorDTO { name = "Hemingway", birthDate = DateTime.Now, };
             //List<AuthorDTO> authorList = new List<AuthorDTO>()
@@ -244,48 +266,48 @@ namespace LibraryManagement.ViewModel
             //    },
 
 
-            var importReceiptDetailList = new List<ImportReceiptDetailDTO> {
-                new ImportReceiptDetailDTO(){
-                    unitPrice=30000,
-                    quantity=10,
-                    book=  new BookDTO()
-                    {
-                        id = "BOOK0002",
-                    },
-                },
-                new ImportReceiptDetailDTO(){
-                    unitPrice=30000,
-                    quantity=15,
-                    book=  new BookDTO()
-                    {
-                        baseBookId = "BB0003",
-                        yearOfPublication = 2020,
-                        publisher = "Nhà xuất bản Trẻ",
-                        isNew = true,
-                    },
-                },
-                  new ImportReceiptDetailDTO(){
-                    unitPrice=30000,
-                    quantity=12,
-                    book=  new BookDTO()
-                    {
-                        id = "BOOK0001",
-                    },
-                },
-
-            };
+            //var importReceiptDetailList = new List<ImportReceiptDetailDTO> {
+            //    new ImportReceiptDetailDTO(){
+            //        unitPrice=30000,
+            //        quantity=10,
+            //        book=  new BookDTO()
+            //        {
+            //            id = "BOOK0002",
+            //        },
+            //    },
+            //    new ImportReceiptDetailDTO(){
+            //        unitPrice=30000,
+            //        quantity=15,
+            //        book=  new BookDTO()
+            //        {
+            //            baseBookId = "BB0003",
+            //            yearOfPublication = 2020,
+            //            publisher = "Nhà xuất bản Trẻ",
+            //            isNew = true,
+            //        },
+            //    },
+            //      new ImportReceiptDetailDTO(){
+            //        unitPrice=30000,
+            //        quantity=12,
+            //        book=  new BookDTO()
+            //        {
+            //            id = "BOOK0001",
+            //        },
+            //    },
 
             //};
 
+            ////};
 
-            var imReceipt = new ImportReceiptDTO
-            {
-                supplier = "Thư viện UIT",
-                createdAt = DateTime.Now,
-                employeeId = "NV0001",
-                importReceiptDetailList = importReceiptDetailList,
-            };
-            (bool isImportSuccess, string message) = ImportSerivce.Ins.CreateNewBookImportReceipt(imReceipt);
+
+            //var imReceipt = new ImportReceiptDTO
+            //{
+            //    supplier = "Thư viện UIT",
+            //    createdAt = DateTime.Now,
+            //    employeeId = "NV0001",
+            //    importReceiptDetailList = importReceiptDetailList,
+            //};
+            //(bool isImportSuccess, string message) = ImportService.Ins.CreateNewBookImportReceipt(imReceipt);
 
             //var data = BaseBookService.Ins.GetAllBaseBook();
 
@@ -304,10 +326,10 @@ namespace LibraryManagement.ViewModel
             //    yearOfPublication = 1990,
             //    publisher = "Nhà xuất bản Trẻ",
             //});
-            var allImportReceipt = ImportService.Ins.GetAllImportReceipt();
-            var importReceiptDetails = ImportService.Ins.GetImportReceiptDetail("IPR0002");
-            var bookList = BookService.Ins.GetAllBook();
-            var availableBookList = BookService.Ins.GetAllAvailableBook();
+            //var allImportReceipt = ImportService.Ins.GetAllImportReceipt();
+            //var importReceiptDetails = ImportService.Ins.GetImportReceiptDetail("IPR0002");
+            //var bookList = BookService.Ins.GetAllBook();
+            //var availableBookList = BookService.Ins.GetAllAvailableBook();
 
             //var role = new RoleDTO
             //{
@@ -413,20 +435,20 @@ namespace LibraryManagement.ViewModel
             ////FINE RECEIPT
             ///
 
-            var fineReceipt = new FineReceiptDTO()
-            {
-                amount = 3000,
-                createdAt = DateTime.Now,
-                employeeId = "NV0001",
-                readerCardId = "READER0001",
-            };
+            //var fineReceipt = new FineReceiptDTO()
+            //{
+            //    amount = 3000,
+            //    createdAt = DateTime.Now,
+            //    employeeId = "NV0001",
+            //    readerCardId = "READER0001",
+            //};
 
             //(bool isSucc, string message) = FineReceiptService.Ins.CreateFineReceipt(fineReceipt);
 
 
-            var books = BookService.Ins.GetAllAvailableBook();
-            var delayBorrowingCards = BorrowingReturnService.Ins.GetDelayBorrowingCardsByReaderId("READER0001");
-            var a = "";
+            //var books = BookService.Ins.GetAllAvailableBook();
+            //var delayBorrowingCards = BorrowingReturnService.Ins.GetDelayBorrowingCardsByReaderId("READER0001");
+            //var a = "";
         }
 
 

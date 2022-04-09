@@ -16,8 +16,8 @@ namespace LibraryManagement.ViewModel.ImportBookVM
     public class ImportBookViewModel : BaseViewModel
     {
 
-        private Books selectedItem;
-        public Books SelectedItem
+        private ImportReceiptDetailDTO selectedItem;
+        public ImportReceiptDetailDTO SelectedItem
         {
             get { return selectedItem; }
             set { selectedItem = value; OnPropertyChanged(); }
@@ -27,8 +27,8 @@ namespace LibraryManagement.ViewModel.ImportBookVM
 
 
 
-        private ObservableCollection<Books> importBookList;
-        public ObservableCollection<Books> ImportBookList
+        private ObservableCollection<ImportReceiptDetailDTO> importBookList;
+        public ObservableCollection<ImportReceiptDetailDTO> ImportBookList
         {
             get { return importBookList; }
             set { importBookList = value; OnPropertyChanged(); }
@@ -129,6 +129,13 @@ namespace LibraryManagement.ViewModel.ImportBookVM
             set { supplier = value; OnPropertyChanged(); }
         }
 
+        private DateTime? createAt;
+        public DateTime? CreateAt
+        {
+            get { return createAt; }
+            set { createAt = value; OnPropertyChanged(); }
+        }
+
 
 
         private ObservableCollection<AuthorDTO> baseAuthor;
@@ -149,6 +156,12 @@ namespace LibraryManagement.ViewModel.ImportBookVM
             set { totalQuantity = value; OnPropertyChanged(); }
         }
 
+        private int totalReceiptPrice;
+        public int TotalReceiptPrice
+        {
+            get { return totalReceiptPrice; }
+            set { totalReceiptPrice = value; OnPropertyChanged(); }
+        }
 
 
 
@@ -161,8 +174,6 @@ namespace LibraryManagement.ViewModel.ImportBookVM
         public ICommand OpenImportWindowCM2 { get; set; }
         public ICommand AddBookFromSearchCM { get; set; }
         public ICommand ImportBookCM { get; set; }
-
-
         public ICommand OpenImportWindowCM { get; set; }
         public ICommand AddBookCM { get; set; }
         public ICommand AddNewGenreCM { get; set; }
@@ -172,7 +183,7 @@ namespace LibraryManagement.ViewModel.ImportBookVM
         public ICommand AddNewBaseBookCM { get; set; }
         public ICommand IncreaseBaseAuthorCM { get; set; }
         public ICommand DecreaseBaseAuthorCM { get; set; }
-
+        public ICommand PriceChangedCM { get; set; }
         public ICommand CloseCM { get; set; }
         public ICommand FirstLoadCM { get; set; }
 
@@ -182,11 +193,11 @@ namespace LibraryManagement.ViewModel.ImportBookVM
 
         public ImportBookViewModel()
         {
-            ImportBookList = new ObservableCollection<Books>();
+            ImportBookList = new ObservableCollection<ImportReceiptDetailDTO>();
             ListGenre = new ObservableCollection<GenreDTO>(GenreService.Ins.GetAllGenre());
             ListAuthor = new ObservableCollection<AuthorDTO>(AuthorService.Ins.GetAllAuthor());
-
             TotalQuantity = 0;
+            TotalReceiptPrice = 0;
 
             FirstLoadCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
@@ -195,26 +206,26 @@ namespace LibraryManagement.ViewModel.ImportBookVM
             });
             IncreaseQuantityCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                SelectedItem.Quantity++;
-                SelectedItem.CalculateTotal();
+                SelectedItem.quantity++;
+                CalculateTotal(SelectedItem);
             });
             DecreaseQuantityCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                if (SelectedItem.Quantity != 0)
+                if (SelectedItem.quantity != 0)
                 {
-                    SelectedItem.Quantity--;
+                    SelectedItem.quantity--;
+                    CalculateTotal(SelectedItem);
                 }
-                SelectedItem.CalculateTotal();
             });
             QuantityChangedCM = new RelayCommand<TextBox>((p) => { return true; }, (p) =>
             {
+                CalculateTotal(SelectedItem);
                 if (SelectedItem != null)
                 {
-                    SelectedItem.CalculateTotal();
                     TotalQuantity = 0;
                     foreach (var item in ImportBookList)
                     {
-                        TotalQuantity += item.Quantity;
+                        TotalQuantity += item.quantity;
                     }
                 }
             });
@@ -222,13 +233,10 @@ namespace LibraryManagement.ViewModel.ImportBookVM
             {
                 if (SelectedItem != null)
                 {
-                    TotalQuantity -= SelectedItem.Quantity;
+                    TotalQuantity -= SelectedItem.quantity;
                     ImportBookList.Remove(SelectedItem);
                 }
             });
-
-
-
             OpenAddBaseBookPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new AddBaseBookPage();
@@ -250,42 +258,53 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                     MessageBox.Show("Năm xuất bản sách không thoả quy định");
                     return;
                 }
-                Books newBook = new Books
-                {
-                    baseBook = SelectedBaseBook,
-                    Unit = (int)UnitPrice,
-                    Quantity = (int)Quantity,
-                    isNew = true,
 
+                ImportReceiptDetailDTO newRCD = new ImportReceiptDetailDTO
+                {
+                    unitPrice = (int)UnitPrice,
+                    quantity = (int)Quantity,
+                    book = new BookDTO
+                    {
+                        baseBookId = SelectedBaseBook.id,
+                        baseBook = SelectedBaseBook,
+                        yearOfPublication = (int)YearPublish,
+                        publisher = Publisher,
+                        isNew = true,
+                    },
+                    unitTotal = (int)(UnitPrice * Quantity),
                 };
 
-                //ImportBookList.Add(newBook);
-                //TotalQuantity += newBook.SL;
+                ImportBookList.Add(newRCD);
+                TotalQuantity += newRCD.quantity;
+                TotalReceiptPrice += newRCD.unitTotal;
 
-                p.Close();
+                importWindow.Close();
             });
-            //AddBookFromSearchCM = new RelayCommand<ListView>((p) => { return true; }, (p) =>
-            //{
-            //    if (p.SelectedItem is null) return;
+            AddBookFromSearchCM = new RelayCommand<ListView>((p) => { return true; }, (p) =>
+            {
+                if (p.SelectedItem is null) return;
 
-            //    BookDTO SelectedBook = p.SelectedItem as BookDTO;
+                if (ImportBookList.Count > 0)
+                    foreach (var item in ImportBookList)
+                        if (item.book.id == ((BookDTO)p.SelectedItem).id) return;
 
-            //    foreach (var item in ImportBookList)
-            //        if (item.Id == SelectedBook.id)
-            //            return;
+                BookDTO slt = p.SelectedItem as BookDTO;
 
-            //    Books importselectedBook = new Books
-            //    {
-            //        Id = SelectedBook.id,
-            //        Name = SelectedBook.name,
-            //        Author = SelectedBook.author,
-            //        SL = 1,
-            //        IsNew = false,
-            //    };
-            //    ImportBookList.Add(importselectedBook);
-            //    TotalQuantity++;
-
-            //});
+                ImportReceiptDetailDTO newRCD = new ImportReceiptDetailDTO
+                {
+                    unitPrice = 0,
+                    quantity = 1,
+                    book = new BookDTO
+                    {
+                        id = slt.id,
+                        baseBook = slt.baseBook,
+                        yearOfPublication = slt.yearOfPublication,
+                        isNew = false,
+                    }
+                };
+                ImportBookList.Add(newRCD);
+                TotalQuantity++;
+            });
             OpenImportWindowCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 BaseName = null;
@@ -360,54 +379,42 @@ namespace LibraryManagement.ViewModel.ImportBookVM
             });
             ImportBookCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                //if (ImportBookList.Count == 0)
-                //{
-                //    MessageBox.Show("Danh sách nhập trống!");
-                //    return;
-                //}
-                //if (string.IsNullOrEmpty(Supplier))
-                //{
-                //    MessageBox.Show("Vui lòng nhập thông tin nhà cung cấp");
-                //    return;
-                //}
+                if (ImportBookList.Count == 0)
+                {
+                    MessageBox.Show("Danh sách nhập trống!");
+                    return;
+                }
+                if (string.IsNullOrEmpty(Supplier))
+                {
+                    MessageBox.Show("Vui lòng nhập thông tin nhà cung cấp");
+                    return;
+                }
 
-                //List<BookDTO> importList = new List<BookDTO>();
+                var importRC = new ImportReceiptDTO
+                {
+                    supplier = Supplier,
+                    createdAt = (DateTime)CreateAt,
+                    employeeId = "NV0001",
+                    importReceiptDetailList = new List<ImportReceiptDetailDTO>(ImportBookList),
+                };
 
-                //foreach (var item in ImportBookList)
-                //{
-                //    BookDTO tempBook = new BookDTO
-                //    {
-                //        name = item.Name,
-                //        publisher = item.Publisher,
-                //        quantity = item.SL,
-                //        authorId = item.Author.id,
-                //        yearOfPublication = item.YearPublish,
-                //        genreId = item.GenreId,
-                //        id = item.Id,
-                //        isNew = item.IsNew,
-                //        //UnitPrice = item.Price,
-                //    };
+                try
+                {
+                    (bool isS, string mes) = ImportService.Ins.CreateNewBookImportReceipt(importRC);
 
-                //    importList.Add(tempBook);
-                //}
+                    if (isS)
+                    {
+                        ImportBookList.Clear();
+                        MainImportBookPage.AllBookList = new ObservableCollection<BookDTO>(BookService.Ins.GetAllBook());
+                        PrintImportReiceipt();
+                    }
+                    MessageBox.Show(mes);
+                }
+                catch (Exception e)
+                {
 
-                //try
-                //{
-                //    (bool isS, string mes) = BookService.Ins.ImportBooks(importList);
-
-                //    if (isS)
-                //    {
-                //        ImportBookList.Clear();
-                //        MainImportBookPage.AllBookList = new ObservableCollection<BookDTO>(BookService.Ins.GetAllBook());
-                //        PrintImportReiceipt();
-                //    }
-                //    MessageBox.Show(mes);
-                //}
-                //catch (Exception e)
-                //{
-
-                //    MessageBox.Show(e.Message);
-                //}
+                    MessageBox.Show(e.Message);
+                }
 
             });
             CloseCM = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -476,6 +483,10 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                     MessageBox.Show(e.Message);
                 }
             });
+            PriceChangedCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                CalculateTotal(SelectedItem);
+            });
         }
 
 
@@ -492,73 +503,17 @@ namespace LibraryManagement.ViewModel.ImportBookVM
         {
 
         }
-        public class Books : BaseViewModel
+        public void CalculateTotal(ImportReceiptDetailDTO item)
         {
-            public Books()
+            if (item is null) return;
+            item.unitTotal = item.quantity * item.unitPrice;
+
+            TotalReceiptPrice = 0;
+            foreach (var it in ImportBookList)
             {
-
-            }
-
-            private string id;
-            public string Id
-            {
-                get { return id; }
-                set { id = value; OnPropertyChanged(); }
-            }
-
-            private int yearOfPublication;
-            public int YearOfPublication
-            {
-                get { return yearOfPublication; }
-                set { yearOfPublication = value; OnPropertyChanged(); }
-            }
-
-            private string publisher;
-            public string Publisher
-            {
-                get { return publisher; }
-                set { publisher = value; }
-            }
-
-            private int quantity;
-            public int Quantity
-            {
-                get { return quantity; }
-                set { quantity = value; OnPropertyChanged(); }
-            }
-
-            public List<BookInfoDTO> bookInfoes { get; set; }
-            public string baseBookId { get; set; }
-            public BaseBookDTO baseBook { get; set; }
-
-            private int total;
-            public int Total
-            {
-                get { return total; }
-                set { total = value; OnPropertyChanged(); }
-            }
-
-            private int unit;
-            public int Unit
-            {
-                get { return unit; }
-                set { unit = value; OnPropertyChanged(); }
-            }
-
-            private int price;
-            public int Price
-            {
-                get { return price; }
-                set { price = value; OnPropertyChanged(); }
-            }
-
-
-            public bool isNew { get; set; }
-
-            public void CalculateTotal()
-            {
-                Total = Quantity * Unit;
+                TotalReceiptPrice += it.unitTotal;
             }
         }
+
     }
 }

@@ -227,15 +227,16 @@
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        <GridViewColumn Header="Đơn giá">
+                                        <!--<GridViewColumn Header="Đơn giá">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="10,000"
+                                                               Text="{Binding }"
                                                                Margin="15,0,0,0"
                                                                FontSize="18" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
+                                        </GridViewColumn>-->
                                         <GridViewColumn>
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
@@ -304,7 +305,7 @@
                                        FontSize="20"
                                        Foreground="#0266FD"
                                        FontWeight="Bold" />
-                            <TextBlock Text="10,000"
+                            <TextBlock Text="{Binding SelectedBookInfor.Book.}"
                                        FontSize="18"
                                        Margin="20,0,0,0"
                                        VerticalAlignment="Bottom" />
