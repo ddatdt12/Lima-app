@@ -14,11 +14,32 @@ namespace LibraryManagement.ViewModel.BookManagementVM
     public class BookManagementViewModel : BaseViewModel
     {
 
-        private ObservableCollection<BookDTO> bookList;
-        public ObservableCollection<BookDTO> BookList
+        private ObservableCollection<BaseBookDTO> basebookList;
+        public ObservableCollection<BaseBookDTO> BaseBookList
         {
-            get { return bookList; }
-            set { bookList = value; OnPropertyChanged(); }
+            get { return basebookList; }
+            set { basebookList = value; OnPropertyChanged(); }
+        }
+
+        private BaseBookDTO selectedItem;
+        public BaseBookDTO SelectedItem
+        {
+            get { return selectedItem; }
+            set { selectedItem = value; OnPropertyChanged(); }
+        }
+
+        private BaseBookDTO baseBookDetail;
+        public BaseBookDTO BaseBookDetail
+        {
+            get { return baseBookDetail; }
+            set { baseBookDetail = value; OnPropertyChanged(); }
+        }
+
+        private BookDTO selectedBaseBookDetail;
+        public BookDTO SelectedBaseBookDetail
+        {
+            get { return selectedBaseBookDetail; }
+            set { selectedBaseBookDetail = value; OnPropertyChanged(); }
         }
 
         private ObservableCollection<BookInfoDTO> bookInforList;
@@ -26,6 +47,13 @@ namespace LibraryManagement.ViewModel.BookManagementVM
         {
             get { return bookInforList; }
             set { bookInforList = value; OnPropertyChanged(); }
+        }
+
+        private BookInfoDTO selectedBookInfor;
+        public BookInfoDTO SelectedBookInfor
+        {
+            get { return selectedBookInfor; }
+            set { selectedBookInfor = value; OnPropertyChanged(); }
         }
 
 
@@ -50,41 +78,29 @@ namespace LibraryManagement.ViewModel.BookManagementVM
             set { selectedGenre = value; OnPropertyChanged(); }
         }
 
-        private BookDTO selectedItem;
-        public BookDTO SelectedItem
-        {
-            get { return selectedItem; }
-            set { selectedItem = value; OnPropertyChanged(); }
-        }
 
-        private BookInfoDTO selectedBookInfor;
-        public BookInfoDTO SelectedBookInfor
-        {
-            get { return selectedBookInfor; }
-            set { selectedBookInfor = value; OnPropertyChanged(); }
-        }
 
 
         #region BINDING
-        private string name;
-        public string Name
+        private string baseName;
+        public string BaseName
         {
-            get { return name; }
-            set { name = value; OnPropertyChanged(); }
+            get { return baseName; }
+            set { baseName = value; OnPropertyChanged(); }
         }
 
-        private AuthorDTO author;
-        public AuthorDTO Author
+        private ObservableCollection<AuthorDTO> baseauthor;
+        public ObservableCollection<AuthorDTO> BaseAuthor
         {
-            get { return author; }
-            set { author = value; OnPropertyChanged(); }
+            get { return baseauthor; }
+            set { baseauthor = value; OnPropertyChanged(); }
         }
 
-        private GenreDTO genre;
-        public GenreDTO Genre
+        private GenreDTO basegenre;
+        public GenreDTO BaseGenre
         {
-            get { return genre; }
-            set { genre = value; OnPropertyChanged(); }
+            get { return basegenre; }
+            set { basegenre = value; OnPropertyChanged(); }
         }
 
         private string publisher;
@@ -94,12 +110,20 @@ namespace LibraryManagement.ViewModel.BookManagementVM
             set { publisher = value; OnPropertyChanged(); }
         }
 
-        private int yearPublish;
-        public int YearPublish
+        private int? yearPublish;
+        public int? YearPublish
         {
             get { return yearPublish; }
             set { yearPublish = value; OnPropertyChanged(); }
         }
+
+        private int? quantity;
+        public int? Quantity
+        {
+            get { return quantity; }
+            set { quantity = value; OnPropertyChanged(); }
+        }
+
 
         #endregion
 
@@ -110,20 +134,25 @@ namespace LibraryManagement.ViewModel.BookManagementVM
         #region COMMAND
         public ICommand FirstLoadCM { get; set; }
         public ICommand GenreFilterCM { get; set; }
-        public ICommand DeleteBookCM { get; set; }
+        public ICommand DeleteBaseBookCM { get; set; }
+        public ICommand DeleteBaseBookDetailCM { get; set; }
         public ICommand DeleteBookInforCM { get; set; }
         public ICommand UpdateBookCM { get; set; }
         public ICommand OpenEditBookCM { get; set; }
         public ICommand CloseWindowCM { get; set; }
+        public ICommand IncreaseBaseAuthorCM { get; set; }
+        public ICommand DecreaseBaseAuthorCM { get; set; }
+        public ICommand SaveBaseBookCM { get; set; }
+        public ICommand BindingBookInforCM { get; set; }
         #endregion
 
 
         public BookManagementViewModel()
         {
 
-            BookList = new ObservableCollection<BookDTO>(BookService.Ins.GetAllBook());
+            BaseBookList = new ObservableCollection<BaseBookDTO>(BaseBookService.Ins.GetAllBaseBook());
 
-            FirstLoadCM = new RelayCommand<System.Windows.Controls.ComboBox>((p) => { return true; }, (p) =>
+            FirstLoadCM = new RelayCommand<ComboBox>((p) => { return true; }, (p) =>
             {
                 GenreDTO allGenre = new GenreDTO();
                 allGenre.name = "Toàn bộ";
@@ -135,39 +164,39 @@ namespace LibraryManagement.ViewModel.BookManagementVM
                 ListAuthor = new List<AuthorDTO>(AuthorService.Ins.GetAllAuthor());
 
             });
-            GenreFilterCM = new RelayCommand<System.Windows.Controls.ListView>((p) => { return true; }, (p) =>
+            GenreFilterCM = new RelayCommand<ListView>((p) => { return true; }, (p) =>
             {
                 if (SelectedGenre is null) return;
 
                 if (SelectedGenre.name == "Toàn bộ")
                 {
-                    p.ItemsSource = BookList;
+                    p.ItemsSource = BaseBookList;
                     return;
                 }
 
 
-                ObservableCollection<BookDTO> filterList = new ObservableCollection<BookDTO>();
-                foreach (var item in BookList)
+                ObservableCollection<BaseBookDTO> filterList = new ObservableCollection<BaseBookDTO>();
+                foreach (var item in BaseBookList)
                 {
                     if (item.genre.name == SelectedGenre.name)
                         filterList.Add(item);
                 }
                 p.ItemsSource = filterList;
             });
-            DeleteBookCM = new RelayCommand<System.Windows.Controls.ListView>((p) => { return true; }, (p) =>
+            DeleteBaseBookCM = new RelayCommand<ListView>((p) => { return true; }, (p) =>
             {
                 if (p.SelectedItem is null) return;
 
-                if (MessageBox.Show("Bạn có chắc muốn xoá sách này không?", "Cảnh báo", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show("Bạn có chắc muốn xoá đầu sách này không?", "Cảnh báo", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    BookDTO selectedBook = p.SelectedItem as BookDTO;
+                    BaseBookDTO selectedbaseBook = p.SelectedItem as BaseBookDTO;
 
                     try
                     {
-                        (bool isSuc, string res) = BookService.Ins.DeleteBook(selectedBook.id);
+                        (bool isSuc, string res) = BaseBookService.Ins.DeleteBaseBook(selectedbaseBook.id);
 
                         if (isSuc)
-                            BookList.Remove(selectedBook);
+                            BaseBookList.Remove(selectedbaseBook);
                         MessageBox.Show(res);
 
                     }
@@ -180,21 +209,23 @@ namespace LibraryManagement.ViewModel.BookManagementVM
                 else
                     return;
             });
-            DeleteBookInforCM = new RelayCommand<System.Windows.Controls.ListView>((p) => { return true; }, (p) =>
+            DeleteBaseBookDetailCM = new RelayCommand<ListView>((p) => { return true; }, (p) =>
             {
-                if (p.SelectedItem is null) return;
+                if (SelectedBaseBookDetail is null) return;
 
                 if (MessageBox.Show("Bạn có chắc muốn xoá sách này không?", "Cảnh báo", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    BookInfoDTO selectedBook = p.SelectedItem as BookInfoDTO;
-
                     try
                     {
-                        (bool isSuc, string res) = BookService.Ins.DeleteBookInfo(selectedBook.id);
+                        (bool isSuc, string res) = BookService.Ins.DeleteBook(SelectedBaseBookDetail.id);
 
                         if (isSuc)
                         {
-                            BookInforList.Remove(selectedBook);
+                            BaseBookDetail = BaseBookService.Ins.GetBookDetail(SelectedItem.id);
+                            Publisher = null;
+                            YearPublish = null;
+                            Quantity = null;
+                            BookInforList = null;
                         }
                         MessageBox.Show(res);
 
@@ -208,30 +239,65 @@ namespace LibraryManagement.ViewModel.BookManagementVM
                 else
                     return;
             });
-            UpdateBookCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            DeleteBookInforCM = new RelayCommand<ListView>((p) => { return true; }, (p) =>
             {
+                if (SelectedBookInfor is null) return;
+
+                if (MessageBox.Show("Bạn có chắc muốn xoá sách này không?", "Cảnh báo", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        (bool isSuc, string res) = BookService.Ins.DeleteBookInfo(SelectedBookInfor.id);
+
+                        if (isSuc)
+                        {
+                            BookInforList.Remove(SelectedBookInfor);
+                            BaseBookDetail = BaseBookService.Ins.GetBookDetail(SelectedItem.id);
+                            Quantity--;
+                        }
+                        MessageBox.Show(res);
+
+                    }
+                    catch (System.Exception e)
+                    {
+                        MessageBox.Show(e.Message);
+                    }
+
+                }
+                else
+                    return;
+            });
+            UpdateBookCM = new RelayCommand<Window>((p) => { if (SelectedBaseBookDetail is null) return false; else return true; }, (p) =>
+            {
+                if (SelectedBaseBookDetail is null) return;
+                if (string.IsNullOrEmpty(Publisher) || YearPublish is null)
+                {
+                    MessageBox.Show("Vui lòng nhập đủ thông tin");
+                    return;
+                }
+
                 BookDTO tempBook = new BookDTO
                 {
-                    name = Name,
-                    authorId = Author.id,
-                    genreId = Genre.id,
+                    id = SelectedBaseBookDetail.id,
                     publisher = Publisher,
-                    yearOfPublication = YearPublish,
-                    id = SelectedItem.id,
+                    yearOfPublication = (int)YearPublish,
                 };
 
                 try
                 {
                     (bool isS, string mes) = BookService.Ins.UpdateBook(tempBook);
-
                     if (isS)
                     {
-                        BookList = new ObservableCollection<BookDTO>(BookService.Ins.GetAllBook());
-                        MessageBox.Show(mes);
-                        p.Close();
+                        string id = SelectedBaseBookDetail.id;
+                        BaseBookDetail = BaseBookService.Ins.GetBookDetail(SelectedItem.id);
+                        foreach (var item in BaseBookDetail.books)
+                        {
+                            if (item.id == id)
+                                SelectedBaseBookDetail = item;
+                        }
+
                     }
-                    else
-                        MessageBox.Show(mes);
+                    MessageBox.Show(mes);
 
                 }
                 catch (System.Exception e)
@@ -246,22 +312,94 @@ namespace LibraryManagement.ViewModel.BookManagementVM
 
                 BookInforWindow w = new BookInforWindow();
 
-                BookInforList = new ObservableCollection<BookInfoDTO>(SelectedItem.bookInfoes);
-                Name = SelectedItem.name;
-                Author = SelectedItem.author;
-                Genre = SelectedItem.genre;
-                Publisher = SelectedItem.publisher;
-                YearPublish = SelectedItem.yearOfPublication;
+                BaseAuthor = new ObservableCollection<AuthorDTO>(SelectedItem.authors);
+                BaseName = SelectedItem.name;
+                BaseGenre = SelectedItem.genre;
+                BaseBookDetail = BaseBookService.Ins.GetBookDetail(SelectedItem.id);
 
+                Publisher = "";
+                YearPublish = null;
+                Quantity = null;
+                BookInforList = null;
                 w.ShowDialog();
 
             });
             CloseWindowCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
-                BookList = new ObservableCollection<BookDTO>(BookService.Ins.GetAllBook());
+                BaseBookList = new ObservableCollection<BaseBookDTO>(BaseBookService.Ins.GetAllBaseBook());
                 p.Close();
             });
+            IncreaseBaseAuthorCM = new RelayCommand<ComboBox>((p) => { return true; }, (p) =>
+            {
+                if (p.SelectedItem is null) return;
 
+                AuthorDTO it = p.SelectedItem as AuthorDTO;
+
+                foreach (var item in BaseAuthor)
+                {
+                    if (item.name == it.name)
+                    {
+                        p.SelectedItem = null;
+                        return;
+                    }
+                }
+
+                BaseAuthor.Add(it);
+                p.SelectedItem = null;
+
+            });
+            DecreaseBaseAuthorCM = new RelayCommand<ListView>((p) => { return true; }, (p) =>
+            {
+                if (p.SelectedItem is null) return;
+
+                AuthorDTO it = p.SelectedItem as AuthorDTO;
+                BaseAuthor.Remove(it);
+            });
+            SaveBaseBookCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (BaseAuthor.Count == 0 || BaseGenre is null || string.IsNullOrEmpty(BaseName))
+                {
+                    MessageBox.Show("Vui lòng nhập đủ thông tin");
+                    return;
+                }
+
+                try
+                {
+                    List<AuthorDTO> list = new List<AuthorDTO>();
+                    foreach (var item in BaseAuthor)
+                    {
+                        list.Add(item);
+                    }
+
+                    BaseBookDTO bb = new BaseBookDTO
+                    {
+                        id = SelectedItem.id,
+                        name = BaseName,
+                        genreId = BaseGenre.id,
+                        authors = list,
+                    };
+
+                    (bool isS, string mess) = BaseBookService.Ins.UpdateBaseBook(bb);
+
+                    if (isS)
+                        MessageBox.Show(mess);
+
+                }
+                catch (System.Exception e)
+                {
+
+                    MessageBox.Show(e.Message);
+                }
+            });
+            BindingBookInforCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (SelectedBaseBookDetail is null) return;
+
+                Publisher = SelectedBaseBookDetail.publisher;
+                YearPublish = SelectedBaseBookDetail.yearOfPublication;
+                Quantity = SelectedBaseBookDetail.quantity;
+                BookInforList = new ObservableCollection<BookInfoDTO>(SelectedBaseBookDetail.bookInfoes);
+            });
         }
     }
 }

@@ -210,7 +210,7 @@ namespace LibraryManagement.ViewModels.Genre_AuthorManagementVM
 
                     if (MessageBox.Show("Bạn có muốn thêm tác giả này không?", "Thêm tác giả", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
-                        AuthorDTO newAu = new AuthorDTO { name = TxtAuthor, birthDate = DateTime.Now };
+                        AuthorDTO newAu = new AuthorDTO { name = TxtAuthor, birthDate = (DateTime)BirthDate };
                         (bool isS, string mes) = AuthorService.Ins.CreateNewAuthor(newAu);
                         if (isS)
                         {
@@ -233,28 +233,28 @@ namespace LibraryManagement.ViewModels.Genre_AuthorManagementVM
             });
             DeleteAuthorCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                if (SelectedAuthor != null)
-                    try
-                    {
-                        if (MessageBox.Show("Bạn có muốn xoá tác giả này không?", "Cảnh báo", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                        {
-                            (bool IsS, string mes) = AuthorService.Ins.DeleteAuthor(SelectedAuthor.id);
+                //if (SelectedAuthor != null)
+                //    try
+                //    {
+                //        if (MessageBox.Show("Bạn có muốn xoá tác giả này không?", "Cảnh báo", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                //        {
+                //            (bool IsS, string mes) = AuthorService.Ins.DeleteAuthor(SelectedAuthor.id);
 
-                            if (IsS)
-                                AuthorList.Remove(SelectedAuthor);
-                            MessageBox.Show(mes);
-                        }
-                        else
-                        {
-                            return;
-                        }
+                //            if (IsS)
+                //                AuthorList.Remove(SelectedAuthor);
+                //            MessageBox.Show(mes);
+                //        }
+                //        else
+                //        {
+                //            return;
+                //        }
 
-                    }
-                    catch (Exception e)
-                    {
+                //    }
+                //    catch (Exception e)
+                //    {
 
-                        MessageBox.Show(e.Message);
-                    }
+                //        MessageBox.Show(e.Message);
+                //    }
             });
             OpenEditAuthorWindowCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {

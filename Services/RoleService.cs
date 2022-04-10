@@ -37,13 +37,13 @@ namespace LibraryManagement.Services
                      select new RoleDTO
                      {
                          id = s.id,
-                         position = s.position,
+                         name = s.name,
                          roleDetaislList = s.RoleDetails.Select(rD =>
-                          new RoleDetailsDTO
+                          new RoleDetailDTO
                           {
+                              roleId = rD.roleId,
                               isPermitted = rD.isPermitted,
-                              permission = rD.permission,
-                              roleId = rD.permission
+                              permissionId = rD.permissionId,
                           }).ToList()
                      }).ToList();
                 return roles;
@@ -60,15 +60,14 @@ namespace LibraryManagement.Services
 
         //    try
         //    {
-        //        var isExist = context.Roles.Where(g => g.position == role.position).Any();
+        //        var isExist = context.Roles.Where(g => g.name == role.name).Any();
         //        if (isExist)
         //        {
         //            return (false, "Vai trò này đã tồn tại");
         //        }
         //        var newRole = new Role
         //        {
-        //            position = role.position,
-
+        //            name = role.name,
         //        };
 
         //        context.Roles.Add(newRole);
@@ -83,6 +82,20 @@ namespace LibraryManagement.Services
         //    }
 
         //}
+        public List<PermissionDTO> GetAllPermissions()
+        {
+            try
+            {
+                var permissions = (from s in DataProvider.Ins.DB.Permissions
+                                   select new PermissionDTO { id = s.id, name = s.name }).ToList();
+                return permissions;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+        }
         public (bool, string message) CreateNewRole(RoleDTO role)
         {
             var context = DataProvider.Ins.DB;
@@ -90,23 +103,40 @@ namespace LibraryManagement.Services
             {
                 try
                 {
-                    var isExist = context.Roles.Where(g => g.position == role.position).Any();
+                    var isExist = context.Roles.Where(g => g.name == role.name).Any();
                     if (isExist)
                     {
                         return (false, "Vai trò này đã tồn tại");
                     }
                     var newRole = new Role
                     {
-                        position = role.position,
+                        name = role.name,
                     };
 
                     context.Roles.Add(newRole);
                     context.SaveChanges();
+                    var permissionIds = context.Permissions.Select(p => p.id).ToList();
+
+                    if(permissionIds.Count() != role.roleDetaislList.Count())
+                    {
+                        if (role.roleDetaislList is null)
+                        {
+                            role.roleDetaislList = new List<RoleDetailDTO>();
+                        }
+                        permissionIds.ForEach(p =>
+                        {
+                            int isPermissionExist = role.roleDetaislList.FindIndex(rD => rD.permissionId == p);
+                            if (isPermissionExist == -1)
+                            {
+                                role.roleDetaislList.Add(new RoleDetailDTO { permissionId = p, isPermitted = false, });
+                            }
+                        });
+                    }
 
                     role.roleDetaislList.ForEach((per) =>
                     {
                         context.RoleDetails.Add(new RoleDetail
-                        { roleId = newRole.id, isPermitted = per.isPermitted, permission = per.permission }
+                        { roleId = newRole.id, isPermitted = per.isPermitted, permissionId = per.permissionId }
                         );
                     });
 
@@ -136,13 +166,13 @@ namespace LibraryManagement.Services
                     return (false, "Vai trò không tồn tại");
                 }
 
-                var isExist = context.Roles.Where(g => g.position == role.position).Any();
+                var isExist = context.Roles.Where(g => g.name == role.name).Any();
                 if (isExist)
                 {
                     return (false, "Tên vai trò này đã tồn tại");
                 }
 
-                roleInDB.position = role.position;
+                roleInDB.name = role.name;
                 context.SaveChanges();
                 return (true, "Cập nhật thành công");
             }
@@ -157,7 +187,7 @@ namespace LibraryManagement.Services
             }
 
         }
-        public (bool, string message) EditRolePermission(int roleId, List<RoleDetailsDTO> roleDetaislList)
+        public (bool, string message) EditRolePermission(int roleId, List<RoleDetailDTO> roleDetaislList)
         {
             try
             {
@@ -169,12 +199,27 @@ namespace LibraryManagement.Services
                 }
 
                 var RoleDetails = context.RoleDetails.Where(rD => rD.roleId == roleId).ToList();
-                var permissionList = roleDetaislList.ToDictionary(r => r.permission, r => r.isPermitted);
+
+                var permissionIds = context.Permissions.Select(p => p.id).ToList();
+
+                if (permissionIds.Count() != roleDetaislList.Count())
+                {
+                    permissionIds.ForEach(p =>
+                    {
+                        int isPermissionExist = roleDetaislList.FindIndex(rD => rD.permissionId == p);
+                        if (isPermissionExist == -1)
+                        {
+                            roleDetaislList.Add(new RoleDetailDTO { permissionId = p, isPermitted = false });
+                        }
+                    });
+                }
+
+                var permissionList = roleDetaislList.ToDictionary(r => r.permissionId, r => r.isPermitted);
                 RoleDetails.ForEach(rD =>
                 {
-                    if (permissionList.ContainsKey(rD.permission))
+                    if (permissionList.ContainsKey(rD.permissionId))
                     {
-                        rD.isPermitted = permissionList[rD.permission];
+                        rD.isPermitted = permissionList[rD.permissionId];
                     }
                 });
 
@@ -198,10 +243,10 @@ namespace LibraryManagement.Services
             try
             {
                 var context = DataProvider.Ins.DB;
-                var related = context.Employees.Where(b => b.roleId == roleId).Any();
+                var related = context.Accounts.Where(b => b.roleId == roleId).Any();
                 if (related)
                 {
-                    return (false, "Đã có nhân viên thuộc vai trò này, không thể xóa!");
+                    return (false, "Đã có tài khoản thuộc vai trò này, không thể xóa!");
                 }
                 var role = context.Roles.Find(roleId);
                 var roleDetails = context.RoleDetails.Where(r => r.roleId == role.id).ToList();

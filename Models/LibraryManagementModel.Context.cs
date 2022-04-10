@@ -25,17 +25,23 @@ namespace LibraryManagement.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<Author> Authors { get; set; }
+        public virtual DbSet<BaseBook> BaseBooks { get; set; }
         public virtual DbSet<Book> Books { get; set; }
         public virtual DbSet<BookInfo> BookInfoes { get; set; }
-        public virtual DbSet<BookReturnCard> BookReturnCards { get; set; }
-        public virtual DbSet<BorrowingCard> BorrowingCards { get; set; }
+        public virtual DbSet<BorrowedGenreReport> BorrowedGenreReports { get; set; }
+        public virtual DbSet<BorrowedGenreReportDetail> BorrowedGenreReportDetails { get; set; }
+        public virtual DbSet<Borrowing_ReturnCard> Borrowing_ReturnCard { get; set; }
+        public virtual DbSet<DelayReturnBookReport> DelayReturnBookReports { get; set; }
+        public virtual DbSet<DelayReturnBookReportDetail> DelayReturnBookReportDetails { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<FineReceipt> FineReceipts { get; set; }
         public virtual DbSet<Genre> Genres { get; set; }
         public virtual DbSet<ImportReceipt> ImportReceipts { get; set; }
         public virtual DbSet<ImportReceiptDetail> ImportReceiptDetails { get; set; }
         public virtual DbSet<Parameter> Parameters { get; set; }
+        public virtual DbSet<Permission> Permissions { get; set; }
         public virtual DbSet<ReaderCard> ReaderCards { get; set; }
         public virtual DbSet<ReaderType> ReaderTypes { get; set; }
         public virtual DbSet<Role> Roles { get; set; }

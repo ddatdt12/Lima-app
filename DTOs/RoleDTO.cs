@@ -1,18 +1,13 @@
-﻿using LibraryManagement.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace LibraryManagement.DTOs
 {
    public class RoleDTO
     {
         public int id { get; set; }
-        public string position{ get; set; }
+        public string name{ get; set; }
         public bool isDeleted { get; set; }
 
-        public List<RoleDetailsDTO> roleDetaislList { get; set; }
+        public List<RoleDetailDTO> roleDetaislList { get; set; }
     }
 }

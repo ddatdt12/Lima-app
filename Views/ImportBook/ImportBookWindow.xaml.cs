@@ -1,31 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace LibraryManagement.Views.ImportBook
 {
-    /// <summary>
-    /// Interaction logic for ImportBookWindow.xaml
-    /// </summary>
+
     public partial class ImportBookWindow : Window
     {
+        public static string PreEnterBaseBook;
+
         public ImportBookWindow()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
+            AddBaseBookPage.PreEnterBaseBook = PreEnterBaseBook;
         }
 
         private static readonly Regex _regex = new Regex("[^0-9]"); //regex that matches disallowed text
@@ -44,6 +32,17 @@ namespace LibraryManagement.Views.ImportBook
 
             if (sd.Text.Length <= 0)
                 sd.Text = "1";
+        }
+
+
+        private void RadioButton_Click(object sender, RoutedEventArgs e)
+        {
+            headertxt.Text = "Thêm sách";
+        }
+
+        private void RadioButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            headertxt.Text = "Thêm đầu sách";
         }
     }
 }

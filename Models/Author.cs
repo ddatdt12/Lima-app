@@ -17,14 +17,14 @@ namespace LibraryManagement.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Author()
         {
-            this.Books = new HashSet<Book>();
+            this.BaseBooks = new HashSet<BaseBook>();
         }
     
         public int id { get; set; }
         public string name { get; set; }
-        public System.DateTime birthDate { get; set; }
+        public Nullable<System.DateTime> birthDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Book> Books { get; set; }
+        public virtual ICollection<BaseBook> BaseBooks { get; set; }
     }
 }

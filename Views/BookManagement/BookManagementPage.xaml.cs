@@ -14,9 +14,7 @@ using System.Windows.Shapes;
 
 namespace LibraryManagement.Views.BookManagement
 {
-    /// <summary>
-    /// Interaction logic for BookManagementPage.xaml
-    /// </summary>
+
     public partial class BookManagementPage : Page
     {
         public BookManagementPage()
@@ -38,15 +36,23 @@ namespace LibraryManagement.Views.BookManagement
             switch (FilterBox.Text)
             {
                 case "Mã sách":
-                    return ((item as BookDTO).id.ToString().IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+                    return ((item as BaseBookDTO).id.ToString().IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
                 case "Tên sách":
-                    return ((item as BookDTO).name.IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+                    return ((item as BaseBookDTO).name.IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
                 case "Thể loại":
-                    return ((item as BookDTO).genre.name.IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+                    return ((item as BaseBookDTO).genre.name.IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
                 case "Tác giả":
-                    return ((item as BookDTO).author.name.IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+                    {
+                        string res = "";
+                        BaseBookDTO bb = item as BaseBookDTO;
+                        foreach (var it in bb.authors)
+                        {
+                            res += it.name + " ";
+                        }
+                        return (res.IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+                    }
                 default:
-                    return ((item as BookDTO).id.ToString().IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+                    return ((item as BaseBookDTO).id.ToString().IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
             }
 
         }

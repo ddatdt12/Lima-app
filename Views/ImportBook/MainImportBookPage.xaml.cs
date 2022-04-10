@@ -1,11 +1,13 @@
 ﻿using LibraryManagement.DTOs;
 using LibraryManagement.Services;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Markup;
 
 namespace LibraryManagement.Views.ImportBookPage
 {
@@ -19,12 +21,14 @@ namespace LibraryManagement.Views.ImportBookPage
             set { allBookList = value; }
         }
 
-
         public MainImportBookPage()
         {
             InitializeComponent();
 
             AllBookList = new ObservableCollection<BookDTO>(BookService.Ins.GetAllBook());
+
+            this.Language = XmlLanguage.GetLanguage("vi-VN");
+            createAt.SelectedDate = DateTime.Now;
         }
 
 
@@ -33,8 +37,7 @@ namespace LibraryManagement.Views.ImportBookPage
             TextBox sd = sender as TextBox;
 
             if (sd.Text.Length <= 0)
-                sd.Text = "1";
-
+                sd.Text = "0";
         }
 
         private static readonly Regex _regex = new Regex("[^0-9]"); //regex that matches disallowed text
@@ -64,7 +67,8 @@ namespace LibraryManagement.Views.ImportBookPage
         {
             if (String.IsNullOrEmpty(searchBox.Text))
                 return true;
-            return ((item as BookDTO).name.IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+
+            return ((item as BookDTO).baseBook.name.IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
         }
     }
 }

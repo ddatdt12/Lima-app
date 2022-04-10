@@ -4,27 +4,51 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="LibraryManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="LibraryManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" />
+          <Property Name="password" Type="nvarchar" MaxLength="100" />
+          <Property Name="roleId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Author">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="birthDate" Type="date" Nullable="false" />
+          <Property Name="birthDate" Type="date" />
         </EntityType>
-        <EntityType Name="Book">
+        <EntityType Name="BaseBook">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="genreId" Type="int" Nullable="false" />
-          <Property Name="authorId" Type="int" Nullable="false" />
+          <Property Name="isDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="baseBookId" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="yearOfPublication" Type="int" Nullable="false" />
           <Property Name="publisher" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="quantity" Type="int" Nullable="false" />
           <Property Name="isDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Book_Author">
+          <Key>
+            <PropertyRef Name="baseBookId" />
+            <PropertyRef Name="authorId" />
+          </Key>
+          <Property Name="baseBookId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="authorId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="BookInfo">
           <Key>
@@ -35,16 +59,24 @@
           <Property Name="status" Type="bit" Nullable="false" />
           <Property Name="isDeleted" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="BookReturnCard">
+        <EntityType Name="BorrowedGenreReport">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="borrowingCardId" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="returnedDate" Type="datetime" Nullable="false" />
-          <Property Name="employeeId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="reportDate" Type="date" Nullable="false" />
+          <Property Name="totalNumberOfBorrowings" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="BorrowingCard">
+        <EntityType Name="BorrowedGenreReportDetail">
+          <Key>
+            <PropertyRef Name="borrowedGenreReportId" />
+            <PropertyRef Name="genreId" />
+          </Key>
+          <Property Name="borrowedGenreReportId" Type="int" Nullable="false" />
+          <Property Name="genreId" Type="int" Nullable="false" />
+          <Property Name="NumberOfBorrowings" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Borrowing_ReturnCard">
           <Key>
             <PropertyRef Name="id" />
           </Key>
@@ -52,24 +84,42 @@
           <Property Name="readerCardId" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="borrowingDate" Type="datetime" Nullable="false" />
           <Property Name="dueDate" Type="datetime" Nullable="false" />
-          <Property Name="employeeId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="borrowing_employeeId" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="bookInfoId" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="returnedDate" Type="datetime" />
+          <Property Name="return_employeeId" Type="varchar" MaxLength="10" />
+          <Property Name="fine" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DelayReturnBookReport">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="reportDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DelayReturnBookReportDetail">
+          <Key>
+            <PropertyRef Name="delayReturnBookReportId" />
+            <PropertyRef Name="borrowingCardId" />
+          </Key>
+          <Property Name="delayReturnBookReportId" Type="int" Nullable="false" />
+          <Property Name="borrowingCardId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="borrowingDate" Type="int" Nullable="false" />
+          <Property Name="numberOfDelayReturn" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="username" Type="varchar" MaxLength="50" />
-          <Property Name="password" Type="nvarchar" MaxLength="100" />
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="phoneNumber" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="80" />
           <Property Name="birthDate" Type="datetime" />
           <Property Name="gender" Type="nchar" MaxLength="3" Nullable="false" />
           <Property Name="startingDate" Type="datetime" />
-          <Property Name="roleId" Type="int" Nullable="false" />
           <Property Name="isDeleted" Type="bit" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="80" />
+          <Property Name="accountId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="FineReceipt">
           <Key>
@@ -98,7 +148,7 @@
           <Property Name="createdAt" Type="datetime" Nullable="false" />
           <Property Name="employeeId" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
-        <EntityType Name="ImportReceiptDetails">
+        <EntityType Name="ImportReceiptDetail">
           <Key>
             <PropertyRef Name="importReceiptId" />
             <PropertyRef Name="bookId" />
@@ -115,6 +165,13 @@
           <Property Name="id" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="value" Type="smallint" Nullable="false" />
         </EntityType>
+        <EntityType Name="Permission">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="ReaderCard">
           <Key>
             <PropertyRef Name="id" />
@@ -125,12 +182,12 @@
           <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="birthDate" Type="datetime" Nullable="false" />
           <Property Name="gender" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="identityCard" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="createdAt" Type="datetime" Nullable="false" />
           <Property Name="expiryDate" Type="datetime" Nullable="false" />
           <Property Name="isDeleted" Type="bit" Nullable="false" />
           <Property Name="totalFine" Type="int" />
           <Property Name="readerTypeId" Type="int" Nullable="false" />
+          <Property Name="accountId" Type="int" Nullable="false" />
           <Property Name="employeeId" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="ReaderType">
@@ -146,91 +203,175 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="position" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="isDeleted" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="RoleDetails">
+        <EntityType Name="RoleDetail">
           <Key>
             <PropertyRef Name="roleId" />
-            <PropertyRef Name="permission" />
+            <PropertyRef Name="permissionId" />
           </Key>
           <Property Name="roleId" Type="int" Nullable="false" />
-          <Property Name="permission" Type="int" Nullable="false" />
+          <Property Name="permissionId" Type="int" Nullable="false" />
           <Property Name="isPermitted" Type="bit" Nullable="false" />
         </EntityType>
-        <Association Name="FK__BookRetur__borro__5441852A">
-          <End Role="BorrowingCard" Type="Self.BorrowingCard" Multiplicity="1" />
-          <End Role="BookReturnCard" Type="Self.BookReturnCard" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BorrowingCard">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="BookReturnCard">
-              <PropertyRef Name="borrowingCardId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__BookRetur__emplo__534D60F1">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="BookReturnCard" Type="Self.BookReturnCard" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="BookReturnCard">
-              <PropertyRef Name="employeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Borrowing__bookI__5070F446">
-          <End Role="BookInfo" Type="Self.BookInfo" Multiplicity="1" />
-          <End Role="BorrowingCard" Type="Self.BorrowingCard" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BookInfo">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="BorrowingCard">
-              <PropertyRef Name="bookInfoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Borrowing__emplo__4E88ABD4">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="BorrowingCard" Type="Self.BorrowingCard" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="BorrowingCard">
-              <PropertyRef Name="employeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Borrowing__reade__4F7CD00D">
-          <End Role="ReaderCard" Type="Self.ReaderCard" Multiplicity="1" />
-          <End Role="BorrowingCard" Type="Self.BorrowingCard" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ReaderCard">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="BorrowingCard">
-              <PropertyRef Name="readerCardId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Employee__roleId__30F848ED">
+        <Association Name="FK__Account__roleId__31EC6D26">
           <End Role="Role" Type="Self.Role" Multiplicity="1" />
-          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Role">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="Employee">
+            <Dependent Role="Account">
               <PropertyRef Name="roleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__FineRecei__emplo__5812160E">
+        <Association Name="FK__Book__baseBookId__49C3F6B7">
+          <End Role="BaseBook" Type="Self.BaseBook" Multiplicity="1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseBook">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="baseBookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Book_Auth__autho__4CA06362">
+          <End Role="Author" Type="Self.Author" Multiplicity="1" />
+          <End Role="Book_Author" Type="Self.Book_Author" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Author">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Book_Author">
+              <PropertyRef Name="authorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Book_Auth__baseB__4D94879B">
+          <End Role="BaseBook" Type="Self.BaseBook" Multiplicity="1" />
+          <End Role="Book_Author" Type="Self.Book_Author" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseBook">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Book_Author">
+              <PropertyRef Name="baseBookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BorrowedG__borro__6E01572D">
+          <End Role="BorrowedGenreReport" Type="Self.BorrowedGenreReport" Multiplicity="1" />
+          <End Role="BorrowedGenreReportDetail" Type="Self.BorrowedGenreReportDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BorrowedGenreReport">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="BorrowedGenreReportDetail">
+              <PropertyRef Name="borrowedGenreReportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BorrowedG__genre__6D0D32F4">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
+          <End Role="BorrowedGenreReportDetail" Type="Self.BorrowedGenreReportDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="BorrowedGenreReportDetail">
+              <PropertyRef Name="genreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Borrowing__bookI__5FB337D6">
+          <End Role="BookInfo" Type="Self.BookInfo" Multiplicity="1" />
+          <End Role="Borrowing_ReturnCard" Type="Self.Borrowing_ReturnCard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BookInfo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Borrowing_ReturnCard">
+              <PropertyRef Name="bookInfoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Borrowing__borro__5CD6CB2B">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Borrowing_ReturnCard" Type="Self.Borrowing_ReturnCard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Borrowing_ReturnCard">
+              <PropertyRef Name="borrowing_employeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Borrowing__reade__5EBF139D">
+          <End Role="ReaderCard" Type="Self.ReaderCard" Multiplicity="1" />
+          <End Role="Borrowing_ReturnCard" Type="Self.Borrowing_ReturnCard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReaderCard">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Borrowing_ReturnCard">
+              <PropertyRef Name="readerCardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Borrowing__retur__5DCAEF64">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Borrowing_ReturnCard" Type="Self.Borrowing_ReturnCard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Borrowing_ReturnCard">
+              <PropertyRef Name="return_employeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DelayRetu__borro__73BA3083">
+          <End Role="Borrowing_ReturnCard" Type="Self.Borrowing_ReturnCard" Multiplicity="1" />
+          <End Role="DelayReturnBookReportDetail" Type="Self.DelayReturnBookReportDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Borrowing_ReturnCard">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DelayReturnBookReportDetail">
+              <PropertyRef Name="borrowingCardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DelayRetu__delay__74AE54BC">
+          <End Role="DelayReturnBookReport" Type="Self.DelayReturnBookReport" Multiplicity="1" />
+          <End Role="DelayReturnBookReportDetail" Type="Self.DelayReturnBookReportDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DelayReturnBookReport">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DelayReturnBookReportDetail">
+              <PropertyRef Name="delayReturnBookReportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee__accoun__36B12243">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="accountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FineRecei__emplo__6383C8BA">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="FineReceipt" Type="Self.FineReceipt" Multiplicity="*" />
           <ReferentialConstraint>
@@ -242,7 +383,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__FineRecei__reade__59063A47">
+        <Association Name="FK__FineRecei__reade__6477ECF3">
           <End Role="ReaderCard" Type="Self.ReaderCard" Multiplicity="1" />
           <End Role="FineReceipt" Type="Self.FineReceipt" Multiplicity="*" />
           <ReferentialConstraint>
@@ -254,19 +395,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ImportRec__bookI__4AB81AF0">
+        <Association Name="FK__ImportRec__bookI__5812160E">
           <End Role="Book" Type="Self.Book" Multiplicity="1" />
-          <End Role="ImportReceiptDetails" Type="Self.ImportReceiptDetails" Multiplicity="*" />
+          <End Role="ImportReceiptDetail" Type="Self.ImportReceiptDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Book">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="ImportReceiptDetails">
+            <Dependent Role="ImportReceiptDetail">
               <PropertyRef Name="bookId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ImportRec__emplo__47DBAE45">
+        <Association Name="FK__ImportRec__emplo__5535A963">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="ImportReceipt" Type="Self.ImportReceipt" Multiplicity="*" />
           <ReferentialConstraint>
@@ -278,19 +419,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ImportRec__impor__4BAC3F29">
+        <Association Name="FK__ImportRec__impor__59063A47">
           <End Role="ImportReceipt" Type="Self.ImportReceipt" Multiplicity="1" />
-          <End Role="ImportReceiptDetails" Type="Self.ImportReceiptDetails" Multiplicity="*" />
+          <End Role="ImportReceiptDetail" Type="Self.ImportReceiptDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ImportReceipt">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="ImportReceiptDetails">
+            <Dependent Role="ImportReceiptDetail">
               <PropertyRef Name="importReceiptId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ReaderCar__emplo__36B12243">
+        <Association Name="FK__ReaderCar__accou__3C69FB99">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="ReaderCard" Type="Self.ReaderCard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ReaderCard">
+              <PropertyRef Name="accountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReaderCar__emplo__3D5E1FD2">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="ReaderCard" Type="Self.ReaderCard" Multiplicity="*" />
           <ReferentialConstraint>
@@ -302,7 +455,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ReaderCar__reade__37A5467C">
+        <Association Name="FK__ReaderCar__reade__3E52440B">
           <End Role="ReaderType" Type="Self.ReaderType" Multiplicity="1" />
           <End Role="ReaderCard" Type="Self.ReaderCard" Multiplicity="*" />
           <ReferentialConstraint>
@@ -314,27 +467,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__RoleDetai__roleI__286302EC">
+        <Association Name="FK__RoleDetai__permi__2B3F6F97">
+          <End Role="Permission" Type="Self.Permission" Multiplicity="1" />
+          <End Role="RoleDetail" Type="Self.RoleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permission">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RoleDetail">
+              <PropertyRef Name="permissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RoleDetai__roleI__2A4B4B5E">
           <End Role="Role" Type="Self.Role" Multiplicity="1" />
-          <End Role="RoleDetails" Type="Self.RoleDetails" Multiplicity="*" />
+          <End Role="RoleDetail" Type="Self.RoleDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Role">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="RoleDetails">
+            <Dependent Role="RoleDetail">
               <PropertyRef Name="roleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AUTHORID">
-          <End Role="Author" Type="Self.Author" Multiplicity="1" />
-          <End Role="Book" Type="Self.Book" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Author">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Book">
-              <PropertyRef Name="authorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -352,91 +505,130 @@
         </Association>
         <Association Name="FK_GENREID">
           <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
-          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <End Role="BaseBook" Type="Self.BaseBook" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Genre">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="Book">
+            <Dependent Role="BaseBook">
               <PropertyRef Name="genreId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="LibraryManagementModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Author" EntityType="Self.Author" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BaseBook" EntityType="Self.BaseBook" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Book_Author" EntityType="Self.Book_Author" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BookInfo" EntityType="Self.BookInfo" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="BookReturnCard" EntityType="Self.BookReturnCard" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="BorrowingCard" EntityType="Self.BorrowingCard" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BorrowedGenreReport" EntityType="Self.BorrowedGenreReport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BorrowedGenreReportDetail" EntityType="Self.BorrowedGenreReportDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Borrowing_ReturnCard" EntityType="Self.Borrowing_ReturnCard" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DelayReturnBookReport" EntityType="Self.DelayReturnBookReport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DelayReturnBookReportDetail" EntityType="Self.DelayReturnBookReportDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FineReceipt" EntityType="Self.FineReceipt" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Genre" EntityType="Self.Genre" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ImportReceipt" EntityType="Self.ImportReceipt" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ImportReceiptDetails" EntityType="Self.ImportReceiptDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ImportReceiptDetail" EntityType="Self.ImportReceiptDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Parameter" EntityType="Self.Parameter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Permission" EntityType="Self.Permission" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReaderCard" EntityType="Self.ReaderCard" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReaderType" EntityType="Self.ReaderType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="RoleDetails" EntityType="Self.RoleDetails" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__BookRetur__borro__5441852A" Association="Self.FK__BookRetur__borro__5441852A">
-            <End Role="BorrowingCard" EntitySet="BorrowingCard" />
-            <End Role="BookReturnCard" EntitySet="BookReturnCard" />
-          </AssociationSet>
-          <AssociationSet Name="FK__BookRetur__emplo__534D60F1" Association="Self.FK__BookRetur__emplo__534D60F1">
-            <End Role="Employee" EntitySet="Employee" />
-            <End Role="BookReturnCard" EntitySet="BookReturnCard" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Borrowing__bookI__5070F446" Association="Self.FK__Borrowing__bookI__5070F446">
-            <End Role="BookInfo" EntitySet="BookInfo" />
-            <End Role="BorrowingCard" EntitySet="BorrowingCard" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Borrowing__emplo__4E88ABD4" Association="Self.FK__Borrowing__emplo__4E88ABD4">
-            <End Role="Employee" EntitySet="Employee" />
-            <End Role="BorrowingCard" EntitySet="BorrowingCard" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Borrowing__reade__4F7CD00D" Association="Self.FK__Borrowing__reade__4F7CD00D">
-            <End Role="ReaderCard" EntitySet="ReaderCard" />
-            <End Role="BorrowingCard" EntitySet="BorrowingCard" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Employee__roleId__30F848ED" Association="Self.FK__Employee__roleId__30F848ED">
+          <EntitySet Name="RoleDetail" EntityType="Self.RoleDetail" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Account__roleId__31EC6D26" Association="Self.FK__Account__roleId__31EC6D26">
             <End Role="Role" EntitySet="Role" />
-            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Account" EntitySet="Account" />
           </AssociationSet>
-          <AssociationSet Name="FK__FineRecei__emplo__5812160E" Association="Self.FK__FineRecei__emplo__5812160E">
-            <End Role="Employee" EntitySet="Employee" />
-            <End Role="FineReceipt" EntitySet="FineReceipt" />
-          </AssociationSet>
-          <AssociationSet Name="FK__FineRecei__reade__59063A47" Association="Self.FK__FineRecei__reade__59063A47">
-            <End Role="ReaderCard" EntitySet="ReaderCard" />
-            <End Role="FineReceipt" EntitySet="FineReceipt" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ImportRec__bookI__4AB81AF0" Association="Self.FK__ImportRec__bookI__4AB81AF0">
+          <AssociationSet Name="FK__Book__baseBookId__49C3F6B7" Association="Self.FK__Book__baseBookId__49C3F6B7">
+            <End Role="BaseBook" EntitySet="BaseBook" />
             <End Role="Book" EntitySet="Book" />
-            <End Role="ImportReceiptDetails" EntitySet="ImportReceiptDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__ImportRec__emplo__47DBAE45" Association="Self.FK__ImportRec__emplo__47DBAE45">
+          <AssociationSet Name="FK__Book_Auth__autho__4CA06362" Association="Self.FK__Book_Auth__autho__4CA06362">
+            <End Role="Author" EntitySet="Author" />
+            <End Role="Book_Author" EntitySet="Book_Author" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Book_Auth__baseB__4D94879B" Association="Self.FK__Book_Auth__baseB__4D94879B">
+            <End Role="BaseBook" EntitySet="BaseBook" />
+            <End Role="Book_Author" EntitySet="Book_Author" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BorrowedG__borro__6E01572D" Association="Self.FK__BorrowedG__borro__6E01572D">
+            <End Role="BorrowedGenreReport" EntitySet="BorrowedGenreReport" />
+            <End Role="BorrowedGenreReportDetail" EntitySet="BorrowedGenreReportDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BorrowedG__genre__6D0D32F4" Association="Self.FK__BorrowedG__genre__6D0D32F4">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="BorrowedGenreReportDetail" EntitySet="BorrowedGenreReportDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Borrowing__bookI__5FB337D6" Association="Self.FK__Borrowing__bookI__5FB337D6">
+            <End Role="BookInfo" EntitySet="BookInfo" />
+            <End Role="Borrowing_ReturnCard" EntitySet="Borrowing_ReturnCard" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Borrowing__borro__5CD6CB2B" Association="Self.FK__Borrowing__borro__5CD6CB2B">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Borrowing_ReturnCard" EntitySet="Borrowing_ReturnCard" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Borrowing__reade__5EBF139D" Association="Self.FK__Borrowing__reade__5EBF139D">
+            <End Role="ReaderCard" EntitySet="ReaderCard" />
+            <End Role="Borrowing_ReturnCard" EntitySet="Borrowing_ReturnCard" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Borrowing__retur__5DCAEF64" Association="Self.FK__Borrowing__retur__5DCAEF64">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Borrowing_ReturnCard" EntitySet="Borrowing_ReturnCard" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DelayRetu__borro__73BA3083" Association="Self.FK__DelayRetu__borro__73BA3083">
+            <End Role="Borrowing_ReturnCard" EntitySet="Borrowing_ReturnCard" />
+            <End Role="DelayReturnBookReportDetail" EntitySet="DelayReturnBookReportDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DelayRetu__delay__74AE54BC" Association="Self.FK__DelayRetu__delay__74AE54BC">
+            <End Role="DelayReturnBookReport" EntitySet="DelayReturnBookReport" />
+            <End Role="DelayReturnBookReportDetail" EntitySet="DelayReturnBookReportDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee__accoun__36B12243" Association="Self.FK__Employee__accoun__36B12243">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FineRecei__emplo__6383C8BA" Association="Self.FK__FineRecei__emplo__6383C8BA">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="FineReceipt" EntitySet="FineReceipt" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FineRecei__reade__6477ECF3" Association="Self.FK__FineRecei__reade__6477ECF3">
+            <End Role="ReaderCard" EntitySet="ReaderCard" />
+            <End Role="FineReceipt" EntitySet="FineReceipt" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ImportRec__bookI__5812160E" Association="Self.FK__ImportRec__bookI__5812160E">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="ImportReceiptDetail" EntitySet="ImportReceiptDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ImportRec__emplo__5535A963" Association="Self.FK__ImportRec__emplo__5535A963">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="ImportReceipt" EntitySet="ImportReceipt" />
           </AssociationSet>
-          <AssociationSet Name="FK__ImportRec__impor__4BAC3F29" Association="Self.FK__ImportRec__impor__4BAC3F29">
+          <AssociationSet Name="FK__ImportRec__impor__59063A47" Association="Self.FK__ImportRec__impor__59063A47">
             <End Role="ImportReceipt" EntitySet="ImportReceipt" />
-            <End Role="ImportReceiptDetails" EntitySet="ImportReceiptDetails" />
+            <End Role="ImportReceiptDetail" EntitySet="ImportReceiptDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK__ReaderCar__emplo__36B12243" Association="Self.FK__ReaderCar__emplo__36B12243">
+          <AssociationSet Name="FK__ReaderCar__accou__3C69FB99" Association="Self.FK__ReaderCar__accou__3C69FB99">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="ReaderCard" EntitySet="ReaderCard" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReaderCar__emplo__3D5E1FD2" Association="Self.FK__ReaderCar__emplo__3D5E1FD2">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="ReaderCard" EntitySet="ReaderCard" />
           </AssociationSet>
-          <AssociationSet Name="FK__ReaderCar__reade__37A5467C" Association="Self.FK__ReaderCar__reade__37A5467C">
+          <AssociationSet Name="FK__ReaderCar__reade__3E52440B" Association="Self.FK__ReaderCar__reade__3E52440B">
             <End Role="ReaderType" EntitySet="ReaderType" />
             <End Role="ReaderCard" EntitySet="ReaderCard" />
           </AssociationSet>
-          <AssociationSet Name="FK__RoleDetai__roleI__286302EC" Association="Self.FK__RoleDetai__roleI__286302EC">
-            <End Role="Role" EntitySet="Role" />
-            <End Role="RoleDetails" EntitySet="RoleDetails" />
+          <AssociationSet Name="FK__RoleDetai__permi__2B3F6F97" Association="Self.FK__RoleDetai__permi__2B3F6F97">
+            <End Role="Permission" EntitySet="Permission" />
+            <End Role="RoleDetail" EntitySet="RoleDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK_AUTHORID" Association="Self.FK_AUTHORID">
-            <End Role="Author" EntitySet="Author" />
-            <End Role="Book" EntitySet="Book" />
+          <AssociationSet Name="FK__RoleDetai__roleI__2A4B4B5E" Association="Self.FK__RoleDetai__roleI__2A4B4B5E">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="RoleDetail" EntitySet="RoleDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_BOOKINFO_BOOK" Association="Self.FK_BOOKINFO_BOOK">
             <End Role="Book" EntitySet="Book" />
@@ -444,171 +636,351 @@
           </AssociationSet>
           <AssociationSet Name="FK_GENREID" Association="Self.FK_GENREID">
             <End Role="Genre" EntitySet="Genre" />
-            <End Role="Book" EntitySet="Book" />
+            <End Role="BaseBook" EntitySet="BaseBook" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="LibraryManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="LibraryManagementEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="LibraryManagementModel.Account" />
+          <EntitySet Name="Authors" EntityType="LibraryManagementModel.Author" />
+          <EntitySet Name="BaseBooks" EntityType="LibraryManagementModel.BaseBook" />
+          <EntitySet Name="Books" EntityType="LibraryManagementModel.Book" />
+          <EntitySet Name="BookInfoes" EntityType="LibraryManagementModel.BookInfo" />
+          <EntitySet Name="BorrowedGenreReports" EntityType="LibraryManagementModel.BorrowedGenreReport" />
+          <EntitySet Name="BorrowedGenreReportDetails" EntityType="LibraryManagementModel.BorrowedGenreReportDetail" />
+          <EntitySet Name="Borrowing_ReturnCard" EntityType="LibraryManagementModel.Borrowing_ReturnCard" />
+          <EntitySet Name="DelayReturnBookReports" EntityType="LibraryManagementModel.DelayReturnBookReport" />
+          <EntitySet Name="DelayReturnBookReportDetails" EntityType="LibraryManagementModel.DelayReturnBookReportDetail" />
+          <EntitySet Name="Employees" EntityType="LibraryManagementModel.Employee" />
+          <EntitySet Name="FineReceipts" EntityType="LibraryManagementModel.FineReceipt" />
+          <EntitySet Name="Genres" EntityType="LibraryManagementModel.Genre" />
+          <EntitySet Name="ImportReceipts" EntityType="LibraryManagementModel.ImportReceipt" />
+          <EntitySet Name="ImportReceiptDetails" EntityType="LibraryManagementModel.ImportReceiptDetail" />
+          <EntitySet Name="Parameters" EntityType="LibraryManagementModel.Parameter" />
+          <EntitySet Name="Permissions" EntityType="LibraryManagementModel.Permission" />
+          <EntitySet Name="ReaderCards" EntityType="LibraryManagementModel.ReaderCard" />
+          <EntitySet Name="ReaderTypes" EntityType="LibraryManagementModel.ReaderType" />
+          <EntitySet Name="Roles" EntityType="LibraryManagementModel.Role" />
+          <EntitySet Name="RoleDetails" EntityType="LibraryManagementModel.RoleDetail" />
+          <AssociationSet Name="FK__Account__roleId__31EC6D26" Association="LibraryManagementModel.FK__Account__roleId__31EC6D26">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee__accoun__36B12243" Association="LibraryManagementModel.FK__Employee__accoun__36B12243">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReaderCar__accou__3C69FB99" Association="LibraryManagementModel.FK__ReaderCar__accou__3C69FB99">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="ReaderCard" EntitySet="ReaderCards" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Book__baseBookId__49C3F6B7" Association="LibraryManagementModel.FK__Book__baseBookId__49C3F6B7">
+            <End Role="BaseBook" EntitySet="BaseBooks" />
+            <End Role="Book" EntitySet="Books" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GENREID" Association="LibraryManagementModel.FK_GENREID">
+            <End Role="Genre" EntitySet="Genres" />
+            <End Role="BaseBook" EntitySet="BaseBooks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ImportRec__bookI__5812160E" Association="LibraryManagementModel.FK__ImportRec__bookI__5812160E">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="ImportReceiptDetail" EntitySet="ImportReceiptDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BOOKINFO_BOOK" Association="LibraryManagementModel.FK_BOOKINFO_BOOK">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="BookInfo" EntitySet="BookInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Borrowing__bookI__5FB337D6" Association="LibraryManagementModel.FK__Borrowing__bookI__5FB337D6">
+            <End Role="BookInfo" EntitySet="BookInfoes" />
+            <End Role="Borrowing_ReturnCard" EntitySet="Borrowing_ReturnCard" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BorrowedG__borro__6E01572D" Association="LibraryManagementModel.FK__BorrowedG__borro__6E01572D">
+            <End Role="BorrowedGenreReport" EntitySet="BorrowedGenreReports" />
+            <End Role="BorrowedGenreReportDetail" EntitySet="BorrowedGenreReportDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BorrowedG__genre__6D0D32F4" Association="LibraryManagementModel.FK__BorrowedG__genre__6D0D32F4">
+            <End Role="Genre" EntitySet="Genres" />
+            <End Role="BorrowedGenreReportDetail" EntitySet="BorrowedGenreReportDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Borrowing__borro__5CD6CB2B" Association="LibraryManagementModel.FK__Borrowing__borro__5CD6CB2B">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Borrowing_ReturnCard" EntitySet="Borrowing_ReturnCard" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Borrowing__reade__5EBF139D" Association="LibraryManagementModel.FK__Borrowing__reade__5EBF139D">
+            <End Role="ReaderCard" EntitySet="ReaderCards" />
+            <End Role="Borrowing_ReturnCard" EntitySet="Borrowing_ReturnCard" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Borrowing__retur__5DCAEF64" Association="LibraryManagementModel.FK__Borrowing__retur__5DCAEF64">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Borrowing_ReturnCard" EntitySet="Borrowing_ReturnCard" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DelayRetu__borro__73BA3083" Association="LibraryManagementModel.FK__DelayRetu__borro__73BA3083">
+            <End Role="Borrowing_ReturnCard" EntitySet="Borrowing_ReturnCard" />
+            <End Role="DelayReturnBookReportDetail" EntitySet="DelayReturnBookReportDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DelayRetu__delay__74AE54BC" Association="LibraryManagementModel.FK__DelayRetu__delay__74AE54BC">
+            <End Role="DelayReturnBookReport" EntitySet="DelayReturnBookReports" />
+            <End Role="DelayReturnBookReportDetail" EntitySet="DelayReturnBookReportDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FineRecei__emplo__6383C8BA" Association="LibraryManagementModel.FK__FineRecei__emplo__6383C8BA">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="FineReceipt" EntitySet="FineReceipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ImportRec__emplo__5535A963" Association="LibraryManagementModel.FK__ImportRec__emplo__5535A963">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="ImportReceipt" EntitySet="ImportReceipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReaderCar__emplo__3D5E1FD2" Association="LibraryManagementModel.FK__ReaderCar__emplo__3D5E1FD2">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="ReaderCard" EntitySet="ReaderCards" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FineRecei__reade__6477ECF3" Association="LibraryManagementModel.FK__FineRecei__reade__6477ECF3">
+            <End Role="ReaderCard" EntitySet="ReaderCards" />
+            <End Role="FineReceipt" EntitySet="FineReceipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ImportRec__impor__59063A47" Association="LibraryManagementModel.FK__ImportRec__impor__59063A47">
+            <End Role="ImportReceipt" EntitySet="ImportReceipts" />
+            <End Role="ImportReceiptDetail" EntitySet="ImportReceiptDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RoleDetai__permi__2B3F6F97" Association="LibraryManagementModel.FK__RoleDetai__permi__2B3F6F97">
+            <End Role="Permission" EntitySet="Permissions" />
+            <End Role="RoleDetail" EntitySet="RoleDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReaderCar__reade__3E52440B" Association="LibraryManagementModel.FK__ReaderCar__reade__3E52440B">
+            <End Role="ReaderType" EntitySet="ReaderTypes" />
+            <End Role="ReaderCard" EntitySet="ReaderCards" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RoleDetai__roleI__2A4B4B5E" Association="LibraryManagementModel.FK__RoleDetai__roleI__2A4B4B5E">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="RoleDetail" EntitySet="RoleDetails" />
+          </AssociationSet>
+          <AssociationSet Name="Book_Author" Association="LibraryManagementModel.Book_Author">
+            <End Role="Author" EntitySet="Authors" />
+            <End Role="BaseBook" EntitySet="BaseBooks" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="roleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="LibraryManagementModel.FK__Account__roleId__31EC6D26" FromRole="Account" ToRole="Role" />
+          <NavigationProperty Name="Employees" Relationship="LibraryManagementModel.FK__Employee__accoun__36B12243" FromRole="Account" ToRole="Employee" />
+          <NavigationProperty Name="ReaderCards" Relationship="LibraryManagementModel.FK__ReaderCar__accou__3C69FB99" FromRole="Account" ToRole="ReaderCard" />
+        </EntityType>
         <EntityType Name="Author">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="birthDate" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Books" Relationship="Self.FK_AUTHORID" FromRole="Author" ToRole="Book" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="birthDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="BaseBooks" Relationship="LibraryManagementModel.Book_Author" FromRole="Author" ToRole="BaseBook" />
+        </EntityType>
+        <EntityType Name="BaseBook">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="genreId" Type="Int32" Nullable="false" />
+          <Property Name="isDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Books" Relationship="LibraryManagementModel.FK__Book__baseBookId__49C3F6B7" FromRole="BaseBook" ToRole="Book" />
+          <NavigationProperty Name="Genre" Relationship="LibraryManagementModel.FK_GENREID" FromRole="BaseBook" ToRole="Genre" />
+          <NavigationProperty Name="Authors" Relationship="LibraryManagementModel.Book_Author" FromRole="BaseBook" ToRole="Author" />
         </EntityType>
         <EntityType Name="Book">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="genreId" Type="Int32" Nullable="false" />
-          <Property Name="authorId" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="baseBookId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="yearOfPublication" Type="Int32" Nullable="false" />
-          <Property Name="publisher" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="publisher" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="quantity" Type="Int32" Nullable="false" />
           <Property Name="isDeleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Author" Relationship="Self.FK_AUTHORID" FromRole="Book" ToRole="Author" />
-          <NavigationProperty Name="ImportReceiptDetails" Relationship="Self.FK__ImportRec__bookI__4AB81AF0" FromRole="Book" ToRole="ImportReceiptDetails" />
-          <NavigationProperty Name="BookInfoes" Relationship="Self.FK_BOOKINFO_BOOK" FromRole="Book" ToRole="BookInfo" />
-          <NavigationProperty Name="Genre" Relationship="Self.FK_GENREID" FromRole="Book" ToRole="Genre" />
+          <NavigationProperty Name="BaseBook" Relationship="LibraryManagementModel.FK__Book__baseBookId__49C3F6B7" FromRole="Book" ToRole="BaseBook" />
+          <NavigationProperty Name="ImportReceiptDetails" Relationship="LibraryManagementModel.FK__ImportRec__bookI__5812160E" FromRole="Book" ToRole="ImportReceiptDetail" />
+          <NavigationProperty Name="BookInfoes" Relationship="LibraryManagementModel.FK_BOOKINFO_BOOK" FromRole="Book" ToRole="BookInfo" />
         </EntityType>
         <EntityType Name="BookInfo">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="bookId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="bookId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="status" Type="Boolean" Nullable="false" />
           <Property Name="isDeleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Book" Relationship="Self.FK_BOOKINFO_BOOK" FromRole="BookInfo" ToRole="Book" />
-          <NavigationProperty Name="BorrowingCards" Relationship="Self.FK__Borrowing__bookI__5070F446" FromRole="BookInfo" ToRole="BorrowingCard" />
+          <NavigationProperty Name="Book" Relationship="LibraryManagementModel.FK_BOOKINFO_BOOK" FromRole="BookInfo" ToRole="Book" />
+          <NavigationProperty Name="Borrowing_ReturnCard" Relationship="LibraryManagementModel.FK__Borrowing__bookI__5FB337D6" FromRole="BookInfo" ToRole="Borrowing_ReturnCard" />
         </EntityType>
-        <EntityType Name="BookReturnCard">
+        <EntityType Name="BorrowedGenreReport">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="borrowingCardId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="returnedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="employeeId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="BorrowingCard" Relationship="Self.FK__BookRetur__borro__5441852A" FromRole="BookReturnCard" ToRole="BorrowingCard" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK__BookRetur__emplo__534D60F1" FromRole="BookReturnCard" ToRole="Employee" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="reportDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="totalNumberOfBorrowings" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BorrowedGenreReportDetails" Relationship="LibraryManagementModel.FK__BorrowedG__borro__6E01572D" FromRole="BorrowedGenreReport" ToRole="BorrowedGenreReportDetail" />
         </EntityType>
-        <EntityType Name="BorrowingCard">
+        <EntityType Name="BorrowedGenreReportDetail">
+          <Key>
+            <PropertyRef Name="borrowedGenreReportId" />
+            <PropertyRef Name="genreId" />
+          </Key>
+          <Property Name="borrowedGenreReportId" Type="Int32" Nullable="false" />
+          <Property Name="genreId" Type="Int32" Nullable="false" />
+          <Property Name="NumberOfBorrowings" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BorrowedGenreReport" Relationship="LibraryManagementModel.FK__BorrowedG__borro__6E01572D" FromRole="BorrowedGenreReportDetail" ToRole="BorrowedGenreReport" />
+          <NavigationProperty Name="Genre" Relationship="LibraryManagementModel.FK__BorrowedG__genre__6D0D32F4" FromRole="BorrowedGenreReportDetail" ToRole="Genre" />
+        </EntityType>
+        <EntityType Name="Borrowing_ReturnCard">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="readerCardId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="readerCardId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="borrowingDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="dueDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="employeeId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="bookInfoId" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="BookInfo" Relationship="Self.FK__Borrowing__bookI__5070F446" FromRole="BorrowingCard" ToRole="BookInfo" />
-          <NavigationProperty Name="BookReturnCards" Relationship="Self.FK__BookRetur__borro__5441852A" FromRole="BorrowingCard" ToRole="BookReturnCard" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK__Borrowing__emplo__4E88ABD4" FromRole="BorrowingCard" ToRole="Employee" />
-          <NavigationProperty Name="ReaderCard" Relationship="Self.FK__Borrowing__reade__4F7CD00D" FromRole="BorrowingCard" ToRole="ReaderCard" />
+          <Property Name="borrowing_employeeId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="bookInfoId" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="returnedDate" Type="DateTime" Precision="3" />
+          <Property Name="return_employeeId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="fine" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BookInfo" Relationship="LibraryManagementModel.FK__Borrowing__bookI__5FB337D6" FromRole="Borrowing_ReturnCard" ToRole="BookInfo" />
+          <NavigationProperty Name="Employee" Relationship="LibraryManagementModel.FK__Borrowing__borro__5CD6CB2B" FromRole="Borrowing_ReturnCard" ToRole="Employee" />
+          <NavigationProperty Name="ReaderCard" Relationship="LibraryManagementModel.FK__Borrowing__reade__5EBF139D" FromRole="Borrowing_ReturnCard" ToRole="ReaderCard" />
+          <NavigationProperty Name="Employee1" Relationship="LibraryManagementModel.FK__Borrowing__retur__5DCAEF64" FromRole="Borrowing_ReturnCard" ToRole="Employee" />
+          <NavigationProperty Name="DelayReturnBookReportDetails" Relationship="LibraryManagementModel.FK__DelayRetu__borro__73BA3083" FromRole="Borrowing_ReturnCard" ToRole="DelayReturnBookReportDetail" />
+        </EntityType>
+        <EntityType Name="DelayReturnBookReport">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="reportDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="DelayReturnBookReportDetails" Relationship="LibraryManagementModel.FK__DelayRetu__delay__74AE54BC" FromRole="DelayReturnBookReport" ToRole="DelayReturnBookReportDetail" />
+        </EntityType>
+        <EntityType Name="DelayReturnBookReportDetail">
+          <Key>
+            <PropertyRef Name="delayReturnBookReportId" />
+            <PropertyRef Name="borrowingCardId" />
+          </Key>
+          <Property Name="delayReturnBookReportId" Type="Int32" Nullable="false" />
+          <Property Name="borrowingCardId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="borrowingDate" Type="Int32" Nullable="false" />
+          <Property Name="numberOfDelayReturn" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Borrowing_ReturnCard" Relationship="LibraryManagementModel.FK__DelayRetu__borro__73BA3083" FromRole="DelayReturnBookReportDetail" ToRole="Borrowing_ReturnCard" />
+          <NavigationProperty Name="DelayReturnBookReport" Relationship="LibraryManagementModel.FK__DelayRetu__delay__74AE54BC" FromRole="DelayReturnBookReportDetail" ToRole="DelayReturnBookReport" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="phoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="phoneNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
           <Property Name="birthDate" Type="DateTime" Precision="3" />
-          <Property Name="gender" Type="String" MaxLength="3" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="gender" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="true" />
           <Property Name="startingDate" Type="DateTime" Precision="3" />
-          <Property Name="roleId" Type="Int32" Nullable="false" />
           <Property Name="isDeleted" Type="Boolean" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="BookReturnCards" Relationship="Self.FK__BookRetur__emplo__534D60F1" FromRole="Employee" ToRole="BookReturnCard" />
-          <NavigationProperty Name="BorrowingCards" Relationship="Self.FK__Borrowing__emplo__4E88ABD4" FromRole="Employee" ToRole="BorrowingCard" />
-          <NavigationProperty Name="Role" Relationship="Self.FK__Employee__roleId__30F848ED" FromRole="Employee" ToRole="Role" />
-          <NavigationProperty Name="FineReceipts" Relationship="Self.FK__FineRecei__emplo__5812160E" FromRole="Employee" ToRole="FineReceipt" />
-          <NavigationProperty Name="ImportReceipts" Relationship="Self.FK__ImportRec__emplo__47DBAE45" FromRole="Employee" ToRole="ImportReceipt" />
-          <NavigationProperty Name="ReaderCards" Relationship="Self.FK__ReaderCar__emplo__36B12243" FromRole="Employee" ToRole="ReaderCard" />
+          <Property Name="accountId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Account" Relationship="LibraryManagementModel.FK__Employee__accoun__36B12243" FromRole="Employee" ToRole="Account" />
+          <NavigationProperty Name="Borrowing_ReturnCard" Relationship="LibraryManagementModel.FK__Borrowing__borro__5CD6CB2B" FromRole="Employee" ToRole="Borrowing_ReturnCard" />
+          <NavigationProperty Name="Borrowing_ReturnCard1" Relationship="LibraryManagementModel.FK__Borrowing__retur__5DCAEF64" FromRole="Employee" ToRole="Borrowing_ReturnCard" />
+          <NavigationProperty Name="FineReceipts" Relationship="LibraryManagementModel.FK__FineRecei__emplo__6383C8BA" FromRole="Employee" ToRole="FineReceipt" />
+          <NavigationProperty Name="ImportReceipts" Relationship="LibraryManagementModel.FK__ImportRec__emplo__5535A963" FromRole="Employee" ToRole="ImportReceipt" />
+          <NavigationProperty Name="ReaderCards" Relationship="LibraryManagementModel.FK__ReaderCar__emplo__3D5E1FD2" FromRole="Employee" ToRole="ReaderCard" />
         </EntityType>
         <EntityType Name="FineReceipt">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="amount" Type="Int32" Nullable="false" />
           <Property Name="createdAt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="employeeId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="readerCardId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK__FineRecei__emplo__5812160E" FromRole="FineReceipt" ToRole="Employee" />
-          <NavigationProperty Name="ReaderCard" Relationship="Self.FK__FineRecei__reade__59063A47" FromRole="FineReceipt" ToRole="ReaderCard" />
+          <Property Name="employeeId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="readerCardId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Employee" Relationship="LibraryManagementModel.FK__FineRecei__emplo__6383C8BA" FromRole="FineReceipt" ToRole="Employee" />
+          <NavigationProperty Name="ReaderCard" Relationship="LibraryManagementModel.FK__FineRecei__reade__6477ECF3" FromRole="FineReceipt" ToRole="ReaderCard" />
         </EntityType>
         <EntityType Name="Genre">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Books" Relationship="Self.FK_GENREID" FromRole="Genre" ToRole="Book" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BaseBooks" Relationship="LibraryManagementModel.FK_GENREID" FromRole="Genre" ToRole="BaseBook" />
+          <NavigationProperty Name="BorrowedGenreReportDetails" Relationship="LibraryManagementModel.FK__BorrowedG__genre__6D0D32F4" FromRole="Genre" ToRole="BorrowedGenreReportDetail" />
         </EntityType>
         <EntityType Name="ImportReceipt">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="supplier" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="id" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="supplier" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="totalPrice" Type="Int32" Nullable="false" />
           <Property Name="createdAt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="employeeId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK__ImportRec__emplo__47DBAE45" FromRole="ImportReceipt" ToRole="Employee" />
-          <NavigationProperty Name="ImportReceiptDetails" Relationship="Self.FK__ImportRec__impor__4BAC3F29" FromRole="ImportReceipt" ToRole="ImportReceiptDetails" />
+          <Property Name="employeeId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Employee" Relationship="LibraryManagementModel.FK__ImportRec__emplo__5535A963" FromRole="ImportReceipt" ToRole="Employee" />
+          <NavigationProperty Name="ImportReceiptDetails" Relationship="LibraryManagementModel.FK__ImportRec__impor__59063A47" FromRole="ImportReceipt" ToRole="ImportReceiptDetail" />
         </EntityType>
         <EntityType Name="ImportReceiptDetail">
           <Key>
             <PropertyRef Name="importReceiptId" />
             <PropertyRef Name="bookId" />
           </Key>
-          <Property Name="importReceiptId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="bookId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="importReceiptId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="bookId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="unitPrice" Type="Int32" Nullable="false" />
           <Property Name="quantity" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Book" Relationship="Self.FK__ImportRec__bookI__4AB81AF0" FromRole="ImportReceiptDetails" ToRole="Book" />
-          <NavigationProperty Name="ImportReceipt" Relationship="Self.FK__ImportRec__impor__4BAC3F29" FromRole="ImportReceiptDetails" ToRole="ImportReceipt" />
+          <NavigationProperty Name="Book" Relationship="LibraryManagementModel.FK__ImportRec__bookI__5812160E" FromRole="ImportReceiptDetail" ToRole="Book" />
+          <NavigationProperty Name="ImportReceipt" Relationship="LibraryManagementModel.FK__ImportRec__impor__59063A47" FromRole="ImportReceiptDetail" ToRole="ImportReceipt" />
         </EntityType>
         <EntityType Name="Parameter">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="value" Type="Int16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Permission">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="RoleDetails" Relationship="LibraryManagementModel.FK__RoleDetai__permi__2B3F6F97" FromRole="Permission" ToRole="RoleDetail" />
         </EntityType>
         <EntityType Name="ReaderCard">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="birthDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="identityCard" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="gender" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="createdAt" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="expiryDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="isDeleted" Type="Boolean" Nullable="false" />
           <Property Name="totalFine" Type="Int32" />
           <Property Name="readerTypeId" Type="Int32" Nullable="false" />
-          <Property Name="employeeId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="BorrowingCards" Relationship="Self.FK__Borrowing__reade__4F7CD00D" FromRole="ReaderCard" ToRole="BorrowingCard" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK__ReaderCar__emplo__36B12243" FromRole="ReaderCard" ToRole="Employee" />
-          <NavigationProperty Name="FineReceipts" Relationship="Self.FK__FineRecei__reade__59063A47" FromRole="ReaderCard" ToRole="FineReceipt" />
-          <NavigationProperty Name="ReaderType" Relationship="Self.FK__ReaderCar__reade__37A5467C" FromRole="ReaderCard" ToRole="ReaderType" />
+          <Property Name="accountId" Type="Int32" Nullable="false" />
+          <Property Name="employeeId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Account" Relationship="LibraryManagementModel.FK__ReaderCar__accou__3C69FB99" FromRole="ReaderCard" ToRole="Account" />
+          <NavigationProperty Name="Borrowing_ReturnCard" Relationship="LibraryManagementModel.FK__Borrowing__reade__5EBF139D" FromRole="ReaderCard" ToRole="Borrowing_ReturnCard" />
+          <NavigationProperty Name="Employee" Relationship="LibraryManagementModel.FK__ReaderCar__emplo__3D5E1FD2" FromRole="ReaderCard" ToRole="Employee" />
+          <NavigationProperty Name="FineReceipts" Relationship="LibraryManagementModel.FK__FineRecei__reade__6477ECF3" FromRole="ReaderCard" ToRole="FineReceipt" />
+          <NavigationProperty Name="ReaderType" Relationship="LibraryManagementModel.FK__ReaderCar__reade__3E52440B" FromRole="ReaderCard" ToRole="ReaderType" />
         </EntityType>
         <EntityType Name="ReaderType">
           <Key>
@@ -617,55 +989,104 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="isDeleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="ReaderCards" Relationship="Self.FK__ReaderCar__reade__37A5467C" FromRole="ReaderType" ToRole="ReaderCard" />
+          <NavigationProperty Name="ReaderCards" Relationship="LibraryManagementModel.FK__ReaderCar__reade__3E52440B" FromRole="ReaderType" ToRole="ReaderCard" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="position" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="isDeleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Employees" Relationship="Self.FK__Employee__roleId__30F848ED" FromRole="Role" ToRole="Employee" />
-          <NavigationProperty Name="RoleDetails" Relationship="Self.FK__RoleDetai__roleI__286302EC" FromRole="Role" ToRole="RoleDetails" />
+          <NavigationProperty Name="Accounts" Relationship="LibraryManagementModel.FK__Account__roleId__31EC6D26" FromRole="Role" ToRole="Account" />
+          <NavigationProperty Name="RoleDetails" Relationship="LibraryManagementModel.FK__RoleDetai__roleI__2A4B4B5E" FromRole="Role" ToRole="RoleDetail" />
         </EntityType>
         <EntityType Name="RoleDetail">
           <Key>
             <PropertyRef Name="roleId" />
-            <PropertyRef Name="permission" />
+            <PropertyRef Name="permissionId" />
           </Key>
           <Property Name="roleId" Type="Int32" Nullable="false" />
-          <Property Name="permission" Type="Int32" Nullable="false" />
+          <Property Name="permissionId" Type="Int32" Nullable="false" />
           <Property Name="isPermitted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Role" Relationship="Self.FK__RoleDetai__roleI__286302EC" FromRole="RoleDetails" ToRole="Role" />
+          <NavigationProperty Name="Permission" Relationship="LibraryManagementModel.FK__RoleDetai__permi__2B3F6F97" FromRole="RoleDetail" ToRole="Permission" />
+          <NavigationProperty Name="Role" Relationship="LibraryManagementModel.FK__RoleDetai__roleI__2A4B4B5E" FromRole="RoleDetail" ToRole="Role" />
         </EntityType>
-        <Association Name="FK_AUTHORID">
-          <End Role="Author" Type="Self.Author" Multiplicity="1" />
-          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+        <Association Name="FK__Account__roleId__31EC6D26">
+          <End Type="LibraryManagementModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="LibraryManagementModel.Account" Role="Account" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Author">
+            <Principal Role="Role">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="Book">
-              <PropertyRef Name="authorId" />
+            <Dependent Role="Account">
+              <PropertyRef Name="roleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ImportRec__bookI__4AB81AF0">
-          <End Role="Book" Type="Self.Book" Multiplicity="1" />
-          <End Role="ImportReceiptDetails" Type="Self.ImportReceiptDetail" Multiplicity="*" />
+        <Association Name="FK__Employee__accoun__36B12243">
+          <End Type="LibraryManagementModel.Account" Role="Account" Multiplicity="1" />
+          <End Type="LibraryManagementModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="accountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReaderCar__accou__3C69FB99">
+          <End Type="LibraryManagementModel.Account" Role="Account" Multiplicity="1" />
+          <End Type="LibraryManagementModel.ReaderCard" Role="ReaderCard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ReaderCard">
+              <PropertyRef Name="accountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Book__baseBookId__49C3F6B7">
+          <End Type="LibraryManagementModel.BaseBook" Role="BaseBook" Multiplicity="1" />
+          <End Type="LibraryManagementModel.Book" Role="Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseBook">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="baseBookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GENREID">
+          <End Type="LibraryManagementModel.Genre" Role="Genre" Multiplicity="1" />
+          <End Type="LibraryManagementModel.BaseBook" Role="BaseBook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="BaseBook">
+              <PropertyRef Name="genreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ImportRec__bookI__5812160E">
+          <End Type="LibraryManagementModel.Book" Role="Book" Multiplicity="1" />
+          <End Type="LibraryManagementModel.ImportReceiptDetail" Role="ImportReceiptDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Book">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="ImportReceiptDetails">
+            <Dependent Role="ImportReceiptDetail">
               <PropertyRef Name="bookId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BOOKINFO_BOOK">
-          <End Role="Book" Type="Self.Book" Multiplicity="1" />
-          <End Role="BookInfo" Type="Self.BookInfo" Multiplicity="*" />
+          <End Type="LibraryManagementModel.Book" Role="Book" Multiplicity="1" />
+          <End Type="LibraryManagementModel.BookInfo" Role="BookInfo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Book">
               <PropertyRef Name="id" />
@@ -675,93 +1096,105 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_GENREID">
-          <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
-          <End Role="Book" Type="Self.Book" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Genre">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Book">
-              <PropertyRef Name="genreId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Borrowing__bookI__5070F446">
-          <End Role="BookInfo" Type="Self.BookInfo" Multiplicity="1" />
-          <End Role="BorrowingCard" Type="Self.BorrowingCard" Multiplicity="*" />
+        <Association Name="FK__Borrowing__bookI__5FB337D6">
+          <End Type="LibraryManagementModel.BookInfo" Role="BookInfo" Multiplicity="1" />
+          <End Type="LibraryManagementModel.Borrowing_ReturnCard" Role="Borrowing_ReturnCard" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="BookInfo">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="BorrowingCard">
+            <Dependent Role="Borrowing_ReturnCard">
               <PropertyRef Name="bookInfoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__BookRetur__borro__5441852A">
-          <End Role="BorrowingCard" Type="Self.BorrowingCard" Multiplicity="1" />
-          <End Role="BookReturnCard" Type="Self.BookReturnCard" Multiplicity="*" />
+        <Association Name="FK__BorrowedG__borro__6E01572D">
+          <End Type="LibraryManagementModel.BorrowedGenreReport" Role="BorrowedGenreReport" Multiplicity="1" />
+          <End Type="LibraryManagementModel.BorrowedGenreReportDetail" Role="BorrowedGenreReportDetail" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="BorrowingCard">
+            <Principal Role="BorrowedGenreReport">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="BookReturnCard">
-              <PropertyRef Name="borrowingCardId" />
+            <Dependent Role="BorrowedGenreReportDetail">
+              <PropertyRef Name="borrowedGenreReportId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__BookRetur__emplo__534D60F1">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="BookReturnCard" Type="Self.BookReturnCard" Multiplicity="*" />
+        <Association Name="FK__BorrowedG__genre__6D0D32F4">
+          <End Type="LibraryManagementModel.Genre" Role="Genre" Multiplicity="1" />
+          <End Type="LibraryManagementModel.BorrowedGenreReportDetail" Role="BorrowedGenreReportDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="BorrowedGenreReportDetail">
+              <PropertyRef Name="genreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Borrowing__borro__5CD6CB2B">
+          <End Type="LibraryManagementModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="LibraryManagementModel.Borrowing_ReturnCard" Role="Borrowing_ReturnCard" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="BookReturnCard">
-              <PropertyRef Name="employeeId" />
+            <Dependent Role="Borrowing_ReturnCard">
+              <PropertyRef Name="borrowing_employeeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Borrowing__emplo__4E88ABD4">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="BorrowingCard" Type="Self.BorrowingCard" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="BorrowingCard">
-              <PropertyRef Name="employeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Borrowing__reade__4F7CD00D">
-          <End Role="ReaderCard" Type="Self.ReaderCard" Multiplicity="1" />
-          <End Role="BorrowingCard" Type="Self.BorrowingCard" Multiplicity="*" />
+        <Association Name="FK__Borrowing__reade__5EBF139D">
+          <End Type="LibraryManagementModel.ReaderCard" Role="ReaderCard" Multiplicity="1" />
+          <End Type="LibraryManagementModel.Borrowing_ReturnCard" Role="Borrowing_ReturnCard" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ReaderCard">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="BorrowingCard">
+            <Dependent Role="Borrowing_ReturnCard">
               <PropertyRef Name="readerCardId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Employee__roleId__30F848ED">
-          <End Role="Role" Type="Self.Role" Multiplicity="1" />
-          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+        <Association Name="FK__Borrowing__retur__5DCAEF64">
+          <End Type="LibraryManagementModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="LibraryManagementModel.Borrowing_ReturnCard" Role="Borrowing_ReturnCard" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Role">
+            <Principal Role="Employee">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="roleId" />
+            <Dependent Role="Borrowing_ReturnCard">
+              <PropertyRef Name="return_employeeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__FineRecei__emplo__5812160E">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="FineReceipt" Type="Self.FineReceipt" Multiplicity="*" />
+        <Association Name="FK__DelayRetu__borro__73BA3083">
+          <End Type="LibraryManagementModel.Borrowing_ReturnCard" Role="Borrowing_ReturnCard" Multiplicity="1" />
+          <End Type="LibraryManagementModel.DelayReturnBookReportDetail" Role="DelayReturnBookReportDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Borrowing_ReturnCard">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DelayReturnBookReportDetail">
+              <PropertyRef Name="borrowingCardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DelayRetu__delay__74AE54BC">
+          <End Type="LibraryManagementModel.DelayReturnBookReport" Role="DelayReturnBookReport" Multiplicity="1" />
+          <End Type="LibraryManagementModel.DelayReturnBookReportDetail" Role="DelayReturnBookReportDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DelayReturnBookReport">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DelayReturnBookReportDetail">
+              <PropertyRef Name="delayReturnBookReportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FineRecei__emplo__6383C8BA">
+          <End Type="LibraryManagementModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="LibraryManagementModel.FineReceipt" Role="FineReceipt" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="id" />
@@ -771,9 +1204,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ImportRec__emplo__47DBAE45">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="ImportReceipt" Type="Self.ImportReceipt" Multiplicity="*" />
+        <Association Name="FK__ImportRec__emplo__5535A963">
+          <End Type="LibraryManagementModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="LibraryManagementModel.ImportReceipt" Role="ImportReceipt" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="id" />
@@ -783,9 +1216,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ReaderCar__emplo__36B12243">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="ReaderCard" Type="Self.ReaderCard" Multiplicity="*" />
+        <Association Name="FK__ReaderCar__emplo__3D5E1FD2">
+          <End Type="LibraryManagementModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="LibraryManagementModel.ReaderCard" Role="ReaderCard" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="id" />
@@ -795,9 +1228,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__FineRecei__reade__59063A47">
-          <End Role="ReaderCard" Type="Self.ReaderCard" Multiplicity="1" />
-          <End Role="FineReceipt" Type="Self.FineReceipt" Multiplicity="*" />
+        <Association Name="FK__FineRecei__reade__6477ECF3">
+          <End Type="LibraryManagementModel.ReaderCard" Role="ReaderCard" Multiplicity="1" />
+          <End Type="LibraryManagementModel.FineReceipt" Role="FineReceipt" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ReaderCard">
               <PropertyRef Name="id" />
@@ -807,21 +1240,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ImportRec__impor__4BAC3F29">
-          <End Role="ImportReceipt" Type="Self.ImportReceipt" Multiplicity="1" />
-          <End Role="ImportReceiptDetails" Type="Self.ImportReceiptDetail" Multiplicity="*" />
+        <Association Name="FK__ImportRec__impor__59063A47">
+          <End Type="LibraryManagementModel.ImportReceipt" Role="ImportReceipt" Multiplicity="1" />
+          <End Type="LibraryManagementModel.ImportReceiptDetail" Role="ImportReceiptDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ImportReceipt">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="ImportReceiptDetails">
+            <Dependent Role="ImportReceiptDetail">
               <PropertyRef Name="importReceiptId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ReaderCar__reade__37A5467C">
-          <End Role="ReaderType" Type="Self.ReaderType" Multiplicity="1" />
-          <End Role="ReaderCard" Type="Self.ReaderCard" Multiplicity="*" />
+        <Association Name="FK__RoleDetai__permi__2B3F6F97">
+          <End Type="LibraryManagementModel.Permission" Role="Permission" Multiplicity="1" />
+          <End Type="LibraryManagementModel.RoleDetail" Role="RoleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permission">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RoleDetail">
+              <PropertyRef Name="permissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReaderCar__reade__3E52440B">
+          <End Type="LibraryManagementModel.ReaderType" Role="ReaderType" Multiplicity="1" />
+          <End Type="LibraryManagementModel.ReaderCard" Role="ReaderCard" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ReaderType">
               <PropertyRef Name="id" />
@@ -831,275 +1276,255 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__RoleDetai__roleI__286302EC">
-          <End Role="Role" Type="Self.Role" Multiplicity="1" />
-          <End Role="RoleDetails" Type="Self.RoleDetail" Multiplicity="*" />
+        <Association Name="FK__RoleDetai__roleI__2A4B4B5E">
+          <End Type="LibraryManagementModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="LibraryManagementModel.RoleDetail" Role="RoleDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Role">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="RoleDetails">
+            <Dependent Role="RoleDetail">
               <PropertyRef Name="roleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="LibraryManagementEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Authors" EntityType="Self.Author" />
-          <EntitySet Name="Books" EntityType="Self.Book" />
-          <EntitySet Name="BookInfoes" EntityType="Self.BookInfo" />
-          <EntitySet Name="BookReturnCards" EntityType="Self.BookReturnCard" />
-          <EntitySet Name="BorrowingCards" EntityType="Self.BorrowingCard" />
-          <EntitySet Name="Employees" EntityType="Self.Employee" />
-          <EntitySet Name="FineReceipts" EntityType="Self.FineReceipt" />
-          <EntitySet Name="Genres" EntityType="Self.Genre" />
-          <EntitySet Name="ImportReceipts" EntityType="Self.ImportReceipt" />
-          <EntitySet Name="ImportReceiptDetails" EntityType="Self.ImportReceiptDetail" />
-          <EntitySet Name="Parameters" EntityType="Self.Parameter" />
-          <EntitySet Name="ReaderCards" EntityType="Self.ReaderCard" />
-          <EntitySet Name="ReaderTypes" EntityType="Self.ReaderType" />
-          <EntitySet Name="Roles" EntityType="Self.Role" />
-          <EntitySet Name="RoleDetails" EntityType="Self.RoleDetail" />
-          <AssociationSet Name="FK_AUTHORID" Association="Self.FK_AUTHORID">
-            <End Role="Author" EntitySet="Authors" />
-            <End Role="Book" EntitySet="Books" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ImportRec__bookI__4AB81AF0" Association="Self.FK__ImportRec__bookI__4AB81AF0">
-            <End Role="Book" EntitySet="Books" />
-            <End Role="ImportReceiptDetails" EntitySet="ImportReceiptDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BOOKINFO_BOOK" Association="Self.FK_BOOKINFO_BOOK">
-            <End Role="Book" EntitySet="Books" />
-            <End Role="BookInfo" EntitySet="BookInfoes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_GENREID" Association="Self.FK_GENREID">
-            <End Role="Genre" EntitySet="Genres" />
-            <End Role="Book" EntitySet="Books" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Borrowing__bookI__5070F446" Association="Self.FK__Borrowing__bookI__5070F446">
-            <End Role="BookInfo" EntitySet="BookInfoes" />
-            <End Role="BorrowingCard" EntitySet="BorrowingCards" />
-          </AssociationSet>
-          <AssociationSet Name="FK__BookRetur__borro__5441852A" Association="Self.FK__BookRetur__borro__5441852A">
-            <End Role="BorrowingCard" EntitySet="BorrowingCards" />
-            <End Role="BookReturnCard" EntitySet="BookReturnCards" />
-          </AssociationSet>
-          <AssociationSet Name="FK__BookRetur__emplo__534D60F1" Association="Self.FK__BookRetur__emplo__534D60F1">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="BookReturnCard" EntitySet="BookReturnCards" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Borrowing__emplo__4E88ABD4" Association="Self.FK__Borrowing__emplo__4E88ABD4">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="BorrowingCard" EntitySet="BorrowingCards" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Borrowing__reade__4F7CD00D" Association="Self.FK__Borrowing__reade__4F7CD00D">
-            <End Role="ReaderCard" EntitySet="ReaderCards" />
-            <End Role="BorrowingCard" EntitySet="BorrowingCards" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Employee__roleId__30F848ED" Association="Self.FK__Employee__roleId__30F848ED">
-            <End Role="Role" EntitySet="Roles" />
-            <End Role="Employee" EntitySet="Employees" />
-          </AssociationSet>
-          <AssociationSet Name="FK__FineRecei__emplo__5812160E" Association="Self.FK__FineRecei__emplo__5812160E">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="FineReceipt" EntitySet="FineReceipts" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ImportRec__emplo__47DBAE45" Association="Self.FK__ImportRec__emplo__47DBAE45">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="ImportReceipt" EntitySet="ImportReceipts" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ReaderCar__emplo__36B12243" Association="Self.FK__ReaderCar__emplo__36B12243">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="ReaderCard" EntitySet="ReaderCards" />
-          </AssociationSet>
-          <AssociationSet Name="FK__FineRecei__reade__59063A47" Association="Self.FK__FineRecei__reade__59063A47">
-            <End Role="ReaderCard" EntitySet="ReaderCards" />
-            <End Role="FineReceipt" EntitySet="FineReceipts" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ImportRec__impor__4BAC3F29" Association="Self.FK__ImportRec__impor__4BAC3F29">
-            <End Role="ImportReceipt" EntitySet="ImportReceipts" />
-            <End Role="ImportReceiptDetails" EntitySet="ImportReceiptDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ReaderCar__reade__37A5467C" Association="Self.FK__ReaderCar__reade__37A5467C">
-            <End Role="ReaderType" EntitySet="ReaderTypes" />
-            <End Role="ReaderCard" EntitySet="ReaderCards" />
-          </AssociationSet>
-          <AssociationSet Name="FK__RoleDetai__roleI__286302EC" Association="Self.FK__RoleDetai__roleI__286302EC">
-            <End Role="Role" EntitySet="Roles" />
-            <End Role="RoleDetails" EntitySet="RoleDetails" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema>
+        <Association Name="Book_Author">
+          <End Type="LibraryManagementModel.Author" Role="Author" Multiplicity="*" />
+          <End Type="LibraryManagementModel.BaseBook" Role="BaseBook" Multiplicity="*" />
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="LibraryManagementModelStoreContainer" CdmEntityContainer="LibraryManagementEntities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="LibraryManagementModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="roleId" ColumnName="roleId" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Authors">
             <EntityTypeMapping TypeName="LibraryManagementModel.Author">
               <MappingFragment StoreEntitySet="Author">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="birthDate" ColumnName="birthDate" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BaseBooks">
+            <EntityTypeMapping TypeName="LibraryManagementModel.BaseBook">
+              <MappingFragment StoreEntitySet="BaseBook">
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="genreId" ColumnName="genreId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Books">
             <EntityTypeMapping TypeName="LibraryManagementModel.Book">
               <MappingFragment StoreEntitySet="Book">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="genreId" ColumnName="genreId" />
-                <ScalarProperty Name="authorId" ColumnName="authorId" />
-                <ScalarProperty Name="yearOfPublication" ColumnName="yearOfPublication" />
-                <ScalarProperty Name="publisher" ColumnName="publisher" />
-                <ScalarProperty Name="quantity" ColumnName="quantity" />
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="publisher" ColumnName="publisher" />
+                <ScalarProperty Name="yearOfPublication" ColumnName="yearOfPublication" />
+                <ScalarProperty Name="baseBookId" ColumnName="baseBookId" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="BookInfoes">
             <EntityTypeMapping TypeName="LibraryManagementModel.BookInfo">
               <MappingFragment StoreEntitySet="BookInfo">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="bookId" ColumnName="bookId" />
-                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="bookId" ColumnName="bookId" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="BookReturnCards">
-            <EntityTypeMapping TypeName="LibraryManagementModel.BookReturnCard">
-              <MappingFragment StoreEntitySet="BookReturnCard">
+          <EntitySetMapping Name="BorrowedGenreReports">
+            <EntityTypeMapping TypeName="LibraryManagementModel.BorrowedGenreReport">
+              <MappingFragment StoreEntitySet="BorrowedGenreReport">
+                <ScalarProperty Name="totalNumberOfBorrowings" ColumnName="totalNumberOfBorrowings" />
+                <ScalarProperty Name="reportDate" ColumnName="reportDate" />
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="borrowingCardId" ColumnName="borrowingCardId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BorrowedGenreReportDetails">
+            <EntityTypeMapping TypeName="LibraryManagementModel.BorrowedGenreReportDetail">
+              <MappingFragment StoreEntitySet="BorrowedGenreReportDetail">
+                <ScalarProperty Name="NumberOfBorrowings" ColumnName="NumberOfBorrowings" />
+                <ScalarProperty Name="genreId" ColumnName="genreId" />
+                <ScalarProperty Name="borrowedGenreReportId" ColumnName="borrowedGenreReportId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Borrowing_ReturnCard">
+            <EntityTypeMapping TypeName="LibraryManagementModel.Borrowing_ReturnCard">
+              <MappingFragment StoreEntitySet="Borrowing_ReturnCard">
+                <ScalarProperty Name="fine" ColumnName="fine" />
+                <ScalarProperty Name="return_employeeId" ColumnName="return_employeeId" />
                 <ScalarProperty Name="returnedDate" ColumnName="returnedDate" />
-                <ScalarProperty Name="employeeId" ColumnName="employeeId" />
+                <ScalarProperty Name="bookInfoId" ColumnName="bookInfoId" />
+                <ScalarProperty Name="borrowing_employeeId" ColumnName="borrowing_employeeId" />
+                <ScalarProperty Name="dueDate" ColumnName="dueDate" />
+                <ScalarProperty Name="borrowingDate" ColumnName="borrowingDate" />
+                <ScalarProperty Name="readerCardId" ColumnName="readerCardId" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="BorrowingCards">
-            <EntityTypeMapping TypeName="LibraryManagementModel.BorrowingCard">
-              <MappingFragment StoreEntitySet="BorrowingCard">
+          <EntitySetMapping Name="DelayReturnBookReports">
+            <EntityTypeMapping TypeName="LibraryManagementModel.DelayReturnBookReport">
+              <MappingFragment StoreEntitySet="DelayReturnBookReport">
+                <ScalarProperty Name="reportDate" ColumnName="reportDate" />
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="readerCardId" ColumnName="readerCardId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DelayReturnBookReportDetails">
+            <EntityTypeMapping TypeName="LibraryManagementModel.DelayReturnBookReportDetail">
+              <MappingFragment StoreEntitySet="DelayReturnBookReportDetail">
+                <ScalarProperty Name="numberOfDelayReturn" ColumnName="numberOfDelayReturn" />
                 <ScalarProperty Name="borrowingDate" ColumnName="borrowingDate" />
-                <ScalarProperty Name="dueDate" ColumnName="dueDate" />
-                <ScalarProperty Name="employeeId" ColumnName="employeeId" />
-                <ScalarProperty Name="bookInfoId" ColumnName="bookInfoId" />
+                <ScalarProperty Name="borrowingCardId" ColumnName="borrowingCardId" />
+                <ScalarProperty Name="delayReturnBookReportId" ColumnName="delayReturnBookReportId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="LibraryManagementModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="username" ColumnName="username" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
-                <ScalarProperty Name="birthDate" ColumnName="birthDate" />
-                <ScalarProperty Name="gender" ColumnName="gender" />
-                <ScalarProperty Name="startingDate" ColumnName="startingDate" />
-                <ScalarProperty Name="roleId" ColumnName="roleId" />
+                <ScalarProperty Name="accountId" ColumnName="accountId" />
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="startingDate" ColumnName="startingDate" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="birthDate" ColumnName="birthDate" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="FineReceipts">
             <EntityTypeMapping TypeName="LibraryManagementModel.FineReceipt">
               <MappingFragment StoreEntitySet="FineReceipt">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="amount" ColumnName="amount" />
-                <ScalarProperty Name="createdAt" ColumnName="createdAt" />
-                <ScalarProperty Name="employeeId" ColumnName="employeeId" />
                 <ScalarProperty Name="readerCardId" ColumnName="readerCardId" />
+                <ScalarProperty Name="employeeId" ColumnName="employeeId" />
+                <ScalarProperty Name="createdAt" ColumnName="createdAt" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Genres">
             <EntityTypeMapping TypeName="LibraryManagementModel.Genre">
               <MappingFragment StoreEntitySet="Genre">
-                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ImportReceipts">
             <EntityTypeMapping TypeName="LibraryManagementModel.ImportReceipt">
               <MappingFragment StoreEntitySet="ImportReceipt">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="supplier" ColumnName="supplier" />
-                <ScalarProperty Name="totalPrice" ColumnName="totalPrice" />
-                <ScalarProperty Name="createdAt" ColumnName="createdAt" />
                 <ScalarProperty Name="employeeId" ColumnName="employeeId" />
+                <ScalarProperty Name="createdAt" ColumnName="createdAt" />
+                <ScalarProperty Name="totalPrice" ColumnName="totalPrice" />
+                <ScalarProperty Name="supplier" ColumnName="supplier" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ImportReceiptDetails">
             <EntityTypeMapping TypeName="LibraryManagementModel.ImportReceiptDetail">
-              <MappingFragment StoreEntitySet="ImportReceiptDetails">
-                <ScalarProperty Name="importReceiptId" ColumnName="importReceiptId" />
-                <ScalarProperty Name="bookId" ColumnName="bookId" />
-                <ScalarProperty Name="unitPrice" ColumnName="unitPrice" />
+              <MappingFragment StoreEntitySet="ImportReceiptDetail">
                 <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="unitPrice" ColumnName="unitPrice" />
+                <ScalarProperty Name="bookId" ColumnName="bookId" />
+                <ScalarProperty Name="importReceiptId" ColumnName="importReceiptId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Parameters">
             <EntityTypeMapping TypeName="LibraryManagementModel.Parameter">
               <MappingFragment StoreEntitySet="Parameter">
-                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Permissions">
+            <EntityTypeMapping TypeName="LibraryManagementModel.Permission">
+              <MappingFragment StoreEntitySet="Permission">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ReaderCards">
             <EntityTypeMapping TypeName="LibraryManagementModel.ReaderCard">
               <MappingFragment StoreEntitySet="ReaderCard">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="address" ColumnName="address" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="birthDate" ColumnName="birthDate" />
-                <ScalarProperty Name="gender" ColumnName="gender" />
-                <ScalarProperty Name="identityCard" ColumnName="identityCard" />
-                <ScalarProperty Name="createdAt" ColumnName="createdAt" />
-                <ScalarProperty Name="expiryDate" ColumnName="expiryDate" />
-                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
-                <ScalarProperty Name="totalFine" ColumnName="totalFine" />
-                <ScalarProperty Name="readerTypeId" ColumnName="readerTypeId" />
                 <ScalarProperty Name="employeeId" ColumnName="employeeId" />
+                <ScalarProperty Name="accountId" ColumnName="accountId" />
+                <ScalarProperty Name="readerTypeId" ColumnName="readerTypeId" />
+                <ScalarProperty Name="totalFine" ColumnName="totalFine" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="expiryDate" ColumnName="expiryDate" />
+                <ScalarProperty Name="createdAt" ColumnName="createdAt" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="birthDate" ColumnName="birthDate" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ReaderTypes">
             <EntityTypeMapping TypeName="LibraryManagementModel.ReaderType">
               <MappingFragment StoreEntitySet="ReaderType">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="LibraryManagementModel.Role">
               <MappingFragment StoreEntitySet="Role">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="position" ColumnName="position" />
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RoleDetails">
             <EntityTypeMapping TypeName="LibraryManagementModel.RoleDetail">
-              <MappingFragment StoreEntitySet="RoleDetails">
-                <ScalarProperty Name="roleId" ColumnName="roleId" />
-                <ScalarProperty Name="permission" ColumnName="permission" />
+              <MappingFragment StoreEntitySet="RoleDetail">
                 <ScalarProperty Name="isPermitted" ColumnName="isPermitted" />
+                <ScalarProperty Name="permissionId" ColumnName="permissionId" />
+                <ScalarProperty Name="roleId" ColumnName="roleId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="Book_Author" TypeName="LibraryManagementModel.Book_Author" StoreEntitySet="Book_Author">
+            <EndProperty Name="BaseBook">
+              <ScalarProperty Name="id" ColumnName="baseBookId" />
+            </EndProperty>
+            <EndProperty Name="Author">
+              <ScalarProperty Name="id" ColumnName="authorId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
