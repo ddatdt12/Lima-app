@@ -183,13 +183,13 @@ namespace LibraryManagement.Services
             }
             catch (Exception e)
             {
-                //var statusCode = e.Data.Keys.Cast<int>().Single();
+                var statusCode = e.Data.Keys.Cast<int>().Single();
 
-                //if (statusCode == 400)
-                //{
-                //    var statusMessage = e.Data[statusCode].ToString();
-                //    return (false, statusMessage);
-                //}
+                if (statusCode == 400)
+                {
+                    var statusMessage = e.Data[statusCode].ToString();
+                    return (false, statusMessage);
+                }
                 return (false, "Lỗi hệ thống");
 
             }

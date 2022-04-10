@@ -42,9 +42,9 @@ namespace LibraryManagement.Models
         public virtual DbSet<ImportReceiptDetail> ImportReceiptDetails { get; set; }
         public virtual DbSet<Parameter> Parameters { get; set; }
         public virtual DbSet<Permission> Permissions { get; set; }
-        public virtual DbSet<ReaderCard> ReaderCards { get; set; }
         public virtual DbSet<ReaderType> ReaderTypes { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<RoleDetail> RoleDetails { get; set; }
+        public virtual DbSet<ReaderCard> ReaderCards { get; set; }
     }
 }

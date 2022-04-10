@@ -9,6 +9,8 @@ using LibraryManagement.Views.SettingManagement;
 using LibraryManagement.Views.StatisticalManagement;
 using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -27,15 +29,14 @@ namespace LibraryManagement.ViewModel
 
         public MainWindowViewModel()
         {
-
             OpenBookManagementPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new BookManagementPage();
             });
             OpenImportBookPage = new RelayCommand<Frame>((p) => { return true; }, (p) =>
-            {
-                p.Content = new MainImportBookPage();
-            });
+             {
+                 p.Content = new MainImportBookPage();
+             });
             OpenGenreAuthorManagementPage = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new MainManagementPage();
@@ -143,19 +144,24 @@ namespace LibraryManagement.ViewModel
             var createdAt = DateTime.Now;
             var newReaderCard = new ReaderCardDTO()
             {
-                name = "Tesst",
-                address = "Kí túc xá khu A",
+                name = "Khôi Trần",
+                address = "Quận 1, TPHCM",
                 readerTypeId = 3,
-                email = "tesst123@gmail.com",
+                email = "khoitran@gmail.com",
                 createdAt = createdAt,
                 expiryDate = createdAt.AddMonths(30),
                 gender = "Nữ",
                 birthDate = new DateTime(2002, 5, 26),
                 employeeId = "NV0002",
             };
-            //(bool isSuccess, string message) = ReaderService.Ins.CreateNewReaderCard(newReaderCard);
-            (AccountDTO user, string mesasage) = AuthService.Ins.Login("READER0002", "READER0002");
+            (bool isSuccess, string messageCreate) = ReaderService.Ins.CreateNewReaderCard(newReaderCard);
+            //(bool deleteSuccess, string deleteMessage) = ReaderService.Ins.DeleteReaderCard("READER0001");
+            ////Authentication
+            //(AccountDTO user, string mesasage) = AuthService.Ins.Login("datdo", "123456");
 
+            var email = AuthService.Ins.GetAccountByUsername("datdo");
+            (bool resetSuccess, string resetMessage) = AuthService.Ins.ResetPassword("datdo", "1234567");
+            (var userLogin, string message) = AuthService.Ins.Login("datdo", "1234567");
 
             //BOOK IMPORT
             List<BaseBookDTO> baseBookDTOs = new List<BaseBookDTO>()
@@ -350,21 +356,9 @@ namespace LibraryManagement.ViewModel
             //};
 
             //(bool success, string message) = RoleService.Ins.CreateNewRole(role);
-            //(bool successEdit, string messageEdit) = RoleService.Ins.EditRolePermission(2, new List<RoleDetailsDTO>
-            //    {
-            //        new RoleDetailsDTO
-            //        {
-            //        permissionId = 3,
-            //        isPermitted = true
-            //        },
-            //         new RoleDetailsDTO
-            //        {
-            //        permissionId = 4,
-            //        isPermitted = true
-            //        },
-            //    });
+            //(bool success, string roleMessage) = RoleService.Ins.DeleteRole(5);
 
-            //var roleList = RoleService.Ins.GetAllRoles();
+            var roleList = RoleService.Ins.GetAllRoles();
             //var permissionList = RoleService.Ins.GetAllPermissions();
 
 
@@ -451,6 +445,30 @@ namespace LibraryManagement.ViewModel
             //var a = "";
         }
 
+        const string APP_EMAIL = "";
+        const string APP_PASSWORD = "";
+        protected void SendEmail(string email, int randomCode)
+        {
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+            smtp.EnableSsl = true;
+            smtp.Port = 587;
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = new NetworkCredential(APP_EMAIL, APP_PASSWORD);
 
+            MailMessage mail = new MailMessage();
+            mail.IsBodyHtml = true;
+
+            //AlternateView htmlView = AlternateView.CreateAlternateViewFromString(GetResetPasswordTemplate(randomCode), null, "text/html");
+
+            //Add view to the Email Message
+            //mail.AlternateViews.Add(htmlView);
+
+            mail.From = new MailAddress(APP_EMAIL, "Squadin Cinema");
+            mail.To.Add(email);
+            mail.Subject = "Lấy lại mật khẩu đăng nhập";
+
+            smtp.Send(mail);
+        }
     }
 }
