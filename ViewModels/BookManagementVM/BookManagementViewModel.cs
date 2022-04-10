@@ -267,7 +267,7 @@ namespace LibraryManagement.ViewModel.BookManagementVM
                 else
                     return;
             });
-            UpdateBookCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            UpdateBookCM = new RelayCommand<Window>((p) => { if (SelectedBaseBookDetail is null) return false; else return true; }, (p) =>
             {
                 if (SelectedBaseBookDetail is null) return;
                 if (string.IsNullOrEmpty(Publisher) || YearPublish is null)

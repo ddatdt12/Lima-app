@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7897bf7a5b174d0eb0aed6ab228a9a9e" Name="Diagram1" ZoomLevel="77">
+      <Diagram DiagramId="7897bf7a5b174d0eb0aed6ab228a9a9e" Name="Diagram1" ZoomLevel="109">
         <EntityTypeShape EntityType="LibraryManagementModel.Account" Width="1.5" PointX="3" PointY="13" />
         <EntityTypeShape EntityType="LibraryManagementModel.Author" Width="1.5" PointX="3.75" PointY="6.25" />
         <EntityTypeShape EntityType="LibraryManagementModel.BaseBook" Width="1.5" PointX="6" PointY="4.75" />
@@ -22,13 +22,11 @@
         <EntityTypeShape EntityType="LibraryManagementModel.ImportReceiptDetail" Width="1.5" PointX="9.75" PointY="25.875" />
         <EntityTypeShape EntityType="LibraryManagementModel.Parameter" Width="1.5" PointX="0.75" PointY="1.5" />
         <EntityTypeShape EntityType="LibraryManagementModel.Permission" Width="1.5" PointX="0.75" PointY="7.625" />
-        <EntityTypeShape EntityType="LibraryManagementModel.ReaderCard" Width="1.5" PointX="7.5" PointY="12" />
         <EntityTypeShape EntityType="LibraryManagementModel.ReaderType" Width="1.5" PointX="5.25" PointY="9.25" />
         <EntityTypeShape EntityType="LibraryManagementModel.Role" Width="1.5" PointX="0.75" PointY="10.5" />
         <EntityTypeShape EntityType="LibraryManagementModel.RoleDetail" Width="1.5" PointX="3" PointY="9.5" />
         <AssociationConnector Association="LibraryManagementModel.FK__Account__roleId__31EC6D26" />
         <AssociationConnector Association="LibraryManagementModel.FK__Employee__accoun__36B12243" />
-        <AssociationConnector Association="LibraryManagementModel.FK__ReaderCar__accou__3C69FB99" />
         <AssociationConnector Association="LibraryManagementModel.FK__Book__baseBookId__49C3F6B7" />
         <AssociationConnector Association="LibraryManagementModel.FK_GENREID" />
         <AssociationConnector Association="LibraryManagementModel.FK__ImportRec__bookI__5812160E" />
@@ -37,19 +35,21 @@
         <AssociationConnector Association="LibraryManagementModel.FK__BorrowedG__borro__6E01572D" />
         <AssociationConnector Association="LibraryManagementModel.FK__BorrowedG__genre__6D0D32F4" />
         <AssociationConnector Association="LibraryManagementModel.FK__Borrowing__borro__5CD6CB2B" />
-        <AssociationConnector Association="LibraryManagementModel.FK__Borrowing__reade__5EBF139D" />
         <AssociationConnector Association="LibraryManagementModel.FK__Borrowing__retur__5DCAEF64" />
         <AssociationConnector Association="LibraryManagementModel.FK__DelayRetu__borro__73BA3083" />
         <AssociationConnector Association="LibraryManagementModel.FK__DelayRetu__delay__74AE54BC" />
         <AssociationConnector Association="LibraryManagementModel.FK__FineRecei__emplo__6383C8BA" />
         <AssociationConnector Association="LibraryManagementModel.FK__ImportRec__emplo__5535A963" />
-        <AssociationConnector Association="LibraryManagementModel.FK__ReaderCar__emplo__3D5E1FD2" />
-        <AssociationConnector Association="LibraryManagementModel.FK__FineRecei__reade__6477ECF3" />
         <AssociationConnector Association="LibraryManagementModel.FK__ImportRec__impor__59063A47" />
         <AssociationConnector Association="LibraryManagementModel.FK__RoleDetai__permi__2B3F6F97" />
-        <AssociationConnector Association="LibraryManagementModel.FK__ReaderCar__reade__3E52440B" />
         <AssociationConnector Association="LibraryManagementModel.FK__RoleDetai__roleI__2A4B4B5E" />
         <AssociationConnector Association="LibraryManagementModel.Book_Author" />
+        <EntityTypeShape EntityType="LibraryManagementModel.ReaderCard" Width="1.5" PointX="7.5" PointY="10.5" />
+        <AssociationConnector Association="LibraryManagementModel.FK__ReaderCar__accou__3C69FB99" />
+        <AssociationConnector Association="LibraryManagementModel.FK__Borrowing__reade__5EBF139D" />
+        <AssociationConnector Association="LibraryManagementModel.FK__ReaderCar__emplo__3D5E1FD2" />
+        <AssociationConnector Association="LibraryManagementModel.FK__FineRecei__reade__6477ECF3" />
+        <AssociationConnector Association="LibraryManagementModel.FK__ReaderCar__reade__3E52440B" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

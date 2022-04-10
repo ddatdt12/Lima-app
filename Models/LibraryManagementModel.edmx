@@ -181,7 +181,7 @@
           <Property Name="address" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="birthDate" Type="datetime" Nullable="false" />
-          <Property Name="gender" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="gender" Type="nchar" MaxLength="3" Nullable="false" />
           <Property Name="createdAt" Type="datetime" Nullable="false" />
           <Property Name="expiryDate" Type="datetime" Nullable="false" />
           <Property Name="isDeleted" Type="bit" Nullable="false" />
@@ -661,7 +661,6 @@
           <EntitySet Name="ImportReceiptDetails" EntityType="LibraryManagementModel.ImportReceiptDetail" />
           <EntitySet Name="Parameters" EntityType="LibraryManagementModel.Parameter" />
           <EntitySet Name="Permissions" EntityType="LibraryManagementModel.Permission" />
-          <EntitySet Name="ReaderCards" EntityType="LibraryManagementModel.ReaderCard" />
           <EntitySet Name="ReaderTypes" EntityType="LibraryManagementModel.ReaderType" />
           <EntitySet Name="Roles" EntityType="LibraryManagementModel.Role" />
           <EntitySet Name="RoleDetails" EntityType="LibraryManagementModel.RoleDetail" />
@@ -672,10 +671,6 @@
           <AssociationSet Name="FK__Employee__accoun__36B12243" Association="LibraryManagementModel.FK__Employee__accoun__36B12243">
             <End Role="Account" EntitySet="Accounts" />
             <End Role="Employee" EntitySet="Employees" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ReaderCar__accou__3C69FB99" Association="LibraryManagementModel.FK__ReaderCar__accou__3C69FB99">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="ReaderCard" EntitySet="ReaderCards" />
           </AssociationSet>
           <AssociationSet Name="FK__Book__baseBookId__49C3F6B7" Association="LibraryManagementModel.FK__Book__baseBookId__49C3F6B7">
             <End Role="BaseBook" EntitySet="BaseBooks" />
@@ -709,10 +704,6 @@
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Borrowing_ReturnCard" EntitySet="Borrowing_ReturnCard" />
           </AssociationSet>
-          <AssociationSet Name="FK__Borrowing__reade__5EBF139D" Association="LibraryManagementModel.FK__Borrowing__reade__5EBF139D">
-            <End Role="ReaderCard" EntitySet="ReaderCards" />
-            <End Role="Borrowing_ReturnCard" EntitySet="Borrowing_ReturnCard" />
-          </AssociationSet>
           <AssociationSet Name="FK__Borrowing__retur__5DCAEF64" Association="LibraryManagementModel.FK__Borrowing__retur__5DCAEF64">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Borrowing_ReturnCard" EntitySet="Borrowing_ReturnCard" />
@@ -733,14 +724,6 @@
             <End Role="Employee" EntitySet="Employees" />
             <End Role="ImportReceipt" EntitySet="ImportReceipts" />
           </AssociationSet>
-          <AssociationSet Name="FK__ReaderCar__emplo__3D5E1FD2" Association="LibraryManagementModel.FK__ReaderCar__emplo__3D5E1FD2">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="ReaderCard" EntitySet="ReaderCards" />
-          </AssociationSet>
-          <AssociationSet Name="FK__FineRecei__reade__6477ECF3" Association="LibraryManagementModel.FK__FineRecei__reade__6477ECF3">
-            <End Role="ReaderCard" EntitySet="ReaderCards" />
-            <End Role="FineReceipt" EntitySet="FineReceipts" />
-          </AssociationSet>
           <AssociationSet Name="FK__ImportRec__impor__59063A47" Association="LibraryManagementModel.FK__ImportRec__impor__59063A47">
             <End Role="ImportReceipt" EntitySet="ImportReceipts" />
             <End Role="ImportReceiptDetail" EntitySet="ImportReceiptDetails" />
@@ -749,10 +732,6 @@
             <End Role="Permission" EntitySet="Permissions" />
             <End Role="RoleDetail" EntitySet="RoleDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__ReaderCar__reade__3E52440B" Association="LibraryManagementModel.FK__ReaderCar__reade__3E52440B">
-            <End Role="ReaderType" EntitySet="ReaderTypes" />
-            <End Role="ReaderCard" EntitySet="ReaderCards" />
-          </AssociationSet>
           <AssociationSet Name="FK__RoleDetai__roleI__2A4B4B5E" Association="LibraryManagementModel.FK__RoleDetai__roleI__2A4B4B5E">
             <End Role="Role" EntitySet="Roles" />
             <End Role="RoleDetail" EntitySet="RoleDetails" />
@@ -760,6 +739,27 @@
           <AssociationSet Name="Book_Author" Association="LibraryManagementModel.Book_Author">
             <End Role="Author" EntitySet="Authors" />
             <End Role="BaseBook" EntitySet="BaseBooks" />
+          </AssociationSet>
+          <EntitySet Name="ReaderCards" EntityType="LibraryManagementModel.ReaderCard" />
+          <AssociationSet Name="FK__ReaderCar__accou__3C69FB99" Association="LibraryManagementModel.FK__ReaderCar__accou__3C69FB99">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="ReaderCard" EntitySet="ReaderCards" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Borrowing__reade__5EBF139D" Association="LibraryManagementModel.FK__Borrowing__reade__5EBF139D">
+            <End Role="ReaderCard" EntitySet="ReaderCards" />
+            <End Role="Borrowing_ReturnCard" EntitySet="Borrowing_ReturnCard" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReaderCar__emplo__3D5E1FD2" Association="LibraryManagementModel.FK__ReaderCar__emplo__3D5E1FD2">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="ReaderCard" EntitySet="ReaderCards" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FineRecei__reade__6477ECF3" Association="LibraryManagementModel.FK__FineRecei__reade__6477ECF3">
+            <End Role="ReaderCard" EntitySet="ReaderCards" />
+            <End Role="FineReceipt" EntitySet="FineReceipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReaderCar__reade__3E52440B" Association="LibraryManagementModel.FK__ReaderCar__reade__3E52440B">
+            <End Role="ReaderType" EntitySet="ReaderTypes" />
+            <End Role="ReaderCard" EntitySet="ReaderCards" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Account">
@@ -855,9 +855,9 @@
           <Property Name="fine" Type="Int32" Nullable="false" />
           <NavigationProperty Name="BookInfo" Relationship="LibraryManagementModel.FK__Borrowing__bookI__5FB337D6" FromRole="Borrowing_ReturnCard" ToRole="BookInfo" />
           <NavigationProperty Name="Employee" Relationship="LibraryManagementModel.FK__Borrowing__borro__5CD6CB2B" FromRole="Borrowing_ReturnCard" ToRole="Employee" />
-          <NavigationProperty Name="ReaderCard" Relationship="LibraryManagementModel.FK__Borrowing__reade__5EBF139D" FromRole="Borrowing_ReturnCard" ToRole="ReaderCard" />
           <NavigationProperty Name="Employee1" Relationship="LibraryManagementModel.FK__Borrowing__retur__5DCAEF64" FromRole="Borrowing_ReturnCard" ToRole="Employee" />
           <NavigationProperty Name="DelayReturnBookReportDetails" Relationship="LibraryManagementModel.FK__DelayRetu__borro__73BA3083" FromRole="Borrowing_ReturnCard" ToRole="DelayReturnBookReportDetail" />
+          <NavigationProperty Name="ReaderCard" Relationship="LibraryManagementModel.FK__Borrowing__reade__5EBF139D" FromRole="Borrowing_ReturnCard" ToRole="ReaderCard" />
         </EntityType>
         <EntityType Name="DelayReturnBookReport">
           <Key>
@@ -959,29 +959,6 @@
           <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="RoleDetails" Relationship="LibraryManagementModel.FK__RoleDetai__permi__2B3F6F97" FromRole="Permission" ToRole="RoleDetail" />
         </EntityType>
-        <EntityType Name="ReaderCard">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="address" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="birthDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="gender" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="createdAt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="expiryDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="isDeleted" Type="Boolean" Nullable="false" />
-          <Property Name="totalFine" Type="Int32" />
-          <Property Name="readerTypeId" Type="Int32" Nullable="false" />
-          <Property Name="accountId" Type="Int32" Nullable="false" />
-          <Property Name="employeeId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Account" Relationship="LibraryManagementModel.FK__ReaderCar__accou__3C69FB99" FromRole="ReaderCard" ToRole="Account" />
-          <NavigationProperty Name="Borrowing_ReturnCard" Relationship="LibraryManagementModel.FK__Borrowing__reade__5EBF139D" FromRole="ReaderCard" ToRole="Borrowing_ReturnCard" />
-          <NavigationProperty Name="Employee" Relationship="LibraryManagementModel.FK__ReaderCar__emplo__3D5E1FD2" FromRole="ReaderCard" ToRole="Employee" />
-          <NavigationProperty Name="FineReceipts" Relationship="LibraryManagementModel.FK__FineRecei__reade__6477ECF3" FromRole="ReaderCard" ToRole="FineReceipt" />
-          <NavigationProperty Name="ReaderType" Relationship="LibraryManagementModel.FK__ReaderCar__reade__3E52440B" FromRole="ReaderCard" ToRole="ReaderType" />
-        </EntityType>
         <EntityType Name="ReaderType">
           <Key>
             <PropertyRef Name="id" />
@@ -1032,18 +1009,6 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Employee">
-              <PropertyRef Name="accountId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__ReaderCar__accou__3C69FB99">
-          <End Type="LibraryManagementModel.Account" Role="Account" Multiplicity="1" />
-          <End Type="LibraryManagementModel.ReaderCard" Role="ReaderCard" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="ReaderCard">
               <PropertyRef Name="accountId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1144,18 +1109,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Borrowing__reade__5EBF139D">
-          <End Type="LibraryManagementModel.ReaderCard" Role="ReaderCard" Multiplicity="1" />
-          <End Type="LibraryManagementModel.Borrowing_ReturnCard" Role="Borrowing_ReturnCard" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ReaderCard">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Borrowing_ReturnCard">
-              <PropertyRef Name="readerCardId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Borrowing__retur__5DCAEF64">
           <End Type="LibraryManagementModel.Employee" Role="Employee" Multiplicity="0..1" />
           <End Type="LibraryManagementModel.Borrowing_ReturnCard" Role="Borrowing_ReturnCard" Multiplicity="*" />
@@ -1216,30 +1169,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ReaderCar__emplo__3D5E1FD2">
-          <End Type="LibraryManagementModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="LibraryManagementModel.ReaderCard" Role="ReaderCard" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="ReaderCard">
-              <PropertyRef Name="employeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__FineRecei__reade__6477ECF3">
-          <End Type="LibraryManagementModel.ReaderCard" Role="ReaderCard" Multiplicity="1" />
-          <End Type="LibraryManagementModel.FineReceipt" Role="FineReceipt" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ReaderCard">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="FineReceipt">
-              <PropertyRef Name="readerCardId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__ImportRec__impor__59063A47">
           <End Type="LibraryManagementModel.ImportReceipt" Role="ImportReceipt" Multiplicity="1" />
           <End Type="LibraryManagementModel.ImportReceiptDetail" Role="ImportReceiptDetail" Multiplicity="*" />
@@ -1264,18 +1193,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ReaderCar__reade__3E52440B">
-          <End Type="LibraryManagementModel.ReaderType" Role="ReaderType" Multiplicity="1" />
-          <End Type="LibraryManagementModel.ReaderCard" Role="ReaderCard" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ReaderType">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="ReaderCard">
-              <PropertyRef Name="readerTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__RoleDetai__roleI__2A4B4B5E">
           <End Type="LibraryManagementModel.Role" Role="Role" Multiplicity="1" />
           <End Type="LibraryManagementModel.RoleDetail" Role="RoleDetail" Multiplicity="*" />
@@ -1291,6 +1208,89 @@
         <Association Name="Book_Author">
           <End Type="LibraryManagementModel.Author" Role="Author" Multiplicity="*" />
           <End Type="LibraryManagementModel.BaseBook" Role="BaseBook" Multiplicity="*" />
+        </Association>
+        <EntityType Name="ReaderCard">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="birthDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="gender" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="createdAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="expiryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="isDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="totalFine" Type="Int32" />
+          <Property Name="readerTypeId" Type="Int32" Nullable="false" />
+          <Property Name="accountId" Type="Int32" Nullable="false" />
+          <Property Name="employeeId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Account" Relationship="LibraryManagementModel.FK__ReaderCar__accou__3C69FB99" FromRole="ReaderCard" ToRole="Account" />
+          <NavigationProperty Name="Borrowing_ReturnCard" Relationship="LibraryManagementModel.FK__Borrowing__reade__5EBF139D" FromRole="ReaderCard" ToRole="Borrowing_ReturnCard" />
+          <NavigationProperty Name="Employee" Relationship="LibraryManagementModel.FK__ReaderCar__emplo__3D5E1FD2" FromRole="ReaderCard" ToRole="Employee" />
+          <NavigationProperty Name="FineReceipts" Relationship="LibraryManagementModel.FK__FineRecei__reade__6477ECF3" FromRole="ReaderCard" ToRole="FineReceipt" />
+          <NavigationProperty Name="ReaderType" Relationship="LibraryManagementModel.FK__ReaderCar__reade__3E52440B" FromRole="ReaderCard" ToRole="ReaderType" />
+        </EntityType>
+        <Association Name="FK__ReaderCar__accou__3C69FB99">
+          <End Type="LibraryManagementModel.Account" Role="Account" Multiplicity="1" />
+          <End Type="LibraryManagementModel.ReaderCard" Role="ReaderCard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ReaderCard">
+              <PropertyRef Name="accountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Borrowing__reade__5EBF139D">
+          <End Type="LibraryManagementModel.ReaderCard" Role="ReaderCard" Multiplicity="1" />
+          <End Type="LibraryManagementModel.Borrowing_ReturnCard" Role="Borrowing_ReturnCard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReaderCard">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Borrowing_ReturnCard">
+              <PropertyRef Name="readerCardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReaderCar__emplo__3D5E1FD2">
+          <End Type="LibraryManagementModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="LibraryManagementModel.ReaderCard" Role="ReaderCard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ReaderCard">
+              <PropertyRef Name="employeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FineRecei__reade__6477ECF3">
+          <End Type="LibraryManagementModel.ReaderCard" Role="ReaderCard" Multiplicity="1" />
+          <End Type="LibraryManagementModel.FineReceipt" Role="FineReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReaderCard">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="FineReceipt">
+              <PropertyRef Name="readerCardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReaderCar__reade__3E52440B">
+          <End Type="LibraryManagementModel.ReaderType" Role="ReaderType" Multiplicity="1" />
+          <End Type="LibraryManagementModel.ReaderCard" Role="ReaderCard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReaderType">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ReaderCard">
+              <PropertyRef Name="readerTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -1471,25 +1471,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ReaderCards">
-            <EntityTypeMapping TypeName="LibraryManagementModel.ReaderCard">
-              <MappingFragment StoreEntitySet="ReaderCard">
-                <ScalarProperty Name="employeeId" ColumnName="employeeId" />
-                <ScalarProperty Name="accountId" ColumnName="accountId" />
-                <ScalarProperty Name="readerTypeId" ColumnName="readerTypeId" />
-                <ScalarProperty Name="totalFine" ColumnName="totalFine" />
-                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
-                <ScalarProperty Name="expiryDate" ColumnName="expiryDate" />
-                <ScalarProperty Name="createdAt" ColumnName="createdAt" />
-                <ScalarProperty Name="gender" ColumnName="gender" />
-                <ScalarProperty Name="birthDate" ColumnName="birthDate" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="address" ColumnName="address" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ReaderTypes">
             <EntityTypeMapping TypeName="LibraryManagementModel.ReaderType">
               <MappingFragment StoreEntitySet="ReaderType">
@@ -1525,6 +1506,25 @@
               <ScalarProperty Name="id" ColumnName="authorId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="ReaderCards">
+            <EntityTypeMapping TypeName="LibraryManagementModel.ReaderCard">
+              <MappingFragment StoreEntitySet="ReaderCard">
+                <ScalarProperty Name="employeeId" ColumnName="employeeId" />
+                <ScalarProperty Name="accountId" ColumnName="accountId" />
+                <ScalarProperty Name="readerTypeId" ColumnName="readerTypeId" />
+                <ScalarProperty Name="totalFine" ColumnName="totalFine" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="expiryDate" ColumnName="expiryDate" />
+                <ScalarProperty Name="createdAt" ColumnName="createdAt" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="birthDate" ColumnName="birthDate" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -107,7 +107,7 @@ namespace LibraryManagement.Services
                 var related = context.BaseBooks.Where(b => b.genreId == genreId).Any();
                 if (related)
                 {
-                    return (false, "Đã có thể loại sách thuộc thể loại này không thể xóa");
+                    return (false, "Đã có sách thuộc thể loại này không thể xóa");
                 }
                 var genre = context.Genres.Where(g => g.id == genreId).FirstOrDefault();
                 if (genre is null)

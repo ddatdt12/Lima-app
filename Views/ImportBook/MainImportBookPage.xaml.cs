@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Markup;
 
 namespace LibraryManagement.Views.ImportBookPage
 {
@@ -25,6 +26,9 @@ namespace LibraryManagement.Views.ImportBookPage
             InitializeComponent();
 
             AllBookList = new ObservableCollection<BookDTO>(BookService.Ins.GetAllBook());
+
+            this.Language = XmlLanguage.GetLanguage("vi-VN");
+            createAt.SelectedDate = DateTime.Now;
         }
 
 
@@ -33,8 +37,7 @@ namespace LibraryManagement.Views.ImportBookPage
             TextBox sd = sender as TextBox;
 
             if (sd.Text.Length <= 0)
-                sd.Text = "1";
-
+                sd.Text = "0";
         }
 
         private static readonly Regex _regex = new Regex("[^0-9]"); //regex that matches disallowed text

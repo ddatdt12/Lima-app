@@ -27,7 +27,8 @@
                          FontSize="18"
                          Width="350"
                          Text="{Binding BaseName}"
-                         HorizontalAlignment="Left" />
+                         HorizontalAlignment="Left"
+                         x:Name="basebooktb"/>
             </StackPanel>
 
             <StackPanel HorizontalAlignment="Left"
