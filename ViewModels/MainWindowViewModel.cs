@@ -6,6 +6,8 @@ using LibraryManagement.Views.BookManagement;
 using LibraryManagement.Views.ImportBookPage;
 using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -131,8 +133,12 @@ namespace LibraryManagement.ViewModel
                 employeeId = "NV0002",
             };
             //(bool isSuccess, string message) = ReaderService.Ins.CreateNewReaderCard(newReaderCard);
-            (AccountDTO user, string mesasage) = AuthService.Ins.Login("READER0002", "READER0002");
+            (AccountDTO user, string mesasage) = AuthService.Ins.Login("datdo", "123456");
 
+            var email = AuthService.Ins.GetAccountByUsername("datdo");
+            (bool resetSuccess, string resetMessage) = AuthService.Ins.ResetPassword("datdo","1234567");
+            (var userLogin, string message) = AuthService.Ins.Login("datdo","1234567");
+            var a = "";
 
             //BOOK IMPORT
             List<BaseBookDTO> baseBookDTOs = new List<BaseBookDTO>()
@@ -207,51 +213,51 @@ namespace LibraryManagement.ViewModel
 
 
 
-            //var importReceiptDetailList = new List<ImportReceiptDetailDTO> {
-            //    new ImportReceiptDetailDTO(){
-            //        unitPrice=30000,
-            //        quantity=10,
-            //        book=  new BookDTO()
-            //        {
-            //              baseBookId = "BB0001",
-            //              yearOfPublication = 2016,
-            //            publisher = "Nhà xuất bản Trẻ",
-            //            isNew = true,
-            //        },
-            //    },
-            //    new ImportReceiptDetailDTO(){
-            //        unitPrice=30000,
-            //        quantity=15,
-            //        book=  new BookDTO()
-            //        {
-            //            baseBookId = "BB0002",
-            //            yearOfPublication = 2020,
-            //            publisher = "Nhà xuất bản Trẻ",
-            //            isNew = true,
-            //        },
-            //    },
-            //      new ImportReceiptDetailDTO(){
-            //        unitPrice=30000,
-            //        quantity=12,
-            //        book=  new BookDTO()
-            //        {
-            //            baseBookId = "BB0003",
-            //            yearOfPublication = 2022,
-            //            publisher = "Nhà xuất bản Trẻ",
-            //            isNew = true,
-            //        },
-            //    },
+            var importReceiptDetailList = new List<ImportReceiptDetailDTO> {
+                new ImportReceiptDetailDTO(){
+                    unitPrice=30000,
+                    quantity=10,
+                    book=  new BookDTO()
+                    {
+                          baseBookId = "BB0001",
+                          yearOfPublication = 2011,
+                        publisher = "Nhà xuất bản Trẻ",
+                        isNew = true,
+                    },
+                },
+                new ImportReceiptDetailDTO(){
+                    unitPrice=30000,
+                    quantity=15,
+                    book=  new BookDTO()
+                    {
+                        baseBookId = "BB0002",
+                        yearOfPublication = 2014,
+                        publisher = "Nhà xuất bản Trẻ",
+                        isNew = true,
+                    },
+                },
+                  new ImportReceiptDetailDTO(){
+                    unitPrice=30000,
+                    quantity=12,
+                    book=  new BookDTO()
+                    {
+                        baseBookId = "BB0003",
+                        yearOfPublication = 2016,
+                        publisher = "Nhà xuất bản Trẻ",
+                        isNew = true,
+                    },
+                },
 
-            //};
+            };
 
-            //var imReceipt = new ImportReceiptDTO
-            //{
-            //    supplier = "Thư viện UIT",
-            //    createdAt = DateTime.Now,
-            //    employeeId = "NV0001",
-            //    importReceiptDetailList = importReceiptDetailList,
-            //};
-            //(bool isImportSuccess, string message) = ImportSerivce.Ins.CreateNewBookImportReceipt(imReceipt);
+            var imReceipt = new ImportReceiptDTO
+            {
+                supplier = "Thư viện UIT",
+                createdAt = DateTime.Now,
+                employeeId = "NV0001",
+                importReceiptDetailList = importReceiptDetailList,
+            };
+            //(bool isImportSuccess, string message) = ImportService.Ins.CreateNewBookImportReceipt(imReceipt);
 
             //var data = BaseBookService.Ins.GetAllBaseBook();
 
@@ -332,24 +338,26 @@ namespace LibraryManagement.ViewModel
 
 
             // Borrowing/Return Service
-            int borrowingDuration = ParameterService.Ins.GetRuleValue(Rules.MAXIMUM_NUMBER_OF_DAYS_TO_BORROW);
-            int max = ParameterService.Ins.GetRuleValue(Rules.ALLOWED_BOOK_MAXIMUM);
-            int fineDaily = ParameterService.Ins.GetRuleValue(Rules.FINE);
-            //Check số sách tối đa có thể mượn
+
+
+            var reader = ReaderService.Ins.GetReaderInfo("reader0003");
+
+            //int borrowingDuration = ParameterService.Ins.GetRuleValue(Rules.MAXIMUM_NUMBER_OF_DAYS_TO_BORROW);
+            //int max = ParameterService.Ins.GetRuleValue(Rules.ALLOWED_BOOK_MAXIMUM);
+            //int fineDaily = ParameterService.Ins.GetRuleValue(Rules.FINE);
+            ////Check số sách tối đa có thể mượn
             //BorrowingCardDTO cardDTO = new BorrowingCardDTO()
             //{
-            //    readerCardId = "READER0001",
+            //    readerCardId = "reader0003",
             //    borrowingDate = DateTime.Now,
             //    dueDate = DateTime.Now.AddDays(borrowingDuration),
             //    employeeId = "NV0001",
             //};
             //var bookInfoIdList = new List<string>()
             //{
-            //    "BOOK0001_001",
-            //    "BOOK0002_002",
-            //    "BOOK0003_002",
+            //    "BOOK0001_003",
             //};
-            //(bool success, string message) = BorrowingReturnService.Ins.CreateBorrowingCard(cardDTO, bookInfoIdList);
+            //(bool success, string messageFromBorrowing) = BorrowingReturnService.Ins.CreateBorrowingCard(cardDTO, bookInfoIdList);
 
             //var borrowingCardDTOs = BorrowingReturnService.Ins.GetBorrowingCardsByReaderId("READER0001");
 
@@ -392,9 +400,31 @@ namespace LibraryManagement.ViewModel
 
             var books = BookService.Ins.GetAllAvailableBook();
             var delayBorrowingCards = BorrowingReturnService.Ins.GetDelayBorrowingCardsByReaderId("READER0001");
-            var a = "";
         }
+        const string APP_EMAIL = "";
+        const string APP_PASSWORD = "";
+        protected void SendEmail(string email, int randomCode)
+        {
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+            smtp.EnableSsl = true;
+            smtp.Port = 587;
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = new NetworkCredential(APP_EMAIL, APP_PASSWORD);
 
+            MailMessage mail = new MailMessage();
+            mail.IsBodyHtml = true;
 
+            //AlternateView htmlView = AlternateView.CreateAlternateViewFromString(GetResetPasswordTemplate(randomCode), null, "text/html");
+
+            //Add view to the Email Message
+            //mail.AlternateViews.Add(htmlView);
+
+            mail.From = new MailAddress(APP_EMAIL, "Squadin Cinema");
+            mail.To.Add(email);
+            mail.Subject = "Lấy lại mật khẩu đăng nhập";
+
+            smtp.Send(mail);
+        }
     }
 }

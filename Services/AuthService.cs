@@ -59,7 +59,7 @@ namespace LibraryManagement.Services
                 };
 
 
-                if(account.Employees.Count() > 0)
+                if (account.Employees.Count() > 0)
                 {
                     user.type = Utils.AccountType.EMPLOYEE;
                 }
@@ -76,6 +76,61 @@ namespace LibraryManagement.Services
             catch (Exception e)
             {
                 return (null, "Lỗi hệ thống");
+            }
+
+        }
+
+        public string GetAccountByUsername(string username)
+        {
+            try
+            {
+                var context = DataProvider.Ins.DB;
+                var account = context.Accounts.Where(c => c.username == username).FirstOrDefault();
+                string email;
+
+                if (account is null)
+                {
+                    return null;
+                }
+
+                if (account.Employees.Count >= 0)
+                {
+                    email = account.Employees.FirstOrDefault()?.email;
+                }
+                else 
+                {
+                    email = account.ReaderCards.FirstOrDefault()?.email;
+                }
+
+                return email;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+        }
+
+        public (bool, string) ResetPassword(string username , string newPassword)
+        {
+            try
+            {
+                var context = DataProvider.Ins.DB;
+                var account = context.Accounts.Where(a => a.username == username).FirstOrDefault();
+
+                if (account == null)
+                {
+                    return (false, "Tài khoản không tồn tại!");
+                }
+
+                account.password = Helper.MD5Hash(newPassword);
+                context.SaveChanges();
+                return (true, "Cập nhật mật khẩu thành công!");
+            }
+            catch (Exception)
+            {
+                return (false, "Lỗi hệ thống!");
             }
 
         }
