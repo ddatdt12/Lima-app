@@ -50,12 +50,13 @@
                                              Width="24"
                                              VerticalAlignment="Bottom"/>
                     <TextBox materialDesign:HintAssist.Hint="Tên đăng nhập"
-                             Text="{Binding UserName}"
+                             Text="{Binding Account}"
                              Width="220"
                              FontSize="16"
                              Foreground="#5C5959"
                              BorderBrush="#5C5959"
                              Margin="10 0 0 0"
+                             IsReadOnly="True"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                 </StackPanel>
 
@@ -78,7 +79,7 @@
                                  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PasswordChanged">
-                                <i:InvokeCommandAction Command="{Binding NewPassCM}"
+                                <i:InvokeCommandAction Command="{Binding NewPassChangedCM}"
                                                        CommandParameter="{Binding ElementName=floatingPasswordBox}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
@@ -93,6 +94,7 @@
                         FontWeight="Bold"
                         materialDesign:ButtonAssist.CornerRadius="12"
                         Background="#0266FD"
+                        Foreground="White"
                         VerticalAlignment="Bottom"
                         HorizontalAlignment="Center"
                         Margin="0 368"

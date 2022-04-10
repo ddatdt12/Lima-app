@@ -13,7 +13,6 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{x:Null}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="LoginWindow"
         Height="500" 
         Width="760"
         AllowsTransparency="True" 
@@ -27,6 +26,10 @@
         <!--DragWindow-->
         <i:EventTrigger EventName="MouseLeftButtonDown">
             <i:InvokeCommandAction Command="{Binding MouseLeftButtonDownWindowCM}"
+                                   CommandParameter="{Binding ElementName=loginWindow}"/>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding SaveLoginWindowCM}"
                                    CommandParameter="{Binding ElementName=loginWindow}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
@@ -47,7 +50,8 @@
 
                 <!--MinimizeButton-->
                 <Button Command="{Binding MinimizeWindowCM}"
-                        CommandParameter="{Binding ElementName=loginWindow}">
+                        CommandParameter="{Binding ElementName=loginWindow
+                    }">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Background"

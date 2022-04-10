@@ -8,7 +8,6 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       d:DesignHeight="440"
       d:DesignWidth="350"
-      Title="LoginPage"
       DataContext="{StaticResource LoginVM}"
       x:Name="loginPage">
 
@@ -53,7 +52,7 @@
                                              Height="24" 
                                              Width="24"
                                              VerticalAlignment="Bottom"/>
-                    <PasswordBox x:Name="floatingPasswordBox" 
+                    <PasswordBox x:Name="FloatingPasswordBox" 
                                  materialDesign:HintAssist.Hint="Mật khẩu"
                                  Width="220"
                                  FontSize="16"
@@ -64,7 +63,7 @@
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PasswordChanged">
                                 <i:InvokeCommandAction Command="{Binding PasswordChangedCM}"
-                                   CommandParameter="{Binding ElementName=floatingPasswordBox}"/>
+                                                       CommandParameter="{Binding ElementName=FloatingPasswordBox}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </PasswordBox>
@@ -97,7 +96,7 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </TextBlock>
-
+                
                 <!--LoginButton-->
                 <Button Content="Đăng nhập"
                         IsDefault="True"
@@ -107,9 +106,10 @@
                         FontWeight="Bold"
                         materialDesign:ButtonAssist.CornerRadius="12"
                         Background="#0266FD"
+                        Foreground="White"
                         VerticalAlignment="Bottom"
                         HorizontalAlignment="Center"
-                        Margin="0 368"
+                        Margin="0 370"
                         Command="{Binding LoginCM}"/>
             </Grid>
         </StackPanel>

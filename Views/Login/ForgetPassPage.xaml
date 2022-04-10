@@ -24,7 +24,7 @@
                            HorizontalAlignment="Center" 
                            VerticalAlignment="Top" 
                            Margin="0 30 0 0"/>
-                
+
                 <!--BackPageButton-->
                 <Button Margin="10"
                         VerticalAlignment="Top"                      
@@ -64,10 +64,19 @@
                                  BorderBrush="#5C5959"                                 
                                  Margin="10 0 0 0"                                 
                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                 Text="{Binding UserName}"/>
+                                 Text="{Binding Account}"/>
                     </StackPanel>
-
+                    
+                    <!--ErrorTextBlock-->
+                    <TextBlock Text=""
+                               FontSize="16"
+                               Foreground="Red"
+                               VerticalAlignment="Top"
+                               HorizontalAlignment="Center"
+                               Margin="0 120 0 0"
+                               x:Name="Errortxtblck"/>
                     <!--SendCodeButton-->
+                    
                     <Button Content="Gửi mã"
                             Width="145"
                             Height="42"
@@ -75,10 +84,12 @@
                             FontWeight="Bold"
                             materialDesign:ButtonAssist.CornerRadius="12"
                             Background="#0266FD"
+                            Foreground="White"
                             VerticalAlignment="Bottom"
                             HorizontalAlignment="Center"
-                            Margin="0 148"
-                            Command="{Binding SendCodeCM}">
+                            Margin="0 8"
+                            Command="{Binding SendCodeCM}"
+                            CommandParameter="{Binding ElementName=Errortxtblck}">
                     </Button>
                 </StackPanel>
             </Grid>
