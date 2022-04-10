@@ -6,7 +6,7 @@ using System.Windows.Input;
 
 namespace LibraryManagement.ViewModels.LoginVM
 {
-    class LoginViewModel : BaseViewModel
+    public class LoginViewModel : BaseViewModel
     {
         #region BINDING
         private string userName;

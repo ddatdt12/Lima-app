@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace LibraryManagement.Views.Login
 {
-    /// <summary>
-    /// Interaction logic for LoginPage.xaml
-    /// </summary>
     public partial class LoginPage : Page
     {
         public LoginPage()

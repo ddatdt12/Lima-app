@@ -4,7 +4,6 @@
              xmlns:local="clr-namespace:LibraryManagement"
              StartupUri="Views/Login/LoginWindow.xaml">
     <Application.Resources>
-
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />

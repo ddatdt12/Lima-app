@@ -130,14 +130,14 @@
                 </Grid.ColumnDefinitions>
 
                 <!--Image-->
-                <Image Grid.Column="0"
+                <!--<Image Grid.Column="0"
                        Source="/Assets/images/LoginImage.png"
                        Stretch="Uniform"
                        Height="266"
                        Width="322"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Bottom"
-                       Margin="20 30"/>
+                       Margin="20 30"/>-->
 
                 <!--LoginPage-->
                 <Frame Grid.Column="1"
