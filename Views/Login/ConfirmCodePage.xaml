@@ -48,7 +48,8 @@
                 </Button>
 
                 <StackPanel Orientation="Vertical"
-                            Margin="30 90">
+                            Margin="30 90"
+                            VerticalAlignment="Top">
                     <TextBlock Text=""
                                VerticalAlignment="Top"
                                Foreground="Black"
@@ -60,55 +61,56 @@
                     <StackPanel HorizontalAlignment="Center" 
                                 VerticalAlignment="Top"
                                 Orientation="Horizontal"
-                                Margin="20 0 16 0"/>
-                    <materialDesign:PackIcon Kind="Password"                                         
+                                Margin="20 0 16 0">
+                        <materialDesign:PackIcon Kind="Password"                                         
                                                  Height="24"                                           
                                                  Width="24"
                                                  VerticalAlignment="Bottom"/>
-                    <PasswordBox x:Name="CodeBox"
+                        <PasswordBox x:Name="CodeBox"
                                      materialDesign:HintAssist.Hint="Mã bảo mật"
                                      Width="220"
                                      FontSize="16"
                                      Foreground="#5C5959"
                                      BorderBrush="#5C5959"
                                      Margin="10 0 0 0"
-                                     Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"/>
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="PasswordChanged">
-                            <i:InvokeCommandAction Command="{Binding CodeChangedCM}"
+                                     Style="{StaticResource MaterialDesignFloatingHintPasswordBox}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PasswordChanged">
+                                    <i:InvokeCommandAction Command="{Binding CodeChangedCM}"
                                                        CommandParameter="{Binding ElementName=CodeBox}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </StackPanel>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </PasswordBox>
+                    </StackPanel>
 
-                <!--SendAgainButton-->
-                <TextBlock Text="Bạn không nhận được mã?"    
+                    <!--SendAgainButton-->
+                    <TextBlock Text="Bạn không nhận được mã?"    
                                Cursor="Hand"
                                Foreground="Blue"                              
                                FontSize="16"                              
                                VerticalAlignment="Top" 
                                HorizontalAlignment="Left"
                                Margin="20 10 16 0">
-                    <TextBlock.Style>
-                        <Style TargetType="TextBlock">
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver"
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver"
                                          Value="True">
-                                    <Setter Property="TextDecorations" 
+                                        <Setter Property="TextDecorations" 
                                             Value="Underline"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseLeftButtonDown">
                             <i:InvokeCommandAction Command="{Binding SendCodeCM}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                </TextBlock>
+                    </TextBlock>
 
-                <!--ConfirmButton-->
-                <Button Content="Xác nhận"
+                    <!--ConfirmButton-->
+                    <Button Content="Xác nhận"
                             Width="145"
                             Height="42"
                             FontSize="16"
@@ -116,9 +118,10 @@
                             materialDesign:ButtonAssist.CornerRadius="12"
                             Background="#0266FD"
                             Foreground="White"
-                            Margin="0 368"
+                            Margin="0 178"
                             HorizontalAlignment="Center"
                             Command="{Binding ConfirmCodeCM}"/>
+                </StackPanel>
             </Grid>
         </StackPanel>
     </materialDesign:Card>

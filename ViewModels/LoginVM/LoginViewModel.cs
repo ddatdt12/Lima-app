@@ -177,20 +177,20 @@ namespace LibraryManagement.ViewModels.LoginVM
                     string sender = "";
                     string passwword = "";
                     string recipient = "";
-                    SendEmail(sender, passwword, recipient);
+                    //SendEmail(sender, passwword, recipient);
                     MainFrame.Content = new ConfirmCodePage();
                 }
             });
 
             ConfirmCodeCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                //if (!string.IsNullOrEmpty(Code))
-                //{
-                //    if (Code != SecurityCode.ToString())
-                //        MessageBox.Show("Mã bảo mật không hợp lệ!");
-                //    else
-                        MainFrame.Content = new ChangePassPage();
-                //}
+                if (string.IsNullOrEmpty(Code))
+                    MessageBox.Show("Vui lòng nhập mã bảo mật!");
+                if (Code != SecurityCode.ToString())
+                    MessageBox.Show("Mã bảo mật không hợp lệ!");
+                else
+                    MainFrame.Content = new ChangePassPage();
+            
             });
 
             SaveNewPassCM = new RelayCommand<object>((p) => { return true; }, (p) =>
