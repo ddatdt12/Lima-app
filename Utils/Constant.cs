@@ -8,15 +8,6 @@ namespace LibraryManagement.Utils
 {
     public class Constant
     {
-        public readonly static Dictionary<int, string> PERMISSIONS = new Dictionary<int, string>
-        {
-            { 0, "Quản lý sách" },
-            { 1, "Tiếp nhận sách" },
-            { 2, "Quản lý độc giả" },
-            { 3, "Quản lý nhân viên" },
-            { 4, "Thống kê" },
-            { 5, "Cài đặt" },
-        };
     }
 
     public enum Permission
@@ -50,7 +41,7 @@ namespace LibraryManagement.Utils
 
         public string Name { get; private set; }
 
-        public static AccountType READER_CARD { get { return new AccountType("MAX_AGE"); } }
-        public static AccountType EMPLOYEE { get { return new AccountType("MIN_AGE"); } }
+        public static AccountType READER_CARD { get { return new AccountType("ReaderCard"); } }
+        public static AccountType EMPLOYEE { get { return new AccountType("Employee"); } }
     }
 }

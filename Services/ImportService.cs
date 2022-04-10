@@ -7,17 +7,17 @@ using System.Linq;
 
 namespace LibraryManagement.Services
 {
-    public class ImportSerivce
+    public class ImportService
     {
-        private ImportSerivce() { }
-        private static ImportSerivce _ins;
-        public static ImportSerivce Ins
+        private ImportService() { }
+        private static ImportService _ins;
+        public static ImportService Ins
         {
             get
             {
                 if (_ins == null)
                 {
-                    _ins = new ImportSerivce();
+                    _ins = new ImportService();
                 }
                 return _ins;
             }
@@ -35,23 +35,94 @@ namespace LibraryManagement.Services
         }
 
 
-        //public void GetAllImportReceipt()
-        //{
-        //    var context = DataProvider.Ins.DB;
-        //    var bookList = context.ImportReceipts.Select(imR => new ImportReceipt { }).ToList();
+        public List<ImportReceiptDTO> GetAllImportReceipt()
+        {
+            try
+            {
+                var context = DataProvider.Ins.DB;
+                var importReceiptList = context.ImportReceipts.Select(imR => new ImportReceiptDTO
+                {
+                    id = imR.id,
+                    totalPrice = imR.totalPrice,
+                    supplier = imR.supplier,
+                    employee = new EmployeeDTO
+                    {
+                        id = imR.Employee.id,
+                        email = imR.Employee.email,
+                        name = imR.Employee.name,
+                        phoneNumber = imR.Employee.phoneNumber,
+                    },
+                    createdAt = imR.createdAt,
+                    employeeId = imR.employeeId,
+                }).ToList();
 
-        //    BookService.Ins.ImportBooks(bookList);
-        //    List<ImportReceiptDetail> importReceiptDetails = importReceiptDetailList.Select(imR =>
-        //   new ImportReceiptDetail
-        //   {
-        //       importReceiptId = imR.importReceiptId,
-        //       bookId = imR.bookId,
-        //       quantity = imR.quantity,
-        //       unitPrice = imR.unitPrice
-        //   }).ToList();
+                return importReceiptList;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw e;
+            }
+        }
+        public ImportReceiptDTO GetImportReceiptDetail(string importReceiptId)
+        {
+            try
+            {
+                var context = DataProvider.Ins.DB;
+                var importReceiptList = context.ImportReceipts.Where(iR => iR.id == importReceiptId).Select(imR => new ImportReceiptDTO
+                {
+                    id = imR.id,
+                    totalPrice = imR.totalPrice,
+                    supplier = imR.supplier,
+                    employee = new EmployeeDTO
+                    {
+                        id = imR.Employee.id,
+                        email = imR.Employee.email,
+                        name = imR.Employee.name,
+                        phoneNumber = imR.Employee.phoneNumber,
+                    },
+                    createdAt = imR.createdAt,
+                    employeeId = imR.employeeId,
+                    importReceiptDetailList = imR.ImportReceiptDetails.Select(iR => new ImportReceiptDetailDTO
+                    {
+                        importReceiptId = iR.importReceiptId,
+                        quantity = iR.quantity,
+                        unitPrice = iR.unitPrice,
+                        book = new BookDTO
+                        {
+                            id = iR.Book.id,
+                            quantity = iR.Book.quantity,
+                            publisher = iR.Book.publisher,
+                            yearOfPublication = iR.Book.yearOfPublication,
+                            baseBookId = iR.Book.baseBookId,
+                            baseBook = new BaseBookDTO
+                            {
+                                id = iR.Book.baseBookId,
+                                name = iR.Book.BaseBook.name,
+                                genre = new GenreDTO
+                                {
+                                    id = iR.Book.BaseBook.Genre.id,
+                                    name = iR.Book.BaseBook.Genre.name,
+                                },
+                                authors = iR.Book.BaseBook.Authors.Select(x => new AuthorDTO
+                                {
+                                    id = x.id,
+                                    name = x.name,
+                                    birthDate = x.birthDate ?? DateTime.Now
+                                }).ToList(),
+                            },
+                        }
+                    }).ToList()
+                }).FirstOrDefault();
 
-        //    context.ImportReceiptDetails.AddRange(importReceiptDetails);
-        //}
+                return importReceiptList;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw e;
+            }
+        }
 
         private void CreateReceipt(List<ImportReceiptDetailDTO> importReceiptDetailList)
         {
@@ -112,11 +183,11 @@ namespace LibraryManagement.Services
             }
             catch (Exception e)
             {
-                var statusCode = e.Data.Keys.Cast<int>().Single(); 
-                
-                if(statusCode == 400)
+                var statusCode = e.Data.Keys.Cast<int>().Single();
+
+                if (statusCode == 400)
                 {
-                    var statusMessage = e.Data[statusCode].ToString(); 
+                    var statusMessage = e.Data[statusCode].ToString();
                     return (false, statusMessage);
                 }
                 return (false, "Lỗi hệ thống");
