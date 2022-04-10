@@ -1,9 +1,7 @@
-﻿using LibraryManagement.DTOs;
-using LibraryManagement.Services;
-using LibraryManagement.ViewModels;
+﻿using LibraryManagement.ViewModels;
 using System;
 using System.Collections.ObjectModel;
-using System.Linq;
+using System.Windows.Input;
 
 namespace LibraryManagement.ViewModel.ReaderCardVM
 {
@@ -36,8 +34,8 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             set { _Name = value; OnPropertyChanged(); }
         }
 
-        private DateTime _Birthday;
-        public DateTime Birthday
+        private DateTime? _Birthday;
+        public DateTime? Birthday
         {
             get { return _Birthday; }
             set { _Birthday = value; OnPropertyChanged(); }
@@ -79,26 +77,6 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             set { _ListGenre = value; OnPropertyChanged(); }
         }
 
-
-        public void AddReader(System.Windows.Window p)
-        {
-            ReaderCardDTO reader = new ReaderCardDTO()
-            {
-                name = Name,
-                address = Adress,
-                employeeId = "NV0001",
-                readerTypeId = (ListReaderType.FirstOrDefault(s => s.name == ReaderType)).id,
-                totalFine = 100,
-                email = Email,
-                createdAt = StartDate,
-                expiryDate = FinishDate,
-                gender = "Nam",
-                birthDate = Birthday,
-            };
-
-            (bool Successful, string message) = ReaderService.Ins.CreateNewReaderCard(reader);
-            ListReaderCard.Add(reader);
-            p.Close();
-        }
+        public ICommand CheckedSexCM { get; set; }
     }
 }

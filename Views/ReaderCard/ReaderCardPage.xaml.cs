@@ -13,17 +13,5 @@ namespace LibraryManagement.View.ReaderCard
         {
             InitializeComponent();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            AddReaderCardWindow addReaderCardWindow = new AddReaderCardWindow();
-            addReaderCardWindow.ShowDialog();
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            AddReaderTypeWindow addReaderTypeWindow = new AddReaderTypeWindow();
-            addReaderTypeWindow.ShowDialog();
-        }
     }
 }

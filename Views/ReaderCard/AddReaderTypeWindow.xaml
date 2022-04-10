@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LibraryManagement.Views.ReaderCard"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Height="500"
         Width="460"
@@ -43,7 +44,8 @@
                            FontWeight="ExtraBold"
                            HorizontalAlignment="Left" />
                 <TextBox Text="{Binding ReaderType, Mode=TwoWay}"
-                         materialDesign:HintAssist.Hint="Nhập tên loại độc giả">
+                         materialDesign:HintAssist.Hint="Nhập tên loại độc giả"
+                         x:Name="readertypeTbx">
                     <TextBox.Style>
                         <Style TargetType="TextBox"
                                BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
@@ -81,6 +83,8 @@
                         Foreground="#0266FD"
                         FontSize="15"
                         FontWeight="ExtraBold"
+                        Command="{Binding RemoveStatusTextBoxCM}"
+                        CommandParameter="{Binding ElementName=readertypeTbx}"
                         Style="{StaticResource MaterialDesignFlatAccentBgButton}"/>
                 <Button Background="#0266FD"
                         BorderBrush="#0266FD"
@@ -94,7 +98,7 @@
                         Foreground="White"
                         FontSize="15"
                         FontWeight="ExtraBold"
-                        Command="{Binding AddReaderType}"
+                        Command="{Binding AddReaderTypeCM}"
                         Style="{StaticResource MaterialDesignFlatAccentBgButton}" />
             </StackPanel>
         </StackPanel>
@@ -106,7 +110,14 @@
                                   VerticalAlignment="Top"
                                   Height="230">
             <ListView Name="lvReaderType"
-                      ItemsSource="{Binding ListReaderType}">
+                      ItemsSource="{Binding ListReaderType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding SelectedReaderTypeChangedCM}"
+                                               CommandParameter="{Binding ElementName=lvReaderType}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem"
                            BasedOn="{StaticResource MaterialDesignGridViewItem}">

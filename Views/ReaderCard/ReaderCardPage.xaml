@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d"
       DataContext="{StaticResource ReaderCardVM}"
       d:DesignHeight="800"
@@ -73,25 +74,26 @@
                             Height="42"
                             Width="148"
                             FontSize="16"
+                            Command="{Binding OpenReaderTypeWindowCM}"
                             materialDesign:ButtonAssist.CornerRadius="15"
-                            Style="{StaticResource MaterialDesignFlatAccentBgButton}"
-                            Click="Button_Click_1">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Plus"
-                                                     Margin="0,0,5,0"
-                                                     Height="23"
-                                                     Width="23" />
-                            <TextBlock Text="Loại độc giả" />
-                        </StackPanel>
+                            Style="{StaticResource MaterialDesignFlatAccentBgButton}">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Plus"
+                                                         Margin="0,0,5,0"
+                                                         Height="23"
+                                                         Width="23" />
+                                <TextBlock Text="Loại độc giả" />
+                            </StackPanel>
+                        </Button.Content>
                     </Button>
-                    <Button Click="Button_Click"
-                            Margin="30,5,0,0"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                    <Button Margin="30,5,0,0"
                             Background="#0266FD"
                             Foreground="White"
                             Height="42"
                             Width="145"
                             FontSize="16"
+                            Command="{Binding OpenAddReaderCardWindowCM}"
                             materialDesign:ButtonAssist.CornerRadius="15"
                             Style="{StaticResource MaterialDesignFlatAccentBgButton}">
                         <StackPanel Orientation="Horizontal">
@@ -160,7 +162,7 @@
                                         Width="130">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding birthDate}"
+                                    <TextBlock Text="{Binding birthDate, StringFormat=dd/MM/yyyy}"
                                                FontSize="16"
                                                Margin="8,0,0,0" />
                                 </DataTemplate>
@@ -170,7 +172,7 @@
                                         Width="90">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding type}"
+                                    <TextBlock Text="{Binding readerType.name}"
                                                FontSize="16"
                                                Margin="16,0,0,0" />
                                 </DataTemplate>
@@ -199,10 +201,12 @@
                         <GridViewColumn>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal"
+                                                Width="200">
                                         <Border BorderBrush="Black"
                                                 BorderThickness="0.5"
-                                                CornerRadius="5">
+                                                CornerRadius="5"
+                                                Margin="40,0,0,0">
                                             <Border.Style>
                                                 <Style TargetType="Border">
                                                     <Style.Triggers>

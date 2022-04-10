@@ -101,9 +101,15 @@
                         <StackPanel Height="40"
                                     Orientation="Horizontal"
                                     HorizontalAlignment="Left">
-                            <RadioButton Content="Nam"/>
-                            <RadioButton Content="Nữ"
-                                         Margin="50,0,0,0" />
+                            <RadioButton x:Name="Man"
+                                         Content="Nam"
+                                         Command="{Binding CheckedSex}"
+                                         CommandParameter="{Binding ElementName=Man}"/>
+                            <RadioButton x:Name="Woman"
+                                         Content="Nữ"
+                                         Margin="50,0,0,0" 
+                                         Command="{Binding CheckedSex}"
+                                         CommandParameter="{Binding ElementName=Woman}"/>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Margin="100,20,0,0">
@@ -112,14 +118,10 @@
                                    FontWeight="ExtraBold"
                                    HorizontalAlignment="Left" />
                         <DatePicker Width="270"
-                                    FontSize="16"
+                                    FontSize="15"
+                                    SelectedDate="{Binding Birthday}"
                                     materialDesign:HintAssist.Hint="Nhập ngày sinh"
                                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="SelectedDateChanged">
-                                    <i:InvokeCommandAction Command="{Binding SelectedDateCM}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
                         </DatePicker>
                     </StackPanel>
                 </WrapPanel>
@@ -163,18 +165,6 @@
                         </Style>
                     </WrapPanel.Resources>
                     <StackPanel Margin="0,20,0,0">
-                        <TextBlock Text="CMND/CCCD"
-                                   FontSize="20"
-                                   Foreground="#0266FD"
-                                   FontWeight="ExtraBold"
-                                   HorizontalAlignment="Left" />
-                        <TextBox Text="{Binding IdCard, Mode=TwoWay}"
-                                 Width="250"
-                                 x:Name="IdCard"
-                                 materialDesign:HintAssist.Hint="Nhập số CMND/CCCD"
-                                 HorizontalAlignment="Left" />
-                    </StackPanel>
-                    <StackPanel Margin="100,20,0,0">
                         <TextBlock Text="Email"
                                    FontSize="20"
                                    Foreground="#0266FD"
@@ -184,15 +174,29 @@
                                  materialDesign:HintAssist.Hint="Nhập email"
                                  Width="220"/>
                     </StackPanel>
-                    <StackPanel Margin="50,20,0,0">
+                    <StackPanel Margin="130,20,0,0">
                         <TextBlock Text="Địa chỉ"
                                    FontSize="20"
                                    Foreground="#0266FD"
                                    FontWeight="ExtraBold"
                                    HorizontalAlignment="Left" />
-                        <TextBox Text="{Binding Adress, Mode=TwoWay}" 
+                        <TextBox Text="{Binding Adress, Mode=TwoWay}"
                                  materialDesign:HintAssist.Hint="Nhập địa chỉ"
-                                 Width="270"/>
+                                 Width="200" />
+                    </StackPanel>
+                    <StackPanel Margin="70,20,0,0">
+                        <TextBlock Text="Loại độc giả"
+                                   FontSize="20"
+                                   Foreground="#0266FD"
+                                   FontWeight="ExtraBold"
+                                   HorizontalAlignment="Left" />
+                        <ComboBox Text="{Binding ReaderType, Mode=TwoWay}"
+                                  Margin="0,10,0,0"
+                                  Width="150"
+                                  x:Name="ReaderType"
+                                  FontSize="15"
+                                  ItemsSource="{Binding ListGenre}"
+                                  materialDesign:HintAssist.Hint="Chọn loại độc giả" />
                     </StackPanel>
                 </WrapPanel>
                 <WrapPanel Grid.Row="3"
@@ -234,20 +238,7 @@
                                     Value="18" />
                         </Style>
                     </WrapPanel.Resources>
-                    <StackPanel Margin="0,20,0,0">
-                        <TextBlock Text="Loại độc giả"
-                                   FontSize="20"
-                                   Foreground="#0266FD"
-                                   FontWeight="ExtraBold"
-                                   HorizontalAlignment="Left" />
-                        <ComboBox Text="{Binding ReaderType, Mode=TwoWay}"
-                                  x:Name="ReaderType"
-                                  Margin="0,20,0,0"
-                                  FontSize="15"
-                                  ItemsSource="{Binding ListGenre}"
-                                  materialDesign:HintAssist.Hint="Chọn loại độc giả"/>
-                    </StackPanel>
-                    <StackPanel Margin="233,20,0,0">
+                    <StackPanel Margin="216,25,0,0">
                         <TextBlock Text="Hạn sử dụng"
                                    FontSize="20"
                                    Foreground="#0266FD"
