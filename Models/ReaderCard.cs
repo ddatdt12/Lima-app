@@ -17,7 +17,7 @@ namespace LibraryManagement.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ReaderCard()
         {
-            this.BorrowingCards = new HashSet<BorrowingCard>();
+            this.Borrowing_ReturnCard = new HashSet<Borrowing_ReturnCard>();
             this.FineReceipts = new HashSet<FineReceipt>();
         }
     
@@ -27,16 +27,17 @@ namespace LibraryManagement.Models
         public string email { get; set; }
         public System.DateTime birthDate { get; set; }
         public string gender { get; set; }
-        public string identityCard { get; set; }
         public System.DateTime createdAt { get; set; }
         public System.DateTime expiryDate { get; set; }
         public bool isDeleted { get; set; }
         public Nullable<int> totalFine { get; set; }
         public int readerTypeId { get; set; }
+        public int accountId { get; set; }
         public string employeeId { get; set; }
     
+        public virtual Account Account { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BorrowingCard> BorrowingCards { get; set; }
+        public virtual ICollection<Borrowing_ReturnCard> Borrowing_ReturnCard { get; set; }
         public virtual Employee Employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FineReceipt> FineReceipts { get; set; }

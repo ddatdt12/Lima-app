@@ -17,30 +17,28 @@ namespace LibraryManagement.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employee()
         {
-            this.BookReturnCards = new HashSet<BookReturnCard>();
-            this.BorrowingCards = new HashSet<BorrowingCard>();
+            this.Borrowing_ReturnCard = new HashSet<Borrowing_ReturnCard>();
+            this.Borrowing_ReturnCard1 = new HashSet<Borrowing_ReturnCard>();
             this.FineReceipts = new HashSet<FineReceipt>();
             this.ImportReceipts = new HashSet<ImportReceipt>();
             this.ReaderCards = new HashSet<ReaderCard>();
         }
     
         public string id { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
         public string name { get; set; }
         public string phoneNumber { get; set; }
+        public string email { get; set; }
         public Nullable<System.DateTime> birthDate { get; set; }
         public string gender { get; set; }
         public Nullable<System.DateTime> startingDate { get; set; }
-        public int roleId { get; set; }
         public bool isDeleted { get; set; }
-        public string Email { get; set; }
+        public int accountId { get; set; }
     
+        public virtual Account Account { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BookReturnCard> BookReturnCards { get; set; }
+        public virtual ICollection<Borrowing_ReturnCard> Borrowing_ReturnCard { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BorrowingCard> BorrowingCards { get; set; }
-        public virtual Role Role { get; set; }
+        public virtual ICollection<Borrowing_ReturnCard> Borrowing_ReturnCard1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FineReceipt> FineReceipts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

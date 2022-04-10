@@ -1,4 +1,7 @@
-﻿using System;
+﻿using CinemaManagement.Utils;
+using LibraryManagement.DTOs;
+using LibraryManagement.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,21 +26,58 @@ namespace LibraryManagement.Services
             private set => _ins = value;
         }
 
+        public (AccountDTO, string message) Login(string username, string password)
+        {
+            try
+            {
+                var context = DataProvider.Ins.DB;
 
-        //public List<AuthorDTO> GetAllAuthor()
-        //{
-        //    try
-        //    {
-        //        List<AuthorDTO> authors;
-        //        authors = (from s in DataProvider.Ins.DB.Authors
-        //                   select new AuthorDTO { id = s.id, name = s.name }).ToList();
-        //        return authors;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        throw e;
-        //    }
+                string hashPass = Helper.MD5Hash(password);
+                var account = context.Accounts.Where(c => c.username == username).FirstOrDefault();
 
-        //}
+
+                if (account == null || account.password != hashPass)
+                {
+                    return (null, "Tài khoản hoặc mật khẩu không đúng!");
+                }
+
+                var user = new AccountDTO
+                {
+                    id = account.id,
+                    username = username,
+                    role = new RoleDTO
+                    {
+                        id = account.Role.id,
+                        name = account.Role.name,
+                        roleDetaislList = account.Role.RoleDetails.Select(rD => new RoleDetailDTO
+                        {
+                            permissionId = rD.permissionId,
+                            roleId = rD.roleId,
+                            isPermitted = rD.isPermitted,
+                        }).ToList(),
+                    },
+                };
+
+
+                if(account.Employees.Count() > 0)
+                {
+                    user.type = Utils.AccountType.EMPLOYEE;
+                }
+                else if (account.ReaderCards.Count() > 0)
+                {
+                    user.type = Utils.AccountType.READER_CARD;
+                }
+                else
+                {
+                    return (null, "Tài khoản không tồn tại!");
+                }
+                return (user, "Đăng nhập thành công!");
+            }
+            catch (Exception e)
+            {
+                return (null, "Lỗi hệ thống");
+            }
+
+        }
     }
 }

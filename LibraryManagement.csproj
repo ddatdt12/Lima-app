@@ -43,11 +43,11 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="MaterialDesignColors, Version=2.0.5.0, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
-      <HintPath>packages\MaterialDesignColors.2.0.5\lib\net452\MaterialDesignColors.dll</HintPath>
+    <Reference Include="MaterialDesignColors, Version=2.0.4.3, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
+      <HintPath>packages\MaterialDesignColors.2.0.4\lib\net452\MaterialDesignColors.dll</HintPath>
     </Reference>
-    <Reference Include="MaterialDesignThemes.Wpf, Version=4.4.0.0, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
-      <HintPath>packages\MaterialDesignThemes.4.4.0\lib\net452\MaterialDesignThemes.Wpf.dll</HintPath>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=4.3.0.3, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
+      <HintPath>packages\MaterialDesignThemes.4.3.0\lib\net452\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
@@ -78,29 +78,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DTOs\ReturnCardDTO.cs" />
+    <Compile Include="DTOs\BorrowingCardDTO.cs" />
+    <Compile Include="DTOs\ReaderTypeDTO.cs" />
+    <Compile Include="DTOs\ReaderCardDTO.cs" />
+    <Compile Include="DTOs\AccountDTO.cs" />
+    <Compile Include="DTOs\BaseBookDTO.cs" />
+    <Compile Include="DTOs\ImportReceiptDetailDTO.cs" />
+    <Compile Include="DTOs\ImportReceiptDTO.cs" />
     <Compile Include="DTOs\BookDTO.cs" />
     <Compile Include="DTOs\AuthorDTO.cs" />
     <Compile Include="DTOs\BookInfoDTO.cs" />
-    <Compile Include="DTOs\RoleDetailsDTO.cs" />
+    <Compile Include="DTOs\EmployeeDTO.cs" />
+    <Compile Include="DTOs\PermissionDTO.cs" />
+    <Compile Include="DTOs\RoleDetailDTO.cs" />
+    <Compile Include="DTOs\FineReceiptDTO.cs" />
     <Compile Include="DTOs\RoleDTO.cs" />
     <Compile Include="DTOs\GenreDTO.cs" />
-    <Compile Include="ViewModels\LoginVM\LoginViewModel.cs" />
-    <Compile Include="Views\Login\ChangePassPage.xaml.cs">
-      <DependentUpon>ChangePassPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Login\ConfirmCodePage.xaml.cs">
-      <DependentUpon>ConfirmCodePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Login\ForgetPassPage.xaml.cs">
-      <DependentUpon>ForgetPassPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Login\LoginPage.xaml.cs">
-      <DependentUpon>LoginPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Login\LoginWindow.xaml.cs">
-      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    <Compile Include="Models\Account.cs">
+      <DependentUpon>LibraryManagementModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Author.cs">
+      <DependentUpon>LibraryManagementModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BaseBook.cs">
       <DependentUpon>LibraryManagementModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Book.cs">
@@ -109,13 +110,22 @@
     <Compile Include="Models\BookInfo.cs">
       <DependentUpon>LibraryManagementModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\BookReturnCard.cs">
+    <Compile Include="Models\BorrowedGenreReport.cs">
       <DependentUpon>LibraryManagementModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\BorrowingCard.cs">
+    <Compile Include="Models\BorrowedGenreReportDetail.cs">
+      <DependentUpon>LibraryManagementModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Borrowing_ReturnCard.cs">
       <DependentUpon>LibraryManagementModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DataProvider.cs" />
+    <Compile Include="Models\DelayReturnBookReport.cs">
+      <DependentUpon>LibraryManagementModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DelayReturnBookReportDetail.cs">
+      <DependentUpon>LibraryManagementModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Employee.cs">
       <DependentUpon>LibraryManagementModel.tt</DependentUpon>
     </Compile>
@@ -149,6 +159,9 @@
     <Compile Include="Models\Parameter.cs">
       <DependentUpon>LibraryManagementModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Permission.cs">
+      <DependentUpon>LibraryManagementModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ReaderCard.cs">
       <DependentUpon>LibraryManagementModel.tt</DependentUpon>
     </Compile>
@@ -161,38 +174,87 @@
     <Compile Include="Models\RoleDetail.cs">
       <DependentUpon>LibraryManagementModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\FineReceiptService.cs" />
+    <Compile Include="Services\BorrowingReturnService.cs" />
+    <Compile Include="Services\ReaderTypeService.cs" />
+    <Compile Include="Services\ReaderService.cs" />
+    <Compile Include="Services\BaseBookService.cs" />
+    <Compile Include="Services\ImportService.cs" />
     <Compile Include="Services\AuthService.cs" />
+    <Compile Include="Services\EmployeeService.cs" />
+    <Compile Include="Services\ReceiptService.cs" />
     <Compile Include="Services\RoleService.cs" />
     <Compile Include="Services\ParameterService.cs" />
     <Compile Include="Services\BookService.cs" />
     <Compile Include="Services\AuthorService.cs" />
     <Compile Include="Services\GenreService.cs" />
     <Compile Include="Utils\Constant.cs" />
+    <Compile Include="Utils\Helper.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\BookManagementVM\BookManagementViewModel.cs" />
+    <Compile Include="ViewModels\Genre_AuthorManagementVM\Genre_AuthorManagementViewModel.cs" />
+    <Compile Include="ViewModels\ImportBookVM\ImportBookViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\SettingVM\GeneralSetting.cs" />
+    <Compile Include="ViewModels\SettingVM\RoleSetting.cs" />
+    <Compile Include="ViewModels\SettingVM\SettingViewModel.cs" />
+    <Compile Include="ViewModels\StatisticalVM\StatisticalViewModel.cs" />
+    <Compile Include="Views\BookManagement\BookInforWindow.xaml.cs">
+      <DependentUpon>BookInforWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BookManagement\BookManagementPage.xaml.cs">
+      <DependentUpon>BookManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Converter\BookStatusConverter.cs" />
+    <Compile Include="Views\Converter\ListToStringConverter.cs" />
+    <Compile Include="Views\Genre_AuthorManagement\AddAuthorWindow.xaml.cs">
+      <DependentUpon>AddAuthorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Genre_AuthorManagement\AddGenreWindow.xaml.cs">
+      <DependentUpon>AddGenreWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Genre_AuthorManagement\EditAuthorWindow.xaml.cs">
+      <DependentUpon>EditAuthorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Genre_AuthorManagement\EditGenreWindow.xaml.cs">
+      <DependentUpon>EditGenreWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Genre_AuthorManagement\MainManagementPage.xaml.cs">
+      <DependentUpon>MainManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ImportBook\AddBaseBookPage.xaml.cs">
+      <DependentUpon>AddBaseBookPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ImportBook\AddBookPage.xaml.cs">
+      <DependentUpon>AddBookPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ImportBook\ImportBookWindow.xaml.cs">
+      <DependentUpon>ImportBookWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ImportBook\MainImportBookPage.xaml.cs">
+      <DependentUpon>MainImportBookPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="Views\Login\ChangePassPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Login\ConfirmCodePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Login\ForgetPassPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Login\LoginPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Login\LoginWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Compile Include="Views\SettingManagement\AddRoleWindow.xaml.cs">
+      <DependentUpon>AddRoleWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingManagement\GeneralSettingPage.xaml.cs">
+      <DependentUpon>GeneralSettingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingManagement\MainSettingPage.xaml.cs">
+      <DependentUpon>MainSettingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingManagement\RoleSettingPage.xaml.cs">
+      <DependentUpon>RoleSettingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatisticalManagement\GenreStatisticPage.xaml.cs">
+      <DependentUpon>GenreStatisticPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatisticalManagement\LateStatisticPage.xaml.cs">
+      <DependentUpon>LateStatisticPage.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -213,7 +275,75 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\BookManagement\BookInforWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BookManagement\BookManagementPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Genre_AuthorManagement\AddAuthorWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Genre_AuthorManagement\AddGenreWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Genre_AuthorManagement\EditAuthorWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Genre_AuthorManagement\EditGenreWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Genre_AuthorManagement\MainManagementPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ImportBook\AddBaseBookPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ImportBook\AddBookPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ImportBook\ImportBookWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ImportBook\MainImportBookPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingManagement\AddRoleWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingManagement\GeneralSettingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingManagement\MainSettingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingManagement\RoleSettingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatisticalManagement\GenreStatisticPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatisticalManagement\LateStatisticPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -235,7 +365,6 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <Resource Include="Assets\Fonts\NunitoSans-Regular.ttf" />
     <Resource Include="Assets\Fonts\PatrickHand-Regular.ttf" />
@@ -255,14 +384,13 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Assets\images\" />
+  </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="C:\Users\Ngoc_Trinh\Pictures\LoginImage.png">
-      <Link>Assets\images\LoginImage.png</Link>
-    </Resource>
     <Content Include="Models\LibraryManagementModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>LibraryManagementModel.edmx</DependentUpon>
@@ -275,11 +403,11 @@
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="packages\MaterialDesignThemes.4.4.0\build\MaterialDesignThemes.targets" Condition="Exists('packages\MaterialDesignThemes.4.4.0\build\MaterialDesignThemes.targets')" />
+  <Import Project="packages\MaterialDesignThemes.4.3.0\build\MaterialDesignThemes.targets" Condition="Exists('packages\MaterialDesignThemes.4.3.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('packages\MaterialDesignThemes.4.4.0\build\MaterialDesignThemes.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\MaterialDesignThemes.4.4.0\build\MaterialDesignThemes.targets'))" />
+    <Error Condition="!Exists('packages\MaterialDesignThemes.4.3.0\build\MaterialDesignThemes.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\MaterialDesignThemes.4.3.0\build\MaterialDesignThemes.targets'))" />
   </Target>
 </Project>
