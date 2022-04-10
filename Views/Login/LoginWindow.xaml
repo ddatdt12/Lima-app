@@ -1,0 +1,159 @@
+﻿<Window x:Class="LibraryManagement.Views.Login.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{x:Null}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="LoginWindow"
+        Height="500" 
+        Width="760"
+        AllowsTransparency="True" 
+        WindowStyle="None" 
+        ResizeMode="NoResize" 
+        WindowStartupLocation="CenterScreen"
+        DataContext="{StaticResource LoginVM}"
+        x:Name="loginWindow">
+
+    <i:Interaction.Triggers>
+        <!--DragWindow-->
+        <i:EventTrigger EventName="MouseLeftButtonDown">
+            <i:InvokeCommandAction Command="{Binding MouseLeftButtonDownWindowCM}"
+                                   CommandParameter="{Binding ElementName=loginWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Border Background="White"
+            CornerRadius="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!--ControlBar-->
+            <StackPanel Grid.Row="0"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top">
+
+                <!--MinimizeButton-->
+                <Button Command="{Binding MinimizeWindowCM}"
+                        CommandParameter="{Binding ElementName=loginWindow}">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background"
+                                Value="Transparent"/>
+                            <Setter Property="Foreground"
+                                Value="Black"/>
+                            <Setter Property="Width"
+                                Value="28"/>
+                            <Setter Property="Height"
+                                Value="24"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" 
+                                                BorderBrush="{TemplateBinding Background}">
+                                            <ContentPresenter HorizontalAlignment="Center" 
+                                                              VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+
+                            <!--MouseOverTrigger-->
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver"
+                                         Value="True">
+                                    <Setter Property="Background" 
+                                            Value="#FFE6E6E6"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <materialDesign:PackIcon Kind="WindowMinimize"/>
+                </Button>
+
+                <!--CloseButton-->
+                <Button Command="{Binding CloseWindowCM}"
+                        CommandParameter="{Binding ElementName=loginWindow}">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background"
+                                Value="Transparent"/>
+                            <Setter Property="Foreground"
+                                Value="Black"/>
+                            <Setter Property="Width"
+                                Value="28"/>
+                            <Setter Property="Height"
+                                Value="24"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" 
+                                                CornerRadius="0 20 0 0" 
+                                                BorderBrush="{TemplateBinding Background}">
+                                            <ContentPresenter HorizontalAlignment="Center" 
+                                                              VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            
+                            <!--MouseOverTrigger-->
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver"
+                                         Value="True">
+                                    <Setter Property="Background" 
+                                            Value="#FFE6E6E6"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <materialDesign:PackIcon Kind="WindowClose"/>
+                </Button>
+            </StackPanel>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <!--Image-->
+                <Image Grid.Column="0"
+                       Source="/Assets/images/LoginImage.png"
+                       Stretch="Uniform"
+                       Height="266"
+                       Width="322"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Bottom"
+                       Margin="20 30"/>
+
+                <!--LoginPage-->
+                <Frame Grid.Column="1"
+                       x:Name="LoginFrame"
+                       Margin="0 0 30 20"
+                       NavigationUIVisibility="Hidden">
+
+                    <!--LoadLoginPage-->
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Loaded">
+                            <i:InvokeCommandAction Command="{Binding LoadLoginPageCM}"
+                                                   CommandParameter="{Binding ElementName=LoginFrame}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Frame>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
