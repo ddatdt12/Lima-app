@@ -32,7 +32,7 @@ namespace LibraryManagement.Services
             {
                 List<AuthorDTO> authors;
                 authors = (from s in DataProvider.Ins.DB.Authors
-                           select new AuthorDTO { id = s.id, name = s.name }).ToList();
+                           select new AuthorDTO { id = s.id, name = s.name, birthDate = (DateTime)s.birthDate }).ToList();
                 return authors;
             }
             catch (Exception e)
@@ -101,35 +101,35 @@ namespace LibraryManagement.Services
 
         }
 
-        public (bool, string message) DeleteAuthor(int authorId)
-        {
-            try
-            {
-                var context = DataProvider.Ins.DB;
-                var related = context.Books.Where(b => b.authorId == authorId).Any();
-                if (related)
-                {
-                    return (false, "Đã có sách của tác giả này. Không thể xóa!");
-                }
-                var genre = context.Authors.Where(g => g.id == authorId).FirstOrDefault();
-                if (genre is null)
-                {
-                    return (false, "Tác giả không tồn tại");
-                }
-                context.Authors.Remove(genre);
-                context.SaveChanges();
-                return (true, "Xóa thể loại thành công");
-            }
-            catch (DbEntityValidationException e)
-            {
-                return (false, e.Message);
+        //public (bool, string message) DeleteAuthor(int authorId)
+        //{
+        //    try
+        //    {
+        //        var context = DataProvider.Ins.DB;
+        //        var related = context.BaseBooks.Where(b => b.authorId == authorId).Any();
+        //        if (related)
+        //        {
+        //            return (false, "Đã có sách của tác giả này. Không thể xóa!");
+        //        }
+        //        var genre = context.Authors.Where(g => g.id == authorId).FirstOrDefault();
+        //        if (genre is null)
+        //        {
+        //            return (false, "Tác giả không tồn tại");
+        //        }
+        //        context.Authors.Remove(genre);
+        //        context.SaveChanges();
+        //        return (true, "Xóa thể loại thành công");
+        //    }
+        //    catch (DbEntityValidationException e)
+        //    {
+        //        return (false, e.Message);
 
-            }
-            catch (DbUpdateException e)
-            {
-                return (false, e.Message);
-            }
-        }
+        //    }
+        //    catch (DbUpdateException e)
+        //    {
+        //        return (false, e.Message);
+        //    }
+        //}
 
     }
 }

@@ -12,14 +12,14 @@ namespace LibraryManagement.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class BookReturnCard
+    public partial class DelayReturnBookReportDetail
     {
-        public string id { get; set; }
+        public int delayReturnBookReportId { get; set; }
         public string borrowingCardId { get; set; }
-        public System.DateTime returnedDate { get; set; }
-        public string employeeId { get; set; }
+        public int borrowingDate { get; set; }
+        public int numberOfDelayReturn { get; set; }
     
-        public virtual BorrowingCard BorrowingCard { get; set; }
-        public virtual Employee Employee { get; set; }
+        public virtual Borrowing_ReturnCard Borrowing_ReturnCard { get; set; }
+        public virtual DelayReturnBookReport DelayReturnBookReport { get; set; }
     }
 }

@@ -85,7 +85,7 @@ namespace LibraryManagement.Services
                 }
                 genre.name = updatedGenre.name;
                 context.SaveChanges();
-                return (true, "");
+                return (true, "Cập nhật thể loại thành công");
             }
             catch (DbEntityValidationException e)
             {
@@ -104,7 +104,7 @@ namespace LibraryManagement.Services
             try
             {
                 var context = DataProvider.Ins.DB;
-                var related = context.Books.Where(b => b.genreId == genreId).Any();
+                var related = context.BaseBooks.Where(b => b.genreId == genreId).Any();
                 if (related)
                 {
                     return (false, "Đã có thể loại sách thuộc thể loại này không thể xóa");

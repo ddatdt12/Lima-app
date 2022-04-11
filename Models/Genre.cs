@@ -17,13 +17,16 @@ namespace LibraryManagement.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Genre()
         {
-            this.Books = new HashSet<Book>();
+            this.BaseBooks = new HashSet<BaseBook>();
+            this.BorrowedGenreReportDetails = new HashSet<BorrowedGenreReportDetail>();
         }
     
         public int id { get; set; }
         public string name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Book> Books { get; set; }
+        public virtual ICollection<BaseBook> BaseBooks { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BorrowedGenreReportDetail> BorrowedGenreReportDetails { get; set; }
     }
 }

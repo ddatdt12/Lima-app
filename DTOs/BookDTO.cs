@@ -14,19 +14,14 @@ namespace LibraryManagement.DTOs
         }
 
         public string id { get; set; }
-        public string name { get; set; }
-        public int genreId { get; set; }
-        public int authorId { get; set; }
         public int yearOfPublication { get; set; }
         public string publisher { get; set; }
         public int quantity { get; set; }
 
         public List<BookInfoDTO> bookInfoes { get; set; }
-        public virtual AuthorDTO author { get; set; }
-        public GenreDTO genre { get; set; }
+        public string baseBookId { get; set; }
+        public BaseBookDTO baseBook { get; set; }
 
-        //
         public bool isNew { get; set; }
-
     }
 }

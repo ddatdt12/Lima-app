@@ -3,8 +3,6 @@ using LibraryManagement.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LibraryManagement.Services
 {
@@ -53,30 +51,44 @@ namespace LibraryManagement.Services
 
             return index;
         }
+
         public List<BookDTO> GetAllBook()
         {
             try
             {
+
+                var S = (from s in DataProvider.Ins.DB.Books
+                        where !s.isDeleted
+                        select s).ToList();
+                foreach (var item in S)
+                {
+                    var baseBook = item.BaseBook;
+                    var authors = item.BaseBook.Authors;
+                }
                 List<BookDTO> bookList = (from s in DataProvider.Ins.DB.Books
                                           where !s.isDeleted
                                           select new BookDTO
                                           {
                                               id = s.id,
-                                              name = s.name,
-                                              author = new AuthorDTO
-                                              {
-                                                  id = s.Author.id,
-                                                  name = s.Author.name,
-                                              },
-                                              authorId = s.Author.id,
-                                              genreId = s.genreId,
                                               quantity = s.quantity,
                                               publisher = s.publisher,
                                               yearOfPublication = s.yearOfPublication,
-                                              genre = new GenreDTO
+                                              baseBookId = s.baseBookId,
+                                              baseBook = new BaseBookDTO
                                               {
-                                                  id = s.Genre.id,
-                                                  name = s.Genre.name,
+                                                  id = s.id,
+                                                  name = s.BaseBook.name,
+                                                  genre = new GenreDTO
+                                                  {
+                                                      id = s.BaseBook.Genre.id,
+                                                      name = s.BaseBook.Genre.name,
+                                                  },
+                                                  authors = s.BaseBook.Authors.Select(x => new AuthorDTO
+                                                  {
+                                                      id = x.id,
+                                                      name = x.name,
+                                                      birthDate = x.birthDate ?? DateTime.Now
+                                                  }).ToList(),
                                               },
                                               bookInfoes = s.BookInfoes
                                               .Where(bI => !bI.isDeleted)
@@ -88,6 +100,54 @@ namespace LibraryManagement.Services
                                                   status = bI.status
                                               }).ToList()
                                           }).ToList();
+                return bookList;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public List<BookDTO> GetAllAvailableBook()
+        {
+            try
+            {
+                List<BookDTO> bookList = (from s in DataProvider.Ins.DB.Books
+                                          where !s.isDeleted && s.BookInfoes.Any(b => b.status)
+                                          select new BookDTO
+                                          {
+                                              id = s.id,
+                                              quantity = s.quantity,
+                                              publisher = s.publisher,
+                                              yearOfPublication = s.yearOfPublication,
+                                              baseBookId = s.baseBookId,
+                                              baseBook = new BaseBookDTO
+                                              {
+                                                  id = s.id,
+                                                  name = s.BaseBook.name,
+                                                  genre = new GenreDTO
+                                                  {
+                                                      id = s.BaseBook.Genre.id,
+                                                      name = s.BaseBook.Genre.name,
+                                                  },
+                                                  authors = s.BaseBook.Authors.Select(x => new AuthorDTO
+                                                  {
+                                                      id = x.id,
+                                                      name = x.name,
+                                                      birthDate = x.birthDate ?? DateTime.Now
+                                                  }).ToList(),
+                                              },
+                                              bookInfoes = s.BookInfoes
+                                              .Where(bI => !bI.isDeleted && bI.status)
+                                              .Select(bI =>
+                                              new BookInfoDTO
+                                              {
+                                                  id = bI.id,
+                                                  BookId = bI.bookId,
+                                                  status = bI.status
+                                              }).ToList()
+                                          }).ToList();
+
+
                 return bookList;
             }
             catch (Exception e)
@@ -115,7 +175,7 @@ namespace LibraryManagement.Services
             context.BookInfoes.AddRange(listBookInfoes);
         }
 
-        public (bool isSuccess, string message) ImportBooks(List<BookDTO> bookList)
+        public void ImportBooks(List<BookDTO> bookList)
         {
             try
             {
@@ -123,30 +183,45 @@ namespace LibraryManagement.Services
                 string maxBookId = context.Books.Max(b => b.id);
 
 
-                //Create new book and list book info belong to book quantity
+                bookList.ForEach(book =>
+                {
+                    var isExist = context.Books
+                     .Where(b => b.baseBookId == book.baseBookId
+                     && b.yearOfPublication == book.yearOfPublication
+                     && b.publisher == book.publisher).Any();
+                    if (isExist)
+                    {
+                        string statusMessage = "Sách lần xuất bản này đã tồn tại!";
+                        int statusCode = 400;
+                        var ex = new Exception($"{statusMessage} - {statusCode}");
+                        ex.Data.Add(statusCode, statusMessage);
+                        throw ex;
+                    }
+                });
+                //Create new book and list book info depend on book quantity
                 var newBookList = bookList.Where(b => b.isNew).Select(b => new Book
                 {
-                    name = b.name,
+                    baseBookId = b.baseBookId,
                     publisher = b.publisher,
                     quantity = b.quantity,
-                    authorId = b.authorId,
                     yearOfPublication = b.yearOfPublication,
-                    genreId = b.genreId,
                 }).ToList();
 
                 if (newBookList.Count() > 0)
                 {
-                    newBookList.ForEach((b) =>
+
+                    for (int i = 0; i < newBookList.Count; i++)
                     {
                         string bookId = CreateBookId(maxBookId);
-                        b.id = bookId;
-                        context.Books.Add(b);
-                        CreateBookInfoList(context, bookId, b.quantity);
+                        newBookList[i].id = bookId;
+                        bookList[i].id = bookId;
+                        context.Books.Add(newBookList[i]);
+                        CreateBookInfoList(context, bookId, newBookList[i].quantity);
                         maxBookId = bookId;
-                    });
+                    }
                 }
 
-                //Update book quantity and create list book info belong to book quantity
+                //Update book quantity and create list book info depend on book quantity
                 IEnumerable<BookDTO> bookListIENum = bookList.Where(b => b.id != null && !b.isNew);
                 if (bookListIENum.Count() > 0)
                 {
@@ -166,15 +241,10 @@ namespace LibraryManagement.Services
                     }
                 }
 
-
-                context.SaveChanges();
-                return (true, "Nhập sách thành công!");
-
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
-                return (false, "Lỗi hệ thống!");
+                throw e;
             }
         }
         public (bool isSuccess, string message) UpdateBook(BookDTO updatedBook)
@@ -187,14 +257,10 @@ namespace LibraryManagement.Services
                 {
                     return (false, "Sách không tồn tại!");
                 }
-                book.name = updatedBook.name;
-                book.authorId = updatedBook.authorId;
-                book.genreId = updatedBook.genreId;
                 book.publisher = updatedBook.publisher;
                 book.yearOfPublication = updatedBook.yearOfPublication;
-
                 context.SaveChanges();
-                return (true, "Cập nhật sách!");
+                return (true, "Cập nhật sách thành công!");
 
             }
             catch (Exception e)
@@ -218,7 +284,7 @@ namespace LibraryManagement.Services
                 return (true, "Xóa sách thành công!");
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return (false, "Lỗi hệ thống!");
             }
@@ -230,7 +296,6 @@ namespace LibraryManagement.Services
             {
                 var bookInfo = DataProvider.Ins.DB.BookInfoes.Find(bookInfoId);
 
-
                 var book = DataProvider.Ins.DB.Books.Find(bookInfo.bookId);
                 if (bookInfo is null || bookInfo.isDeleted)
                 {
@@ -241,7 +306,7 @@ namespace LibraryManagement.Services
                 DataProvider.Ins.DB.SaveChanges();
                 return (true, "Xóa sách thành công!");
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return (false, "Lỗi hệ thống!");
             }
