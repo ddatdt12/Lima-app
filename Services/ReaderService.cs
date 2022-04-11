@@ -101,7 +101,7 @@ namespace LibraryManagement.Services
                                                      employeeId = s.employeeId,
                                                      readerTypeId = s.readerTypeId,
                                                      totalFine = s.totalFine ?? 0,
-                                                     readerType = new ReaderTypeDTO { id = s.readerTypeId, name = s.ReaderType.name },
+                                                     readerType = new ReaderTypeDTO { id = s.ReaderType.id, name = s.ReaderType.name },
                                                      email = s.email,
                                                      createdAt = s.createdAt,
                                                      gender = s.gender,
@@ -165,7 +165,7 @@ namespace LibraryManagement.Services
                         expiryDate = readerCard.expiryDate,
                         gender = readerCard.gender,
                         birthDate = readerCard.birthDate,
-                        accountId = newAccount.id,
+                        accountId = newAccount.id
                     };
 
                     context.ReaderCards.Add(newReaderCard);
