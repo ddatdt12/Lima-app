@@ -106,7 +106,7 @@ namespace LibraryManagement.ViewModels.LoginVM
 
             LoadConfirmPageCM = new RelayCommand<TextBlock>((p) => { return true; }, (p) =>
             {
-                string email = "1603ngoctrinh@gmail.com";
+                string email = "abcdefgh@gmail.com";
                 string[] parts = email.Split('@');
                 string maskedEmail = string.Empty;
                 string host = string.Empty;
@@ -193,10 +193,10 @@ namespace LibraryManagement.ViewModels.LoginVM
                 //    p.Text"Tài khoản không hợp lệ!";
                 else
                 {
-                    string sender = "20520824@gm.uit.edu.vn";
-                    string passwword = "Ngtrinh1";
-                    string recipient = "1603ngoctrinh@gmail.com";
-                    SendEmail(sender, passwword, recipient);
+                    //string sender = "";
+                    //string passwword = "";
+                    //string recipient = "";
+                    //SendEmail(sender, passwword, recipient);
                     MainFrame.Content = new ConfirmCodePage();
                 }
             });
@@ -205,8 +205,8 @@ namespace LibraryManagement.ViewModels.LoginVM
             {
                 if (string.IsNullOrEmpty(Code))
                     MessageBox.Show("Vui lòng nhập mã bảo mật!");
-                else if (Code != SecurityCode.ToString())
-                    MessageBox.Show("Mã bảo mật không hợp lệ!");
+                //else if (Code != SecurityCode.ToString())
+                //    MessageBox.Show("Mã bảo mật không hợp lệ!");
                 else
                     MainFrame.Content = new ChangePassPage();
             });
