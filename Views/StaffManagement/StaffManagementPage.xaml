@@ -38,7 +38,7 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0"
                             Orientation="Horizontal">
-                    <Grid>
+                    <Grid Margin="30,0,0,0">
                         <Border CornerRadius="0,15,15,0"
                                 BorderThickness="1"
                                 Margin="15,0,0,0"
@@ -109,7 +109,7 @@
                 </StackPanel>
 
                 <ListView Grid.Row="2"
-                          Name="lvReader"
+                          Name="lvStaff"
                           ItemsSource="{Binding ListStaff}">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem"
@@ -119,20 +119,20 @@
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Mã nhân viên"
-                                            Width="130">
+                                            Width="150">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding idStaff}"
+                                        <TextBlock Text="{Binding id}"
                                                    FontSize="16"
                                                    Margin="25,0,0,0" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Header="Họ tên"
-                                            Width="110">
+                                            Width="150">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding nameStaff}"
+                                        <TextBlock Text="{Binding name}"
                                                    FontSize="16" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -141,27 +141,37 @@
                                             Width="130">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding birthDay}"
+                                        <TextBlock Text="{Binding birthDate, StringFormat=dd/MM/yyyy}"
                                                    FontSize="16"
                                                    Margin="8,0,0,0" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="CMND/CCCD"
+                            <GridViewColumn Header="Số điện thoại"
                                             Width="145">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding idCard}"
+                                        <TextBlock Text="{Binding phoneNumber}"
                                                    FontSize="16"
                                                    Margin="18,0,0,0" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Header="Giới tính"
-                                            Width="145">
+                                            Width="115">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding sex}"
+                                        <TextBlock Text="{Binding gender}"
+                                                   FontSize="16"
+                                                   Margin="18,0,0,0" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Ngày bắt đầu làm việc"
+                                            Width="200">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding startingDate,StringFormat=dd/MM/yyyy}"
                                                    FontSize="16"
                                                    Margin="18,0,0,0" />
                                     </DataTemplate>
