@@ -178,6 +178,12 @@ namespace LibraryManagement.Services
                         username = newAccount.username,
                         type = Utils.AccountType.READER_CARD
                     };
+                    string readerTypeName = context.ReaderTypes.Find(newReaderCard.readerTypeId)?.name;
+                    readerCard.readerType = new ReaderTypeDTO
+                    {
+                        id = newReaderCard.readerTypeId,
+                        name = readerTypeName,
+                    };
                     return (true, "Thêm thẻ độc giả thành công");
                 }
                 catch (Exception e)
