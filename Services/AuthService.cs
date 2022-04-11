@@ -97,7 +97,7 @@ namespace LibraryManagement.Services
                 {
                     email = account.Employees.FirstOrDefault()?.email;
                 }
-                else 
+                else
                 {
                     email = account.ReaderCards.FirstOrDefault()?.email;
                 }
@@ -112,7 +112,7 @@ namespace LibraryManagement.Services
 
         }
 
-        public (bool, string) ResetPassword(string username , string newPassword)
+        public (bool, string) ResetPassword(string username, string newPassword)
         {
             try
             {

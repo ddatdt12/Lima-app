@@ -3,9 +3,6 @@ using LibraryManagement.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -21,53 +18,21 @@ namespace LibraryManagement.ViewModels.SettingVM
             set { roleList = value; OnPropertyChanged(); }
         }
 
+        private ObservableCollection<RoleDetailDTO> permissionList;
+        public ObservableCollection<RoleDetailDTO> PermissionList
+        {
+            get { return permissionList; }
+            set { permissionList = value; OnPropertyChanged(); }
+        }
+
+        private int NUMBER_OF_PERMISSION = RoleService.Ins.GetAllPermissions().Count;
+
+
         private RoleDTO selectedRole;
         public RoleDTO SelectedRole
         {
             get { return selectedRole; }
             set { selectedRole = value; OnPropertyChanged(); }
-        }
-
-        private bool isBookManagement;
-        public bool IsBookManagement
-        {
-            get { return isBookManagement; }
-            set { isBookManagement = value; OnPropertyChanged(); }
-        }
-
-        private bool isImportBook;
-        public bool IsImportBook
-        {
-            get { return isImportBook; }
-            set { isImportBook = value; OnPropertyChanged(); }
-        }
-
-        private bool isReaderManagement;
-        public bool IsReaderManagement
-        {
-            get { return isReaderManagement; }
-            set { isReaderManagement = value; OnPropertyChanged(); }
-        }
-
-        private bool isStaffManagement;
-        public bool IsStaffManagement
-        {
-            get { return isStaffManagement; }
-            set { isStaffManagement = value; OnPropertyChanged(); }
-        }
-
-        private bool isStatictis;
-        public bool IsStatictis
-        {
-            get { return isStatictis; }
-            set { isStatictis = value; OnPropertyChanged(); }
-        }
-
-        private bool isSetting;
-        public bool IsSetting
-        {
-            get { return isSetting; }
-            set { isSetting = value; OnPropertyChanged(); }
         }
 
         private string txtRole;
@@ -87,56 +52,22 @@ namespace LibraryManagement.ViewModels.SettingVM
         {
             if (SelectedRole is null) return;
 
-
-            //List<RoleDetailsDTO> listDetail = new List<RoleDetailsDTO>
-            //{
-            //     new RoleDetailsDTO
-            //            {
-            //            permission = 0,
-            //            isPermitted = IsBookManagement
-            //            },
-            //             new RoleDetailsDTO
-            //             {
-            //            permission = 1,
-            //            isPermitted = IsImportBook
-            //            },
-            //            new RoleDetailsDTO{
-            //            permission = 2,
-            //            isPermitted = IsReaderManagement
-            //            },
-            //            new RoleDetailsDTO{
-            //            permission = 3,
-            //            isPermitted = IsStatictis
-            //            },
-            //            new RoleDetailsDTO{
-            //            permission = 4,
-            //            isPermitted = IsStaffManagement
-            //            },
-            //            new RoleDetailsDTO{
-            //            permission = 5,
-            //            isPermitted = IsSetting
-            //            }
-            //};
-
             try
             {
-                //(bool IsS, string mes) = RoleService.Ins.EditRolePermission(SelectedRole.id, listDetail);
-                //if (IsS)
-                //{
-                //    RoleList = new ObservableCollection<RoleDTO>(RoleService.Ins.GetAllRoles());
-                //    p.IsEnabled = false;
-                //}
+                (bool IsS, string mes) = RoleService.Ins.EditRolePermission(SelectedRole.id, new List<RoleDetailDTO>(PermissionList));
+                if (IsS)
+                {
+                    RoleList = new ObservableCollection<RoleDTO>(RoleService.Ins.GetAllRoles());
+                    p.IsEnabled = false;
+                }
 
-                //MessageBox.Show(mes);
-
+                MessageBox.Show(mes);
             }
             catch (Exception e)
             {
 
                 MessageBox.Show(e.Message);
             }
-
-
         }
         public void DeleteRoleFunc()
         {
@@ -160,64 +91,37 @@ namespace LibraryManagement.ViewModels.SettingVM
 
                 }
             }
-
-
-
         }
         public void AddRoleFunc(Window p)
         {
-            //RoleDTO role = new RoleDTO
-            //{
-            //    position = TxtRole,
-            //    roleDetaislList = new List<RoleDetailsDTO>
-            //    {
-            //        new RoleDetailsDTO
-            //        {
-            //        permission = 0,
-            //        isPermitted = false
-            //        },
-            //         new RoleDetailsDTO
-            //         {
-            //        permission = 1,
-            //        isPermitted = false
-            //        },
-            //        new RoleDetailsDTO{
-            //        permission = 2,
-            //        isPermitted = false
-            //        },
-            //                 new RoleDetailsDTO{
-            //        permission = 3,
-            //        isPermitted = false
-            //        },
-            //                    new RoleDetailsDTO{
-            //        permission = 4,
-            //        isPermitted = false
-            //        },
-            //                       new RoleDetailsDTO{
-            //        permission = 5,
-            //        isPermitted = false
-            //        },
+            RoleDTO role = new RoleDTO();
 
-            //    },
-            //};
-            //try
-            //{
-            //    (bool success, string message) = RoleService.Ins.CreateNewRole(role);
-            //    if (success)
-            //    {
-            //        RoleList.Add(role);
-            //        MessageBox.Show(message);
-            //        p.Close();
-            //        return;
-            //    }
-            //    MessageBox.Show(message);
-            //}
-            //catch (Exception e)
-            //{
+            role.name = TxtRole;
+            role.roleDetaislList = new List<RoleDetailDTO>();
+            for (int i = 1; i <= NUMBER_OF_PERMISSION; i++)
+                role.roleDetaislList.Add(new RoleDetailDTO
+                {
+                    permissionId = i,
+                    isPermitted = false
+                });
 
-            //    MessageBox.Show(e.Message);
-            //}
+            try
+            {
+                (bool success, string message) = RoleService.Ins.CreateNewRole(role);
+                if (success)
+                {
+                    RoleList = new ObservableCollection<RoleDTO>(RoleService.Ins.GetAllRoles());
+                    MessageBox.Show(message);
+                    p.Close();
+                    return;
+                }
+                MessageBox.Show(message);
+            }
+            catch (Exception e)
+            {
 
+                MessageBox.Show(e.Message);
+            }
         }
 
     }

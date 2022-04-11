@@ -198,6 +198,7 @@
     <Compile Include="ViewModels\LoginVM\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\SettingVM\GeneralSetting.cs" />
+    <Compile Include="ViewModels\SettingVM\ReaderSetting.cs" />
     <Compile Include="ViewModels\SettingVM\RoleSetting.cs" />
     <Compile Include="ViewModels\SettingVM\SettingViewModel.cs" />
     <Compile Include="ViewModels\StatisticalVM\StatisticalViewModel.cs" />
@@ -209,6 +210,7 @@
     </Compile>
     <Compile Include="Views\Converter\BookStatusConverter.cs" />
     <Compile Include="Views\Converter\ListToStringConverter.cs" />
+    <Compile Include="Views\Converter\PermissionConverter.cs" />
     <Compile Include="Views\Genre_AuthorManagement\AddAuthorWindow.xaml.cs">
       <DependentUpon>AddAuthorWindow.xaml</DependentUpon>
     </Compile>
@@ -262,6 +264,9 @@
     </Compile>
     <Compile Include="Views\SettingManagement\MainSettingPage.xaml.cs">
       <DependentUpon>MainSettingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingManagement\ReaderSettingPage.xaml.cs">
+      <DependentUpon>ReaderSettingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingManagement\RoleSettingPage.xaml.cs">
       <DependentUpon>RoleSettingPage.xaml</DependentUpon>
@@ -361,6 +366,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SettingManagement\MainSettingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingManagement\ReaderSettingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LibraryManagement.Views"
+        xmlns:cvt="clr-namespace:LibraryManagement.Views.Converter"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
@@ -21,6 +22,11 @@
         Width="1440"
         x:Name="this"
         DataContext="{StaticResource MainWindowVM}">
+
+    <Window.Resources>
+        <cvt:PermissionConverter x:Key="PermissionConverter" />
+    </Window.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="312" />
@@ -71,7 +77,10 @@
             <StackPanel Width="280">
                 <StackPanel Width="280"
                             Height="60"
-                            Orientation="Horizontal">
+                            Orientation="Horizontal"
+                            Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[0].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                     <StackPanel.Style>
                         <Style TargetType="StackPanel">
                             <Style.Triggers>
@@ -100,7 +109,10 @@
 
                 <StackPanel Width="280"
                             Height="60"
-                            Orientation="Horizontal">
+                            Orientation="Horizontal"
+                            Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[1].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                     <StackPanel.Style>
                         <Style TargetType="StackPanel">
                             <Style.Triggers>
@@ -135,7 +147,10 @@
 
                 <StackPanel Width="280"
                             Height="60"
-                            Orientation="Horizontal">
+                            Orientation="Horizontal"
+                            Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[2].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                     <StackPanel.Style>
                         <Style TargetType="StackPanel">
                             <Style.Triggers>
@@ -203,7 +218,9 @@
                     </i:Interaction.Triggers>
                 </StackPanel>
 
-                <Grid>
+                <Grid Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[5].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                     <TreeView Foreground="#1B48BA"
                               HorizontalAlignment="Left">
                         <TreeViewItem Width="280"
@@ -258,7 +275,9 @@
                         </TreeViewItem>
                     </TreeView>
                 </Grid>
-                <Grid>
+                <Grid Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[7].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                     <TreeView Foreground="#1B48BA"
                               HorizontalAlignment="Left">
                         <TreeViewItem IsExpanded="True"

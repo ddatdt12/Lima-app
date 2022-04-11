@@ -1,5 +1,6 @@
 ﻿using LibraryManagement.DTOs;
 using LibraryManagement.Services;
+using LibraryManagement.ViewModel;
 using LibraryManagement.Views;
 using LibraryManagement.Views.Login;
 using System;
@@ -183,6 +184,7 @@ namespace LibraryManagement.ViewModels.LoginVM
                         if (user != null)
                         {
                             LoginWindow.Hide();
+                            MainWindowViewModel.CurrentUser = user;
                             MainWindow wd = new MainWindow();
                             wd.Show();
                             LoginWindow.Close();
