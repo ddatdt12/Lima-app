@@ -202,6 +202,7 @@
     <Compile Include="ViewModels\SettingVM\GeneralSetting.cs" />
     <Compile Include="ViewModels\SettingVM\RoleSetting.cs" />
     <Compile Include="ViewModels\SettingVM\SettingViewModel.cs" />
+    <Compile Include="ViewModels\StaffManagementVM\StaffManagementViewModel.cs" />
     <Compile Include="ViewModels\StatisticalVM\StatisticalViewModel.cs" />
     <Compile Include="Views\BookManagement\BookInforWindow.xaml.cs">
       <DependentUpon>BookInforWindow.xaml</DependentUpon>
@@ -268,22 +269,17 @@
     <Compile Include="Views\SettingManagement\RoleSettingPage.xaml.cs">
       <DependentUpon>RoleSettingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\StaffManagement\StaffManagementPage.xaml.cs">
+      <DependentUpon>StaffManagementPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\StatisticalManagement\GenreStatisticPage.xaml.cs">
       <DependentUpon>GenreStatisticPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StatisticalManagement\LateStatisticPage.xaml.cs">
       <DependentUpon>LateStatisticPage.xaml</DependentUpon>
     </Compile>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ResourceXAML\MainResource.xaml">
@@ -377,6 +373,10 @@
     <Page Include="Views\SettingManagement\RoleSettingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StaffManagement\StaffManagementPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\StatisticalManagement\GenreStatisticPage.xaml">
       <SubType>Designer</SubType>

@@ -5,13 +5,11 @@ using LibraryManagement.ViewModels;
 using LibraryManagement.Views.BookManagement;
 using LibraryManagement.Views.ImportBookPage;
 ﻿using LibraryManagement.View.ReaderCard;
-using LibraryManagement.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows.Controls;
 using System.Windows.Input;
-
+using LibraryManagement.Views.StaffManagement;
 
 namespace LibraryManagement.ViewModel
 {
@@ -21,6 +19,7 @@ namespace LibraryManagement.ViewModel
         public ICommand OpenReaderCardPageCM { get; set; }
         public ICommand OpenBookManagementPageCM { get; set; }
         public ICommand OpenImportBookPage { get; set; }
+        public ICommand OpenStaffManagementPageCM { get; set; }
         #endregion
         public MainWindowViewModel()
         {
@@ -35,6 +34,10 @@ namespace LibraryManagement.ViewModel
             OpenImportBookPage = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new MainImportBookPage();
+            });
+            OpenStaffManagementPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
+            {
+               p.Content = new StaffManagementPage();
             });
             //var author = new AuthorDTO { name = "Hemingway", birthDate = DateTime.Now, };
             //List<AuthorDTO> authorList = new List<AuthorDTO>()
