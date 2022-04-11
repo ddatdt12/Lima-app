@@ -16,11 +16,11 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             set { _ListReaderType = value; OnPropertyChanged(); }
         }
 
-        private string _ReaderType;
-        public string ReaderType
+        private string _tempReaderType;
+        public string tempReaderType
         {
-            get { return _ReaderType; }
-            set { _ReaderType = value; OnPropertyChanged(); }
+            get { return _tempReaderType; }
+            set { _tempReaderType = value; OnPropertyChanged(); }
         }
 
         private TextBox readerTypeTxb;
@@ -30,10 +30,14 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             set { readerTypeTxb = value; OnPropertyChanged(); }
         }
 
-
         public ICommand AddReaderTypeCM { get; set; }
         public ICommand SelectedReaderTypeChangedCM { get; set; }
-        public ICommand SaveReaderTypeTbxCM { get; set; }
+        public ICommand RemoveStatusListViewCM { get; set; }
 
+        public void ResetDataAddReaderTypeWindow()
+        {
+            SelectedReaderType = null;
+            tempReaderType = null;
+        }
     }
 }

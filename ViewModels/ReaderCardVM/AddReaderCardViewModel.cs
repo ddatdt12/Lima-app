@@ -7,24 +7,18 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
 {
     public partial class ReaderCardViewModel : BaseViewModel
     {
-        private DateTime _StartDate;
-        public DateTime StartDate
+        private DateTime? _StartDate;
+        public DateTime? StartDate
         {
             get { return _StartDate; }
             set { _StartDate = value; OnPropertyChanged(); }
         }
 
-        private DateTime _FinishDate;
-        public DateTime FinishDate
+        private DateTime? _FinishDate;
+        public DateTime? FinishDate
         {
             get { return _FinishDate; }
             set { _FinishDate = value; OnPropertyChanged(); }
-        }
-        private DateTime _GetCurrentDate;
-        public DateTime GetCurrentDate
-        {
-            get { return _GetCurrentDate; }
-            set { _GetCurrentDate = value; OnPropertyChanged(); }
         }
 
         private String _Name;
@@ -39,13 +33,6 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
         {
             get { return _Birthday; }
             set { _Birthday = value; OnPropertyChanged(); }
-        }
-
-        private String _ReaderCode;
-        public String ReaderCode
-        {
-            get { return _ReaderCode; }
-            set { _ReaderCode = value; OnPropertyChanged(); }
         }
 
         private string _Email;
@@ -69,14 +56,14 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             set { _Sex = value; OnPropertyChanged(); }
         }
 
-        private ObservableCollection<String> _ListGenre;
-
-        public ObservableCollection<String> ListGenre
+        private string _ReaderType;
+        public string ReaderType
         {
-            get { return _ListGenre; }
-            set { _ListGenre = value; OnPropertyChanged(); }
+            get { return _ReaderType; }
+            set { _ReaderType = value; OnPropertyChanged(); }
         }
 
         public ICommand CheckedSexCM { get; set; }
+        public ICommand AddReaderCardCM { get; set; }
     }
 }

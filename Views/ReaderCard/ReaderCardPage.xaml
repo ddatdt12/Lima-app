@@ -68,7 +68,6 @@
                 <StackPanel Orientation="Horizontal"
                             Margin="130,0,0,0">
                     <Button Margin="30,5,0,0"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                             Background="#0266FD"
                             Foreground="White"
                             Height="42"
@@ -105,7 +104,6 @@
                         </StackPanel>
                     </Button>
                     <Button Margin="30,5,0,0"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                             Background="#37B634"
                             Foreground="White"
                             Height="42"
@@ -131,7 +129,8 @@
                                   materialDesign:ShadowAssist.ShadowEdges="Right,Bottom"
                                   Margin="30,0,30,15">
             <ListView Name="lvReader"
-                      ItemsSource="{Binding ListReaderCard}">
+                      ItemsSource="{Binding ListReaderCard}"
+                      SelectedItem="{Binding SelectedItem}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem"
                            BasedOn="{StaticResource MaterialDesignGridViewItem}">
@@ -145,16 +144,17 @@
                                 <DataTemplate>
                                     <TextBlock Text="{Binding id}"
                                                FontSize="16"
-                                               Margin="25,0,0,0" />
+                                               Margin="7,0,0,0" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Header="Họ tên"
-                                        Width="110">
+                                        Width="150">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding name}"
-                                               FontSize="16" />
+                                               FontSize="16"
+                                               Margin="10,0,0,0" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -164,17 +164,17 @@
                                 <DataTemplate>
                                     <TextBlock Text="{Binding birthDate, StringFormat=dd/MM/yyyy}"
                                                FontSize="16"
-                                               Margin="8,0,0,0" />
+                                               Margin="7,0,0,0" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Header="Loại"
-                                        Width="90">
+                                        Width="100">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding readerType.name}"
                                                FontSize="16"
-                                               Margin="16,0,0,0" />
+                                               Margin="7,0,0,0" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -182,7 +182,7 @@
                                         Width="147">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding createdAt}"
+                                    <TextBlock Text="{Binding createdAt,StringFormat=dd/MM/yyyy}"
                                                FontSize="16"
                                                Margin="18,0,0,0" />
                                 </DataTemplate>
@@ -192,7 +192,7 @@
                                         Width="147">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding expiryDate}"
+                                    <TextBlock Text="{Binding expiryDate, StringFormat=dd/MM/yyyy}"
                                                FontSize="16"
                                                Margin="20,0,0,0" />
                                 </DataTemplate>
@@ -201,52 +201,32 @@
                         <GridViewColumn>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal"
-                                                Width="200">
-                                        <Border BorderBrush="Black"
-                                                BorderThickness="0.5"
-                                                CornerRadius="5"
-                                                Margin="40,0,0,0">
-                                            <Border.Style>
-                                                <Style TargetType="Border">
-                                                    <Style.Triggers>
-                                                        <Trigger Property="IsMouseOver"
-                                                                 Value="True">
-                                                            <Setter Property="Background"
-                                                                    Value="#00e5ff" />
-                                                        </Trigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Border.Style>
-                                            <materialDesign:PackIcon Kind="LeadPencil"
-                                                                     Width="30"
-                                                                     Height="30"
-                                                                     Cursor="Hand"
-                                                                     Foreground="#258E23" />
-                                        </Border>
-                                        <Border BorderThickness="0.5"
-                                                BorderBrush="Black"
-                                                CornerRadius="5"
-                                                Margin="10,0,0,0">
-                                            <Border.Style>
-                                                <Style TargetType="Border">
-                                                    <Style.Triggers>
-                                                        <Trigger Property="IsMouseOver"
-                                                                 Value="True">
-                                                            <Setter Property="Background"
-                                                                    Value="#ff6255" />
-                                                        </Trigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Border.Style>
-                                            <materialDesign:PackIcon Kind="GarbageCanEmpty"
-                                                                     Width="30"
-                                                                     Height="30"
-                                                                     Cursor="Hand"
-                                                                     Foreground="#DC1B1B">
-                                            </materialDesign:PackIcon>
-                                        </Border>
-                                    </StackPanel>
+                                    <Border BorderBrush="Black"
+                                            BorderThickness="0.5"
+                                            CornerRadius="5"
+                                            Cursor="Hand"
+                                            Margin="40,0,0,0">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver"
+                                                             Value="True">
+                                                        <Setter Property="Background"
+                                                                Value="#00e5ff" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                        <materialDesign:PackIcon Kind="LeadPencil"
+                                                                 Width="30"
+                                                                 Height="30"
+                                                                 Foreground="#258E23" />
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                <i:InvokeCommandAction Command="{Binding ElementName=lvReader, Path=DataContext.OpenEditReaderCardCM}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Border>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

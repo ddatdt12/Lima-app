@@ -103,12 +103,12 @@
                                     HorizontalAlignment="Left">
                             <RadioButton x:Name="Man"
                                          Content="Nam"
-                                         Command="{Binding CheckedSex}"
+                                         Command="{Binding CheckedSexCM}"
                                          CommandParameter="{Binding ElementName=Man}"/>
                             <RadioButton x:Name="Woman"
                                          Content="Nữ"
                                          Margin="50,0,0,0" 
-                                         Command="{Binding CheckedSex}"
+                                         Command="{Binding CheckedSexCM}"
                                          CommandParameter="{Binding ElementName=Woman}"/>
                         </StackPanel>
                     </StackPanel>
@@ -119,7 +119,7 @@
                                    HorizontalAlignment="Left" />
                         <DatePicker Width="270"
                                     FontSize="15"
-                                    SelectedDate="{Binding Birthday}"
+                                    SelectedDate="{Binding Birthday, StringFormat=dd/MM/yyyy}"
                                     materialDesign:HintAssist.Hint="Nhập ngày sinh"
                                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}">
                         </DatePicker>
@@ -195,7 +195,8 @@
                                   Width="150"
                                   x:Name="ReaderType"
                                   FontSize="15"
-                                  ItemsSource="{Binding ListGenre}"
+                                  ItemsSource="{Binding ListReaderType}"
+                                  DisplayMemberPath="name"
                                   materialDesign:HintAssist.Hint="Chọn loại độc giả" />
                     </StackPanel>
                 </WrapPanel>
@@ -307,7 +308,7 @@
                             Foreground="White"
                             FontSize="18"
                             FontWeight="ExtraBold"
-                            Command="{Binding AddReaderCard}"
+                            Command="{Binding AddReaderCardCM}"
                             CommandParameter="{Binding ElementName=AddReaderWindow}"
                             Style="{StaticResource MaterialDesignFlatAccentBgButton}" />
                 </StackPanel>

@@ -21,29 +21,46 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             set { _listReaderCard = value; OnPropertyChanged(); }
         }
 
+        private ReaderCardDTO _SelectedItem;
+        public ReaderCardDTO SelectedItem
+        {
+            get { return _SelectedItem; }
+            set { _SelectedItem = value; OnPropertyChanged(); }
+        }
+
+
         private ReaderTypeDTO SelectedReaderType;
+
+
         #region
         public ICommand SelectedDateCM { get; set; }
-        public ICommand AddReaderCardCM { get; set; }
         public ICommand OpenReaderTypeWindowCM { get; set; }
         public ICommand OpenAddReaderCardWindowCM { get; set; }
-        public ICommand RemoveStatusTextBoxCM { get; set; }
         #endregion
+
+
+        public void ResetData()
+        {
+            SelectedItem = null;
+            Name = null;
+            Birthday = null;
+            Email = null;
+            Adress = null;
+            ReaderType = null;
+            StartDate = null;
+            FinishDate = null;
+        }
+
 
         public ReaderCardViewModel()
         {
             ListReaderCard = new ObservableCollection<ReaderCardDTO>(ReaderService.Ins.GetAllReaderCards());
             ListReaderType = new ObservableCollection<ReaderTypeDTO>(ReaderTypeService.Ins.GetAllReaderTypes());
-            ListGenre = new ObservableCollection<string>();
-            foreach (ReaderTypeDTO type in ReaderTypeService.Ins.GetAllReaderTypes())
-            {
-                ListGenre.Add(type.name);
-            }
             StartDate = DateTime.Now;
-            FinishDate = StartDate.AddDays(30);
+            FinishDate = StartDate?.AddDays(30);
             SelectedDateCM = new RelayCommand<object>((p) => { return true; }, (p) =>
              {
-                 FinishDate = StartDate.AddDays(30);
+                 FinishDate = StartDate?.AddDays(30);
              });
 
             AddReaderCardCM = new RelayCommand<System.Windows.Window>((p) => { return true; }, (p) =>
@@ -55,8 +72,8 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
                      employeeId = "NV0001",
                      readerTypeId = (ListReaderType.FirstOrDefault(s => s.name == ReaderType)).id,
                      email = Email,
-                     createdAt = StartDate,
-                     expiryDate = FinishDate,
+                     createdAt = (DateTime)StartDate,
+                     expiryDate = (DateTime)FinishDate,
                      gender = Sex,
                      birthDate = (DateTime)Birthday,
                  };
@@ -65,6 +82,25 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
                  ListReaderCard.Add(reader);
                  p.Close();
              });
+            SelectedReaderTypeChangedCM = new RelayCommand<ListView>((p) => { return true; }, (p) =>
+            {
+                if (p.SelectedItem != null)
+                {
+                    SelectedReaderType = p.SelectedItem as ReaderTypeDTO;
+                    tempReaderType = SelectedReaderType.name;
+                }
+            });
+            RemoveStatusListViewCM = new RelayCommand<ListView>((p) => { return true; }, (p) =>
+            {
+                p.SelectedItem = null;
+                tempReaderType = null;
+            });
+            OpenReaderTypeWindowCM = new RelayCommand<Object>((p) => { return true; }, (p) =>
+            {
+                AddReaderTypeWindow addReaderTypeWindow = new AddReaderTypeWindow();
+                ResetDataAddReaderTypeWindow();
+                addReaderTypeWindow.ShowDialog();
+            });
             AddReaderTypeCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
                 if (SelectedReaderType != null)
@@ -72,7 +108,7 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
                     ReaderTypeDTO readerTypeDTO = new ReaderTypeDTO()
                     {
                         id = SelectedReaderType.id,
-                        name = ReaderType
+                        name = tempReaderType
                     };
                     (bool isS, string mes) = ReaderTypeService.Ins.EditReaderType(readerTypeDTO);
 
@@ -82,46 +118,31 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
                     }
                     var readerTypeFound = ListReaderType.FirstOrDefault(s => s.id == readerTypeDTO.id);
                     ListReaderType[ListReaderType.IndexOf(readerTypeFound)] = readerTypeDTO;
+                    ResetDataAddReaderTypeWindow();
                     return;
                 }
 
                 ReaderTypeDTO reader = new ReaderTypeDTO();
-                reader.name = ReaderType;
+                reader.name = tempReaderType;
                 (bool Successful, string message) = ReaderTypeService.Ins.CreateReaderType(reader);
                 ListReaderType.Add(reader);
+                ResetDataAddReaderTypeWindow();
             });
             CheckedSexCM = new RelayCommand<RadioButton>((p) => { return true; }, (p) =>
              {
                  Sex = p.Content.ToString();
              });
-            SelectedReaderTypeChangedCM = new RelayCommand<ListView>((p) => { return true; }, (p) =>
-            {
-
-                if (p.SelectedItem != null)
-                {
-                    SelectedReaderType = p.SelectedItem as ReaderTypeDTO;
-                    ReaderType = SelectedReaderType.name;
-                }
-            });
-            SaveReaderTypeTbxCM = new RelayCommand<TextBox>((p) => { return true; }, (p) =>
-            {
-                if (p != null)
-                    ReaderTypeTxb = p;
-            });
-            OpenReaderTypeWindowCM = new RelayCommand<Object>((p) => { return true; }, (p) =>
-            {
-                AddReaderTypeWindow addReaderTypeWindow = new AddReaderTypeWindow();
-                addReaderTypeWindow.readertypeTbx.Text = null;
-                addReaderTypeWindow.ShowDialog();
-            });
             OpenAddReaderCardWindowCM = new RelayCommand<Object>((p) => { return true; }, (p) =>
             {
                 AddReaderCardWindow addReaderCardWindow = new AddReaderCardWindow();
+                ResetData();
                 addReaderCardWindow.ShowDialog();
             });
-            RemoveStatusTextBoxCM = new RelayCommand<TextBox>((p) => { return true; }, (p) =>
+            OpenEditReaderCardCM = new RelayCommand<object>((p) => { return true; }, (p) => 
             {
-                p.Text = null;
+                EditReaderCardWindow editReaderCardWindow = new EditReaderCardWindow();
+                LoadEditReaderCard(editReaderCardWindow);
+                editReaderCardWindow.ShowDialog();
             });
         }
     }
