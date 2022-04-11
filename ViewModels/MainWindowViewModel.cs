@@ -5,6 +5,7 @@ using LibraryManagement.ViewModels;
 using LibraryManagement.Views.BookManagement;
 using LibraryManagement.Views.Genre_AuthorManagement;
 using LibraryManagement.Views.ImportBookPage;
+using LibraryManagement.Views.Login;
 using LibraryManagement.Views.SettingManagement;
 using LibraryManagement.Views.StatisticalManagement;
 using System;
@@ -12,6 +13,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -26,6 +28,7 @@ namespace LibraryManagement.ViewModel
         public ICommand OpenGenreStatisticPageCM { get; set; }
         public ICommand OpenLateStatisticPageCM { get; set; }
         public ICommand OpenSettingPageCM { get; set; }
+        public ICommand SignOutCM { get; set; }
 
         public MainWindowViewModel()
         {
@@ -52,6 +55,13 @@ namespace LibraryManagement.ViewModel
             OpenSettingPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new MainSettingPage();
+            });
+            SignOutCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                p.Hide();
+                LoginWindow w = new LoginWindow();
+                w.Show();
+                p.Close();
             });
             //var author = new AuthorDTO { name = "Hemingway", birthDate = DateTime.Now, };
             //List<AuthorDTO> authorList = new List<AuthorDTO>()
@@ -90,24 +100,126 @@ namespace LibraryManagement.ViewModel
             //    GenreService.Ins.CreateNewGenre(gen);
             //});
 
+            //List<BookDTO> bookDTOs = new List<BookDTO>()
+            //{
+            //    new BookDTO()
+            //    {
+            //        name = "Cô gái đến từ hôm qua",
+            //        genreId = 1,
+            //        authorId = 7,
+            //        yearOfPublication = 1990,
+            //        publisher = "Nhà xuất bản Trẻ",
+            //        quantity = 5,
+            //        isNew = true,
+            //     },
+            //    new BookDTO()
+            //    {
+            //        name = "Mắt Biếc",
+            //        genreId = 1,
+            //        authorId = 3,
+            //        yearOfPublication = 1990,
+            //        publisher = "Nhà xuất bản Trẻ",
+            //        quantity = 10,
+            //        isNew = true,
+            //     },
+            //    new BookDTO()
+            //    {
+            //        name = "Cho tôi xin một vé đi tuổi thơ",
+            //        genreId = 1,
+            //        authorId = 7,
+            //        yearOfPublication = 2008,
+            //        publisher = "Nhà xuất bản Trẻ",
+            //        quantity = 5,
+            //        isNew = true,
+            //     },
+            //    //new BookDTO()
+            //    //{
+            //    //    id = "BOOK0001",
+            //    //    quantity = 4,
+            //    // },
+            //    //new BookDTO()
+            //    //{
+            //    //    id = "BOOK0002",
+            //    //    quantity = 3,
+            //    //},
+            // };
+            //(bool isImportSuccess, string importMessage) = BookService.Ins.ImportBooks(bookDTOs);
+            //int minAge = ParameterService.Ins.GetRuleValue(Rules.MIN_AGE);
+            //int maxAge = ParameterService.Ins.GetRuleValue(Rules.MAX_AGE);
+            //int ALLOWED_BOOK_MAXIMUM = ParameterService.Ins.GetRuleValue(Rules.ALLOWED_BOOK_MAXIMUM);
+            //int YEAR_PUBLICATION_PERIOD = ParameterService.Ins.GetRuleValue(Rules.YEAR_PUBLICATION_PERIOD);
+            //int MAXIMUM_NUMBER_OF_DAYS_TO_BORROW = ParameterService.Ins.GetRuleValue(Rules.MAXIMUM_NUMBER_OF_DAYS_TO_BORROW);
+            ////(bool isUpdateSuccess, string updateMessage)  = BookService.Ins.UpdateBook(new BookDTO
+            ////{
+            ////    id="BOOK0004",
+            ////    name = "Cô gái đến từ hôm qua test",
+            ////    genreId = 1,
+            ////    authorId = 2,
+            ////    yearOfPublication = 1990,
+            ////    publisher = "Nhà xuất bản Trẻ",
+            ////});
+            //var bookList = BookService.Ins.GetAllBook();
 
+
+            //var role = new RoleDTO
+            //{
+            //    id = 1,
+            //    position = "Thủ thư",
+            //    roleDetaislList = new List<RoleDetailsDTO>
+            //    {
+            //        new RoleDetailsDTO
+            //        {
+            //        permission = 0,
+            //        isPermitted = true
+            //        },
+            //         new RoleDetailsDTO
+            //         {
+            //        permission = 1,
+            //        isPermitted = true
+            //        },
+            //        new RoleDetailsDTO{
+            //        permission = 2,
+            //        isPermitted = false
+            //        },
+            //                 new RoleDetailsDTO{
+            //        permission = 3,
+            //        isPermitted = true
+            //        },
+            //                    new RoleDetailsDTO{
+            //        permission = 4,
+            //        isPermitted = true
+            //        },
+            //                       new RoleDetailsDTO{
+            //        permission = 5,
+            //        isPermitted = false
+            //        },
+            //                          new RoleDetailsDTO{
+            //        permission = 6,
+            //        isPermitted = false
+            //        },
+
+            //    },
+            //};
+
+            //(bool success, string message) = RoleService.Ins.CreateNewRole(role);
+            //var roleList = RoleService.Ins.GetAllRoles();
 
             // EMPLOYEEEE
-            var newEmployee = new EmployeeDTO()
-            {
-                name = "Lee Phong new",
-                phoneNumber = "09875123444",
-                birthDate = new DateTime(2002, 5, 26),
-                gender = "Nam", //Nam or Nữ
-                startingDate = DateTime.Now,
-                email = "20521111@gm.uit.edu.vn",
-                account = new AccountDTO
-                {
-                    username = "lephong",
-                    password = "123456",
-                    roleId = 1,
-                }
-            };
+            //var newEmployee = new EmployeeDTO()
+            //{
+            //    name = "Lee Phong new",
+            //    phoneNumber = "09875123444",
+            //    birthDate = new DateTime(2002, 5, 26),
+            //    gender = "Nam", //Nam or Nữ
+            //    startingDate = DateTime.Now,
+            //    email = "20521111@gm.uit.edu.vn",
+            //    account = new AccountDTO
+            //    {
+            //        username = "lephong",
+            //        password = "123456",
+            //        roleId = 1,
+            //    }
+            //};
 
             //(bool success, string message) = EmployeeService.Ins.CreateNewEmployee(newEmployee);
             //var employees = EmployeeService.Ins.GetAllEmployees();
@@ -116,27 +228,27 @@ namespace LibraryManagement.ViewModel
             //(bool uupdateSuccess, string updateMessage) = EmployeeService.Ins.UpdateEmployee(newEmployee);
             //(bool deleteSuccess, string deleteMessage) = EmployeeService.Ins.DeleteEmployee("NV0003");
 
-            List<ReaderTypeDTO> readerTypeList = new List<ReaderTypeDTO>(){
-                new ReaderTypeDTO
-                {
-                    name = "Độc giả A"
-                },
-                new ReaderTypeDTO
-                {
-                    name = "Độc giả B"
-                },
-                new ReaderTypeDTO
-                {
-                    name = "Độc giả C"
-                },
-            };
+            //List<ReaderTypeDTO> readerTypeList = new List<ReaderTypeDTO>(){
+            //        new ReaderTypeDTO
+            //        {
+            //            name = "Độc giả A"
+            //        },
+            //        new ReaderTypeDTO
+            //        {
+            //            name = "Độc giả B"
+            //        },
+            //        new ReaderTypeDTO
+            //        {
+            //            name = "Độc giả C"
+            //        },
+            //    };
 
             //readerTypeList.ForEach(r =>
             //{
             //    ReaderTypeService.Ins.CreateReaderType(r);
             //});
 
-            var data = ReaderTypeService.Ins.GetAllReaderTypes();
+            //var data = ReaderTypeService.Ins.GetAllReaderTypes();
 
 
             //Reader Card
@@ -158,10 +270,26 @@ namespace LibraryManagement.ViewModel
             //(bool deleteSuccess, string deleteMessage) = ReaderService.Ins.DeleteReaderCard("READER0001");
             ////Authentication
             //(AccountDTO user, string mesasage) = AuthService.Ins.Login("datdo", "123456");
+            //int duration = ParameterService.Ins.GetRuleValue(Rules.VALIDITY_PERIOD_OF_CARD);
+            //var createdAt = DateTime.Now;
+            //var newReaderCard = new ReaderCardDTO()
+            //{
+            //    name = "Tesst",
+            //    address = "Kí túc xá khu A",
+            //    readerTypeId = 3,
+            //    email = "tesst123@gmail.com",
+            //    createdAt = createdAt,
+            //    expiryDate = createdAt.AddMonths(30),
+            //    gender = "Nữ",
+            //    birthDate = new DateTime(2002, 5, 26),
+            //    employeeId = "NV0002",
+            //};
+            //(bool isSuccess, string message) = ReaderService.Ins.CreateNewReaderCard(newReaderCard);
+            //(AccountDTO user, string mesasage) = AuthService.Ins.Login("READER0002", "READER0002");
 
-            var email = AuthService.Ins.GetAccountByUsername("datdo");
-            (bool resetSuccess, string resetMessage) = AuthService.Ins.ResetPassword("datdo", "1234567");
-            (var userLogin, string message) = AuthService.Ins.Login("datdo", "1234567");
+            //var email = AuthService.Ins.GetAccountByUsername("datdo");
+            //(bool resetSuccess, string resetMessage) = AuthService.Ins.ResetPassword("datdo", "1234567");
+            //(var userLogin, string message) = AuthService.Ins.Login("datdo", "1234567");
 
             //BOOK IMPORT
             List<BaseBookDTO> baseBookDTOs = new List<BaseBookDTO>()
@@ -437,7 +565,7 @@ namespace LibraryManagement.ViewModel
             //    readerCardId = "READER0001",
             //};
 
-            //(bool isSucc, string message) = FineReceiptService.Ins.CreateFineReceipt(fineReceipt);
+            ////(bool isSucc, string message) = FineReceiptService.Ins.CreateFineReceipt(fineReceipt);
 
 
             //var books = BookService.Ins.GetAllAvailableBook();
@@ -457,13 +585,6 @@ namespace LibraryManagement.ViewModel
             smtp.Credentials = new NetworkCredential(APP_EMAIL, APP_PASSWORD);
 
             MailMessage mail = new MailMessage();
-            mail.IsBodyHtml = true;
-
-            //AlternateView htmlView = AlternateView.CreateAlternateViewFromString(GetResetPasswordTemplate(randomCode), null, "text/html");
-
-            //Add view to the Email Message
-            //mail.AlternateViews.Add(htmlView);
-
             mail.From = new MailAddress(APP_EMAIL, "Squadin Cinema");
             mail.To.Add(email);
             mail.Subject = "Lấy lại mật khẩu đăng nhập";

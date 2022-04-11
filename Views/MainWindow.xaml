@@ -19,6 +19,7 @@
         WindowStartupLocation="CenterScreen"
         Height="816"
         Width="1440"
+        x:Name="this"
         DataContext="{StaticResource MainWindowVM}">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -300,7 +301,8 @@
             <!--SIGN OUT-->
             <StackPanel Margin="0,20,10,0"
                         Orientation="Horizontal"
-                        FlowDirection="RightToLeft">
+                        FlowDirection="RightToLeft"
+                        HorizontalAlignment="Right">
                 <materialDesign:PackIcon Kind="Power"
                                          Width="20"
                                          Height="20"
@@ -312,7 +314,23 @@
                            Foreground="#1B48BA"
                            FontWeight="Bold"
                            FontSize="20" />
-
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter Property="Cursor"
+                                        Value="Hand" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonUp">
+                        <i:InvokeCommandAction Command="{Binding SignOutCM}"
+                                               CommandParameter="{Binding ElementName=this}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </StackPanel>
 
         </StackPanel>
