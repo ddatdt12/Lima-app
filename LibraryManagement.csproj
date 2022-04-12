@@ -463,6 +463,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\Icon\ErrorIcon.png" />
+    <Resource Include="Assets\Icon\info.png" />
+    <Resource Include="Assets\Icon\succes.png" />
+    <Resource Include="Assets\Icon\warning.png" />
     <Content Include="Models\LibraryManagementModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>LibraryManagementModel.edmx</DependentUpon>

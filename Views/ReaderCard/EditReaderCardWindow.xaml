@@ -192,7 +192,7 @@
                         <ComboBox Text="{Binding ReaderType, Mode=TwoWay}"
                                   Margin="0,10,0,0"
                                   Width="150"
-                                  x:Name="ReaderType"
+                                  x:Name="readerType"
                                   FontSize="15"
                                   ItemsSource="{Binding ListReaderType}"
                                   DisplayMemberPath="name"

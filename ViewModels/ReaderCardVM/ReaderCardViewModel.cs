@@ -1,7 +1,9 @@
 ﻿using LibraryManagement.DTOs;
 using LibraryManagement.Services;
+using LibraryManagement.Utils;
 using LibraryManagement.View.ReaderCard;
 using LibraryManagement.ViewModels;
+using LibraryManagement.Views;
 using LibraryManagement.Views.ReaderCard;
 using System;
 using System.Collections.ObjectModel;
@@ -65,22 +67,42 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
 
             AddReaderCardCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
              {
-                 ReaderCardDTO reader = new ReaderCardDTO()
+                 (bool isvalid, string error) = IsValidData();
+                 if (isvalid)
                  {
-                     name = Name,
-                     address = Adress,
-                     employeeId = "NV0001",
-                     readerTypeId = (ListReaderType.FirstOrDefault(s => s.name == ReaderType)).id,
-                     email = Email,
-                     createdAt = (DateTime)StartDate,
-                     expiryDate = (DateTime)FinishDate,
-                     gender = Sex,
-                     birthDate = (DateTime)Birthday,
-                 };
+                     ReaderCardDTO reader = new ReaderCardDTO()
+                     {
+                         name = Name,
+                         address = Adress,
+                         employeeId = "NV0001",
+                         readerTypeId = (ListReaderType.FirstOrDefault(s => s.name == ReaderType)).id,
+                         email = Email,
+                         createdAt = (DateTime)StartDate,
+                         expiryDate = (DateTime)FinishDate,
+                         gender = Sex,
+                         birthDate = (DateTime)Birthday,
+                     };
 
-                 (bool Successful, string message) = ReaderService.Ins.CreateNewReaderCard(reader);
-                 ListReaderCard.Add(reader);
-                 p.Close();
+                     (bool Successful, string message) = ReaderService.Ins.CreateNewReaderCard(reader);
+
+                     if (Successful)
+                     {
+                         ListReaderCard.Add(reader);
+                         p.Close();
+                         MessageBoxCustom mb = new MessageBoxCustom("Thông báo", message, MessageType.Success, MessageButtons.OK);
+                         mb.ShowDialog();
+                     }
+                     else
+                     {
+                         MessageBoxCustom mb = new MessageBoxCustom("Lỗi", message, MessageType.Error, MessageButtons.OK);
+                         mb.ShowDialog();
+                     }
+                 }
+                 else
+                 {
+                     MessageBoxCustom mb = new MessageBoxCustom("Lỗi", error, MessageType.Error, MessageButtons.OK);
+                     mb.ShowDialog();
+                 }
              });
             SelectedReaderTypeChangedCM = new RelayCommand<ListView>((p) => { return true; }, (p) =>
             {
@@ -114,19 +136,51 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
 
                     if (isS)
                     {
-                        MessageBox.Show(mes);
+                        var readerTypeFound = ListReaderType.FirstOrDefault(s => s.id == readerTypeDTO.id);
+                        ListReaderType[ListReaderType.IndexOf(readerTypeFound)] = readerTypeDTO;
+                        MessageBoxCustom mb = new MessageBoxCustom("Thông báo", mes, MessageType.Success, MessageButtons.OK);
+                        mb.ShowDialog();
+                        ResetDataAddReaderTypeWindow();
+                        return;
                     }
-                    var readerTypeFound = ListReaderType.FirstOrDefault(s => s.id == readerTypeDTO.id);
-                    ListReaderType[ListReaderType.IndexOf(readerTypeFound)] = readerTypeDTO;
-                    ResetDataAddReaderTypeWindow();
-                    return;
+                    else
+                    {
+                        MessageBoxCustom mb = new MessageBoxCustom("Lỗi", mes, MessageType.Error, MessageButtons.OK);
+                        mb.ShowDialog();
+                        ResetDataAddReaderTypeWindow();
+                        return;
+                    }
                 }
-
-                ReaderTypeDTO reader = new ReaderTypeDTO();
-                reader.name = tempReaderType;
-                (bool Successful, string message) = ReaderTypeService.Ins.CreateReaderType(reader);
-                ListReaderType.Add(reader);
-                ResetDataAddReaderTypeWindow();
+                else
+                {
+                    if (string.IsNullOrEmpty(tempReaderType))
+                    {
+                        MessageBoxCustom mb = new MessageBoxCustom("Cảnh báo", "Vui lòng chọn loại độc giả bạn muốn thay đổi hoặc thêm loại độc giả mới", MessageType.Warning, MessageButtons.OK);
+                        mb.ShowDialog();
+                        return;
+                    }
+                    else
+                    {
+                        ReaderTypeDTO reader = new ReaderTypeDTO();
+                        reader.name = tempReaderType;
+                        (bool Successful, string message) = ReaderTypeService.Ins.CreateReaderType(reader);
+                        if (Successful)
+                        {
+                            ListReaderType.Add(reader);
+                            MessageBoxCustom mb = new MessageBoxCustom("Thông báo", message, MessageType.Success, MessageButtons.OK);
+                            mb.ShowDialog();
+                            ResetDataAddReaderTypeWindow();
+                            return;
+                        }
+                        else
+                        {
+                            MessageBoxCustom mb = new MessageBoxCustom("Lỗi", message, MessageType.Error, MessageButtons.OK);
+                            mb.ShowDialog();
+                            ResetDataAddReaderTypeWindow();
+                            return;
+                        }
+                    }
+                }
             });
             CheckedSexCM = new RelayCommand<RadioButton>((p) => { return true; }, (p) =>
              {
@@ -138,11 +192,12 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
                 ResetData();
                 addReaderCardWindow.ShowDialog();
             });
-            OpenEditReaderCardCM = new RelayCommand<object>((p) => { return true; }, (p) => 
+            OpenEditReaderCardCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 EditReaderCardWindow editReaderCardWindow = new EditReaderCardWindow();
                 LoadEditReaderCard(editReaderCardWindow);
                 editReaderCardWindow.ShowDialog();
+                ResetData();
             });
             OpenPrintReaderCardCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -152,26 +207,61 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             });
             UpdateReaderCardCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
-                ReaderCardDTO reader = new ReaderCardDTO()
+                (bool isvalid, string error) = IsValidData();
+                if (isvalid)
                 {
-                    id = SelectedItem.id,
-                    name = Name,
-                    address = Adress,
-                    employeeId = "NV0001",
-                    readerTypeId = (ListReaderType.FirstOrDefault(s => s.name == ReaderType)).id,
-                    totalFine = SelectedItem.totalFine,
-                    email = Email,
-                    createdAt = (DateTime)StartDate,
-                    expiryDate = (DateTime)FinishDate,
-                    gender = Sex,
-                    birthDate = (DateTime)Birthday,
-                };
-                (bool Successful, string message) = ReaderService.Ins.UpdateReaderCard(reader);
-                var readerCardFound = ListReaderCard.FirstOrDefault(s => s.id == reader.id);
-                ListReaderCard[ListReaderCard.IndexOf(readerCardFound)] = reader;
-                MessageBox.Show(message);
-                p.Close();
+                    ReaderCardDTO reader = new ReaderCardDTO()
+                    {
+                        id = SelectedItem.id,
+                        name = Name,
+                        address = Adress,
+                        employeeId = "NV0001",
+                        readerTypeId = (ListReaderType.FirstOrDefault(s => s.name == ReaderType)).id,
+                        totalFine = SelectedItem.totalFine,
+                        email = Email,
+                        createdAt = (DateTime)StartDate,
+                        expiryDate = (DateTime)FinishDate,
+                        gender = Sex,
+                        birthDate = (DateTime)Birthday,
+                    };
+
+                    (bool Successful, string message) = ReaderService.Ins.UpdateReaderCard(reader);
+
+                    if (Successful)
+                    {
+                        var readerCardFound = ListReaderCard.FirstOrDefault(s => s.id == reader.id);
+                        ListReaderCard[ListReaderCard.IndexOf(readerCardFound)] = reader;
+                        MessageBoxCustom mb = new MessageBoxCustom("Thông báo", message, MessageType.Success, MessageButtons.OK);
+                        mb.ShowDialog();
+                        p.Close();
+                    }
+                    else
+                    {
+                        MessageBoxCustom mb = new MessageBoxCustom("Lỗi", message, MessageType.Error, MessageButtons.OK);
+                        mb.ShowDialog();
+                    }
+                }
+                else
+                {
+                    MessageBoxCustom mb = new MessageBoxCustom("Lỗi", error, MessageType.Error, MessageButtons.OK);
+                    mb.ShowDialog();
+                }
             });
+        }
+        private (bool valid, string error) IsValidData()
+        {
+
+            if (string.IsNullOrEmpty(Name) || Sex is null || Birthday is null || string.IsNullOrEmpty(Adress) || string.IsNullOrEmpty(ReaderType))
+            {
+                return (false, "Thông tin độc giả thiếu! Vui lòng bổ sung");
+            }
+
+            if (!Helper.IsValidEmail(Email))
+            {
+                return (false, "Email không hợp lệ");
+            }
+
+            return (true, null);
         }
     }
 }
