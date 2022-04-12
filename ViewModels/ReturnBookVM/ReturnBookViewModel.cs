@@ -1,13 +1,9 @@
 ﻿using LibraryManagement.DTOs;
 using LibraryManagement.Services;
 using LibraryManagement.ViewModel;
-using LibraryManagement.ViewModels.RentBookVM;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -208,12 +204,7 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                     {
                         int sumDateRent;
                         sumDateRent = DateTime.Now.Subtract(listBorrowingCard[i].borrowingDate).Days;
-                        decimal fine = (DateTime.Now.Date -
-                                        (listBorrowingCard[i].borrowingDate.AddDays(
-                                                ParameterService.Ins.GetRuleValue(Utils.
-                                                Rules.
-                                                MAXIMUM_NUMBER_OF_DAYS_TO_BORROW)))).Days *
-                                        ParameterService.Ins.GetRuleValue(Utils.Rules.FINE);
+                        decimal fine = DateTime.Now.Subtract(listBorrowingCard[i].dueDate).Days * ParameterService.Ins.GetRuleValue(Utils.Rules.FINE);
                         if (fine < 0) fine = 0;
 
                         Book book = new Book
@@ -232,11 +223,8 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                 }
                 CanReturn = true;
 
-            }
-               )
-            {
+            });
 
-            };
             ConfirmCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 if (ReturnBookTotal == 0)
@@ -268,8 +256,7 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                     CanReturn = false;
                 }
                 MessageBox.Show(message);
-            }
-               );
+            });
 
             RemoveBookCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -290,8 +277,7 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                 }
 
 
-            }
-               );
+            });
 
             AddBookCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -310,8 +296,7 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                     TotalPunish = totalPunish;
                 }
 
-            }
-               );
+            });
 
 
         }

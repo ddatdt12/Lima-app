@@ -1,4 +1,4 @@
-﻿using CinemaManagement.Utils;
+﻿using LibraryManagement.Utils;
 using LibraryManagement.DTOs;
 using LibraryManagement.Models;
 using System;

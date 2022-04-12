@@ -17,7 +17,11 @@
       Width="1128"
       DataContext="{StaticResource RentBookVM}"
       ShowsNavigationUI="False">
-
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding FirstLoadCM}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="7*" />
@@ -452,6 +456,19 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </DatePicker>
+                    </Grid>
+                    <Grid Height="50">
+                        <TextBlock Text="Hạn trả"
+                                   VerticalAlignment="Center"
+                                   FontSize="18"
+                                   Foreground="#5C5959"
+                                   FontWeight="Bold" />
+                        <TextBlock Width="190"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Right"
+                                   Text="{Binding Path=ExpiredBookDate, StringFormat=dd/MM/yyyy}"
+                                   FontSize="18"
+                                   TextAlignment="Right" />
                     </Grid>
 
                     <Button Background="#0266FD"

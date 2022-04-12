@@ -18,6 +18,7 @@ namespace LibraryManagement.ViewModels.RentBookVM
         public ICommand RemoveBookCM { get; set; }
         public ICommand AddBookCM { get; set; }
         public ICommand SelectedDateCM { get; set; }
+        public ICommand FirstLoadCM { get; set; }
 
         #endregion
 
@@ -197,21 +198,27 @@ namespace LibraryManagement.ViewModels.RentBookVM
             set { _SelecteddBook = value; OnPropertyChanged(); }
         }
 
+        List<BookDTO> listBookDTO { get; set; }
+
         public RentBookViewModel()
         {
-            IsReaderCardExpired = Visibility.Collapsed;
-            IsHaveOutdatedBook = Visibility.Collapsed;
-            CanRent = false;
 
-            List<BookDTO> listBookDTO = BookService.Ins.GetAllAvailableBook();
 
-            RentBookList = new ObservableCollection<Book>();
-            BookList = new ObservableCollection<Book>();
+            FirstLoadCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                IsReaderCardExpired = Visibility.Collapsed;
+                IsHaveOutdatedBook = Visibility.Collapsed;
+                CanRent = false;
 
-            RentBookTotal = RentBookList.Count;
-            RentDate = DateTime.Now;
-            DateTime dateTimeSub = RentDate.Value.AddDays(ParameterService.Ins.GetRuleValue(Utils.Rules.VALIDITY_PERIOD_OF_CARD));
-            ExpiredBookDate = dateTimeSub;
+                List<BookDTO> listBookDTO = BookService.Ins.GetAllAvailableBook();
+                RentBookList = new ObservableCollection<Book>();
+                BookList = new ObservableCollection<Book>();
+
+                RentBookTotal = RentBookList.Count;
+                RentDate = DateTime.Now;
+                DateTime dateTimeSub = RentDate.Value.AddDays(ParameterService.Ins.GetRuleValue(Utils.Rules.MAXIMUM_NUMBER_OF_DAYS_TO_BORROW));
+                ExpiredBookDate = dateTimeSub;
+            });
 
             CheckReaderCardCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -226,7 +233,6 @@ namespace LibraryManagement.ViewModels.RentBookVM
                     ExpiredBook = null;
                     RentBookQuantity = null;
                     RentDate = null;
-                    ExpiredBookDate = null;
                     IsHaveOutdatedBook = Visibility.Collapsed;
                     IsReaderCardExpired = Visibility.Collapsed;
                     RentBookTotal = 0;
@@ -244,7 +250,6 @@ namespace LibraryManagement.ViewModels.RentBookVM
                     ExpiredBook = null;
                     RentBookQuantity = null;
                     RentDate = null;
-                    ExpiredBookDate = null;
                     IsHaveOutdatedBook = Visibility.Collapsed;
                     IsReaderCardExpired = Visibility.Collapsed;
                     RentBookTotal = 0;
@@ -311,8 +316,7 @@ namespace LibraryManagement.ViewModels.RentBookVM
 
 
 
-            }
-               );
+            });
 
             ConfirmCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -380,8 +384,7 @@ namespace LibraryManagement.ViewModels.RentBookVM
 
                     throw;
                 }
-            }
-               );
+            });
 
             RemoveBookCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -397,8 +400,7 @@ namespace LibraryManagement.ViewModels.RentBookVM
                     }
                 }
 
-            }
-               );
+            });
 
             AddBookCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -410,8 +412,7 @@ namespace LibraryManagement.ViewModels.RentBookVM
                     RentBookTotal = RentBookList.Count;
                 }
 
-            }
-               );
+            });
 
             SelectedDateCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
