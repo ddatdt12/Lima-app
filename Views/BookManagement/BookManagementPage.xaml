@@ -148,12 +148,15 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn Header="Tên sách">
+                                    <GridViewColumn Header="Tên sách"
+                                                    Width="320">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding name}"
                                                            Margin="15,0,0,0"
-                                                           FontSize="18" />
+                                                           FontSize="18"
+                                                           ToolTip="{Binding name}"
+                                                           TextTrimming="CharacterEllipsis" />
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
@@ -163,7 +166,9 @@
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding genre.name}"
                                                            FontSize="18"
-                                                           Margin="15,0,0,0" />
+                                                           Margin="15,0,0,0"
+                                                           ToolTip="{Binding genre.name}"
+                                                           TextTrimming="CharacterEllipsis" />
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
@@ -173,7 +178,9 @@
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding authors,Converter={StaticResource ListToStringConverter}}"
                                                            FontSize="18"
-                                                           Margin="15,0,0,0" />
+                                                           Margin="15,0,0,0"
+                                                           ToolTip="{Binding authors}"
+                                                           TextTrimming="CharacterEllipsis" />
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>

@@ -44,6 +44,7 @@ namespace LibraryManagement.Services
                               roleId = rD.roleId,
                               isPermitted = rD.isPermitted,
                               permissionId = rD.permissionId,
+                              permissionName = rD.Permission.name
                           }).ToList()
                      }).ToList();
                 return roles;

@@ -1,17 +1,24 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:main="clr-namespace:LibraryManagement.ViewModel"
+                    xmlns:login="clr-namespace:LibraryManagement.ViewModels.LoginVM"
+                    xmlns:rentBook="clr-namespace:LibraryManagement.ViewModels.RentBookVM"
+                    xmlns:returnBook="clr-namespace:LibraryManagement.ViewModels.ReturnBookVM"
+                    xmlns:punishBook="clr-namespace:LibraryManagement.ViewModels.PunishBookVM"
                     xmlns:importbook="clr-namespace:LibraryManagement.ViewModel.ImportBookVM"
                     xmlns:bookmanage="clr-namespace:LibraryManagement.ViewModel.BookManagementVM"
                     xmlns:genreauthormanage="clr-namespace:LibraryManagement.ViewModels.Genre_AuthorManagementVM"
-xmlns:statistisgenre="clr-namespace:LibraryManagement.ViewModels.StatisticalVM"
+                    xmlns:statistisgenre="clr-namespace:LibraryManagement.ViewModels.StatisticalVM"
                     xmlns:setting="clr-namespace:LibraryManagement.ViewModels.SettingVM">
-
     <main:MainWindowViewModel x:Key="MainWindowVM" />
+    <login:LoginViewModel x:Key="LoginVM" />
+    <rentBook:RentBookViewModel x:Key="RentBookVM" />
+    <returnBook:ReturnBookViewModel x:Key="ReturnBookVM" />
+    <punishBook:PunishBookViewModel x:Key="PunishBookVM" />
     <importbook:ImportBookViewModel x:Key="ImportBookVM" />
     <bookmanage:BookManagementViewModel x:Key="BookManagementVM" />
     <genreauthormanage:Genre_AuthorManagementViewModel x:Key="Genre_AuthorManagementVM" />
-<statistisgenre:StatisticalViewModel x:Key="StatisticalVM" />
+    <statistisgenre:StatisticalViewModel x:Key="StatisticalVM" />
     <setting:SettingViewModel x:Key="SettingVM" />
 
 </ResourceDictionary>

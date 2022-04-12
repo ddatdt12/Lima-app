@@ -1,0 +1,186 @@
+﻿<Window x:Class="LibraryManagement.Views.PunishBook.PunishBookWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LibraryManagement.Views.PunishBook"
+        mc:Ignorable="d"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="#FBFBFD"
+        FontFamily="{StaticResource NunitoSans_Regular}"
+        DataContext="{StaticResource PunishBookVM}"
+        Height="520"
+        Width="450"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        x:Name="punishBookWindow">
+
+    <materialDesign:Card>
+        <StackPanel>
+            <TextBlock Text="Tạo phiếu phạt"
+                       Foreground="#1B48BA"
+                       FontSize="32"
+                       LineHeight="43.65"
+                       Margin="52 40 0 0"
+                       FontWeight="ExtraBold" />
+
+            <StackPanel Margin="50 56 50 0"
+                        Orientation="Horizontal">
+                <TextBox Width="200"
+                         Margin="0 0 0 0"
+                         materialDesign:HintAssist.Hint="Nhập mã độc giả"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Center"
+                         Padding="0"
+                         Text="{Binding ReaderID, Mode=TwoWay}"
+                         FontSize="18"
+                         FontFamily="{StaticResource NunitoSans_Regular}"
+                         Foreground="#5C5959"
+                         BorderBrush="#0266FD" />
+                <Button Command="{Binding CheckReaderCardCM}"
+                        Width="100"
+                        Height="42"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Margin="35 0 0 0"
+                        materialDesign:ButtonAssist.CornerRadius="8"
+                        BorderBrush="Transparent"
+                        Background="#37B634">
+                    <TextBlock Text="Kiểm tra"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontFamily="{StaticResource NunitoSans_ExtraBold}"
+                               Foreground="#FFFFFF"
+                               FontSize="16" />
+                </Button>
+            </StackPanel>
+
+            <Grid  Margin="50 10 50 0"
+                   Height="50">
+                <TextBlock Text="Họ tên độc giả"
+                           VerticalAlignment="Center"
+                           FontSize="18"
+                           Foreground="#5C5959"
+                           FontWeight="ExtraBold"
+                           FontFamily="{StaticResource NunitoSans_ExtraBold}" />
+                <TextBlock Width="180"
+                           Margin="0 0 0 0"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Right"
+                           TextAlignment="Right"
+                           Text="{Binding ReaderName}"
+                           FontWeight="Regular"
+                           FontSize="18"
+                           FontFamily="{StaticResource NunitoSans_Regular}"
+                           Foreground="#5C5959" />
+            </Grid>
+
+            <Grid     Margin="50 10 50 0"
+                      Height="50">
+                <TextBlock Text="Tổng nợ"
+                           VerticalAlignment="Center"
+                           FontSize="18"
+                           Foreground="#5C5959"
+                           FontWeight="ExtraBold"
+                           FontFamily="{StaticResource NunitoSans_ExtraBold}" />
+                <TextBlock Width="180"
+                           Margin="0 0 0 0"
+                           VerticalAlignment="Center"
+                           TextAlignment="Right"
+                           HorizontalAlignment="Right"
+                           Text="{Binding TotalDept}"
+                           FontSize="18"
+                           FontWeight="Regular"
+                           FontFamily="{StaticResource NunitoSans_Regular}"
+                           Foreground="#5C5959" />
+            </Grid>
+
+            <Grid     Margin="50 10 50 0"
+                      Height="50">
+                <TextBlock Text="Số tiền thu"
+                           VerticalAlignment="Center"
+                           FontSize="18"
+                           Foreground="#5C5959"
+                           FontWeight="ExtraBold"
+                           FontFamily="{StaticResource NunitoSans_ExtraBold}"
+                           LineHeight="24.55" />
+                <TextBox Width="180"
+                         materialDesign:HintAssist.Hint="Nhập số tiền thu"
+                         Margin="0 0 0 0"
+                         TextAlignment="Right"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Right"
+                         Text="{Binding TotalPaid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         FontSize="18"
+                         FontFamily="{StaticResource NunitoSans_Regular}"
+                         Foreground="#5C5959"
+                         BorderBrush="#0266FD"
+                         DataObject.Pasting="TextBox_Pasting"
+                         PreviewTextInput="TextBox_PreviewTextInput">
+                </TextBox>
+            </Grid>
+            <Grid     Margin="50 10 50 0"
+                      Height="50">
+                <TextBlock Text="Còn lại"
+                           VerticalAlignment="Center"
+                           FontSize="18"
+                           Foreground="#5C5959"
+                           FontWeight="ExtraBold"
+                           FontFamily="{StaticResource NunitoSans_ExtraBold}" />
+                <TextBlock Width="180"
+                           Margin="0 0 0 0"
+                           TextAlignment="Right"
+                           VerticalAlignment="Center"
+                           FontWeight="Regular"
+                           HorizontalAlignment="Right"
+                           Text="{Binding TotalLeft}"
+                           FontSize="18"
+                           FontFamily="{StaticResource NunitoSans_Regular}"
+                           Foreground="#5C5959" />
+            </Grid>
+            <Grid Margin="50 0 50 0"
+                  Height="42">
+                <Button Background="Transparent"
+                        Width="145"
+                        Height="42"
+                        materialDesign:ButtonAssist.CornerRadius="8"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Command="{Binding CloseWindowCM}"
+                        CommandParameter="{Binding ElementName=punishBookWindow}"
+                        BorderBrush="#0266FD"
+                        BorderThickness="1">
+                    <TextBlock Text="Hủy bỏ"
+                               FontFamily="{StaticResource NunitoSans_ExtraBold}"
+                               FontSize="16"
+                               Foreground="#0266FD"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center" />
+
+                </Button>
+
+
+                <Button Background="#0266FD"
+                        Width="145"
+                        Height="42"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        materialDesign:ButtonAssist.CornerRadius="8"
+                        Command="{Binding ConfirmCM}"
+                        IsEnabled="{Binding CanPaidFine}"
+                        Content="Xác nhận"
+                        FontSize="16"
+                        FontFamily="{StaticResource NunitoSans_ExtraBold}" />
+
+            </Grid>
+
+        </StackPanel>
+    </materialDesign:Card>
+
+</Window>

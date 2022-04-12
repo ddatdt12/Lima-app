@@ -135,8 +135,6 @@ namespace LibraryManagement.ViewModels.StatisticalVM
                     }
                 }
             });
-
-
         }
 
 

@@ -36,26 +36,6 @@ namespace LibraryManagement.Services
             return "BORC" + newIdString.Substring(newIdString.Length - 4, 4);
         }
 
-        private string CreateReturnCardId(string maxId)
-        {
-            if (maxId is null)
-            {
-                return "RECA0001";
-            }
-            string newIdString = $"0000{int.Parse(maxId.Substring(4)) + 1}";
-            return "RECA" + newIdString.Substring(newIdString.Length - 4, 4);
-        }
-        private int GetBookInfoIndex(string bookInfoId)
-        {
-            if (bookInfoId is null)
-            {
-                return 0;
-            }
-            int index = int.Parse(bookInfoId.Substring(bookInfoId.Length - 4, 4));
-
-            return index;
-        }
-
         public List<BorrowingCardDTO> GetBorrowingCardsByReaderId(string readerId)
         {
             try
