@@ -74,243 +74,353 @@
             </StackPanel>
 
             <!--MENU-->
-            <StackPanel Width="280">
-                <StackPanel Width="280"
-                            Height="60"
-                            Orientation="Horizontal"
-                            Visibility="{Binding ElementName=this, 
+            <ScrollViewer Height="540">
+                <StackPanel Width="280">
+
+                    <!---HOME PAGE-->
+                    <StackPanel Width="280"
+                                Height="60"
+                                Orientation="Horizontal"
+                                Visibility="{Binding ElementName=this, 
                     Path=DataContext.CurrentUser.role.roleDetaislList[0].isPermitted, 
                     Converter={StaticResource PermissionConverter}}">
-                    <StackPanel.Style>
-                        <Style TargetType="StackPanel">
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver"
-                                         Value="true">
-                                    <Setter Property="Background"
-                                            Value="#FFE6E6E6" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </StackPanel.Style>
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver"
+                                             Value="true">
+                                        <Setter Property="Background"
+                                                Value="#FFE6E6E6" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
 
-                    <materialDesign:PackIcon Kind="Home"
-                                             Width="20"
-                                             Height="20"
-                                             Margin="37 0 10 0"
-                                             VerticalAlignment="Center"
-                                             Foreground="#1B48BA" />
-                    <TextBlock Text="Trang chủ"
-                               Foreground="#1B48BA"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Center"
-                               FontSize="20"
-                               FontWeight="Bold" />
-                </StackPanel>
-
-                <StackPanel Width="280"
-                            Height="60"
-                            Orientation="Horizontal"
-                            Visibility="{Binding ElementName=this, 
+                        <materialDesign:PackIcon Kind="Home"
+                                                 Width="20"
+                                                 Height="20"
+                                                 Margin="37 0 10 0"
+                                                 VerticalAlignment="Center"
+                                                 Foreground="#1B48BA" />
+                        <TextBlock Text="Trang chủ"
+                                   Foreground="#1B48BA"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   FontSize="20"
+                                   FontWeight="Bold" />
+                    </StackPanel>
+                    <!--QUAN LY SACH-->
+                    <StackPanel Width="280"
+                                Height="60"
+                                Orientation="Horizontal"
+                                Visibility="{Binding ElementName=this, 
                     Path=DataContext.CurrentUser.role.roleDetaislList[1].isPermitted, 
                     Converter={StaticResource PermissionConverter}}">
-                    <StackPanel.Style>
-                        <Style TargetType="StackPanel">
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver"
-                                         Value="true">
-                                    <Setter Property="Background"
-                                            Value="#FFE6E6E6" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </StackPanel.Style>
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver"
+                                             Value="true">
+                                        <Setter Property="Background"
+                                                Value="#FFE6E6E6" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
 
-                    <materialDesign:PackIcon Kind="NotebookMultiple"
-                                             Width="20"
-                                             Height="20"
-                                             Margin="37 0 10 0"
-                                             VerticalAlignment="Center"
-                                             Foreground="#1B48BA" />
-                    <TextBlock Text="Quản lý sách"
-                               Foreground="#1B48BA"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Center"
-                               FontSize="20"
-                               FontWeight="Bold" />
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                            <i:InvokeCommandAction Command="{Binding OpenBookManagementPageCM}"
-                                                   CommandParameter="{Binding ElementName=mainFrame}" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </StackPanel>
-
-                <StackPanel Width="280"
-                            Height="60"
-                            Orientation="Horizontal"
-                            Visibility="{Binding ElementName=this, 
+                        <materialDesign:PackIcon Kind="NotebookMultiple"
+                                                 Width="20"
+                                                 Height="20"
+                                                 Margin="37 0 10 0"
+                                                 VerticalAlignment="Center"
+                                                 Foreground="#1B48BA" />
+                        <TextBlock Text="Quản lý sách"
+                                   Foreground="#1B48BA"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   FontSize="20"
+                                   FontWeight="Bold" />
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenBookManagementPageCM}"
+                                                       CommandParameter="{Binding ElementName=mainFrame}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </StackPanel>
+                    <!---TIEP NHAN SACH-->
+                    <StackPanel Width="280"
+                                Height="60"
+                                Orientation="Horizontal"
+                                Visibility="{Binding ElementName=this, 
                     Path=DataContext.CurrentUser.role.roleDetaislList[2].isPermitted, 
                     Converter={StaticResource PermissionConverter}}">
-                    <StackPanel.Style>
-                        <Style TargetType="StackPanel">
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver"
-                                         Value="true">
-                                    <Setter Property="Background"
-                                            Value="#FFE6E6E6" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </StackPanel.Style>
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver"
+                                             Value="true">
+                                        <Setter Property="Background"
+                                                Value="#FFE6E6E6" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
 
-                    <materialDesign:PackIcon Kind="NotebookPlus"
-                                             Width="20"
-                                             Height="20"
-                                             Margin="37 0 10 0"
-                                             VerticalAlignment="Center"
-                                             Foreground="#1B48BA" />
-                    <TextBlock Text="Tiếp nhận sách"
-                               Foreground="#1B48BA"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Center"
-                               FontSize="20"
-                               FontWeight="Bold" />
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                            <i:InvokeCommandAction Command="{Binding OpenImportBookPage}"
-                                                   CommandParameter="{Binding ElementName=mainFrame}" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </StackPanel>
+                        <materialDesign:PackIcon Kind="NotebookPlus"
+                                                 Width="20"
+                                                 Height="20"
+                                                 Margin="37 0 10 0"
+                                                 VerticalAlignment="Center"
+                                                 Foreground="#1B48BA" />
+                        <TextBlock Text="Tiếp nhận sách"
+                                   Foreground="#1B48BA"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   FontSize="20"
+                                   FontWeight="Bold" />
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenImportBookPage}"
+                                                       CommandParameter="{Binding ElementName=mainFrame}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </StackPanel>
+                    <!---THE LOAI - TAC GIA-->
+                    <StackPanel Width="280"
+                                Height="60"
+                                Orientation="Horizontal">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver"
+                                             Value="true">
+                                        <Setter Property="Background"
+                                                Value="#FFE6E6E6" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
 
-                <StackPanel Width="280"
-                            Height="60"
-                            Orientation="Horizontal">
-                    <StackPanel.Style>
-                        <Style TargetType="StackPanel">
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver"
-                                         Value="true">
-                                    <Setter Property="Background"
-                                            Value="#FFE6E6E6" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </StackPanel.Style>
+                        <materialDesign:PackIcon Kind="NotebookPlus"
+                                                 Width="20"
+                                                 Height="20"
+                                                 Margin="37 0 10 0"
+                                                 VerticalAlignment="Center"
+                                                 Foreground="#1B48BA" />
+                        <TextBlock Text="Thể loại - Tác giả"
+                                   Foreground="#1B48BA"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   FontSize="20"
+                                   FontWeight="Bold" />
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenGenreAuthorManagementPage}"
+                                                       CommandParameter="{Binding ElementName=mainFrame}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </StackPanel>
+                    <!---PHEIU MUON SACH-->
+                    <StackPanel Width="280"
+                                Height="60"
+                                Orientation="Horizontal">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver"
+                                             Value="true">
+                                        <Setter Property="Background"
+                                                Value="#FFE6E6E6" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
 
-                    <materialDesign:PackIcon Kind="NotebookPlus"
-                                             Width="20"
-                                             Height="20"
-                                             Margin="37 0 10 0"
-                                             VerticalAlignment="Center"
-                                             Foreground="#1B48BA" />
-                    <TextBlock Text="Thể loại - Tác giả"
-                               Foreground="#1B48BA"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Center"
-                               FontSize="20"
-                               FontWeight="Bold" />
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                            <i:InvokeCommandAction Command="{Binding OpenGenreAuthorManagementPage}"
-                                                   CommandParameter="{Binding ElementName=mainFrame}" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </StackPanel>
+                        <materialDesign:PackIcon Kind="NotebookPlus"
+                                                 Width="20"
+                                                 Height="20"
+                                                 Margin="37 0 10 0"
+                                                 VerticalAlignment="Center"
+                                                 Foreground="#1B48BA" />
+                        <TextBlock Text="Phiếu mượn sách"
+                                   Foreground="#1B48BA"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   FontSize="20"
+                                   FontWeight="Bold" />
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenRentBookPageCM}"
+                                                       CommandParameter="{Binding ElementName=mainFrame}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </StackPanel>
+                    <!---PHEIU TRA SACH-->
+                    <StackPanel Width="280"
+                                Height="60"
+                                Orientation="Horizontal">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver"
+                                             Value="true">
+                                        <Setter Property="Background"
+                                                Value="#FFE6E6E6" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
 
-                <Grid Visibility="{Binding ElementName=this, 
+                        <materialDesign:PackIcon Kind="NotebookPlus"
+                                                 Width="20"
+                                                 Height="20"
+                                                 Margin="37 0 10 0"
+                                                 VerticalAlignment="Center"
+                                                 Foreground="#1B48BA" />
+                        <TextBlock Text="Phiếu trả sách"
+                                   Foreground="#1B48BA"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   FontSize="20"
+                                   FontWeight="Bold" />
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenReturnBookPageCM}"
+                                                       CommandParameter="{Binding ElementName=mainFrame}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </StackPanel>
+                    <!---PHEIU PHAT-->
+                    <StackPanel Width="280"
+                                Height="60"
+                                Orientation="Horizontal">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver"
+                                             Value="true">
+                                        <Setter Property="Background"
+                                                Value="#FFE6E6E6" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+
+                        <materialDesign:PackIcon Kind="NotebookPlus"
+                                                 Width="20"
+                                                 Height="20"
+                                                 Margin="37 0 10 0"
+                                                 VerticalAlignment="Center"
+                                                 Foreground="#1B48BA" />
+                        <TextBlock Text="Phiếu phạt"
+                                   Foreground="#1B48BA"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   FontSize="20"
+                                   FontWeight="Bold" />
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenPunishBookWindowCM}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </StackPanel>
+                    <!---THONG KE-->
+                    <Grid Visibility="{Binding ElementName=this, 
                     Path=DataContext.CurrentUser.role.roleDetaislList[5].isPermitted, 
                     Converter={StaticResource PermissionConverter}}">
-                    <TreeView Foreground="#1B48BA"
-                              HorizontalAlignment="Left">
-                        <TreeViewItem Width="280"
-                                      MinHeight="60">
+                        <TreeView Foreground="#1B48BA"
+                                  HorizontalAlignment="Left">
+                            <TreeViewItem Width="280"
+                                          MinHeight="60">
 
-                            <TreeViewItem.Header>
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="FileChart"
-                                                             Width="20"
-                                                             Height="20"
-                                                             Margin="0 0 10 0"
-                                                             VerticalAlignment="Center" />
-                                    <TextBlock Text="Thống kê"
-                                               Foreground="#1B48BA"
-                                               FontSize="20"
-                                               FontWeight="Bold" />
-                                </StackPanel>
-                            </TreeViewItem.Header>
-
-                            <TreeViewItem>
                                 <TreeViewItem.Header>
-                                    <TextBlock Text="Thể loại"
-                                               Foreground="#4C14EA"
-                                               FontSize="20"
-                                               FontWeight="SemiBold">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="FileChart"
+                                                                 Width="20"
+                                                                 Height="20"
+                                                                 Margin="0 0 10 0"
+                                                                 VerticalAlignment="Center" />
+                                        <TextBlock Text="Thống kê"
+                                                   Foreground="#1B48BA"
+                                                   FontSize="20"
+                                                   FontWeight="Bold" />
+                                    </StackPanel>
+                                </TreeViewItem.Header>
+
+                                <TreeViewItem>
+                                    <TreeViewItem.Header>
+                                        <TextBlock Text="Thể loại"
+                                                   Foreground="#4C14EA"
+                                                   FontSize="20"
+                                                   FontWeight="SemiBold">
                                             <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="MouseLeftButtonDown">
                                                 <i:InvokeCommandAction Command="{Binding OpenGenreStatisticPageCM}"
                                                                        CommandParameter="{Binding ElementName=mainFrame}" />
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
-                                    </TextBlock>
-                                </TreeViewItem.Header>
-                            </TreeViewItem>
+                                        </TextBlock>
+                                    </TreeViewItem.Header>
+                                </TreeViewItem>
 
-                            <TreeViewItem>
-                                <TreeViewItem.Header>
-                                    <TextBlock Text="Sách trễ hạn"
-                                               Foreground="#4C14EA"
-                                               FontSize="20"
-                                               FontWeight="SemiBold">
+                                <TreeViewItem>
+                                    <TreeViewItem.Header>
+                                        <TextBlock Text="Sách trễ hạn"
+                                                   Foreground="#4C14EA"
+                                                   FontSize="20"
+                                                   FontWeight="SemiBold">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="MouseLeftButtonDown">
                                                 <i:InvokeCommandAction Command="{Binding OpenLateStatisticPageCM}"
                                                                        CommandParameter="{Binding ElementName=mainFrame}" />
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
-                                    </TextBlock>
-                                </TreeViewItem.Header>
-                            </TreeViewItem>
+                                        </TextBlock>
+                                    </TreeViewItem.Header>
+                                </TreeViewItem>
 
-                        </TreeViewItem>
-                    </TreeView>
-                </Grid>
-                <Grid Visibility="{Binding ElementName=this, 
+                            </TreeViewItem>
+                        </TreeView>
+                    </Grid>
+                    <!---CAI DAT-->
+                    <Grid Visibility="{Binding ElementName=this, 
                     Path=DataContext.CurrentUser.role.roleDetaislList[7].isPermitted, 
                     Converter={StaticResource PermissionConverter}}">
-                    <TreeView Foreground="#1B48BA"
-                              HorizontalAlignment="Left">
-                        <TreeViewItem IsExpanded="True"
-                                      Width="280"
-                                      MinHeight="60">
+                        <TreeView Foreground="#1B48BA"
+                                  HorizontalAlignment="Left">
+                            <TreeViewItem IsExpanded="True"
+                                          Width="280"
+                                          MinHeight="60">
 
-                            <TreeViewItem.Header>
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="Cog"
-                                                             Width="20"
-                                                             Height="20"
-                                                             Margin="0 0 10 0"
-                                                             VerticalAlignment="Center" />
-                                    <TextBlock Text="Cài đặt"
-                                               Foreground="#1B48BA"
-                                               FontSize="20"
-                                               FontWeight="Bold">
+                                <TreeViewItem.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Cog"
+                                                                 Width="20"
+                                                                 Height="20"
+                                                                 Margin="0 0 10 0"
+                                                                 VerticalAlignment="Center" />
+                                        <TextBlock Text="Cài đặt"
+                                                   Foreground="#1B48BA"
+                                                   FontSize="20"
+                                                   FontWeight="Bold">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="MouseLeftButtonDown">
                                                 <i:InvokeCommandAction Command="{Binding OpenSettingPageCM}"
                                                                        CommandParameter="{Binding ElementName=mainFrame}" />
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
-                                    </TextBlock>
-                                </StackPanel>
-                            </TreeViewItem.Header>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </TreeViewItem.Header>
 
-                        </TreeViewItem>
-                    </TreeView>
-                </Grid>
+                            </TreeViewItem>
+                        </TreeView>
+                    </Grid>
 
-            </StackPanel>
-
+                </StackPanel>
+            </ScrollViewer>
+            
+            
             <Grid Width="260"
                   Height="10">
                 <Border BorderThickness="0 0 0 1"

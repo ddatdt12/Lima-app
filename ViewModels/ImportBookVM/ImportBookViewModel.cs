@@ -79,7 +79,6 @@ namespace LibraryManagement.ViewModel.ImportBookVM
 
 
 
-
         private BaseBookDTO selectedBaseBook;
         public BaseBookDTO SelectedBaseBook
         {
@@ -394,6 +393,7 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                 {
                     supplier = Supplier,
                     createdAt = (DateTime)CreateAt,
+                    //fineReceipt.employeeId = MainWindowViewModel.CurrentUser.id;
                     employeeId = "NV0001",
                     importReceiptDetailList = new List<ImportReceiptDetailDTO>(ImportBookList),
                 };

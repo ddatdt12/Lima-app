@@ -19,6 +19,8 @@
 
             <FontFamily x:Key="NunitoSans_Regular">/LibraryManagement;component/Assets/Fonts/NunitoSans-Regular.ttf#Nunito Sans</FontFamily>
             <FontFamily x:Key="PatrickHand_Regular">/LibraryManagement;component/Assets/Fonts/PatrickHand-Regular.ttf#Patrick Hand</FontFamily>
+            <FontFamily x:Key="NunitoSans_ExtraBold">/LibraryManagement;component/Assets/Fonts/NunitoSans-ExtraBold.ttf#Nunito Sans ExtraBold</FontFamily>
+            <FontFamily x:Key="NunitoSans_SemiBold">/LibraryManagement;component/Assets/Fonts/NunitoSans-SemiBold.ttf#Nunito Sans SemiBold</FontFamily>
 
         </ResourceDictionary>
     </Application.Resources>

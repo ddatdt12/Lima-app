@@ -197,6 +197,9 @@
     <Compile Include="ViewModels\ImportBookVM\ImportBookViewModel.cs" />
     <Compile Include="ViewModels\LoginVM\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\PunishBookVM\PunishBookViewModel.cs" />
+    <Compile Include="ViewModels\RentBookVM\RentBookViewModel.cs" />
+    <Compile Include="ViewModels\ReturnBookVM\ReturnBookViewModel.cs" />
     <Compile Include="ViewModels\SettingVM\GeneralSetting.cs" />
     <Compile Include="ViewModels\SettingVM\ReaderSetting.cs" />
     <Compile Include="ViewModels\SettingVM\RoleSetting.cs" />
@@ -255,6 +258,15 @@
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PunishBook\PunishBookWindow.xaml.cs">
+      <DependentUpon>PunishBookWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RentBook\RentBookPage.xaml.cs">
+      <DependentUpon>RentBookPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReturnBook\ReturnBookPage.xaml.cs">
+      <DependentUpon>ReturnBookPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingManagement\AddRoleWindow.xaml.cs">
       <DependentUpon>AddRoleWindow.xaml</DependentUpon>
@@ -357,6 +369,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\PunishBook\PunishBookWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\RentBook\RentBookPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ReturnBook\ReturnBookPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\SettingManagement\AddRoleWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -410,6 +434,8 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>LibraryManagementModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Resource Include="Assets\Fonts\NunitoSans-ExtraBold.ttf" />
+    <Resource Include="Assets\Fonts\NunitoSans-SemiBold.ttf" />
     <None Include="Models\LibraryManagementModel.edmx.diagram">
       <DependentUpon>LibraryManagementModel.edmx</DependentUpon>
     </None>
