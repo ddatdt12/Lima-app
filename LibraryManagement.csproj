@@ -198,6 +198,7 @@
     <Compile Include="ViewModels\ReaderCardVM\AddReaderCardViewModel.cs" />
     <Compile Include="ViewModels\ReaderCardVM\AddReaderTypeViewModel.cs" />
     <Compile Include="ViewModels\ReaderCardVM\EditReaderCardViewModel.cs" />
+    <Compile Include="ViewModels\ReaderCardVM\PrintReaderCardViewModel.cs" />
     <Compile Include="ViewModels\ReaderCardVM\ReaderCardViewModel.cs" />
     <Compile Include="ViewModels\SettingVM\GeneralSetting.cs" />
     <Compile Include="ViewModels\SettingVM\RoleSetting.cs" />
@@ -253,6 +254,9 @@
     </Compile>
     <Compile Include="Views\ReaderCard\EditReaderCardWindow.xaml.cs">
       <DependentUpon>EditReaderCardWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReaderCard\PrintReaderCardWindow.xaml.cs">
+      <DependentUpon>PrintReaderCardWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ReaderCard\ReaderCardPage.xaml.cs">
       <DependentUpon>ReaderCardPage.xaml</DependentUpon>
@@ -351,6 +355,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ReaderCard\EditReaderCardWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReaderCard\PrintReaderCardWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -463,6 +471,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\Icon\ErrorIcon.png" />
+    <Resource Include="Assets\Icon\info.png" />
+    <Resource Include="Assets\Icon\succes.png" />
+    <Resource Include="Assets\Icon\warning.png" />
     <Content Include="Models\LibraryManagementModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>LibraryManagementModel.edmx</DependentUpon>

@@ -6,13 +6,11 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
 {
     public partial class ReaderCardViewModel : BaseViewModel
     {
-        public ICommand OpenEditReaderCardCM { get; set; }
-        public ICommand UpdateReaderCardCM { get; set; }
-
-        public void LoadEditReaderCard(EditReaderCardWindow w)
+        public ICommand OpenPrintReaderCardCM { get; set; }
+        public void LoadPrintReaderCard(PrintReaderCardWindow w)
         {
             Name = SelectedItem.name;
-            if(SelectedItem.gender == "Nam")
+            if (SelectedItem.gender == "Nam")
             {
                 w.Man.IsChecked = true;
             }

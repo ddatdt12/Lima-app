@@ -1,4 +1,4 @@
-﻿using CinemaManagement.Utils;
+﻿using LibraryManagement.Utils;
 using LibraryManagement.DTOs;
 using LibraryManagement.Models;
 using System;
@@ -222,6 +222,12 @@ namespace LibraryManagement.Services
                 readerCard.birthDate = updatedReaderCard.birthDate;
 
                 context.SaveChanges();
+                string readerTypeName = context.ReaderTypes.Find(readerCard.readerTypeId)?.name;
+                updatedReaderCard.readerType = new ReaderTypeDTO
+                {
+                    id = readerCard.readerTypeId,
+                    name = readerTypeName,
+                };
                 return (true, "Cập nhật thành công");
             }
             catch (DbEntityValidationException e)
