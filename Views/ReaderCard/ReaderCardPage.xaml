@@ -41,13 +41,15 @@
                             Margin="15,0,0,0"
                             Background="#EFF4F4"
                             Padding="3"
-                            Width="400"
+                            Width="250"
                             Height="30">
                         <TextBox materialDesign:HintAssist.Hint="Tìm kiếm theo tên"
                                  FontSize="12"
                                  Padding="20,3,10,0"
                                  TextWrapping="Wrap"
                                  Height="25"
+                                 TextChanged="TextBox_TextChanged"
+                                 x:Name="SearchTbx"
                                  materialDesign:TextFieldAssist.DecorationVisibility="Hidden" />
                     </Border>
                     <Border BorderBrush="Transparent"
@@ -65,8 +67,20 @@
                                                  VerticalAlignment="Bottom" />
                     </Border>
                 </Grid>
+                <ComboBox x:Name="FilterCbb"
+                          Height="30"
+                          Width="165"
+                          VerticalAlignment="Center"
+                          Padding="0,10,0,0"
+                          FontSize="12"
+                          Margin="30,10,0,0"
+                          SelectedIndex="0"
+                          SelectedValuePath="Content">
+                    <ComboBoxItem Content="Mã độc giả" />
+                    <ComboBoxItem Content="Tên độc giả" />
+                </ComboBox>
                 <StackPanel Orientation="Horizontal"
-                            Margin="130,0,0,0">
+                            Margin="80,0,0,0">
                     <Button Margin="30,5,0,0"
                             Background="#0266FD"
                             Foreground="White"
@@ -110,6 +124,7 @@
                             Width="142"
                             FontSize="16"
                             materialDesign:ButtonAssist.CornerRadius="15"
+                            Command="{Binding OpenPrintReaderCardCM}"
                             Style="{StaticResource MaterialDesignFlatAccentBgButton}">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Printer"
@@ -155,6 +170,16 @@
                                     <TextBlock Text="{Binding name}"
                                                FontSize="16"
                                                Margin="10,0,0,0" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Giới tính"
+                                        Width="115">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding gender}"
+                                               FontSize="16"
+                                               Margin="25,0,0,0" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

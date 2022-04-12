@@ -7,10 +7,9 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         DataContext="{StaticResource ReaderCardVM}"
-        Title="AddReaderCardWindow"
         Height="520"
         Width="1020"
-        x:Name="AddReaderWindow"
+        x:Name="EditReaderWindow"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Background="Transparent"
@@ -304,12 +303,12 @@
                             Height="51"
                             materialDesign:ButtonAssist.CornerRadius="15"
                             VerticalContentAlignment="Center"
-                            Content="Hoàn thành"
+                            Content="Lưu"
                             Foreground="White"
                             FontSize="18"
                             FontWeight="ExtraBold"
-                            Command="{Binding AddReaderCardCM}"
-                            CommandParameter="{Binding ElementName=AddReaderWindow}"
+                            Command="{Binding UpdateReaderCardCM}"
+                            CommandParameter="{Binding ElementName=EditReaderWindow}"
                             Style="{StaticResource MaterialDesignFlatAccentBgButton}" />
                 </StackPanel>
             </Grid>

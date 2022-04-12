@@ -5,7 +5,6 @@ using LibraryManagement.ViewModels;
 using LibraryManagement.Views.BookManagement;
 using LibraryManagement.Views.ImportBookPage;
 ﻿using LibraryManagement.View.ReaderCard;
-using LibraryManagement.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;

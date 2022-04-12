@@ -63,7 +63,7 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
                  FinishDate = StartDate?.AddDays(30);
              });
 
-            AddReaderCardCM = new RelayCommand<System.Windows.Window>((p) => { return true; }, (p) =>
+            AddReaderCardCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
              {
                  ReaderCardDTO reader = new ReaderCardDTO()
                  {
@@ -143,6 +143,34 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
                 EditReaderCardWindow editReaderCardWindow = new EditReaderCardWindow();
                 LoadEditReaderCard(editReaderCardWindow);
                 editReaderCardWindow.ShowDialog();
+            });
+            OpenPrintReaderCardCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                PrintReaderCardWindow printReaderCardWindow = new PrintReaderCardWindow();
+                LoadPrintReaderCard(printReaderCardWindow);
+                printReaderCardWindow.ShowDialog();
+            });
+            UpdateReaderCardCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                ReaderCardDTO reader = new ReaderCardDTO()
+                {
+                    id = SelectedItem.id,
+                    name = Name,
+                    address = Adress,
+                    employeeId = "NV0001",
+                    readerTypeId = (ListReaderType.FirstOrDefault(s => s.name == ReaderType)).id,
+                    totalFine = SelectedItem.totalFine,
+                    email = Email,
+                    createdAt = (DateTime)StartDate,
+                    expiryDate = (DateTime)FinishDate,
+                    gender = Sex,
+                    birthDate = (DateTime)Birthday,
+                };
+                (bool Successful, string message) = ReaderService.Ins.UpdateReaderCard(reader);
+                var readerCardFound = ListReaderCard.FirstOrDefault(s => s.id == reader.id);
+                ListReaderCard[ListReaderCard.IndexOf(readerCardFound)] = reader;
+                MessageBox.Show(message);
+                p.Close();
             });
         }
     }
