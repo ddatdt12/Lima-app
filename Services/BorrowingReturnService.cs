@@ -122,7 +122,7 @@ namespace LibraryManagement.Services
                                     name = b.BookInfo.Book.BaseBook.name,
                                 }
                             }
-                        }
+                        },
                     }).ToList();
 
                 return borrowingCards;
@@ -219,6 +219,12 @@ namespace LibraryManagement.Services
                     if (returnCardDictionary.ContainsKey(returnCard.id))
                     {
                         var data = returnCardDictionary[returnCard.id];
+
+                        if(data.returnedDate < returnCard.borrowingDate)
+                        {
+                            return (false, "Ngày trả không thể nhỏ hơn ngày mượn");
+                        }
+
                         totalFine += data.fine;
                         returnCard.returnedDate = data.returnedDate;
                         returnCard.fine = data.fine;

@@ -62,10 +62,36 @@ namespace LibraryManagement.Services
                 if (account.Employees.Count() > 0)
                 {
                     user.type = Utils.AccountType.EMPLOYEE;
+                    user.employee = account.Employees.Select(e => new EmployeeDTO
+                    {
+                        id = e.id,
+                        name = e.name,
+                        email = e.email,
+                        phoneNumber = e.phoneNumber,
+                        birthDate = e.birthDate,
+                        gender = e.gender,
+                        startingDate = e.startingDate,
+                        accountId = e.accountId
+                    }).FirstOrDefault();
                 }
                 else if (account.ReaderCards.Count() > 0)
                 {
                     user.type = Utils.AccountType.READER_CARD;
+                    user.reader = account.ReaderCards.Select(s => new ReaderCardDTO
+                    {
+                        id = s.id,
+                        name = s.name,
+                        address = s.address,
+                        expiryDate = s.expiryDate,
+                        employeeId = s.employeeId,
+                        readerTypeId = s.readerTypeId,
+                        totalFine = s.totalFine ?? 0,
+                        readerType = new ReaderTypeDTO { id = s.readerTypeId , name = s.ReaderType.name},
+                        email = s.email,
+                        createdAt = s.createdAt,
+                        gender = s.gender,
+                        birthDate = s.birthDate,
+                    }).FirstOrDefault();
                 }
                 else
                 {
@@ -97,7 +123,7 @@ namespace LibraryManagement.Services
                 {
                     email = account.Employees.FirstOrDefault()?.email;
                 }
-                else 
+                else
                 {
                     email = account.ReaderCards.FirstOrDefault()?.email;
                 }
@@ -112,7 +138,7 @@ namespace LibraryManagement.Services
 
         }
 
-        public (bool, string) ResetPassword(string username , string newPassword)
+        public (bool, string) ResetPassword(string username, string newPassword)
         {
             try
             {

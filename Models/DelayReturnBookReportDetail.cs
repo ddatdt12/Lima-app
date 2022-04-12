@@ -15,8 +15,7 @@ namespace LibraryManagement.Models
     public partial class DelayReturnBookReportDetail
     {
         public int delayReturnBookReportId { get; set; }
-        public string borrowingCardId { get; set; }
-        public int borrowingDate { get; set; }
+        public string borrowingReturnCardId { get; set; }
         public int numberOfDelayReturn { get; set; }
     
         public virtual Borrowing_ReturnCard Borrowing_ReturnCard { get; set; }

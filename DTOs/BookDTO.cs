@@ -36,7 +36,7 @@ namespace LibraryManagement.DTOs
             get { return _quantity; }
             set { _quantity = value; OnPropertyChanged(); }
         }
-
+        public int price { get; set; }
         public List<BookInfoDTO> bookInfoes { get; set; }
         public string baseBookId { get; set; }
 

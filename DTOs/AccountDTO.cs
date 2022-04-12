@@ -15,6 +15,8 @@ namespace LibraryManagement.DTOs
         public int roleId { get; set; }
         public AccountType type { get; set; } // "ReaderCard" or "Employee"
         public RoleDTO role { get; set; }
+        public EmployeeDTO employee { get; set; }
+        public ReaderCardDTO reader { get; set; }
 
     }
 }

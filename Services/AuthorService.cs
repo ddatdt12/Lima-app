@@ -30,9 +30,8 @@ namespace LibraryManagement.Services
         {
             try
             {
-                List<AuthorDTO> authors;
-                authors = (from s in DataProvider.Ins.DB.Authors
-                           select new AuthorDTO { id = s.id, name = s.name, birthDate = (DateTime)s.birthDate }).ToList();
+                List<AuthorDTO> authors = (from s in DataProvider.Ins.DB.Authors
+                                           select new AuthorDTO { id = s.id, name = s.name, birthDate = (DateTime)s.birthDate }).ToList();
                 return authors;
             }
             catch (Exception e)
@@ -106,7 +105,7 @@ namespace LibraryManagement.Services
             try
             {
                 var context = DataProvider.Ins.DB;
-                var related = context.Authors.Find(authorId)?.BaseBooks.Count() > 0 ;
+                var related = context.Authors.Find(authorId)?.BaseBooks.Count() > 0;
                 if (related)
                 {
                     return (false, "Đã có sách của tác giả này. Không thể xóa!");

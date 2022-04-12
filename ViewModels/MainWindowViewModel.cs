@@ -160,8 +160,9 @@ namespace LibraryManagement.ViewModel
             //(AccountDTO user, string mesasage) = AuthService.Ins.Login("datdo", "123456");
 
             var email = AuthService.Ins.GetAccountByUsername("datdo");
-            (bool resetSuccess, string resetMessage) = AuthService.Ins.ResetPassword("datdo", "1234567");
-            (var userLogin, string message) = AuthService.Ins.Login("datdo", "1234567");
+            (bool resetSuccess, string resetMessage) = AuthService.Ins.ResetPassword("datdo", "123456");
+            (var userLogin, string message) = AuthService.Ins.Login("datdo", "123456");
+            (var readerLogin, string messageLogin) = AuthService.Ins.Login("READER0001", "READER0001");
 
             //BOOK IMPORT
             List<BaseBookDTO> baseBookDTOs = new List<BaseBookDTO>()
@@ -385,64 +386,68 @@ namespace LibraryManagement.ViewModel
             int borrowingDuration = ParameterService.Ins.GetRuleValue(Rules.MAXIMUM_NUMBER_OF_DAYS_TO_BORROW);
             int max = ParameterService.Ins.GetRuleValue(Rules.ALLOWED_BOOK_MAXIMUM);
             int fineDaily = ParameterService.Ins.GetRuleValue(Rules.FINE);
+            var borrowingDate = new DateTime(2022, 4, 2);
             //Check số sách tối đa có thể mượn
-            //BorrowingCardDTO cardDTO = new BorrowingCardDTO()
-            //{
-            //    readerCardId = "READER0001",
-            //    borrowingDate = DateTime.Now,
-            //    dueDate = DateTime.Now.AddDays(borrowingDuration),
-            //    employeeId = "NV0001",
-            //};
-            //var bookInfoIdList = new List<string>()
-            //{
-            //    "BOOK0001_001",
-            //    "BOOK0002_002",
-            //    "BOOK0003_002",
-            //};
-            //(bool success, string message) = BorrowingReturnService.Ins.CreateBorrowingCard(cardDTO, bookInfoIdList);
+            BorrowingCardDTO cardDTO = new BorrowingCardDTO()
+            {
+                readerCardId = "READER0001",
+                borrowingDate = borrowingDate,
+                dueDate = borrowingDate.AddDays(4),
+                employeeId = "NV0001",
+            };
+            var bookInfoIdList = new List<string>()
+            {
+                "BOOK0001_002",
+                "BOOK0002_014",
+                "BOOK0004_008",
+            };
+            //(bool success, string messageNew) = BorrowingReturnService.Ins.CreateBorrowingCard(cardDTO, bookInfoIdList);
 
+            var borrowingCardDTOs = BorrowingReturnService.Ins.GetBorrowingCardsByReaderId("READER0006");
+            //var delayBookCardDTOs = BorrowingReturnService.Ins.GetDelayBorrowingCardsByReaderId("READER0004");
+            //var s = "";
+            //////////Return card
+            var returnCardList = new List<ReturnCardDTO>();
+
+            borrowingCardDTOs.ForEach(b =>
+            {
+                var returnDate = borrowingDate.AddDays(10);
+                int days = returnDate.Subtract(b.dueDate).Days;
+                int fine = b.dueDate >= returnDate ? 0 : fineDaily * days;
+                var card = new ReturnCardDTO()
+                {
+                    id = b.id,
+                    borrowingCardId = b.id,
+                    returnedDate = returnDate,
+                    employeeId = "NV0001",
+                    fine = fine,
+                };
+                returnCardList.Add(card);
+            });
             //var borrowingCardDTOs = BorrowingReturnService.Ins.GetBorrowingCardsByReaderId("READER0001");
-
-            ////////Return card
-            //var returnCardList = new List<ReturnCardDTO>();
-
-            //borrowingCardDTOs.ForEach(b =>
-            //{
-
-            //    int days = DateTime.Now.Subtract(b.dueDate).Days;
-            //    int fine = b.dueDate >= DateTime.Now ? 0 : fineDaily * days;
-            //    var card = new ReturnCardDTO()
-            //    {
-            //        id = b.id,
-            //        borrowingCardId = b.id,
-            //        returnedDate = DateTime.Now,
-            //        employeeId = "NV0001",
-            //        fine = fine,
-            //    };
-            //    returnCardList.Add(card);
-            //});
-            ////var borrowingCardDTOs = BorrowingReturnService.Ins.GetBorrowingCardsByReaderId("READER0001");
-            //(bool success, string message) = BorrowingReturnService.Ins.CreateReturnCardList(returnCardList);
+            (bool successReturnCard, string messageReturnCard) = BorrowingReturnService.Ins.CreateReturnCardList(returnCardList);
 
 
 
             ////FINE RECEIPT
             ///
 
-            //var fineReceipt = new FineReceiptDTO()
-            //{
-            //    amount = 3000,
-            //    createdAt = DateTime.Now,
-            //    employeeId = "NV0001",
-            //    readerCardId = "READER0001",
-            //};
+            var fineReceipt = new FineReceiptDTO()
+            {
+                amount = 1000,
+                createdAt = DateTime.Now,
+                employeeId = "NV0001",
+                readerCardId = "READER0004",
+            };
 
-            //(bool isSucc, string message) = FineReceiptService.Ins.CreateFineReceipt(fineReceipt);
+            //(bool isSucc, string messageFine) = FineReceiptService.Ins.CreateFineReceipt(fineReceipt);
 
+            (var statictis, string error) = StatisticService.Ins.GetBookBorrowingStatisticsReportByGenre(4,2022);
+            (var statisticReport, string errorReport) = StatisticService.Ins.GetDelayBookStatsReport(DateTime.Now.AddDays(-1));
 
             //var books = BookService.Ins.GetAllAvailableBook();
             //var delayBorrowingCards = BorrowingReturnService.Ins.GetDelayBorrowingCardsByReaderId("READER0001");
-            //var a = "";
+            var a = "";
         }
 
         const string APP_EMAIL = "";

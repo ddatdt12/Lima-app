@@ -27,6 +27,7 @@ namespace LibraryManagement.Models
         public string publisher { get; set; }
         public int quantity { get; set; }
         public bool isDeleted { get; set; }
+        public int Price { get; set; }
     
         public virtual BaseBook BaseBook { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
