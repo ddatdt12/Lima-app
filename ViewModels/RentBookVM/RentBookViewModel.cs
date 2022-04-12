@@ -251,6 +251,8 @@ namespace LibraryManagement.ViewModels.RentBookVM
                     CanRent = false;
                     return;
                 }
+                RentBookList.Clear();
+                BookList.Clear();
                 ReaderName = readerCard.name;
                 ExpiredDate = readerCard.expiryDate;
                 if (readerCard.haveDelayBook)

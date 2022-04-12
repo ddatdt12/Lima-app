@@ -199,6 +199,8 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                 ReaderName = readerCard.name;
                 TotalDept = readerCard.totalFine;
                 TotalPunish = 0;
+                ReturnBookList.Clear();
+                RentingBookList.Clear();
                 listBorrowingCard = BorrowingReturnService.Ins.GetBorrowingCardsByReaderId(ReaderID);
                 if (ReturnBookList.Count + RentingBookList.Count != listBorrowingCard.Count)
                 {
@@ -206,15 +208,14 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                     {
                         int sumDateRent;
                         sumDateRent = DateTime.Now.Subtract(listBorrowingCard[i].borrowingDate).Days;
-                        decimal fine;
-                        if (DateTime.Now.Subtract(listBorrowingCard[i].dueDate).Days <= 0)
-                        {
-                            fine = 0;
-                        }
-                        else
-                        {
-                            fine = DateTime.Now.Subtract(listBorrowingCard[i].dueDate).Days * ParameterService.Ins.GetRuleValue(Utils.Rules.FINE);
-                        }
+                        decimal fine = (DateTime.Now.Date -
+                                        (listBorrowingCard[i].borrowingDate.AddDays(
+                                                ParameterService.Ins.GetRuleValue(Utils.
+                                                Rules.
+                                                MAXIMUM_NUMBER_OF_DAYS_TO_BORROW)))).Days *
+                                        ParameterService.Ins.GetRuleValue(Utils.Rules.FINE);
+                        if (fine < 0) fine = 0;
+
                         Book book = new Book
                         (
                             0,
