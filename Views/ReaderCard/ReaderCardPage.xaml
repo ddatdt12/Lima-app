@@ -38,7 +38,7 @@
                 <Border BorderBrush="Transparent"
                         Width="30"
                         Height="30"
-                        Margin="0,20,0,0"
+                        Margin="20,20,0,0"
                         HorizontalAlignment="Left">
                     <materialDesign:PackIcon Kind="Magnify"
                                              Background="Transparent"
@@ -76,7 +76,7 @@
                     <ComboBoxItem Content="Tên độc giả" />
                 </ComboBox>
                 <StackPanel Orientation="Horizontal"
-                            Margin="80,0,0,0">
+                            Margin="190,0,0,0">
                     <Button Margin="30,5,0,0"
                             Background="#0266FD"
                             Foreground="White"
@@ -138,7 +138,8 @@
                                   VerticalAlignment="Top"
                                   materialDesign:ShadowAssist.ShadowDepth="Depth2"
                                   materialDesign:ShadowAssist.ShadowEdges="Right,Bottom"
-                                  Margin="30,0,30,15">
+                                  Margin="30,0,30,15"
+                                  Height="615">
             <ListView Name="lvReader"
                       ItemsSource="{Binding ListReaderCard}"
                       SelectedItem="{Binding SelectedItem}">
