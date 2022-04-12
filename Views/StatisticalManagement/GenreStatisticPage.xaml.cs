@@ -27,25 +27,11 @@ namespace LibraryManagement.Views.StatisticalManagement
 
         private void periodbox_Loaded(object sender, RoutedEventArgs e)
         {
-            GetYearSource(timebox);
+            GetYearSource(periodbox);
         }
-
-        private void periodbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void timebox_Loaded(object sender, RoutedEventArgs e)
         {
-            ComboBoxItem s = (ComboBoxItem)periodbox.SelectedItem;
-            switch (s.Content.ToString())
-            {
-                case "Theo năm":
-                    {
-                        GetYearSource(timebox);
-                        return;
-                    }
-                case "Theo tháng":
-                    {
-                        GetMonthSource(timebox);
-                        return;
-                    }
-            }
+            GetMonthSource(timebox);
         }
         public void GetYearSource(ComboBox cbb)
         {
@@ -84,5 +70,6 @@ namespace LibraryManagement.Views.StatisticalManagement
             cbb.ItemsSource = l;
             cbb.SelectedIndex = DateTime.Today.Month - 1;
         }
+
     }
 }

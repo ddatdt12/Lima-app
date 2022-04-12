@@ -393,8 +393,7 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                 {
                     supplier = Supplier,
                     createdAt = (DateTime)CreateAt,
-                    //fineReceipt.employeeId = MainWindowViewModel.CurrentUser.id;
-                    employeeId = "NV0001",
+                    employeeId = MainWindowViewModel.CurrentUser.employee.id,
                     importReceiptDetailList = new List<ImportReceiptDetailDTO>(ImportBookList),
                 };
 

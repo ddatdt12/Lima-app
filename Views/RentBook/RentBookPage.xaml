@@ -12,7 +12,6 @@
       TextElement.FontSize="13"
       TextOptions.TextFormattingMode="Ideal"
       TextOptions.TextRenderingMode="Auto"
-      Background="#FBFBFD"
       FontFamily="{StaticResource NunitoSans_Regular}"
       Height="800"
       Width="1128"

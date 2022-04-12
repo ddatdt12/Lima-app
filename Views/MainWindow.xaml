@@ -51,13 +51,13 @@
                 </Grid>
                 <StackPanel HorizontalAlignment="Center"
                             VerticalAlignment="Top">
-                    <TextBlock Text="Nguyễn Ngọc Trinh"
+                    <TextBlock Text="{Binding ElementName=this,Path=DataContext.CurrentUser.DisplayName}"
                                FontSize="22"
                                Foreground="#000000"
                                HorizontalAlignment="Center"
                                LineHeight="22"
                                FontFamily="{StaticResource PatrickHand_Regular}" />
-                    <TextBlock Text="Admin"
+                    <TextBlock Text="{Binding ElementName=this,Path=DataContext.CurrentUser.type.Name}"
                                Foreground="#0B69F5"
                                HorizontalAlignment="Center"
                                FontSize="14"
@@ -419,8 +419,8 @@
 
                 </StackPanel>
             </ScrollViewer>
-            
-            
+
+
             <Grid Width="260"
                   Height="10">
                 <Border BorderThickness="0 0 0 1"

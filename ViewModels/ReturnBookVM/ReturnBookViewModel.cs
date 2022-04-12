@@ -1,5 +1,6 @@
 ﻿using LibraryManagement.DTOs;
 using LibraryManagement.Services;
+using LibraryManagement.ViewModel;
 using LibraryManagement.ViewModels.RentBookVM;
 using System;
 using System.Collections.Generic;
@@ -80,7 +81,6 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                     if (CanReturn)
                     {
                         RentingBookList.Clear();
-                        //List<BookDTO> listBookDTO = BookService.Ins.GetAllAvailableBook();
                         List<BorrowingCardDTO> listBorrowingCard = BorrowingReturnService.Ins.GetBorrowingCardsByReaderId(ReaderID);
                         for (int i = 0; i < listBorrowingCard.Count; i++)
                         {
@@ -250,8 +250,7 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                     returnCard.id = ReturnBookList[i].RentCardId;
                     returnCard.borrowingCardId = ReturnBookList[i].RentCardId;
                     returnCard.returnedDate = DateTime.Now;
-                    //fineReceipt.employeeId = MainWindowViewModel.CurrentUser.id;
-                    returnCard.employeeId = "NV0001";
+                    returnCard.employeeId = MainWindowViewModel.CurrentUser.employee.id;
                     returnCard.fine = (int)ReturnBookList[i].Fine;
                     returnCardList.Add(returnCard);
                 }

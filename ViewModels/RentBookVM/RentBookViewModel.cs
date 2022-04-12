@@ -1,5 +1,6 @@
 ﻿using LibraryManagement.DTOs;
 using LibraryManagement.Services;
+using LibraryManagement.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -331,8 +332,7 @@ namespace LibraryManagement.ViewModels.RentBookVM
                 BorrowingCardDTO borrowingCard = new BorrowingCardDTO();
                 borrowingCard.readerCardId = ReaderID;
                 borrowingCard.borrowingDate = (DateTime)RentDate;
-                //fineReceipt.employeeId = MainWindowViewModel.CurrentUser.id;
-                borrowingCard.employeeId = "NV0001";
+                borrowingCard.employeeId = MainWindowViewModel.CurrentUser.employee.id;
                 borrowingCard.dueDate = RentDate.Value.AddDays(ParameterService.Ins.GetRuleValue(Utils.Rules.VALIDITY_PERIOD_OF_CARD));
                 var bookInfoList = new List<string>();
                 for (int i = 0; i < RentBookList.Count; i++)

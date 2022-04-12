@@ -17,6 +17,6 @@ namespace LibraryManagement.DTOs
         public RoleDTO role { get; set; }
         public EmployeeDTO employee { get; set; }
         public ReaderCardDTO reader { get; set; }
-
+        public string DisplayName { get; set; }
     }
 }

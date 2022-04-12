@@ -30,7 +30,6 @@ namespace LibraryManagement.ViewModel
 
         public static AccountDTO CurrentUser { get; set; }
 
-
         public MainWindowViewModel()
         {
             OpenBookManagementPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
