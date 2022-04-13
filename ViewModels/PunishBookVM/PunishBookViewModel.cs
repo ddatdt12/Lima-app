@@ -135,6 +135,7 @@ namespace LibraryManagement.ViewModels.PunishBookVM
                 ReaderName = readerCard.name;
                 TotalDept = readerCard.totalFine;
                 TotalLeft = 0;
+                TotalPaid = null;
                 ExpiredBookList.Clear();
                 CanPaidFine = true;
             }

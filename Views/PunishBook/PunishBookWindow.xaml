@@ -3,9 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:LibraryManagement.Views.PunishBook"
         mc:Ignorable="d"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -121,6 +119,7 @@
                          FontFamily="{StaticResource NunitoSans_Regular}"
                          Foreground="#5C5959"
                          BorderBrush="#0266FD"
+                         TextChanged="TextBox_TextChanged"
                          DataObject.Pasting="TextBox_Pasting"
                          PreviewTextInput="TextBox_PreviewTextInput">
                 </TextBox>
@@ -139,7 +138,8 @@
                            VerticalAlignment="Center"
                            FontWeight="Regular"
                            HorizontalAlignment="Right"
-                           Text="{Binding TotalLeft}"
+                           Text="{Binding TotalLeft,NotifyOnTargetUpdated=True}"
+                           TargetUpdated="TextBlock_TargetUpdated"
                            FontSize="18"
                            FontFamily="{StaticResource NunitoSans_Regular}"
                            Foreground="#5C5959" />

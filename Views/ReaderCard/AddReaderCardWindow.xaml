@@ -102,6 +102,7 @@
                                     Orientation="Horizontal"
                                     HorizontalAlignment="Left">
                             <RadioButton x:Name="Man"
+                                         IsChecked="True"
                                          Content="Nam"
                                          Command="{Binding CheckedSexCM}"
                                          CommandParameter="{Binding ElementName=Man}" />

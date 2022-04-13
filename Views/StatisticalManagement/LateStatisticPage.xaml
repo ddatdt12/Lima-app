@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:LibraryManagement.Views.StatisticalManagement"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d"
@@ -28,7 +27,7 @@
             <materialDesign:Card Margin="20"
                                  Height="690">
                 <StackPanel>
-                    <DockPanel Margin="0,25,0,0">
+                    <DockPanel Margin="30,25,0,0">
 
                         <Border Background="White"
                                 Width="145"

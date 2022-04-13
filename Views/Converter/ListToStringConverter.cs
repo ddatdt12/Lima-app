@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace LibraryManagement.Views.Converter
@@ -25,7 +22,7 @@ namespace LibraryManagement.Views.Converter
                 {
                     res += item.name + ", ";
                 }
-                string tempres = res.Remove(res.Length -2);
+                string tempres = res.Remove(res.Length - 2);
                 return tempres;
             }
             return "Trống";

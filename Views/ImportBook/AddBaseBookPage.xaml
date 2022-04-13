@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:LibraryManagement.Views.ImportBook"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d"
@@ -28,7 +27,7 @@
                          Width="350"
                          Text="{Binding BaseName}"
                          HorizontalAlignment="Left"
-                         x:Name="basebooktb"/>
+                         x:Name="basebooktb" />
             </StackPanel>
 
             <StackPanel HorizontalAlignment="Left"
@@ -47,12 +46,21 @@
                               DisplayMemberPath="name"
                               Width="135"
                               FontSize="18"
-                              materialDesign:HintAssist.Hint="Chọn thể loại" />
+                              x:Name="genrebox"
+                              materialDesign:HintAssist.Hint="Chọn thể loại">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="LostFocus">
+                                <i:InvokeCommandAction Command="{Binding GenreLostFocusCM}"
+                                                       CommandParameter="{Binding ElementName=genrebox}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
                     <Border VerticalAlignment="Bottom">
                         <materialDesign:PackIcon Kind="PlusCircleOutline"
                                                  Foreground="Green"
                                                  Width="25"
-                                                 Height="25" />
+                                                 Height="25"
+                                                 Cursor="Hand" />
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseLeftButtonDown">
                                 <i:InvokeCommandAction Command="{Binding AddNewGenreCM}" />
@@ -60,12 +68,15 @@
                         </i:Interaction.Triggers>
                     </Border>
                 </StackPanel>
+                <TextBlock Text="Vui lòng nhập thể loại"
+                           Foreground="Red" 
+                           Visibility="{Binding IsError}"/>
             </StackPanel>
 
         </StackPanel>
 
         <!---LISTVIEW-->
-        <StackPanel   Margin="40,20,40,0">
+        <StackPanel   Margin="40,10,40,0">
 
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Tác giả  "
@@ -93,7 +104,8 @@
                         <materialDesign:PackIcon Kind="PlusCircleOutline"
                                                  Foreground="Green"
                                                  Width="25"
-                                                 Height="25" />
+                                                 Height="25"
+                                                 Cursor="Hand" />
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseLeftButtonDown">
                                 <i:InvokeCommandAction Command="{Binding OpenAddNewAuthorCM}"
@@ -135,8 +147,10 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <materialDesign:PackIcon Kind="Bin"
-                                                                 Width="20"
-                                                                 Height="20">
+                                                                 Width="30"
+                                                                 Height="30"
+                                                                 Foreground="Red"
+                                                                 Cursor="Hand">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="MouseLeftButtonUp">
                                                     <i:InvokeCommandAction Command="{Binding ElementName=authorLV, Path=DataContext.DecreaseBaseAuthorCM}"
@@ -168,8 +182,8 @@
                     Foreground="#0266FD"
                     BorderBrush="#0266FD"
                     materialDesign:ButtonAssist.CornerRadius="12"
-                    Command="{Binding CloseCM}" 
-                    Margin="0,0,50,0"/>
+                    Command="{Binding CloseCM}"
+                    Margin="0,0,50,0" />
             <Button FontSize="20"
                     Width="160"
                     Height="50"

@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:LibraryManagement.Views.ImportBookPage"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d"
@@ -103,20 +102,26 @@
                                 <ListView.View>
                                     <GridView>
 
-                                        <GridViewColumn Header="Tên sách">
+                                        <GridViewColumn Header="Tên sách"
+                                                        Width="200">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding book.baseBook.name}"
-                                                               Margin="15,0,0,0" />
+                                                               Margin="15,0,0,0"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               ToolTip="{Binding book.baseBook.name}" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
 
-                                        <GridViewColumn Header="NXB">
+                                        <GridViewColumn Header="NXB"
+                                                        Width="150">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding book.publisher}"
-                                                               Margin="15,0,0,0" />
+                                                               Margin="15,0,0,0"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               ToolTip="{Binding book.publisher}" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -238,7 +243,8 @@
                                                         <materialDesign:PackIcon Kind="Delete"
                                                                                  Width="30"
                                                                                  Height="30"
-                                                                                 Foreground="#DC1B1B" />
+                                                                                 Foreground="Red"
+                                                                                 Cursor="Hand" />
 
                                                         <i:Interaction.Triggers>
                                                             <i:EventTrigger EventName="MouseLeftButtonUp">
@@ -300,7 +306,8 @@
                                     <materialDesign:PackIcon Kind="PlusCircleOutline"
                                                              Foreground="Green"
                                                              Width="25"
-                                                             Height="25" />
+                                                             Height="25"
+                                                             Cursor="Hand" />
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="MouseLeftButtonDown">
                                             <i:InvokeCommandAction Command="{Binding OpenImportWindowCM2}"
@@ -319,19 +326,22 @@
                             <ListView Name="searchList">
                                 <ListView.View>
                                     <GridView>
-
-                                        <GridViewColumn>
+                                        <GridViewColumn Width="200">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding baseBook.name}" />
+                                                    <TextBlock Text="{Binding baseBook.name}"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               ToolTip="{Binding baseBook.name}" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
 
-                                        <GridViewColumn>
+                                        <GridViewColumn Width="200">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding publisher}" />
+                                                    <TextBlock Text="{Binding publisher}"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               ToolTip="{Binding publisher}" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -349,7 +359,8 @@
                                                 <DataTemplate>
                                                     <Border Background="Transparent">
                                                         <materialDesign:PackIcon Kind="PlusThick"
-                                                                                 Foreground="Green" />
+                                                                                 Foreground="Green"
+                                                                                 Cursor="Hand" />
                                                         <i:Interaction.Triggers>
                                                             <i:EventTrigger EventName="MouseLeftButtonDown">
                                                                 <i:InvokeCommandAction Command="{Binding ElementName=searchList, Path=DataContext.AddBookFromSearchCM}"

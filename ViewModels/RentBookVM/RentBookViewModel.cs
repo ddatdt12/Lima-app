@@ -66,6 +66,14 @@ namespace LibraryManagement.ViewModels.RentBookVM
             set { _RentDate = value; OnPropertyChanged(); }
         }
 
+        private DateTime? todayDay;
+        public DateTime? TodayDay
+        {
+            get { return todayDay; }
+            set { todayDay = value; OnPropertyChanged(); }
+        }
+
+
         private int _RentBookTotal;
         public int RentBookTotal
         {
@@ -218,6 +226,7 @@ namespace LibraryManagement.ViewModels.RentBookVM
                 RentDate = DateTime.Now;
                 DateTime dateTimeSub = RentDate.Value.AddDays(ParameterService.Ins.GetRuleValue(Utils.Rules.MAXIMUM_NUMBER_OF_DAYS_TO_BORROW));
                 ExpiredBookDate = dateTimeSub;
+                TodayDay = DateTime.Today;
             });
 
             CheckReaderCardCM = new RelayCommand<object>((p) => { return true; }, (p) =>

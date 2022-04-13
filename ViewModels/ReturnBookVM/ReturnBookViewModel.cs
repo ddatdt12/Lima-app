@@ -204,6 +204,8 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                     {
                         int sumDateRent;
                         sumDateRent = DateTime.Now.Subtract(listBorrowingCard[i].borrowingDate).Days;
+                        //if (sumDateRent < 0)
+                        //    sumDateRent = 0;
                         decimal fine = DateTime.Now.Subtract(listBorrowingCard[i].dueDate).Days * ParameterService.Ins.GetRuleValue(Utils.Rules.FINE);
                         if (fine < 0) fine = 0;
 

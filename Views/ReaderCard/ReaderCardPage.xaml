@@ -211,7 +211,8 @@
                                                     <materialDesign:PackIcon Kind="LeadPencil"
                                                                              Width="30"
                                                                              Height="30"
-                                                                             Foreground="#258E23" />
+                                                                             Foreground="Green"
+                                                                             Cursor="Hand" />
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonUp">
                                                             <i:InvokeCommandAction Command="{Binding ElementName=lvReader, Path=DataContext.OpenEditReaderCardCM}" />
@@ -229,7 +230,8 @@
                                                     <materialDesign:PackIcon Kind="Bin"
                                                                              Width="30"
                                                                              Height="30"
-                                                                             Foreground="Red" />
+                                                                             Foreground="Red"
+                                                                             Cursor="Hand" />
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonUp">
                                                             <i:InvokeCommandAction Command="{Binding ElementName=lvReader, Path=DataContext.DeleteEditReaderCardCM}" />

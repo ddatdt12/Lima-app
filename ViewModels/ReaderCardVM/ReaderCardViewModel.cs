@@ -75,7 +75,7 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
                      {
                          name = Name,
                          address = Adress,
-                         employeeId = "NV0001",
+                         employeeId = MainWindowViewModel.CurrentUser.employee.id,
                          readerTypeId = (ListReaderType.FirstOrDefault(s => s.name == ReaderType)).id,
                          email = Email,
                          createdAt = (DateTime)StartDate,
@@ -204,7 +204,6 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             {
                 PrintReaderCardWindow printReaderCardWindow = new PrintReaderCardWindow();
                 LoadPrintReaderCard(printReaderCardWindow);
-                printReaderCardWindow.ShowDialog();
             });
             UpdateReaderCardCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
@@ -252,21 +251,28 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             {
                 if (SelectedItem is null) return;
 
-                try
+                if (MessageBox.Show("Bạn có chắc muốn xoá độc giả này không?", "Cảnh bảo", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    (bool isS, string mes) = ReaderService.Ins.DeleteReaderCard(SelectedItem.id);
-
-                    if (isS)
+                    try
                     {
-                        ListReaderCard = new ObservableCollection<ReaderCardDTO>(ReaderService.Ins.GetAllReaderCards());
-                    }
-                    MessageBox.Show(mes);
-                }
-                catch (Exception e)
-                {
+                        (bool isS, string mes) = ReaderService.Ins.DeleteReaderCard(SelectedItem.id);
 
-                    MessageBox.Show(e.Message);
+                        if (isS)
+                        {
+                            ListReaderCard = new ObservableCollection<ReaderCardDTO>(ReaderService.Ins.GetAllReaderCards());
+                        }
+                        MessageBox.Show(mes);
+                    }
+                    catch (Exception e)
+                    {
+
+                        MessageBox.Show(e.Message);
+                    }
                 }
+                else
+                    return;
+
+
             });
         }
         private (bool valid, string error) IsValidData()
@@ -277,12 +283,27 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
                 return (false, "Thông tin độc giả thiếu! Vui lòng bổ sung");
             }
 
+            double year = CalculateAge(Birthday.Value);
+            if(year < ParameterService.Ins.GetRuleValue(Rules.MIN_AGE) || year > ParameterService.Ins.GetRuleValue(Rules.MAX_AGE))
+            {
+                return (false, "Tuổi độc giả phải trong khoảng " + ParameterService.Ins.GetRuleValue(Rules.MIN_AGE) + " đến " + ParameterService.Ins.GetRuleValue(Rules.MAX_AGE));
+            }
+            
             if (!Helper.IsValidEmail(Email))
             {
                 return (false, "Email không hợp lệ");
             }
 
             return (true, null);
+        }
+        private static int CalculateAge(DateTime dateOfBirth)
+        {
+            int age = 0;
+            age = DateTime.Now.Year - dateOfBirth.Year;
+            if (DateTime.Now.DayOfYear < dateOfBirth.DayOfYear)
+                age = age - 1;
+
+            return age;
         }
     }
 }

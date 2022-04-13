@@ -24,6 +24,12 @@ namespace LibraryManagement.ViewModel.ImportBookVM
         }
 
         ImportBookWindow importWindow;
+        private Visibility isError;
+        public Visibility IsError
+        {
+            get { return isError; }
+            set { isError = value; OnPropertyChanged(); }
+        }
 
 
 
@@ -185,6 +191,7 @@ namespace LibraryManagement.ViewModel.ImportBookVM
         public ICommand PriceChangedCM { get; set; }
         public ICommand CloseCM { get; set; }
         public ICommand FirstLoadCM { get; set; }
+        public ICommand GenreLostFocusCM { get; set; }
 
         #endregion
 
@@ -193,15 +200,17 @@ namespace LibraryManagement.ViewModel.ImportBookVM
         public ImportBookViewModel()
         {
             ImportBookList = new ObservableCollection<ImportReceiptDetailDTO>();
-            ListGenre = new ObservableCollection<GenreDTO>(GenreService.Ins.GetAllGenre());
-            ListAuthor = new ObservableCollection<AuthorDTO>(AuthorService.Ins.GetAllAuthor());
-            TotalQuantity = 0;
-            TotalReceiptPrice = 0;
 
             FirstLoadCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
                 if (p != null)
                     importWindow = p as ImportBookWindow;
+
+                ListGenre = new ObservableCollection<GenreDTO>(GenreService.Ins.GetAllGenre());
+                ListAuthor = new ObservableCollection<AuthorDTO>(AuthorService.Ins.GetAllAuthor());
+                TotalQuantity = 0;
+                TotalReceiptPrice = 0;
+                IsError = Visibility.Hidden;
             });
             IncreaseQuantityCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -298,6 +307,7 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                         id = slt.id,
                         baseBook = slt.baseBook,
                         yearOfPublication = slt.yearOfPublication,
+                        publisher = slt.publisher,
                         isNew = false,
                     }
                 };
@@ -375,6 +385,7 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                 w.authorname.Text = p.Text;
                 w.ShowDialog();
                 ListAuthor = new ObservableCollection<AuthorDTO>(AuthorService.Ins.GetAllAuthor());
+                p.Text = "";
             });
             ImportBookCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -406,6 +417,8 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                         ImportBookList.Clear();
                         MainImportBookPage.AllBookList = new ObservableCollection<BookDTO>(BookService.Ins.GetAllBook());
                         PrintImportReiceipt();
+                        TotalQuantity = 0;
+                        TotalReceiptPrice = 0;
                     }
                     MessageBox.Show(mes);
                 }
@@ -447,12 +460,21 @@ namespace LibraryManagement.ViewModel.ImportBookVM
             });
             AddNewBaseBookCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                if (BaseAuthor.Count == 0 || Genre is null || string.IsNullOrEmpty(BaseName))
+                if (string.IsNullOrEmpty(BaseName))
                 {
                     MessageBox.Show("Vui lòng nhập đủ thông tin");
                     return;
                 }
-
+                if (BaseAuthor.Count == 0)
+                {
+                    MessageBox.Show("Vui lòng nhập tác giả");
+                    return;
+                }
+                if (Genre is null)
+                {
+                    MessageBox.Show("Vui lòng nhập thể loại");
+                    return;
+                }
                 try
                 {
 
@@ -485,6 +507,19 @@ namespace LibraryManagement.ViewModel.ImportBookVM
             PriceChangedCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 CalculateTotal(SelectedItem);
+            });
+            GenreLostFocusCM = new RelayCommand<ComboBox>((p) => { return true; }, (p) =>
+            {
+                if (p is null) return;
+
+                if (string.IsNullOrEmpty(p.Text)) return;
+
+                if (Genre is null)
+                {
+                    IsError = Visibility.Visible;
+                }
+                else
+                    IsError = Visibility.Hidden;
             });
         }
 

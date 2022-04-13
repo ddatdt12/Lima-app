@@ -13,7 +13,7 @@ using LibraryManagement.Views.SettingManagement;
 using LibraryManagement.Views.StatisticalManagement;
 using System.Windows;
 
-﻿using LibraryManagement.View.ReaderCard;
+using LibraryManagement.View.ReaderCard;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -37,16 +37,16 @@ namespace LibraryManagement.ViewModel
         public ICommand OpenRentBookPageCM { get; set; }
         public ICommand OpenReturnBookPageCM { get; set; }
         public ICommand OpenPunishBookWindowCM { get; set; }
-   #endregion
+        #endregion
 
         public static AccountDTO CurrentUser { get; set; }
- 
+
         public MainWindowViewModel()
         {
             OpenReaderCardPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new ReaderCardPage();
-            }); 
+            });
 
             OpenBookManagementPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
@@ -63,7 +63,7 @@ namespace LibraryManagement.ViewModel
             OpenPunishBookWindowCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 var punishBookWindow = new PunishBookWindow();
-                punishBookWindow.Show();
+                punishBookWindow.ShowDialog();
             });
             OpenImportBookPage = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {

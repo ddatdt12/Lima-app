@@ -92,6 +92,11 @@ namespace LibraryManagement.ViewModels.LoginVM
                 if (p is null) return;
 
                 LoginWindow = p;
+                UserName = null;
+                Password = null;
+                Email = null;
+                NewPass = null;
+                Account = null;
             });
 
             CloseWindowCM = new RelayCommand<Window>((p) => { return true; }, (p) =>

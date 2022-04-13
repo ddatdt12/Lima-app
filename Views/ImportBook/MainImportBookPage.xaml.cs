@@ -25,6 +25,7 @@ namespace LibraryManagement.Views.ImportBookPage
             InitializeComponent();
 
             AllBookList = new ObservableCollection<BookDTO>(BookService.Ins.GetAllBook());
+            searchList.ItemsSource = AllBookList;
 
             this.Language = XmlLanguage.GetLanguage("vi-VN");
             createAt.SelectedDate = DateTime.Now;
@@ -51,16 +52,10 @@ namespace LibraryManagement.Views.ImportBookPage
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (searchList.ItemsSource is null)
-                searchList.ItemsSource = AllBookList;
+
             CollectionViewSource.GetDefaultView(searchList.ItemsSource).Refresh();
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(AllBookList);
             view.Filter = Filter;
-
-            if (searchBox.Text.Length == 0)
-            {
-                searchList.ItemsSource = null;
-            }
         }
         private bool Filter(object item)
         {
