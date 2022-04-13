@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:LibraryManagement.Views.StaffManagement"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d"
       d:DesignHeight="800"
       d:DesignWidth="1160"
@@ -38,47 +39,56 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0"
                             Orientation="Horizontal">
-                    <Grid Margin="30,0,0,0">
-                        <Border CornerRadius="0,15,15,0"
-                                BorderThickness="1"
-                                Margin="15,0,0,0"
-                                Background="#EFF4F4"
-                                HorizontalAlignment="Left"
-                                Padding="3"
-                                Width="400"
-                                Height="30">
-                            <TextBox materialDesign:HintAssist.Hint="Tìm kiếm"
-                                     FontSize="12"
-                                     Padding="20,3,10,0"
-                                     TextWrapping="Wrap"
-                                     Height="25"
-                                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden" />
-                        </Border>
-                        <Border BorderBrush="Transparent"
-                                Background="#0266FD"
-                                Width="30"
-                                Height="30"
-                                CornerRadius="15"
-                                HorizontalAlignment="Left">
-                            <materialDesign:PackIcon Kind="Magnify"
-                                                     Background="Transparent"
-                                                     Foreground="White"
-                                                     HorizontalAlignment="Center"
-                                                     Width="30"
-                                                     Height="30"
-                                                     VerticalAlignment="Bottom" />
-                        </Border>
-                    </Grid>
+                    <Border BorderBrush="Transparent"
+                            Width="30"
+                            Height="30"
+                            Margin="20,20,0,0"
+                            HorizontalAlignment="Left">
+                        <materialDesign:PackIcon Kind="Magnify"
+                                                 Background="Transparent"
+                                                 Foreground="#0266FD"
+                                                 HorizontalAlignment="Center"
+                                                 Width="30"
+                                                 Height="30"
+                                                 VerticalAlignment="Bottom" />
+                    </Border>
+                    <TextBox materialDesign:HintAssist.Hint="Tìm kiếm theo tên"
+                             FontSize="12"
+                             Padding="0,0,10,0"
+                             Margin="0,5,0,0"
+                             TextWrapping="Wrap"
+                             Height="30"
+                             VerticalAlignment="Center"
+                             Width="130"
+                             TextChanged="SearchTbx_TextChanged"
+                             x:Name="SearchTbx">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox"
+                                   BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        </TextBox.Style>
+                    </TextBox>
+                    <ComboBox x:Name="FilterCbb"
+                              Height="30"
+                              Width="165"
+                              VerticalAlignment="Center"
+                              Padding="0,10,0,0"
+                              FontSize="12"
+                              Margin="30,5,0,0"
+                              SelectedIndex="0"
+                              SelectedValuePath="Content">
+                        <ComboBoxItem Content="Mã nhân viên" />
+                        <ComboBoxItem Content="Tên nhân viên" />
+                    </ComboBox>
                     <StackPanel Orientation="Horizontal"
                                 Margin="300,0,0,0">
                         <Button Margin="30,5,0,0"
-                                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                 Background="#0266FD"
                                 Foreground="White"
                                 Height="42"
                                 Width="145"
                                 FontSize="16"
                                 materialDesign:ButtonAssist.CornerRadius="15"
+                                Command="{Binding OpenAddStaffWindowCM}"
                                 Style="{StaticResource MaterialDesignFlatAccentBgButton}">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Plus"
@@ -89,7 +99,6 @@
                             </StackPanel>
                         </Button>
                         <Button Margin="30,5,0,0"
-                                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                 Background="#37B634"
                                 Foreground="White"
                                 Height="42"
@@ -98,7 +107,7 @@
                                 materialDesign:ButtonAssist.CornerRadius="15"
                                 Style="{StaticResource MaterialDesignFlatAccentBgButton}">
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Printer"
+                                <materialDesign:PackIcon Kind="Export"
                                                          Margin="0,0,20,0"
                                                          Height="23"
                                                          Width="23" />
@@ -110,7 +119,8 @@
 
                 <ListView Grid.Row="2"
                           Name="lvStaff"
-                          ItemsSource="{Binding ListStaff}">
+                          ItemsSource="{Binding ListStaff}"
+                          SelectedItem="{Binding SelectedItem}">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem"
                                BasedOn="{StaticResource MaterialDesignGridViewItem}">
@@ -174,6 +184,69 @@
                                         <TextBlock Text="{Binding startingDate,StringFormat=dd/MM/yyyy}"
                                                    FontSize="16"
                                                    Margin="18,0,0,0" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Border BorderBrush="Black"
+                                                BorderThickness="0.5"
+                                                CornerRadius="5"
+                                                Cursor="Hand"
+                                                Margin="40,0,0,0">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver"
+                                                                 Value="True">
+                                                            <Setter Property="Background"
+                                                                    Value="#00e5ff" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <materialDesign:PackIcon Kind="LeadPencil"
+                                                                     Width="30"
+                                                                     Height="30"
+                                                                     Foreground="#258E23" />
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                    <i:InvokeCommandAction Command="{Binding ElementName=lvStaff, Path=DataContext.OpenEditStaffCM}" />
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </Border>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Border BorderBrush="Black"
+                                                BorderThickness="0.5"
+                                                CornerRadius="5"
+                                                Cursor="Hand">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver"
+                                                                 Value="True">
+                                                            <Setter Property="Background"
+                                                                    Value="#00e5ff" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <materialDesign:PackIcon Kind="DeleteEmpty"
+                                                                     Width="30"
+                                                                     Height="30"
+                                                                     Foreground="#258E23" />
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                    <i:InvokeCommandAction Command="{Binding ElementName=lvStaff, Path=DataContext.DeleteStaffCM}" />
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </Border>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>

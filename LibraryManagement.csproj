@@ -203,6 +203,8 @@
     <Compile Include="ViewModels\SettingVM\GeneralSetting.cs" />
     <Compile Include="ViewModels\SettingVM\RoleSetting.cs" />
     <Compile Include="ViewModels\SettingVM\SettingViewModel.cs" />
+    <Compile Include="ViewModels\StaffManagementVM\AddStaffViewModel.cs" />
+    <Compile Include="ViewModels\StaffManagementVM\EditStaffViewModel.cs" />
     <Compile Include="ViewModels\StaffManagementVM\StaffManagementViewModel.cs" />
     <Compile Include="ViewModels\StatisticalVM\StatisticalViewModel.cs" />
     <Compile Include="Views\BookManagement\BookInforWindow.xaml.cs">
@@ -272,6 +274,12 @@
     </Compile>
     <Compile Include="Views\SettingManagement\RoleSettingPage.xaml.cs">
       <DependentUpon>RoleSettingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StaffManagement\AddStaffWindow.xaml.cs">
+      <DependentUpon>AddStaffWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StaffManagement\EditStaffWindow.xaml.cs">
+      <DependentUpon>EditStaffWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StaffManagement\StaffManagementPage.xaml.cs">
       <DependentUpon>StaffManagementPage.xaml</DependentUpon>
@@ -379,6 +387,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SettingManagement\RoleSettingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StaffManagement\AddStaffWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StaffManagement\EditStaffWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

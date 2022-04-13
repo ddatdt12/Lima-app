@@ -166,8 +166,15 @@ namespace LibraryManagement.Services
                 acc.username = updatedEmployee.account.username;
                 acc.password = Helper.MD5Hash(updatedEmployee.account.password);
                 acc.roleId = updatedEmployee.account.roleId;
-
                 context.SaveChanges();
+                updatedEmployee.account = new AccountDTO()
+                {
+                    id = acc.id,
+                    username = acc.username,
+                    password = acc.password,
+                    roleId = acc.roleId,
+
+                };
                 return (true, "Cập nhật thành công!");
             }
             catch (DbEntityValidationException e)
