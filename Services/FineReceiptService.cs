@@ -2,6 +2,7 @@
 using LibraryManagement.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
@@ -45,6 +46,47 @@ namespace LibraryManagement.Services
             string newIdString = $"0000{int.Parse(maxId.Substring(4)) + 1}";
             return "FIRE" + newIdString.Substring(newIdString.Length - 4, 4);
         }
+
+        public List<FineReceiptDTO> GetFineReceipts(DateTime? date = null)
+        {
+            try
+            {
+                var context = DataProvider.Ins.DB;
+                IQueryable<FineReceipt> fineReceiptQuery = context.FineReceipts;
+                if (date != null)
+                {
+                    var compareDate = date?.Date ?? new DateTime();
+                    fineReceiptQuery = fineReceiptQuery.Where(f => (DbFunctions.TruncateTime(f.createdAt) == compareDate));
+                }
+
+                var fineReceipts = fineReceiptQuery.Select(f => new FineReceiptDTO
+                {
+                    id = f.id,
+                    readerCard = new ReaderCardDTO
+                    {
+                        name = f.ReaderCard.name,
+                        address = f.ReaderCard.address,
+                        employeeId = f.ReaderCard.employeeId,
+                        readerTypeId = f.ReaderCard.readerTypeId,
+                        totalFine = f.ReaderCard.totalFine ?? 0,
+                        email = f.ReaderCard.email,
+                        createdAt = f.ReaderCard.createdAt,
+                        expiryDate = f.ReaderCard.expiryDate,
+                        gender = f.ReaderCard.gender,
+                        birthDate = f.ReaderCard.birthDate,
+                    },
+                    createdAt = f.createdAt,
+                    amount = f.amount,
+                }).ToList();
+
+
+                return fineReceipts;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         public (bool, string message) CreateFineReceipt(FineReceiptDTO fineReceipt)
         {
             try
@@ -53,11 +95,12 @@ namespace LibraryManagement.Services
 
                 var readerCard = context.ReaderCards.Find(fineReceipt.readerCardId);
 
-                if (readerCard is null) {
+                if (readerCard is null)
+                {
                     return (false, "Thẻ độc giả không tồn tại!");
                 }
 
-                if(readerCard.totalFine < fineReceipt.amount)
+                if (readerCard.totalFine < fineReceipt.amount)
                 {
                     return (false, "Tiền thu không được lớn hơn số tiền nợ");
                 }

@@ -1,4 +1,5 @@
 using LibraryManagement.DTOs;
+using LibraryManagement.Services;
 using LibraryManagement.ViewModels;
 using LibraryManagement.ViewModels.SettingVM;
 using LibraryManagement.Views.BookManagement;
@@ -13,6 +14,7 @@ using LibraryManagement.Views.StatisticalManagement;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System;
 namespace LibraryManagement.ViewModel
 {
     public class MainWindowViewModel : BaseViewModel
@@ -79,6 +81,18 @@ namespace LibraryManagement.ViewModel
                 p.Close();
 
             });
+
+            try
+            {
+                var allData = BorrowingReturnService.Ins.GetBorrowingReturnCards();
+                var allCardsByReturnDate = BorrowingReturnService.Ins.GetBorrowingReturnCards(returnDate: new DateTime(2022, 3, 15));
+                var allCardsByBorrowingDate = BorrowingReturnService.Ins.GetBorrowingReturnCards(borrowingDate: new DateTime(2022, 4, 5));
+            }
+            catch (Exception e)
+            {
+
+            }
+
         }
 
     }

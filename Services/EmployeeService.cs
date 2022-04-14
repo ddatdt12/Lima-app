@@ -164,8 +164,32 @@ namespace LibraryManagement.Services
                 employee.startingDate = updatedEmployee.startingDate;
 
                 acc.username = updatedEmployee.account.username;
-                acc.password = Helper.MD5Hash(updatedEmployee.account.password);
                 acc.roleId = updatedEmployee.account.roleId;
+
+                context.SaveChanges();
+                return (true, "Cập nhật thành công!");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (false, e.Message);
+
+            }
+            catch (DbUpdateException e)
+            {
+                return (false, e.Message);
+            }
+        }
+        public (bool, string message) UpdatePasswordOfEmployee(int accountId, string newPassword)
+        {
+            try
+            {
+                var context = DataProvider.Ins.DB;
+                var acc = context.Accounts.Find(accountId);
+                if (acc is null)
+                {
+                    return (false, "Tài khoản không tồn tại");
+                }
+                acc.password = Helper.MD5Hash(newPassword);
 
                 context.SaveChanges();
                 return (true, "Cập nhật thành công!");
