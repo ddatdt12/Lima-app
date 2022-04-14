@@ -197,6 +197,7 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\BookManagementVM\BookManagementViewModel.cs" />
     <Compile Include="ViewModels\Genre_AuthorManagementVM\Genre_AuthorManagementViewModel.cs" />
+    <Compile Include="ViewModels\HomeVM\ReaderHomeViewModel.cs" />
     <Compile Include="ViewModels\ImportBookVM\ImportBookViewModel.cs" />
     <Compile Include="ViewModels\LoginVM\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
@@ -236,6 +237,9 @@
     </Compile>
     <Compile Include="Views\Genre_AuthorManagement\MainManagementPage.xaml.cs">
       <DependentUpon>MainManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Home\ReaderHome.xaml.cs">
+      <DependentUpon>ReaderHome.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ImportBook\AddBaseBookPage.xaml.cs">
       <DependentUpon>AddBaseBookPage.xaml</DependentUpon>
@@ -354,6 +358,10 @@
     <Page Include="Views\Genre_AuthorManagement\MainManagementPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Home\ReaderHome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ImportBook\AddBaseBookPage.xaml">
       <SubType>Designer</SubType>

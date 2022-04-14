@@ -1,0 +1,315 @@
+﻿<Page x:Class="LibraryManagement.Views.Home.ReaderHome"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:LibraryManagement.Views.Home"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      mc:Ignorable="d"
+      Height="800"
+      Width="1128"
+      DataContext="{StaticResource ReaderHomeVM}">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding FirstLoadCM}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid>
+        <StackPanel>
+
+            <TextBlock Text="Trang chủ"
+                       FontSize="32"
+                       FontWeight="Bold"
+                       Foreground="#1B48BA"
+                       Margin="20,10,0,0" />
+
+            <StackPanel Orientation="Horizontal"
+                        Margin="20,20,0,0">
+
+
+                <!---3 CARDS-->
+                <materialDesign:Card Height="160"
+                                     Width="350"
+                                     UniformCornerRadius="10">
+                    <StackPanel>
+                        <Border CornerRadius="10,10,0,0"
+                                Height="60"
+                                BorderThickness="1"
+                                Background="#EFF4F4">
+                            <TextBlock Text="Tổng số sách đang mượn"
+                                       Foreground="#1B48BA"
+                                       FontSize="20"
+                                       FontWeight="Bold"
+                                       TextAlignment="Center"
+                                       VerticalAlignment="Center" />
+                        </Border>
+                        <Border CornerRadius="0,0,10,10"
+                                Height="100"
+                                BorderThickness="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <materialDesign:PackIcon Kind="Bookshelf"
+                                                         Foreground="#1B48BA"
+                                                         Width="72"
+                                                         Height="72"
+                                                         Margin="30,0,0,0"
+                                                         Grid.Column="0"
+                                                         HorizontalAlignment="Left"
+                                                         VerticalAlignment="Center" />
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="{Binding TotalRent}"
+                                               Foreground="#1B48BA"
+                                               FontWeight="Bold"
+                                               FontSize="40"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                    <TextBlock Text="sách"
+                                               Foreground="#1B48BA"
+                                               FontWeight="Bold"
+                                               FontSize="20"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </materialDesign:Card>
+
+                <materialDesign:Card Height="160"
+                                     Width="350"
+                                     UniformCornerRadius="10"
+                                     Margin="20,0,20,0">
+                    <StackPanel>
+                        <Border CornerRadius="10,10,0,0"
+                                Height="60"
+                                BorderThickness="1"
+                                Background="#EFF4F4">
+                            <TextBlock Text="Hạn thẻ còn lại"
+                                       Foreground="#1B48BA"
+                                       FontSize="20"
+                                       FontWeight="Bold"
+                                       TextAlignment="Center"
+                                       VerticalAlignment="Center" />
+                        </Border>
+                        <Border CornerRadius="0,0,10,10"
+                                Height="100"
+                                BorderThickness="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <materialDesign:PackIcon Kind="ClockTimeFour"
+                                                         Foreground="#1B48BA"
+                                                         Width="72"
+                                                         Height="72"
+                                                         Margin="30,0,0,0"
+                                                         Grid.Column="0"
+                                                         HorizontalAlignment="Left"
+                                                         VerticalAlignment="Center" />
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="{Binding DateLeft}"
+                                               Foreground="#1B48BA"
+                                               FontWeight="Bold"
+                                               FontSize="40"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                    <TextBlock Text="ngày"
+                                               Foreground="#1B48BA"
+                                               FontWeight="Bold"
+                                               FontSize="20"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </materialDesign:Card>
+
+                <materialDesign:Card Height="160"
+                                     Width="350"
+                                     UniformCornerRadius="10">
+                    <StackPanel>
+                        <Border CornerRadius="10,10,0,0"
+                                Height="60"
+                                BorderThickness="1"
+                                Background="#EFF4F4">
+                            <TextBlock Text="Tổng nợ"
+                                       Foreground="#1B48BA"
+                                       FontSize="20"
+                                       FontWeight="Bold"
+                                       TextAlignment="Center"
+                                       VerticalAlignment="Center" />
+                        </Border>
+                        <Border CornerRadius="0,0,10,10"
+                                Height="100"
+                                BorderThickness="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <materialDesign:PackIcon Kind="Wallet"
+                                                         Foreground="#1B48BA"
+                                                         Width="72"
+                                                         Height="72"
+                                                         Margin="30,0,0,0"
+                                                         Grid.Column="0"
+                                                         HorizontalAlignment="Left"
+                                                         VerticalAlignment="Center" />
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="{Binding TotalFine}"
+                                               MaxWidth="150"
+                                               x:Name="fine"
+                                               TextTrimming="CharacterEllipsis"
+                                               Foreground="#1B48BA"
+                                               FontWeight="Bold"
+                                               FontSize="40"
+                                               ToolTip="{Binding ElementName=fine, Path=Text}"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                    <TextBlock Text="VND"
+                                               Foreground="#1B48BA"
+                                               FontWeight="Bold"
+                                               FontSize="20"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </materialDesign:Card>
+
+            </StackPanel>
+
+            <!---2 LISTVIEW-->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <materialDesign:Card Grid.Column="0"
+                                     Margin="20"
+                                     Height="500"
+                                     UniformCornerRadius="4">
+                    <StackPanel Margin="20">
+                        <TextBlock Text="Sách đang mượn"
+                                   FontWeight="Bold"
+                                   FontSize="20"
+                                   Foreground="#1B48BA" />
+                        <Border BorderBrush="#BFBABA"
+                                CornerRadius="4"
+                                BorderThickness="1"
+                                Height="400"
+                                Margin="0,30,0,0">
+                            <ListView ItemsSource="{Binding RentingList}">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Mã sách"
+                                                        Width="150">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding bookInfo.id}"
+                                                               FontSize="18"
+                                                               Margin="15,0,0,0" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Tên sách"
+                                                        Width="180">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding bookInfo.Book.baseBook.name}"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               ToolTip="{Binding bookInfo.Book.baseBook.name}"
+                                                               FontSize="18"
+                                                               Margin="15,0,0,0" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Ngày mượn"
+                                                        Width="135">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding borrowingDate,StringFormat=dd/MM/yyyy}"
+                                                               FontSize="18"
+                                                               Margin="15,0,0,0" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </Border>
+                    </StackPanel>
+                </materialDesign:Card>
+
+                <materialDesign:Card Grid.Column="1"
+                                     Margin="20"
+                                     Height="500"
+                                     UniformCornerRadius="4">
+                    <StackPanel Margin="20">
+                        <TextBlock Text="Sách trễ hạn"
+                                   FontWeight="Bold"
+                                   FontSize="20"
+                                   Foreground="#1B48BA" />
+                        <Border BorderBrush="#BFBABA"
+                                CornerRadius="4"
+                                BorderThickness="1"
+                                Height="400"
+                                Margin="0,30,0,0">
+                            <ListView ItemsSource="{Binding DelayList}">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Mã sách"
+                                                        Width="120">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding bookInfoId}"
+                                                               FontSize="18"
+                                                               Margin="15,0,0,0" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Tên sách"
+                                                        Width="200">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding bookInfo.Book.baseBook.name}"
+                                                               FontSize="18"
+                                                               Margin="15,0,0,0"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               ToolTip="{Binding bookInfo.Book.baseBook.name}" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Hạn trả"
+                                                        Width="120">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding dueDate}"
+                                                               FontSize="18"
+                                                               Margin="15,0,0,0" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </Border>
+                    </StackPanel>
+                </materialDesign:Card>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Page>

@@ -107,6 +107,12 @@
                                    VerticalAlignment="Center"
                                    FontSize="20"
                                    FontWeight="Bold" />
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenHomePageCM}"
+                                                       CommandParameter="{Binding ElementName=mainFrame}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                     </StackPanel>
                     <!---BOOK-->
                     <TreeView Foreground="#1B48BA"
@@ -463,6 +469,13 @@
                Background="#F5FDFE"
                Width="1128"
                Height="800"
-               NavigationUIVisibility="Hidden" />
+               NavigationUIVisibility="Hidden">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Loaded">
+                    <i:InvokeCommandAction Command="{Binding FirstLoadCM}"
+                                           CommandParameter="{Binding ElementName=mainFrame}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Frame>
     </Grid>
 </Window>
