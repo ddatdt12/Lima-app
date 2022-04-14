@@ -1,11 +1,15 @@
 ﻿using LibraryManagement.DTOs;
 using LibraryManagement.Services;
 using LibraryManagement.ViewModel;
+using LibraryManagement.Views.RentBook;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 
 namespace LibraryManagement.ViewModels.RentBookVM
 {
@@ -131,16 +135,25 @@ namespace LibraryManagement.ViewModels.RentBookVM
                             string temp = listBookDTO[i].baseBook.name.ToLower();
                             if (temp.Contains(NameSearchBook.ToLower()))
                             {
-                                Book book = new Book(
-                                0,
-                                listBookDTO[i].id,
-                                listBookDTO[i].baseBook.name,
-                                listBookDTO[i].baseBook.genre.name,
-                                author,
-                                listBookDTO[i].publisher,
-                                listBookDTO[i].yearOfPublication
-                                );
-                                BookList.Add(book);
+                                Book book = new Book()
+                                {
+
+                                    Name = listBookDTO[i].baseBook.name,
+                                };
+                                foreach (var bif in listBookDTO[i].bookInfoes)
+                                {
+                                    book.STT = 0;
+                                    book.BookID = bif.id;
+                                    book.BillId = "";
+                                    book.Name = listBookDTO[i].baseBook.name;
+                                    book.Author = author;
+                                    book.Publisher = listBookDTO[i].publisher;
+                                    book.YearPublisher = listBookDTO[i].yearOfPublication;
+
+                                    BookList.Add(book);
+                                }
+
+
                             }
                         }
                         for (int i = 0; i < RentBookList.Count; i++)
@@ -207,6 +220,10 @@ namespace LibraryManagement.ViewModels.RentBookVM
         }
 
         List<BookDTO> listBookDTO { get; set; }
+
+        public List<Book> CurrentPrint { get; set; }
+
+
 
         public RentBookViewModel()
         {
@@ -307,18 +324,27 @@ namespace LibraryManagement.ViewModels.RentBookVM
                                 {
                                     author += '\n';
                                 }
+
+                            }
+                            Book book = new Book()
+                            {
+
+                                Name = listBookDTO[i].baseBook.name,
+                            };
+                            foreach (var bif in listBookDTO[i].bookInfoes)
+                            {
+                                book.STT = 0;
+                                book.BookID = bif.id;
+                                book.BillId = "";
+                                book.Name = listBookDTO[i].baseBook.name;
+                                book.Author = author;
+                                book.Publisher = listBookDTO[i].publisher;
+                                book.YearPublisher = listBookDTO[i].yearOfPublication;
+
+                                BookList.Add(book);
                             }
 
-                            Book book = new Book(
-                                0,
-                                listBookDTO[i].id,
-                                listBookDTO[i].baseBook.name,
-                                listBookDTO[i].baseBook.genre.name,
-                                author,
-                                listBookDTO[i].publisher,
-                                listBookDTO[i].yearOfPublication
-                                );
-                            BookList.Add(book);
+
                         }
                     }
                 }
@@ -374,6 +400,18 @@ namespace LibraryManagement.ViewModels.RentBookVM
                     (bool success, string message) = BorrowingReturnService.Ins.CreateBorrowingCard(borrowingCard, bookInfoList);
                     if (success)
                     {
+                        List<BorrowingCardDTO> listBorrowingCard = BorrowingReturnService.Ins.GetBorrowingCardsByReaderId(ReaderID);
+                        foreach (var it in listBorrowingCard)
+                        {
+                            foreach (var item in RentBookList)
+                            {
+                                if (it.bookInfoId == item.BookID)
+                                {
+                                    item.BillId = it.id;
+                                }
+                            }
+                        }
+                        OpenPrintWindow(RentBookList);
                         RentBookList.Clear();
                         BookList.Clear();
                         ReaderID = string.Empty;
@@ -433,74 +471,113 @@ namespace LibraryManagement.ViewModels.RentBookVM
 
             });
         }
-
-
-    }
-
-
-
-    public class Book : BaseViewModel
-    {
-
-        private int _STT;
-        public int STT
+        public void OpenPrintWindow(ObservableCollection<Book> rl)
         {
-            get { return _STT; }
-            set { _STT = value; OnPropertyChanged(); }
-        }
+            //create printer
+            PrintDialog pd = new PrintDialog();
+            if (pd.ShowDialog() != true) return;
 
-        private string _BookID;
-        public string BookID
-        {
-            get { return _BookID; }
-            set { _BookID = value; }
-        }
+            //create document
+            FixedDocument document = new FixedDocument();
+            document.DocumentPaginator.PageSize = new Size(600, 350);
 
-        private string _Name;
-        public string Name
-        {
-            get { return _Name; }
-            set { _Name = value; }
-        }
 
-        private string _Category;
-        public string Category
-        {
-            get { return _Category; }
-            set { _Category = value; }
-        }
 
-        private string _Author;
-        public string Author
-        {
-            get { return _Author; }
-            set { _Author = value; }
-        }
+            foreach (var item in rl)
+            {
+                //create page
+                FixedPage page = new FixedPage();
+                page.Width = document.DocumentPaginator.PageSize.Width;
+                page.Height = document.DocumentPaginator.PageSize.Height;
 
-        private string _Publisher;
-        public string Publisher
-        {
-            get { return _Publisher; }
-            set { _Publisher = value; }
-        }
+                PrintWindow w = new PrintWindow();
+                w.rcId.Text = item.BillId;
+                w.date.Text = DateTime.Now.ToString("dd/MM/yyyy");
+                w.reader.Text = ReaderName;
+                CurrentPrint = new List<Book>();
+                CurrentPrint.Add(item);
+                w.lv.ItemsSource = CurrentPrint;
 
-        private int _YearPublisher;
-        public int YearPublisher
-        {
-            get { return _YearPublisher; }
-            set { _YearPublisher = value; }
+                //remove element from tree
+                Grid parent = w.Print.Parent as Grid;
+                Grid child = w.Print as Grid;
+                parent.Children.Remove(w.Print);
+                page.Children.Add(child);
+
+                // add the page to the document
+                PageContent page1Content = new PageContent();
+                ((IAddChild)page1Content).AddChild(page);
+                document.Pages.Add(page1Content);
+            }
+
+            // and print
+            pd.PrintDocument(document.DocumentPaginator, "Return bill");
+
+
         }
 
 
-        public Book(int STT, string BookID, string Name, string Category, string Author, string Publisher, int YearPublisher)
+        public class Book : BaseViewModel
         {
-            _STT = STT;
-            _BookID = BookID;
-            _Name = Name;
-            _Category = Category;
-            _Author = Author;
-            _Publisher = Publisher;
-            _YearPublisher = YearPublisher;
+
+            private int _STT;
+            public int STT
+            {
+                get { return _STT; }
+                set { _STT = value; OnPropertyChanged(); }
+            }
+
+            private string _BookID;
+            public string BookID
+            {
+                get { return _BookID; }
+                set { _BookID = value; }
+            }
+
+            private string _Name;
+            public string Name
+            {
+                get { return _Name; }
+                set { _Name = value; }
+            }
+
+            private string _Category;
+            public string Category
+            {
+                get { return _Category; }
+                set { _Category = value; }
+            }
+
+            private string _Author;
+            public string Author
+            {
+                get { return _Author; }
+                set { _Author = value; }
+            }
+
+            private string _Publisher;
+            public string Publisher
+            {
+                get { return _Publisher; }
+                set { _Publisher = value; }
+            }
+
+            private int _YearPublisher;
+            public int YearPublisher
+            {
+                get { return _YearPublisher; }
+                set { _YearPublisher = value; }
+            }
+
+            private string billId;
+            public string BillId
+            {
+                get { return billId; }
+                set { billId = value; }
+            }
+
+
+            public Book() { }
         }
     }
 }

@@ -145,7 +145,7 @@ namespace LibraryManagement.Services
                                               {
                                                   id = bI.id,
                                                   BookId = bI.bookId,
-                                                  status = bI.status
+                                                  status = bI.status,
                                               }).ToList()
                                           }).ToList();
 

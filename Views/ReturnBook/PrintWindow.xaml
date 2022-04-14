@@ -1,0 +1,220 @@
+﻿<Window x:Class="LibraryManagement.Views.ReturnBook.PrintWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LibraryManagement.Views.ReturnBook"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Height="800"
+        Width="600"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        FontFamily="{StaticResource NunitoSans_Regular}"
+        DataContext="{StaticResource ReturnBookVM}">
+
+    <Grid Margin="0,0,0,270"
+          Width="600">
+        <Grid  x:Name="Print">
+
+            <Grid Background="#EBECF0"
+                  RenderTransformOrigin="0.5,0.5"
+                  Margin="67,-534,-67,534">
+                <Grid.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform Angle="-98.387" />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Grid.RenderTransform>
+            </Grid>
+            <Grid Background="#67AEE1"
+                  RenderTransformOrigin="0.5,0.5"
+                  Margin="-388,-305,388,305">
+                <Grid.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform Angle="-61.167" />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Grid.RenderTransform>
+            </Grid>
+            <Grid Background="#032A3F"
+                  Height="200"
+                  RenderTransformOrigin="0.5,0.5"
+                  Margin="-342,42,342,288">
+                <Grid.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform Angle="-73.609" />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Grid.RenderTransform>
+            </Grid>
+
+            <Grid Height="280"
+                  VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="11*" />
+                    <ColumnDefinition Width="14*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <Label Margin="20,20,0,0">
+                        <Label.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Library"
+                                                         Foreground="White"
+                                                         Width="50"
+                                                         Height="50" />
+                                <TextBlock Text="Lima"
+                                           FontWeight="Bold"
+                                           Foreground="White"
+                                           FontSize="35" />
+                            </StackPanel>
+                        </Label.Content>
+                    </Label>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1">
+
+                    <StackPanel Margin="0,80,0,0">
+                        <TextBlock Text="PHIẾU TRẢ SÁCH"
+                                   Foreground="#0266FD"
+                                   FontSize="35"
+                                   FontWeight="Bold" />
+                        <DockPanel Margin="30,0,20,0">
+                            <TextBlock Text="Mã phiếu:"
+                                       FontSize="18"
+                                       FontWeight="Bold" />
+                            <TextBlock FontSize="18"
+                                       HorizontalAlignment="Right"
+                                       Margin="0,0,20,0"
+                                       FontWeight="Bold"
+                                       x:Name="rcId" />
+                        </DockPanel>
+                        <DockPanel Margin="30,0,20,0">
+                            <TextBlock Text="Ngày lập:"
+                                       FontSize="18"
+                                       FontWeight="Bold" />
+                            <TextBlock FontSize="18"
+                                       Margin="0,0,20,0"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Right"
+                                       x:Name="date" />
+                        </DockPanel>
+                        <DockPanel Margin="30,0,20,0">
+                            <TextBlock Text="Độc giả:"
+                                       Foreground="Black"
+                                       FontSize="18"
+                                       FontWeight="Bold" />
+                            <TextBlock x:Name="reader"
+                                       TextWrapping="Wrap"
+                                       Foreground="Black"
+                                       FontSize="20"
+                                       TextAlignment="Right"
+                                       HorizontalAlignment="Right"
+                                       Margin="0,0,20,0" />
+                        </DockPanel>
+                    </StackPanel>
+
+                </StackPanel>
+            </Grid>
+
+            <Border BorderThickness="1"
+                    BorderBrush="#FFB5ADAD"
+                    CornerRadius="4"
+                    Background="White"
+                    Opacity="0.9"
+                    Margin="40,0,40,0"
+                    Height="100">
+                <ListView x:Name="lv"
+                          Height="100"
+                          ItemsSource="{Binding CurrentPrint}"
+                          ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                    <ListView.View>
+                        <GridView>
+                            <GridView.ColumnHeaderContainerStyle>
+                                <Style TargetType="GridViewColumnHeader">
+                                    <Setter Property="Height"
+                                            Value="30" />
+                                    <Setter Property="Padding"
+                                            Value="0" />
+                                </Style>
+                            </GridView.ColumnHeaderContainerStyle>
+                            <GridViewColumn Header="Mã sách"
+                                            Width="120">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding BookId}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Ngày mượn"
+                                            Width="100">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding DateRent,StringFormat=dd/MM/yyyy}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Hạn trả"
+                                            Width="100">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding DueDate,StringFormat=dd/MM/yyyy}"
+                                                   TextWrapping="Wrap" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Số ngày trễ"
+                                            Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding sumDelayDate}"
+                                                   TextWrapping="Wrap" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Tiền phạt"
+                                            Width="120">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Fine}"
+                                                   TextWrapping="Wrap" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Border>
+        </Grid>
+        <Button VerticalAlignment="Bottom"
+                Width="150"
+                Height="45"
+                materialDesign:ButtonAssist.CornerRadius="8"
+                Background="White"
+                Content="Huỷ"
+                Click="Button_Click"
+                Foreground="Black"
+                FontWeight="Bold"
+                FontSize="16"
+                HorizontalAlignment="Left"
+                Margin="40,0,0,10" />
+        <Button VerticalAlignment="Bottom"
+                Width="150"
+                Height="45"
+                materialDesign:ButtonAssist.CornerRadius="8"
+                Background="#0266FD"
+                Content="In Phiếu"
+                FontWeight="Bold"
+                FontSize="16"
+                HorizontalAlignment="Right"
+                Margin="0,0,40,15" />
+    </Grid>
+</Window>

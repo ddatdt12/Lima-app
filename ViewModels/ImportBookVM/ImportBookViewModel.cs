@@ -414,11 +414,12 @@ namespace LibraryManagement.ViewModel.ImportBookVM
 
                     if (isS)
                     {
+                        OpenPrintImportReiceipt(importRC);
                         ImportBookList.Clear();
                         MainImportBookPage.AllBookList = new ObservableCollection<BookDTO>(BookService.Ins.GetAllBook());
-                        PrintImportReiceipt();
                         TotalQuantity = 0;
                         TotalReceiptPrice = 0;
+
                     }
                     MessageBox.Show(mes);
                 }
@@ -533,9 +534,21 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                 !(Price is null) &&
                 !(Quantity is null);
         }
-        public void PrintImportReiceipt()
+        public void OpenPrintImportReiceipt(ImportReceiptDTO rc)
         {
+            PrintWindow w = new PrintWindow();
+            w.supplier.Text = rc.supplier;
+            w.rcId.Text = rc.id;
+            w.date.Text = rc.createdAt.ToString("dd/MM/yyyy");
 
+            int total = 0;
+            foreach (var item in rc.importReceiptDetailList)
+            {
+                total += item.unitTotal;
+            }
+
+            w.totalPrice.Text = total.ToString();
+            w.ShowDialog();
         }
         public void CalculateTotal(ImportReceiptDetailDTO item)
         {
