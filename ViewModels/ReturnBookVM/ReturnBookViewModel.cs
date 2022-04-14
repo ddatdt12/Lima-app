@@ -217,8 +217,9 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                     {
                         int sumDelayDate;
                         sumDelayDate = DateTime.Now.Subtract(listBorrowingCard[i].dueDate).Days;
-                        decimal fine = DateTime.Now.Subtract(listBorrowingCard[i].dueDate).Days * ParameterService.Ins.GetRuleValue(Utils.Rules.FINE);
+                        decimal fine = sumDelayDate * ParameterService.Ins.GetRuleValue(Utils.Rules.FINE);
                         if (fine < 0) fine = 0;
+                        if (sumDelayDate < 0) sumDelayDate = 0;
 
                         Book book = new Book
                         (
