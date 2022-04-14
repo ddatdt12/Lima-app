@@ -17,6 +17,9 @@ namespace LibraryManagement.DTOs
         public string bookInfoId { get; set; }
         public int numberOfDelayReturnDays{ get; set; }
 
+        //This is for UI binding only
+        public int currentFine{ get; set; }
+
         public BookInfoDTO bookInfo { get; set; }
         public ReturnCardDTO returnCard { get; set; }
         public EmployeeDTO employee { get; set; }
