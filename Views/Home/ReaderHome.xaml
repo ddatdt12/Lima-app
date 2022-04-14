@@ -259,10 +259,30 @@
                                      Height="500"
                                      UniformCornerRadius="4">
                     <StackPanel Margin="20">
-                        <TextBlock Text="Sách trễ hạn"
-                                   FontWeight="Bold"
-                                   FontSize="20"
-                                   Foreground="#1B48BA" />
+                        <DockPanel>
+
+                            <TextBlock Text="Sách trễ hạn"
+                                       FontWeight="Bold"
+                                       FontSize="20"
+                                       Foreground="#1B48BA" />
+
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Right">
+                                <TextBlock Text="Quy định phạt: "
+                                           FontWeight="Bold"
+                                           FontSize="15"
+                                           Foreground="#1B48BA"
+                                           HorizontalAlignment="Right"
+                                           VerticalAlignment="Bottom" />
+                                <TextBlock Text="{Binding RuleFine}"
+                                           FontWeight="Bold"
+                                           FontSize="15"
+                                           VerticalAlignment="Bottom"
+                                           Foreground="#1B48BA"
+                                           HorizontalAlignment="Right" />
+                            </StackPanel>
+                        </DockPanel>
+
                         <Border BorderBrush="#BFBABA"
                                 CornerRadius="4"
                                 BorderThickness="1"
@@ -271,8 +291,7 @@
                             <ListView ItemsSource="{Binding DelayList}">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Mã sách"
-                                                        Width="120">
+                                        <GridViewColumn Header="Mã sách">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding bookInfoId}"
@@ -293,11 +312,28 @@
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        <GridViewColumn Header="Hạn trả"
-                                                        Width="120">
+                                        <GridViewColumn Header="Hạn trả">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding dueDate}"
+                                                    <TextBlock Text="{Binding dueDate,StringFormat=dd/MM/yyyy}"
+                                                               FontSize="18"
+                                                               Margin="15,0,0,0" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Số ngày trễ">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding numberOfDelayReturnDays}"
+                                                               FontSize="18"
+                                                               Margin="15,0,0,0" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Tiền phạt">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding currentFine}"
                                                                FontSize="18"
                                                                Margin="15,0,0,0" />
                                                 </DataTemplate>

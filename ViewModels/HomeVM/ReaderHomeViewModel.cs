@@ -35,6 +35,14 @@ namespace LibraryManagement.ViewModels.HomeVM
             set { totalFine = value; OnPropertyChanged(); }
         }
 
+        private string ruleFine;
+        public string RuleFine
+        {
+            get { return ruleFine; }
+            set { ruleFine = value; OnPropertyChanged(); }
+        }
+
+
         private ObservableCollection<BorrowingCardDTO> rentingList;
         public ObservableCollection<BorrowingCardDTO> RentingList
         {
@@ -64,6 +72,7 @@ namespace LibraryManagement.ViewModels.HomeVM
             FirstLoadCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 ReaderInfo = ReaderService.Ins.GetReaderInfo(MainWindowViewModel.CurrentUser.reader.id);
+                RuleFine = ParameterService.Ins.GetRuleValue(Utils.Rules.FINE) + "đ/ngày";
 
                 if (ReaderInfo is null) return;
 
@@ -74,8 +83,11 @@ namespace LibraryManagement.ViewModels.HomeVM
                 TotalRent = ReaderInfo.numberOfBorrowingBooks;
 
                 RentingList = new ObservableCollection<BorrowingCardDTO>(BorrowingReturnService.Ins.GetBorrowingCardsByReaderId(ReaderInfo.id));
-                //DelayList = new ObservableCollection<BorrowingCardDTO>(RentingList.Where(b => b.returnCard != null && b.returnCard.returnedDate == null && b.dueDate < DateTime.Now));
                 DelayList = new ObservableCollection<BorrowingCardDTO>(BorrowingReturnService.Ins.GetDelayBorrowingCardsByReaderId(ReaderInfo.id));
+                foreach (var item in DelayList)
+                {
+                    item.currentFine = DateTime.Now.Subtract(item.dueDate).Days * ParameterService.Ins.GetRuleValue(Utils.Rules.FINE);
+                }
             });
         }
     }
