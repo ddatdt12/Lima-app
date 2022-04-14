@@ -9,7 +9,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 
 namespace LibraryManagement.ViewModels.PunishBookVM
 {
@@ -17,6 +20,7 @@ namespace LibraryManagement.ViewModels.PunishBookVM
     {
 
         #region Command
+        public ICommand FirstLoadCM { get; set; }
         public ICommand CheckReaderCardCM { get; set; }
         public ICommand ConfirmCM { get; set; }
         public ICommand CloseWindowCM { get; set; }
@@ -113,6 +117,12 @@ namespace LibraryManagement.ViewModels.PunishBookVM
             ExpiredBookTotal = ExpiredBookList.Count;
             CanPaidFine = false;
 
+            FirstLoadCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                ClearData();
+                ReaderID = string.Empty;
+            });
+
             RemoveBookCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 if (SelectedExpiredBook != null)
@@ -166,10 +176,10 @@ namespace LibraryManagement.ViewModels.PunishBookVM
                     (bool success, string message) = FineReceiptService.Ins.CreateFineReceipt(fineReceipt);
                     if (success)
                     {
+                        OpenPrintWindow(fineReceipt);
                         ClearData();
                         ReaderID = null;
                         CanPaidFine = false;
-
                     }
                     MessageBox.Show(message);
                 }
@@ -177,7 +187,6 @@ namespace LibraryManagement.ViewModels.PunishBookVM
                 {
                     throw e;
                 }
-
             }
                );
 
@@ -196,8 +205,6 @@ namespace LibraryManagement.ViewModels.PunishBookVM
                 }
             }
                );
-
-
         }
 
         public bool IsReaderCardValid()
@@ -224,6 +231,49 @@ namespace LibraryManagement.ViewModels.PunishBookVM
             TotalLeft = null;
             ExpiredBookTotal = 0;
             ExpiredBookList.Clear();
+
+        }
+
+        public void OpenPrintWindow(FineReceiptDTO fineReceipt)
+        {
+            //create printer
+            PrintDialog pd = new PrintDialog();
+            if (pd.ShowDialog() != true) return;
+
+            //create document
+            FixedDocument document = new FixedDocument();
+            document.DocumentPaginator.PageSize = new Size(600, 420);
+
+
+            
+                //create page
+                FixedPage page = new FixedPage();
+                page.Width = document.DocumentPaginator.PageSize.Width;
+                page.Height = document.DocumentPaginator.PageSize.Height;
+
+                PrintWindow w = new PrintWindow();
+                w.punishCard.Text = fineReceipt.id;
+                w.date.Text = DateTime.Now.ToString("dd/MM/yyyy");
+                w.name.Text = ReaderName;
+                w.totalDept.Text = TotalDept.ToString();
+                w.paid.Text = TotalPaid.ToString();
+                w.remain.Text = TotalLeft.ToString();
+
+                //remove element from tree
+                Grid parent = w.Print.Parent as Grid;
+                Grid child = w.Print as Grid;
+                parent.Children.Remove(w.Print);
+                page.Children.Add(child);
+
+                // add the page to the document
+                PageContent page1Content = new PageContent();
+                ((IAddChild)page1Content).AddChild(page);
+                document.Pages.Add(page1Content);
+            
+
+            // and print
+            pd.PrintDocument(document.DocumentPaginator, "Return bill");
+
 
         }
 

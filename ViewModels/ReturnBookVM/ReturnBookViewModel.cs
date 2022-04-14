@@ -16,6 +16,7 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
     public class ReturnBookViewModel : BaseViewModel
     {
         #region Command
+        public ICommand FirstLoadCM { get; set; }
         public ICommand CheckReaderCardCM { get; set; }
         public ICommand ConfirmCM { get; set; }
         public ICommand RemoveBookCM { get; set; }
@@ -178,31 +179,25 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
             ReturnBookTotal = ReturnBookList.Count;
             CanReturn = false;
 
+            FirstLoadCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                ClearData();
+                ReaderID = string.Empty;
+            });
+
             CheckReaderCardCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 if (string.IsNullOrEmpty(ReaderID))
                 {
                     MessageBox.Show("Vui lòng nhập mã độc giả!");
-                    ReturnBookList.Clear();
-                    RentingBookList.Clear();
-                    ReaderName = null;
-                    TotalDept = null;
-                    TotalPunish = null;
-                    ReturnBookTotal = 0;
-                    CanReturn = false;
+                    ClearData();
                     return;
                 }
                 ReaderCardDTO readerCard = ReaderService.Ins.GetReaderInfo(ReaderID);
                 if (readerCard == null)
                 {
                     MessageBox.Show("Mã độc giả không tồn tại!");
-                    ReturnBookList.Clear();
-                    RentingBookList.Clear();
-                    ReaderName = null;
-                    TotalDept = null;
-                    TotalPunish = null;
-                    ReturnBookTotal = 0;
-                    CanReturn = false;
+                    ClearData();
                     return;
                 }
                 ReaderName = readerCard.name;
@@ -262,14 +257,7 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                 if (success)
                 {
                     OpenPrintWindow(ReturnBookList);
-                    ReaderID = string.Empty;
-                    ReturnBookList.Clear();
-                    RentingBookList.Clear();
-                    ReaderName = null;
-                    TotalDept = null;
-                    TotalPunish = null;
-                    ReturnBookTotal = 0;
-                    CanReturn = false;
+                    ClearData();
                 }
                 MessageBox.Show(message);
             });
@@ -314,7 +302,17 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
 
             });
 
+        }
 
+        public void ClearData()
+        {
+            ReturnBookList.Clear();
+            RentingBookList.Clear();
+            ReaderName = null;
+            TotalDept = null;
+            TotalPunish = null;
+            ReturnBookTotal = 0;
+            CanReturn = false;
         }
 
         public void OpenPrintWindow(ObservableCollection<Book> rt)

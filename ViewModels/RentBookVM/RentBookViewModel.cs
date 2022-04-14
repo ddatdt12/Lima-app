@@ -234,6 +234,8 @@ namespace LibraryManagement.ViewModels.RentBookVM
 
             FirstLoadCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
+                ClearData();
+                ReaderID = string.Empty;
                 IsReaderCardExpired = Visibility.Collapsed;
                 IsHaveOutdatedBook = Visibility.Collapsed;
                 CanRent = false;
@@ -246,8 +248,6 @@ namespace LibraryManagement.ViewModels.RentBookVM
 
             CheckReaderCardCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-
-                CanRent = true;
                 if (ReaderID == null)
                 {
                     MessageBox.Show("Mã độc giả bị trống!");
@@ -261,6 +261,7 @@ namespace LibraryManagement.ViewModels.RentBookVM
                     ClearData();
                     return;
                 }
+                CanRent = true;
                 RentBookList.Clear();
                 BookList.Clear();
                 ReaderName = readerCard.name;

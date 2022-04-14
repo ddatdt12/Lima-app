@@ -165,7 +165,8 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Header="Hạn trả"
-                                            Width="100">
+                                            Width="100"
+                                            >
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding DueDate,StringFormat=dd/MM/yyyy}"

@@ -16,6 +16,11 @@
       Width="1128"
       DataContext="{StaticResource ReturnBookVM}"
       ShowsNavigationUI="False">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding FirstLoadCM}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Grid>
         <Grid.RowDefinitions>
