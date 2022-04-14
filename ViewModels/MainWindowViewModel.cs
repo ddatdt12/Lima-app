@@ -36,6 +36,7 @@ namespace LibraryManagement.ViewModel
         public ICommand OpenPunishBookWindowCM { get; set; }
         public ICommand FirstLoadCM { get; set; }
         public ICommand OpenHomePageCM { get; set; }
+        public ICommand OpenHistoryPageCM { get; set; }
         #endregion
 
         public static AccountDTO CurrentUser { get; set; }
@@ -102,6 +103,10 @@ namespace LibraryManagement.ViewModel
                 w.Show();
                 p.Close();
 
+            });
+            OpenHistoryPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
+            {
+                //p.Content = new
             });
 
             try

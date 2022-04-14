@@ -120,8 +120,7 @@ namespace LibraryManagement.ViewModels.PunishBookVM
                     ExpiredBookList.Remove(SelectedExpiredBook);
                     ExpiredBookTotal = ExpiredBookList.Count;
                 }
-            }
-               );
+            });
 
             CheckReaderCardCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -138,8 +137,7 @@ namespace LibraryManagement.ViewModels.PunishBookVM
                 TotalPaid = null;
                 ExpiredBookList.Clear();
                 CanPaidFine = true;
-            }
-               );
+            });
 
             ConfirmCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -178,8 +176,7 @@ namespace LibraryManagement.ViewModels.PunishBookVM
                     throw e;
                 }
 
-            }
-               );
+            });
 
             CloseWindowCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
@@ -194,8 +191,7 @@ namespace LibraryManagement.ViewModels.PunishBookVM
                         return;
                     }
                 }
-            }
-               );
+            });
 
 
         }
