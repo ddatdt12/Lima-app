@@ -6,19 +6,21 @@
                     xmlns:returnBook="clr-namespace:LibraryManagement.ViewModels.ReturnBookVM"
                     xmlns:punishBook="clr-namespace:LibraryManagement.ViewModels.PunishBookVM"
                     xmlns:importbook="clr-namespace:LibraryManagement.ViewModel.ImportBookVM"
+                    xmlns:readerCardPage="clr-namespace:LibraryManagement.ViewModel.ReaderCardVM"
                     xmlns:bookmanage="clr-namespace:LibraryManagement.ViewModel.BookManagementVM"
                     xmlns:genreauthormanage="clr-namespace:LibraryManagement.ViewModels.Genre_AuthorManagementVM"
                     xmlns:statistisgenre="clr-namespace:LibraryManagement.ViewModels.StatisticalVM"
                     xmlns:setting="clr-namespace:LibraryManagement.ViewModels.SettingVM">
     <main:MainWindowViewModel x:Key="MainWindowVM" />
+
     <login:LoginViewModel x:Key="LoginVM" />
     <rentBook:RentBookViewModel x:Key="RentBookVM" />
     <returnBook:ReturnBookViewModel x:Key="ReturnBookVM" />
     <punishBook:PunishBookViewModel x:Key="PunishBookVM" />
+    <readerCardPage:ReaderCardViewModel x:Key="ReaderCardVM" />
     <importbook:ImportBookViewModel x:Key="ImportBookVM" />
     <bookmanage:BookManagementViewModel x:Key="BookManagementVM" />
     <genreauthormanage:Genre_AuthorManagementViewModel x:Key="Genre_AuthorManagementVM" />
     <statistisgenre:StatisticalViewModel x:Key="StatisticalVM" />
     <setting:SettingViewModel x:Key="SettingVM" />
-
 </ResourceDictionary>

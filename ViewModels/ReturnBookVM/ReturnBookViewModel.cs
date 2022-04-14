@@ -1,12 +1,9 @@
 ﻿using LibraryManagement.DTOs;
 using LibraryManagement.Services;
-using LibraryManagement.ViewModels.RentBookVM;
+using LibraryManagement.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -80,7 +77,6 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                     if (CanReturn)
                     {
                         RentingBookList.Clear();
-                        //List<BookDTO> listBookDTO = BookService.Ins.GetAllAvailableBook();
                         List<BorrowingCardDTO> listBorrowingCard = BorrowingReturnService.Ins.GetBorrowingCardsByReaderId(ReaderID);
                         for (int i = 0; i < listBorrowingCard.Count; i++)
                         {
@@ -199,6 +195,8 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                 ReaderName = readerCard.name;
                 TotalDept = readerCard.totalFine;
                 TotalPunish = 0;
+                ReturnBookList.Clear();
+                RentingBookList.Clear();
                 listBorrowingCard = BorrowingReturnService.Ins.GetBorrowingCardsByReaderId(ReaderID);
                 if (ReturnBookList.Count + RentingBookList.Count != listBorrowingCard.Count)
                 {
@@ -206,15 +204,11 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                     {
                         int sumDateRent;
                         sumDateRent = DateTime.Now.Subtract(listBorrowingCard[i].borrowingDate).Days;
-                        decimal fine;
-                        if (DateTime.Now.Subtract(listBorrowingCard[i].dueDate).Days <= 0)
-                        {
-                            fine = 0;
-                        }
-                        else
-                        {
-                            fine = DateTime.Now.Subtract(listBorrowingCard[i].dueDate).Days * ParameterService.Ins.GetRuleValue(Utils.Rules.FINE);
-                        }
+                        //if (sumDateRent < 0)
+                        //    sumDateRent = 0;
+                        decimal fine = DateTime.Now.Subtract(listBorrowingCard[i].dueDate).Days * ParameterService.Ins.GetRuleValue(Utils.Rules.FINE);
+                        if (fine < 0) fine = 0;
+
                         Book book = new Book
                         (
                             0,
@@ -231,11 +225,8 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                 }
                 CanReturn = true;
 
-            }
-               )
-            {
+            });
 
-            };
             ConfirmCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 if (ReturnBookTotal == 0)
@@ -250,8 +241,7 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                     returnCard.id = ReturnBookList[i].RentCardId;
                     returnCard.borrowingCardId = ReturnBookList[i].RentCardId;
                     returnCard.returnedDate = DateTime.Now;
-                    //fineReceipt.employeeId = MainWindowViewModel.CurrentUser.id;
-                    returnCard.employeeId = "NV0001";
+                    returnCard.employeeId = MainWindowViewModel.CurrentUser.employee.id;
                     returnCard.fine = (int)ReturnBookList[i].Fine;
                     returnCardList.Add(returnCard);
                 }
@@ -268,8 +258,7 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                     CanReturn = false;
                 }
                 MessageBox.Show(message);
-            }
-               );
+            });
 
             RemoveBookCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -290,8 +279,7 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                 }
 
 
-            }
-               );
+            });
 
             AddBookCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -310,8 +298,7 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                     TotalPunish = totalPunish;
                 }
 
-            }
-               );
+            });
 
 
         }

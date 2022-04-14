@@ -1,138 +1,101 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using LibraryManagement.DTOs;
+using LibraryManagement.Services;
+using System;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+using System.Windows;
 using System.Windows.Input;
 
 namespace LibraryManagement.ViewModels.StatisticalVM
 {
     public class StatisticalViewModel : BaseViewModel
     {
-        private ObservableCollection<String> statisticGenreList;
-        public ObservableCollection<String> StatisticGenreList
+        private ObservableCollection<BorrowedGenreReportDetailDTO> statisticGenreList;
+        public ObservableCollection<BorrowedGenreReportDetailDTO> StatisticGenreList
         {
             get { return statisticGenreList; }
             set { statisticGenreList = value; OnPropertyChanged(); }
         }
 
-        private ObservableCollection<String> statisticLateList;
-        public ObservableCollection<String> StatisticLateList
+        private ObservableCollection<DelayReturnBookReportDetailDTO> statisticLateList;
+        public ObservableCollection<DelayReturnBookReportDetailDTO> StatisticLateList
         {
             get { return statisticLateList; }
             set { statisticLateList = value; OnPropertyChanged(); }
         }
 
 
-        private ComboBoxItem selectedGenrePeriod;
-        public ComboBoxItem SelectedGenrePeriod
+        private string selectedGenreYear;
+        public string SelectedGenreYear
         {
-            get { return selectedGenrePeriod; }
-            set { selectedGenrePeriod = value; OnPropertyChanged(); }
+            get { return selectedGenreYear; }
+            set { selectedGenreYear = value; OnPropertyChanged(); }
         }
 
-        private string selectedGenreTime;
-        public string SelectedGenreTime
+        private string selectedGenreMonth;
+        public string SelectedGenreMonth
         {
-            get { return selectedGenreTime; }
-            set { selectedGenreTime = value; OnPropertyChanged(); }
+            get { return selectedGenreMonth; }
+            set { selectedGenreMonth = value; OnPropertyChanged(); }
         }
 
-        private ComboBoxItem selectedLatePeriod;
-        public ComboBoxItem SelectedLatePeriod
-        {
-            get { return selectedLatePeriod; }
-            set { selectedLatePeriod = value; OnPropertyChanged(); }
-        }
-
-        private string selectedLateTime;
-        public string SelectedLateTime
+        private DateTime? selectedLateTime;
+        public DateTime? SelectedLateTime
         {
             get { return selectedLateTime; }
             set { selectedLateTime = value; OnPropertyChanged(); }
         }
 
-
-
-        private int selectedYear;
-        public int SelectedYear
+        private int totalRent;
+        public int TotalRent
         {
-            get { return selectedYear; }
-            set { selectedYear = value; OnPropertyChanged(); }
+            get { return totalRent; }
+            set { totalRent = value; OnPropertyChanged(); }
         }
 
-
-        public ICommand ChangeGenrePeriodCM { get; set; }
-        public ICommand ChangeLatePeriodCM { get; set; }
-
-
+        public ICommand GetGenreStatCM { get; set; }
+        public ICommand GetLateStatCM { get; set; }
 
         public StatisticalViewModel()
         {
-            StatisticGenreList = new ObservableCollection<string>();
-            StatisticGenreList.Add("sss");
-            StatisticGenreList.Add("sss");
-            StatisticGenreList.Add("sss");
-            StatisticGenreList.Add("sss");
-            StatisticGenreList.Add("sss");
-            StatisticGenreList.Add("sss");
-            StatisticGenreList.Add("sss");
+            StatisticGenreList = new ObservableCollection<BorrowedGenreReportDetailDTO>();
+            StatisticLateList = new ObservableCollection<DelayReturnBookReportDetailDTO>();
 
-
-            ChangeGenrePeriodCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            GetGenreStatCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                if (SelectedGenrePeriod != null)
+                try
                 {
-                    switch (SelectedGenrePeriod.Content.ToString())
+                    (BorrowedGenreReportDTO list, string mes) = StatisticService.Ins.GetBookBorrowingStatisticsReportByGenre(int.Parse(SelectedGenreMonth.Remove(0, 6)), int.Parse(SelectedGenreYear));
+                    if (list is null)
                     {
-                        case "Theo năm":
-                            {
-                                if (SelectedGenreTime != null)
-                                {
-                                    if (SelectedGenreTime.Length == 4)
-                                        SelectedYear = int.Parse(SelectedGenreTime);
-                                    //load by year
-                                }
-                                return;
-                            }
-                        case "Theo tháng":
-                            {
-                                if (SelectedGenreTime != null)
-                                {
-                                    //load by month
-                                }
-                                return;
-                            }
+                        MessageBox.Show(mes);
+                        return;
                     }
+                    StatisticGenreList = new ObservableCollection<BorrowedGenreReportDetailDTO>(list.borrowedGenreReportDetails);
+                    TotalRent = list.totalNumberOfBorrowings;
+
+                }
+                catch (Exception e)
+                {
+
+                    MessageBox.Show(e.Message);
                 }
             });
-            ChangeLatePeriodCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            GetLateStatCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                if (SelectedGenrePeriod != null)
+                try
                 {
-                    switch (SelectedGenrePeriod.Content.ToString())
+                    (DelayReturnBookReportDTO list, string mes) = StatisticService.Ins.GetDelayBookStatsReport((DateTime)SelectedLateTime);
+                    if (list is null || mes != null)
                     {
-                        case "Theo năm":
-                            {
-                                if (SelectedGenreTime != null)
-                                {
-                                    if (SelectedGenreTime.Length == 4)
-                                        SelectedYear = int.Parse(SelectedGenreTime);
-                                    //load by year
-                                }
-                                return;
-                            }
-                        case "Theo tháng":
-                            {
-                                if (SelectedGenreTime != null)
-                                {
-                                    //load by month
-                                }
-                                return;
-                            }
+                        MessageBox.Show(mes);
+                        return;
                     }
+                    StatisticLateList = new ObservableCollection<DelayReturnBookReportDetailDTO>(list.delayReturnBookReportDetails);
+                }
+                catch (Exception e)
+                {
+
+                    MessageBox.Show(e.Message);
                 }
             });
         }

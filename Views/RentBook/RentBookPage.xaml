@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:LibraryManagement.Views.RentBook"
       mc:Ignorable="d"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -12,13 +11,16 @@
       TextElement.FontSize="13"
       TextOptions.TextFormattingMode="Ideal"
       TextOptions.TextRenderingMode="Auto"
-      Background="#FBFBFD"
       FontFamily="{StaticResource NunitoSans_Regular}"
       Height="800"
       Width="1128"
       DataContext="{StaticResource RentBookVM}"
       ShowsNavigationUI="False">
-
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding FirstLoadCM}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="7*" />
@@ -148,11 +150,11 @@
                                         <GridViewColumn>
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <materialDesign:PackIcon Kind="Delete"
+                                                    <materialDesign:PackIcon Kind="Bin"
                                                                              Width="30"
                                                                              Height="30"
                                                                              Cursor="Hand"
-                                                                             Foreground="#DC1B1B"
+                                                                             Foreground="Red"
                                                                              HorizontalAlignment="Left">
                                                         <i:Interaction.Triggers>
                                                             <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
@@ -442,17 +444,33 @@
                                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Center"
                                     SelectedDate="{Binding Path=RentDate, Mode=TwoWay,StringFormat=dd/MM/yyyy}"
                                     FontSize="18"
                                     SelectedDateFormat="Short"
                                     BorderBrush="#0266FD"
-                                    Focusable="False">
+                                    Focusable="False"
+                                    DisplayDateEnd="{Binding TodayDay}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectedDateChanged">
                                     <i:InvokeCommandAction Command="{Binding SelectedDateCM}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </DatePicker>
+                    </Grid>
+                    <Grid Height="50">
+                        <TextBlock Text="Hạn trả"
+                                   VerticalAlignment="Center"
+                                   FontSize="18"
+                                   Foreground="#5C5959"
+                                   FontWeight="Bold" />
+                        <TextBlock Width="190"
+                                   Margin="50,0,0,0"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Text="{Binding Path=ExpiredBookDate, StringFormat=dd/MM/yyyy}"
+                                   FontSize="18"
+                                   TextAlignment="Right" />
                     </Grid>
 
                     <Button Background="#0266FD"

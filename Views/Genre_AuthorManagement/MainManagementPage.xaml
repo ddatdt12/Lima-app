@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:LibraryManagement.Views.Genre_AuthorManagement"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d"
@@ -97,8 +96,10 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <materialDesign:PackIcon Kind="Pencil"
-                                                                         Width="20"
-                                                                         Height="20">
+                                                                         Width="30"
+                                                                         Height="30"
+                                                                         Foreground="Green"
+                                                                         Cursor="Hand">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonUp">
                                                             <i:InvokeCommandAction Command="{Binding ElementName=genrelistview,Path=DataContext.OpenEditGenreWindowCM}" />
@@ -112,8 +113,10 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <materialDesign:PackIcon Kind="Bin"
-                                                                         Width="20"
-                                                                         Height="20">
+                                                                         Width="30"
+                                                                         Height="30"
+                                                                         Foreground="Red"
+                                                                         Cursor="Hand">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonUp">
                                                             <i:InvokeCommandAction Command="{Binding ElementName=genrelistview,Path=DataContext.DeleteGenreCM}" />
@@ -167,7 +170,7 @@
                                 Margin="125,0,0,0"
                                 materialDesign:ButtonAssist.CornerRadius="6"
                                 BorderThickness="0"
-                                Command="{Binding OpenAddAuthorWindowCM}"/>
+                                Command="{Binding OpenAddAuthorWindowCM}" />
                     </StackPanel>
                     <Border CornerRadius="2"
                             BorderThickness="1"
@@ -208,8 +211,10 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <materialDesign:PackIcon Kind="Pencil"
-                                                                         Width="20"
-                                                                         Height="20">
+                                                                         Width="30"
+                                                                         Height="30"
+                                                                         Foreground="Green"
+                                                                         Cursor="Hand">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonUp">
                                                             <i:InvokeCommandAction Command="{Binding ElementName=authorlistview,Path=DataContext.OpenEditAuthorWindowCM}" />
@@ -223,8 +228,10 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <materialDesign:PackIcon Kind="Bin"
-                                                                         Width="20"
-                                                                         Height="20">
+                                                                         Width="30"
+                                                                         Height="30"
+                                                                         Foreground="Red"
+                                                                         Cursor="Hand">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonUp">
                                                             <i:InvokeCommandAction Command="{Binding ElementName=authorlistview,Path=DataContext.DeleteAuthorCM}" />

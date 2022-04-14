@@ -1,4 +1,4 @@
-﻿using CinemaManagement.Utils;
+﻿using LibraryManagement.Utils;
 using LibraryManagement.DTOs;
 using LibraryManagement.Models;
 using System;
@@ -101,7 +101,7 @@ namespace LibraryManagement.Services
                                                      employeeId = s.employeeId,
                                                      readerTypeId = s.readerTypeId,
                                                      totalFine = s.totalFine ?? 0,
-                                                     readerType = new ReaderTypeDTO { id = s.readerTypeId },
+                                                     readerType = new ReaderTypeDTO { id = s.ReaderType.id, name = s.ReaderType.name },
                                                      email = s.email,
                                                      createdAt = s.createdAt,
                                                      gender = s.gender,
@@ -159,13 +159,13 @@ namespace LibraryManagement.Services
                         address = readerCard.address,
                         employeeId = readerCard.employeeId,
                         readerTypeId = readerCard.readerTypeId,
-                        totalFine = readerCard.totalFine,
+                        totalFine = 0,
                         email = readerCard.email,
                         createdAt = readerCard.createdAt,
                         expiryDate = readerCard.expiryDate,
                         gender = readerCard.gender,
                         birthDate = readerCard.birthDate,
-                        accountId = newAccount.id,
+                        accountId = newAccount.id
                     };
 
                     context.ReaderCards.Add(newReaderCard);
@@ -177,6 +177,12 @@ namespace LibraryManagement.Services
                         roleId = 2, // Độc giả
                         username = newAccount.username,
                         type = Utils.AccountType.READER_CARD
+                    };
+                    string readerTypeName = context.ReaderTypes.Find(newReaderCard.readerTypeId)?.name;
+                    readerCard.readerType = new ReaderTypeDTO
+                    {
+                        id = newReaderCard.readerTypeId,
+                        name = readerTypeName,
                     };
                     return (true, "Thêm thẻ độc giả thành công");
                 }
@@ -216,6 +222,12 @@ namespace LibraryManagement.Services
                 readerCard.birthDate = updatedReaderCard.birthDate;
 
                 context.SaveChanges();
+                string readerTypeName = context.ReaderTypes.Find(readerCard.readerTypeId)?.name;
+                updatedReaderCard.readerType = new ReaderTypeDTO
+                {
+                    id = readerCard.readerTypeId,
+                    name = readerTypeName,
+                };
                 return (true, "Cập nhật thành công");
             }
             catch (DbEntityValidationException e)

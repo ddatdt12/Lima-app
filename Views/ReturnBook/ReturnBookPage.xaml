@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:LibraryManagement.Views.ReturnBook"
       mc:Ignorable="d"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -13,8 +12,8 @@
       TextOptions.TextFormattingMode="Ideal"
       TextOptions.TextRenderingMode="Auto"
       FontFamily="{StaticResource NunitoSans_Regular}"
-      Height="780"
-      d:DesignWidth="1110"
+      Height="800"
+      Width="1128"
       DataContext="{StaticResource ReturnBookVM}"
       ShowsNavigationUI="False">
 
@@ -146,11 +145,11 @@
                                         <GridViewColumn>
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <materialDesign:PackIcon Kind="Delete"
+                                                    <materialDesign:PackIcon Kind="Bin"
                                                                              Width="30"
                                                                              Height="30"
                                                                              Cursor="Hand"
-                                                                             Foreground="#DC1B1B">
+                                                                             Foreground="Red">
                                                         <i:Interaction.Triggers>
                                                             <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                                                                 <i:InvokeCommandAction Command="{Binding ElementName=listReturnBook, Path=DataContext.RemoveBookCM}" />
@@ -305,8 +304,9 @@
                                FontWeight="Bold"
                                Foreground="#1B48BA"
                                Margin="10" />
-                    <Grid>
+                    <Grid Height="50">
                         <TextBlock Text="Mã độc giả"
+                                   VerticalAlignment="Center"
                                    Foreground="#5C5959"
                                    FontSize="18"
                                    FontWeight="Bold" />

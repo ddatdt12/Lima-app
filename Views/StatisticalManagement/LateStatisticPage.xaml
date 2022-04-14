@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:LibraryManagement.Views.StatisticalManagement"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d"
@@ -33,52 +32,23 @@
                         <Border Background="White"
                                 Width="145"
                                 Height="35"
-                                Padding="5,0,5,0"
-                                BorderBrush="#BFBABA"
-                                BorderThickness="0.5">
-                            <ComboBox BorderThickness="0"
-                                      FontSize="18"
-                                      SelectedIndex="0"
-                                      Foreground="#5C5959"
-                                      x:Name="periodbox"
-                                      Loaded="periodbox_Loaded"
-                                      SelectionChanged="periodbox_SelectionChanged"
-                                      SelectedItem="{Binding SelectedLatePeriod}">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="Loaded">
-                                        <i:InvokeCommandAction Command="{Binding ChangeLatePeriodCM}" />
-                                    </i:EventTrigger>
-                                    <i:EventTrigger EventName="SelectionChanged">
-                                        <i:InvokeCommandAction Command="{Binding ChangeLatePeriodCM}" />
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <ComboBoxItem>Theo năm</ComboBoxItem>
-                                <ComboBoxItem>Theo tháng</ComboBoxItem>
-                            </ComboBox>
-                        </Border>
-                        <Border Background="White"
-                                Width="145"
-                                Height="35"
-                                Padding="5,0,5,0"
                                 HorizontalAlignment="Left"
-                                Margin="30,0,0,0"
+                                Margin="20,0,0,0"
                                 BorderBrush="#BFBABA"
                                 BorderThickness="0.5">
-                            <ComboBox BorderThickness="0"
-                                      FontSize="18"
-                                      SelectedIndex="0"
-                                      Foreground="#5C5959"
-                                      x:Name="timebox"
-                                      SelectedItem="{Binding SelectedLateTime}">
+                            <DatePicker BorderThickness="0"
+                                        FontSize="18"
+                                        Foreground="#5C5959"
+                                        x:Name="timebox"
+                                        materialDesign:HintAssist.Hint="Chọn ngày"
+                                        SelectedDate="{Binding SelectedLateTime}"
+                                        Focusable="False">
                                 <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="Loaded">
-                                        <i:InvokeCommandAction Command="{Binding ChangeLatePeriodCM}" />
-                                    </i:EventTrigger>
-                                    <i:EventTrigger EventName="SelectionChanged">
-                                        <i:InvokeCommandAction Command="{Binding ChangeLatePeriodCM}" />
+                                    <i:EventTrigger EventName="SelectedDateChanged">
+                                        <i:InvokeCommandAction Command="{Binding GetLateStatCM}" />
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
-                            </ComboBox>
+                            </DatePicker>
                         </Border>
                     </DockPanel>
                     <Border CornerRadius="4"
@@ -89,21 +59,20 @@
                                   ItemsSource="{Binding StatisticLateList}">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Header="STT"
-                                                    Width="250">
+                                    <GridViewColumn Header="ID sách">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="123"
+                                                <TextBlock Text="{Binding BorrowingReturnCard.bookInfo.id}"
                                                            FontSize="20"
                                                            Margin="15,0,0,0" />
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                     <GridViewColumn Header="Tên sách"
-                                                    Width="250">
+                                                    Width="450">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="123"
+                                                <TextBlock Text="{Binding BorrowingReturnCard.bookInfo.Book.baseBook.name}"
                                                            FontSize="20"
                                                            Margin="15,0,0,0" />
                                             </DataTemplate>
@@ -113,17 +82,16 @@
                                                     Width="250">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="123"
+                                                <TextBlock Text="{Binding BorrowingReturnCard.borrowingDate,StringFormat=dd/MM/yyyy}"
                                                            FontSize="20"
                                                            Margin="15,0,0,0" />
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn Header="Số ngày trễ"
-                                                    Width="250">
+                                    <GridViewColumn Header="Số ngày trễ">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="1%"
+                                                <TextBlock Text="{Binding numberOfDelayReturn}"
                                                            FontSize="20"
                                                            Margin="15,0,0,0" />
                                             </DataTemplate>

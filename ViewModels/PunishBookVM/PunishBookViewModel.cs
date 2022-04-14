@@ -135,6 +135,7 @@ namespace LibraryManagement.ViewModels.PunishBookVM
                 ReaderName = readerCard.name;
                 TotalDept = readerCard.totalFine;
                 TotalLeft = 0;
+                TotalPaid = null;
                 ExpiredBookList.Clear();
                 CanPaidFine = true;
             }
@@ -159,8 +160,7 @@ namespace LibraryManagement.ViewModels.PunishBookVM
                     FineReceiptDTO fineReceipt = new FineReceiptDTO();
                     fineReceipt.amount = (int)TotalPaid;
                     fineReceipt.createdAt = DateTime.Now;
-                    //fineReceipt.employeeId = MainWindowViewModel.CurrentUser.id;
-                    fineReceipt.employeeId = "NV0001";
+                    fineReceipt.employeeId = MainWindowViewModel.CurrentUser.employee.id;
                     fineReceipt.readerCardId = ReaderID;
 
                     (bool success, string message) = FineReceiptService.Ins.CreateFineReceipt(fineReceipt);

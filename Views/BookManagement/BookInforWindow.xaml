@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:LibraryManagement.Views.ImportBook"
         xmlns:cvt="clr-namespace:LibraryManagement.Views.Converter"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -131,7 +130,6 @@
                             BorderBrush="#BFBABA"
                             Margin="10">
                         <ListView Height="150"
-                                  Background="Red"
                                   ItemsSource="{Binding BaseAuthor,Mode=TwoWay}"
                                   x:Name="authorLV">
                             <ListView.View>
@@ -157,8 +155,10 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <materialDesign:PackIcon Kind="Bin"
-                                                                         Width="20"
-                                                                         Height="20">
+                                                                         Width="30"
+                                                                         Height="30"
+                                                                         Foreground="Red"
+                                                                         Cursor="Hand">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonUp">
                                                             <i:InvokeCommandAction Command="{Binding ElementName=authorLV, Path=DataContext.DecreaseBaseAuthorCM}"
@@ -227,22 +227,14 @@
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        <!--<GridViewColumn Header="Đơn giá">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock Text="10,000"
-                                                               Text="{Binding }"
-                                                               Margin="15,0,0,0"
-                                                               FontSize="18" />
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>-->
                                         <GridViewColumn>
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <materialDesign:PackIcon Kind="Bin"
-                                                                             Width="20"
-                                                                             Height="20">
+                                                                             Width="30"
+                                                                             Height="30"
+                                                                             Foreground="Red"
+                                                                             Cursor="Hand">
                                                         <i:Interaction.Triggers>
                                                             <i:EventTrigger EventName="MouseLeftButtonUp">
                                                                 <i:InvokeCommandAction Command="{Binding ElementName=basebookDetailLV,Path=DataContext.DeleteBaseBookDetailCM}"
@@ -305,12 +297,12 @@
                                        FontSize="20"
                                        Foreground="#0266FD"
                                        FontWeight="Bold" />
-                            <TextBlock Text="{Binding SelectedBookInfor.Book.}"
+                            <TextBlock Text="{Binding SelectedBaseBookDetail.price}"
                                        FontSize="18"
                                        Margin="20,0,0,0"
                                        VerticalAlignment="Bottom" />
                         </StackPanel>
-                        <StackPanel Margin="180,0,0,0"
+                        <StackPanel Margin="230,0,0,0"
                                     Orientation="Horizontal">
                             <TextBlock Text="Số lượng"
                                        FontSize="20"
@@ -355,8 +347,10 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <materialDesign:PackIcon Kind="Bin"
-                                                                         Width="20"
-                                                                         Height="20">
+                                                                         Width="30"
+                                                                         Height="30"
+                                                                         Foreground="Red"
+                                                                         Cursor="Hand">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonUp">
                                                             <i:InvokeCommandAction Command="{Binding ElementName=listview,Path=DataContext.DeleteBookInforCM}"

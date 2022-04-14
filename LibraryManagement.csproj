@@ -201,6 +201,11 @@
     <Compile Include="ViewModels\LoginVM\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\PunishBookVM\PunishBookViewModel.cs" />
+    <Compile Include="ViewModels\ReaderCardVM\AddReaderCardViewModel.cs" />
+    <Compile Include="ViewModels\ReaderCardVM\AddReaderTypeViewModel.cs" />
+    <Compile Include="ViewModels\ReaderCardVM\EditReaderCardViewModel.cs" />
+    <Compile Include="ViewModels\ReaderCardVM\PrintReaderCardViewModel.cs" />
+    <Compile Include="ViewModels\ReaderCardVM\ReaderCardViewModel.cs" />
     <Compile Include="ViewModels\RentBookVM\RentBookViewModel.cs" />
     <Compile Include="ViewModels\ReturnBookVM\ReturnBookViewModel.cs" />
     <Compile Include="ViewModels\SettingVM\GeneralSetting.cs" />
@@ -262,8 +267,26 @@
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MessageBoxCustom.xaml.cs">
+      <DependentUpon>MessageBoxCustom.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PunishBook\PunishBookWindow.xaml.cs">
       <DependentUpon>PunishBookWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReaderCard\AddReaderCardWindow.xaml.cs">
+      <DependentUpon>AddReaderCardWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReaderCard\AddReaderTypeWindow.xaml.cs">
+      <DependentUpon>AddReaderTypeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReaderCard\EditReaderCardWindow.xaml.cs">
+      <DependentUpon>EditReaderCardWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReaderCard\PrintReaderCardWindow.xaml.cs">
+      <DependentUpon>PrintReaderCardWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReaderCard\ReaderCardPage.xaml.cs">
+      <DependentUpon>ReaderCardPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RentBook\RentBookPage.xaml.cs">
       <DependentUpon>RentBookPage.xaml</DependentUpon>
@@ -372,7 +395,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\MessageBoxCustom.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\PunishBook\PunishBookWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ReaderCard\AddReaderCardWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ReaderCard\AddReaderTypeWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ReaderCard\EditReaderCardWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ReaderCard\PrintReaderCardWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ReaderCard\ReaderCardPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -457,6 +504,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\images\LoginImage.png" />
+    <Resource Include="Assets\Icon\ErrorIcon.png" />
+    <Resource Include="Assets\Icon\info.png" />
+    <Resource Include="Assets\Icon\succes.png" />
+    <Resource Include="Assets\Icon\warning.png" />
     <Content Include="Models\LibraryManagementModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>LibraryManagementModel.edmx</DependentUpon>

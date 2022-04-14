@@ -1,11 +1,8 @@
-﻿using CinemaManagement.Utils;
+﻿using LibraryManagement.Utils;
 using LibraryManagement.DTOs;
 using LibraryManagement.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LibraryManagement.Services
 {
@@ -73,6 +70,7 @@ namespace LibraryManagement.Services
                         startingDate = e.startingDate,
                         accountId = e.accountId
                     }).FirstOrDefault();
+                    user.DisplayName = user.employee.name;
                 }
                 else if (account.ReaderCards.Count() > 0)
                 {
@@ -86,12 +84,13 @@ namespace LibraryManagement.Services
                         employeeId = s.employeeId,
                         readerTypeId = s.readerTypeId,
                         totalFine = s.totalFine ?? 0,
-                        readerType = new ReaderTypeDTO { id = s.readerTypeId , name = s.ReaderType.name},
+                        readerType = new ReaderTypeDTO { id = s.readerTypeId, name = s.ReaderType.name },
                         email = s.email,
                         createdAt = s.createdAt,
                         gender = s.gender,
                         birthDate = s.birthDate,
                     }).FirstOrDefault();
+                    user.DisplayName = user.reader.name;
                 }
                 else
                 {
