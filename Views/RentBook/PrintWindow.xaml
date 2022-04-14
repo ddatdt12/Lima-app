@@ -151,7 +151,7 @@
                                             Width="120">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding BookId}" />
+                                        <TextBlock Text="{Binding BookInfoID}" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -159,7 +159,7 @@
                                             Width="300">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding DateRent,StringFormat=dd/MM/yyyy}"
+                                        <TextBlock Text="{Binding Name}"
                                                    TextWrapping="Wrap" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>

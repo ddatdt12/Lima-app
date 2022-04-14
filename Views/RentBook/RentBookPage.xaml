@@ -80,7 +80,6 @@
                                                 Value="Stretch" />
                                     </Style>
                                 </ListView.ItemContainerStyle>
-                                basebook,,, book, bookinfo
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="STT"
@@ -101,9 +100,10 @@
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock FontSize="18"
-                                                               Text="{Binding BookID}"
+                                                               Text="{Binding BookInfoID}"
                                                                Foreground="#000000"
-                                                               TextAlignment="Left" />
+                                                               TextAlignment="Left" 
+                                                               ToolTip="{Binding BookInfoID}"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -411,7 +411,7 @@
                                    FontWeight="Bold" />
                         <TextBlock Width="100"
                                    VerticalAlignment="Center"
-                                   HorizontalAlignment="Right"
+                                   HorizontalAlignment="Center"
                                    Text="{Binding ExpiredBook}"
                                    FontSize="18"
                                    FontWeight="Regular"
@@ -425,7 +425,7 @@
                                    FontWeight="Bold" />
                         <TextBlock Width="100"
                                    VerticalAlignment="Center"
-                                   HorizontalAlignment="Right"
+                                   HorizontalAlignment="Center"
                                    Text="{Binding RentBookQuantity}"
                                    FontSize="18"
                                    FontWeight="Regular"
@@ -442,7 +442,7 @@
                                    Padding="0" />
                         <DatePicker Width="190"
                                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
-                                    HorizontalAlignment="Right"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     HorizontalContentAlignment="Center"
                                     SelectedDate="{Binding Path=RentDate, Mode=TwoWay,StringFormat=dd/MM/yyyy}"
