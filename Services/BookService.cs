@@ -307,6 +307,10 @@ namespace LibraryManagement.Services
                 {
                     return (false, "Sách không tồn tại!");
                 }
+
+                if (bookInfo.status) { 
+                    return (false, "Sách đang được mượn không thể xóa!");
+                }
                 book.quantity--;
                 bookInfo.isDeleted = true;
                 DataProvider.Ins.DB.SaveChanges();

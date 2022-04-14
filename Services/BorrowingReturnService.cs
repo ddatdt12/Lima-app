@@ -2,6 +2,7 @@
 using LibraryManagement.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
@@ -66,8 +67,75 @@ namespace LibraryManagement.Services
                             }
                         }
                     }).ToList();
-
                 return borrowingCards;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public List<BorrowingCardDTO> GetBorrowingReturnCards(DateTime? borrowingDate = null, DateTime? returnDate = null)
+        {
+            try
+            {
+                var context = DataProvider.Ins.DB;
+
+                var borrowingCardsQuery = context.Borrowing_ReturnCard;
+                var borrowingCards =borrowingCardsQuery as IQueryable<Borrowing_ReturnCard>;
+                if (borrowingDate != null)
+                {
+                    borrowingCards = borrowingCardsQuery.Where(b => b.borrowingDate == borrowingDate);
+                }
+                 if (returnDate != null)
+                {
+                    borrowingCards = borrowingCardsQuery.Where(b => b.returnedDate != null && b.returnedDate == returnDate);
+                }
+
+                var cardsDTO = borrowingCards.Select(b => new BorrowingCardDTO
+                {
+                    id = b.id,
+                    bookInfoId = b.bookInfoId,
+                    borrowingDate = b.borrowingDate,
+                    dueDate = b.dueDate,
+                    employeeId = b.borrowing_employeeId,
+                    readerCardId = b.readerCardId,
+                    readerCard = new ReaderCardDTO
+                    {
+                        id = b.readerCardId,
+                        name = b.ReaderCard.name,
+                    },
+                    bookInfo = new BookInfoDTO
+                    {
+                        id = b.bookInfoId,
+                        Book = new BookDTO
+                        {
+                            id = b.BookInfo.Book.id,
+                            publisher = b.BookInfo.Book.publisher,
+                            yearOfPublication = b.BookInfo.Book.yearOfPublication,
+                            baseBook = new BaseBookDTO
+                            {
+                                id = b.BookInfo.Book.BaseBook.id,
+                                name = b.BookInfo.Book.BaseBook.name,
+                            }
+                        }
+                    },
+                    employee = new EmployeeDTO
+                    {
+                        id = b.Employee.id,
+                        name = b.Employee.name
+                    },
+                    returnCard = new ReturnCardDTO
+                    {
+                        fine= b.fine,
+                        returnedDate = b.returnedDate,
+                        employee = new EmployeeDTO
+                        {
+                            id = b.Employee.id,
+                            name = b.Employee.name
+                        }
+                    }
+                }).ToList();
+                return cardsDTO;
             }
             catch (Exception e)
             {
@@ -103,6 +171,7 @@ namespace LibraryManagement.Services
                                 }
                             }
                         },
+                        numberOfDelayReturnDays = DbFunctions.DiffDays(b.dueDate, DateTime.Now) ?? 0,
                     }).ToList();
 
                 return borrowingCards;
@@ -200,7 +269,7 @@ namespace LibraryManagement.Services
                     {
                         var data = returnCardDictionary[returnCard.id];
 
-                        if(data.returnedDate < returnCard.borrowingDate)
+                        if (data.returnedDate < returnCard.borrowingDate)
                         {
                             return (false, "Ngày trả không thể nhỏ hơn ngày mượn");
                         }
