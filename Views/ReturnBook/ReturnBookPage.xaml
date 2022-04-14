@@ -118,11 +118,11 @@
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        <GridViewColumn Header="Số ngày mượn">
+                                        <GridViewColumn Header="Số ngày trễ">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock FontSize="18"
-                                                               Text="{Binding SumDateRent}"
+                                                               Text="{Binding sumDelayDate}"
                                                                Foreground="#000000"
                                                                TextAlignment="Center"
                                                                TextTrimming="CharacterEllipsis"

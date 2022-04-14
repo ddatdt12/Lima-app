@@ -80,7 +80,7 @@
                                                 Value="Stretch" />
                                     </Style>
                                 </ListView.ItemContainerStyle>
-
+                                basebook,,, book, bookinfo
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="STT"

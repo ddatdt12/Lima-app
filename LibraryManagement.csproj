@@ -249,6 +249,9 @@
     <Compile Include="Views\ImportBook\MainImportBookPage.xaml.cs">
       <DependentUpon>MainImportBookPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ImportBook\PrintWindow.xaml.cs">
+      <DependentUpon>PrintWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Login\ChangePassPage.xaml.cs">
       <DependentUpon>ChangePassPage.xaml</DependentUpon>
     </Compile>
@@ -288,8 +291,14 @@
     <Compile Include="Views\ReaderCard\ReaderCardPage.xaml.cs">
       <DependentUpon>ReaderCardPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\RentBook\PrintWindow.xaml.cs">
+      <DependentUpon>PrintWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\RentBook\RentBookPage.xaml.cs">
       <DependentUpon>RentBookPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReturnBook\PrintWindow.xaml.cs">
+      <DependentUpon>PrintWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ReturnBook\ReturnBookPage.xaml.cs">
       <DependentUpon>ReturnBookPage.xaml</DependentUpon>
@@ -371,6 +380,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ImportBook\PrintWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Login\ChangePassPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -423,9 +436,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\RentBook\PrintWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\RentBook\RentBookPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ReturnBook\PrintWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ReturnBook\ReturnBookPage.xaml">
       <Generator>MSBuild:Compile</Generator>
