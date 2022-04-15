@@ -9,6 +9,7 @@
         DataContext="{StaticResource ReaderCardVM}"
         Height="520"
         Width="1020"
+        FontFamily="{StaticResource NunitoSans_Regular}"
         x:Name="printReaderCardWindow"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
@@ -95,9 +96,10 @@
                                        Foreground="#0266FD"
                                        FontWeight="ExtraBold"
                                        HorizontalAlignment="Left" />
-                            <TextBox Text="{Binding Name, Mode=TwoWay}"
-                                     Width="250"
-                                     materialDesign:HintAssist.Hint="Nhập họ tên độc giả" />
+                            <TextBlock Text="{Binding Name, Mode=TwoWay}"
+                                       Width="250"
+                                       FontSize="20"
+                                       TextAlignment="Left" />
                         </StackPanel>
                         <StackPanel Margin="100,20,0,0">
                             <TextBlock Text="Giới tính"
@@ -105,14 +107,17 @@
                                        FontWeight="ExtraBold"
                                        HorizontalAlignment="Left" />
                             <StackPanel Height="40"
+                                        IsEnabled="False"
                                         Orientation="Horizontal"
                                         HorizontalAlignment="Left">
                                 <RadioButton x:Name="Man"
                                              Content="Nam"
+                                             FontSize="20"
                                              Command="{Binding CheckedSexCM}"
                                              CommandParameter="{Binding ElementName=Man}" />
                                 <RadioButton x:Name="Woman"
                                              Content="Nữ"
+                                             FontSize="20"
                                              Margin="50,0,0,0"
                                              Command="{Binding CheckedSexCM}"
                                              CommandParameter="{Binding ElementName=Woman}" />
@@ -123,12 +128,11 @@
                                        Foreground="#0266FD"
                                        FontWeight="ExtraBold"
                                        HorizontalAlignment="Left" />
-                            <DatePicker Width="270"
-                                        FontSize="15"
-                                        SelectedDate="{Binding Birthday}"
-                                        materialDesign:HintAssist.Hint="Nhập ngày sinh"
-                                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}">
-                            </DatePicker>
+                            <TextBlock Width="270"
+                                       FontSize="20"
+                                       Text="{Binding Birthday,StringFormat=dd/MM/yyyy}"
+                                       TextAlignment="Left">
+                            </TextBlock>
                         </StackPanel>
                     </WrapPanel>
                     <WrapPanel Grid.Row="2"
@@ -176,9 +180,10 @@
                                        Foreground="#0266FD"
                                        FontWeight="ExtraBold"
                                        HorizontalAlignment="Left" />
-                            <TextBox Text="{Binding Email, Mode=TwoWay}"
-                                     materialDesign:HintAssist.Hint="Nhập email"
-                                     Width="220" />
+                            <TextBlock Text="{Binding Email, Mode=TwoWay}"
+                                       Width="220"
+                                       FontSize="20"
+                                       TextAlignment="Left" />
                         </StackPanel>
                         <StackPanel Margin="130,20,0,0">
                             <TextBlock Text="Địa chỉ"
@@ -186,9 +191,10 @@
                                        Foreground="#0266FD"
                                        FontWeight="ExtraBold"
                                        HorizontalAlignment="Left" />
-                            <TextBox Text="{Binding Adress, Mode=TwoWay}"
-                                     materialDesign:HintAssist.Hint="Nhập địa chỉ"
-                                     Width="200" />
+                            <TextBlock Text="{Binding Adress, Mode=TwoWay}"
+                                       Width="200"
+                                       FontSize="20"
+                                       TextAlignment="Left" />
                         </StackPanel>
                         <StackPanel Margin="70,20,0,0">
                             <TextBlock Text="Loại độc giả"
@@ -196,14 +202,12 @@
                                        Foreground="#0266FD"
                                        FontWeight="ExtraBold"
                                        HorizontalAlignment="Left" />
-                            <ComboBox Text="{Binding ReaderType, Mode=TwoWay}"
-                                      Margin="0,10,0,0"
-                                      Width="150"
-                                      x:Name="ReaderType"
-                                      FontSize="15"
-                                      ItemsSource="{Binding ListReaderType}"
-                                      DisplayMemberPath="name"
-                                      materialDesign:HintAssist.Hint="Chọn loại độc giả" />
+                            <TextBlock Text="{Binding ReaderType, Mode=TwoWay}"
+                                       Margin="0,10,0,0"
+                                       Width="150"
+                                       x:Name="ReaderType"
+                                       FontSize="20"
+                                       TextAlignment="Left" />
                         </StackPanel>
                     </WrapPanel>
                     <WrapPanel Grid.Row="3"
@@ -256,32 +260,25 @@
                                            FontSize="18"
                                            Margin="0,15,0,0"
                                            HorizontalAlignment="Left" />
-                                <DatePicker Width="150"
-                                            Margin="15,0,0,0"
-                                            FontSize="16"
-                                            Padding="0,0,0,0"
-                                            SelectedDate="{Binding StartDate}"
-                                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
-                                            Height="37">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="SelectedDateChanged">
-                                            <i:InvokeCommandAction Command="{Binding SelectedDateCM}" />
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </DatePicker>
+                                <TextBlock Width="150"
+                                           Margin="15,0,0,0"
+                                           Text="{Binding StartDate,StringFormat=dd/MM/yyyy}"
+                                           VerticalAlignment="Bottom"
+                                           FontSize="20"
+                                           TextAlignment="Left">
+
+                                </TextBlock>
                                 <TextBlock Text="Đến ngày"
                                            FontSize="18"
                                            Margin="20,15,0,0"
                                            HorizontalAlignment="Left" />
-                                <DatePicker x:Name="ExpirationDate"
-                                            Width="150"
-                                            Margin="33,0,0,0"
-                                            FontSize="16"
-                                            Padding="0,0,0,0"
-                                            Height="37"
-                                            IsEnabled="False"
-                                            SelectedDate="{Binding FinishDate}"
-                                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                                <TextBlock x:Name="ExpirationDate"
+                                           Width="150"
+                                           Margin="33,0,0,0"
+                                           Text="{Binding FinishDate,StringFormat=dd/MM/yyyy}"
+                                           VerticalAlignment="Bottom"
+                                           FontSize="20"
+                                           TextAlignment="Left" />
                             </StackPanel>
                         </StackPanel>
                     </WrapPanel>

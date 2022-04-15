@@ -3,8 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:sys="clr-namespace:System;assembly=mscorlib"
-      xmlns:local="clr-namespace:LibraryManagement.Views.ImportBookPage"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d"
@@ -65,9 +63,7 @@
                                        FontSize="20"
                                        FontWeight="Bold"
                                        Margin="10"
-                                       Foreground="#1B48BA"
-                                       FontFamily="/Assets/Fonts/NunitoSans-Regular" />
-
+                                       Foreground="#1B48BA" />
                             <StackPanel Orientation="Horizontal"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Center">
@@ -75,7 +71,6 @@
                                 <TextBlock Text=" Sách"
                                            Margin="0,0,10,0" />
                             </StackPanel>
-
                         </Grid>
                         <Border CornerRadius="2"
                                 BorderThickness="1"
@@ -107,28 +102,34 @@
                                 <ListView.View>
                                     <GridView>
 
-                                        <GridViewColumn Header="Tên sách">
+                                        <GridViewColumn Header="Tên sách"
+                                                        Width="200">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding Name}"
-                                                               Margin="15,0,0,0" />
+                                                    <TextBlock Text="{Binding book.baseBook.name}"
+                                                               Margin="15,0,0,0"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               ToolTip="{Binding book.baseBook.name}" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        
-                                        <GridViewColumn Header="NXB">
+
+                                        <GridViewColumn Header="NXB"
+                                                        Width="150">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding Publisher}"
-                                                               Margin="15,0,0,0" />
+                                                    <TextBlock Text="{Binding book.publisher}"
+                                                               Margin="15,0,0,0"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               ToolTip="{Binding book.publisher}" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        
+
                                         <GridViewColumn Header="Năm XB">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding YearPublish}"
+                                                    <TextBlock Text="{Binding book.yearOfPublication}"
                                                                Margin="15,0,0,0" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
@@ -153,7 +154,7 @@
 
                                                             <TextBox Name="quantitybox"
                                                                      Grid.Column="0"
-                                                                     Text="{Binding SL,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                                     Text="{Binding quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                                                      Style="{x:Null}"
                                                                      BorderThickness="0"
                                                                      Background="Transparent"
@@ -210,10 +211,16 @@
                                         <GridViewColumn Header="Đơn giá">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBox Text="{Binding Price,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                    <TextBox Text="{Binding unitPrice,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                                              PreviewTextInput="quantitybox_PreviewTextInput"
                                                              TextChanged="quantitybox_TextChanged"
-                                                             Margin="15,0,0,0" />
+                                                             Margin="15,0,0,0">
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="TextChanged">
+                                                                <i:InvokeCommandAction Command="{Binding ElementName=listview, Path=DataContext.PriceChangedCM}" />
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                    </TextBox>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -221,7 +228,7 @@
                                         <GridViewColumn Header="Thành tiền">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding Total}"
+                                                    <TextBlock Text="{Binding unitTotal}"
                                                                Margin="15,0,0,0" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
@@ -236,7 +243,8 @@
                                                         <materialDesign:PackIcon Kind="Delete"
                                                                                  Width="30"
                                                                                  Height="30"
-                                                                                 Foreground="#DC1B1B" />
+                                                                                 Foreground="Red"
+                                                                                 Cursor="Hand" />
 
                                                         <i:Interaction.Triggers>
                                                             <i:EventTrigger EventName="MouseLeftButtonUp">
@@ -252,9 +260,9 @@
                                 </ListView.View>
                             </ListView>
                         </Border>
-
                     </StackPanel>
                 </materialDesign:Card>
+
                 <materialDesign:Card Width="724"
                                      Margin="0,20,0,0"
                                      Background="White"
@@ -275,14 +283,12 @@
                                        Margin="20,10,10,10" />
                             <StackPanel Orientation="Horizontal"
                                         Margin="210,0,0,0">
-
                                 <materialDesign:PackIcon Kind="Search"
                                                          Width="25"
                                                          Height="25"
                                                          HorizontalAlignment="Center"
                                                          VerticalAlignment="Center"
                                                          Foreground="#0266FD">
-
                                 </materialDesign:PackIcon>
                                 <TextBox FontSize="16"
                                          Width="273"
@@ -300,7 +306,8 @@
                                     <materialDesign:PackIcon Kind="PlusCircleOutline"
                                                              Foreground="Green"
                                                              Width="25"
-                                                             Height="25" />
+                                                             Height="25"
+                                                             Cursor="Hand" />
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="MouseLeftButtonDown">
                                             <i:InvokeCommandAction Command="{Binding OpenImportWindowCM2}"
@@ -316,23 +323,25 @@
                                 BorderBrush="#BFBABA"
                                 Margin="20,0,20,5"
                                 CornerRadius="2">
-                            <ListView Name="searchList"
-                                      Margin="0,-30,0,0">
+                            <ListView Name="searchList">
                                 <ListView.View>
                                     <GridView>
-
-                                        <GridViewColumn>
+                                        <GridViewColumn Width="200">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding baseBook.name}" />
+                                                    <TextBlock Text="{Binding baseBook.name}"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               ToolTip="{Binding baseBook.name}" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
 
-                                        <GridViewColumn>
+                                        <GridViewColumn Width="200">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding publisher}" />
+                                                    <TextBlock Text="{Binding publisher}"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               ToolTip="{Binding publisher}" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -350,7 +359,8 @@
                                                 <DataTemplate>
                                                     <Border Background="Transparent">
                                                         <materialDesign:PackIcon Kind="PlusThick"
-                                                                                 Foreground="Green" />
+                                                                                 Foreground="Green"
+                                                                                 Cursor="Hand" />
                                                         <i:Interaction.Triggers>
                                                             <i:EventTrigger EventName="MouseLeftButtonDown">
                                                                 <i:InvokeCommandAction Command="{Binding ElementName=searchList, Path=DataContext.AddBookFromSearchCM}"
@@ -411,10 +421,13 @@
                                    Foreground="#5C5959"
                                    FontSize="18"
                                    FontWeight="Bold" />
-                        <TextBlock Text="{Binding Source={x:Static sys:DateTime.Now}, StringFormat=HH:mm dd/MM/yyyy}"
-                                   Foreground="#5C5959"
-                                   FontSize="18"
-                                   HorizontalAlignment="Right" />
+                        <DatePicker SelectedDate="{Binding CreateAt,Mode=TwoWay}"
+                                    Foreground="#5C5959"
+                                    FontSize="18"
+                                    Focusable="False"
+                                    Width="150"
+                                    x:Name="createAt"
+                                    HorizontalAlignment="Right" />
 
                     </Grid>
                     <Grid Margin="0,30,0,0">
@@ -432,7 +445,7 @@
                                    Foreground="#5C5959"
                                    FontSize="18"
                                    FontWeight="Bold" />
-                        <TextBlock Text=""
+                        <TextBlock Text="{Binding TotalReceiptPrice}"
                                    Foreground="#5C5959"
                                    FontSize="18"
                                    HorizontalAlignment="Right" />

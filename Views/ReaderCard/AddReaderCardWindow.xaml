@@ -7,7 +7,6 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         DataContext="{StaticResource ReaderCardVM}"
-        Title="AddReaderCardWindow"
         Height="520"
         Width="1020"
         x:Name="AddReaderWindow"
@@ -15,7 +14,8 @@
         ResizeMode="NoResize"
         Background="Transparent"
         AllowsTransparency="True"
-        WindowStyle="None">
+        WindowStyle="None"
+        FontFamily="{StaticResource NunitoSans_Regular}">
     <Border Background="White"
             CornerRadius="30"
             BorderBrush="Black"
@@ -23,11 +23,11 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20" />
-                <ColumnDefinition/>
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Border Background="#0266FD"
                     CornerRadius="30,0,0,30"
-                    Grid.Column="0"/>
+                    Grid.Column="0" />
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100" />
@@ -45,7 +45,7 @@
                            Foreground="#1B48BA"
                            FontWeight="UltraBold" />
                 <WrapPanel Grid.Row="1"
-                            Margin="50,0,50,0">
+                           Margin="50,0,50,0">
                     <WrapPanel.Resources>
                         <Style TargetType="TextBox"
                                BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
@@ -88,28 +88,29 @@
                                    FontSize="20"
                                    Foreground="#0266FD"
                                    FontWeight="ExtraBold"
-                                   HorizontalAlignment="Left"/>
+                                   HorizontalAlignment="Left" />
                         <TextBox Text="{Binding Name, Mode=TwoWay}"
                                  Width="250"
-                                 materialDesign:HintAssist.Hint="Nhập họ tên độc giả"/>
+                                 materialDesign:HintAssist.Hint="Nhập họ tên độc giả" />
                     </StackPanel>
                     <StackPanel Margin="100,20,0,0">
                         <TextBlock Text="Giới tính"
                                    Foreground="#0266FD"
                                    FontWeight="ExtraBold"
-                                   HorizontalAlignment="Left"/>
+                                   HorizontalAlignment="Left" />
                         <StackPanel Height="40"
                                     Orientation="Horizontal"
                                     HorizontalAlignment="Left">
                             <RadioButton x:Name="Man"
+                                         IsChecked="True"
                                          Content="Nam"
                                          Command="{Binding CheckedSexCM}"
-                                         CommandParameter="{Binding ElementName=Man}"/>
+                                         CommandParameter="{Binding ElementName=Man}" />
                             <RadioButton x:Name="Woman"
                                          Content="Nữ"
-                                         Margin="50,0,0,0" 
+                                         Margin="50,0,0,0"
                                          Command="{Binding CheckedSexCM}"
-                                         CommandParameter="{Binding ElementName=Woman}"/>
+                                         CommandParameter="{Binding ElementName=Woman}" />
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Margin="100,20,0,0">
@@ -119,6 +120,7 @@
                                    HorizontalAlignment="Left" />
                         <DatePicker Width="270"
                                     FontSize="15"
+                                    Focusable="False"
                                     SelectedDate="{Binding Birthday, StringFormat=dd/MM/yyyy}"
                                     materialDesign:HintAssist.Hint="Nhập ngày sinh"
                                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}">
@@ -170,9 +172,9 @@
                                    Foreground="#0266FD"
                                    FontWeight="ExtraBold"
                                    HorizontalAlignment="Left" />
-                        <TextBox Text="{Binding Email, Mode=TwoWay}" 
+                        <TextBox Text="{Binding Email, Mode=TwoWay}"
                                  materialDesign:HintAssist.Hint="Nhập email"
-                                 Width="220"/>
+                                 Width="220" />
                     </StackPanel>
                     <StackPanel Margin="130,20,0,0">
                         <TextBlock Text="Địa chỉ"
@@ -254,6 +256,7 @@
                                         Margin="15,0,0,0"
                                         FontSize="16"
                                         Padding="0,0,0,0"
+                                        Focusable="False"
                                         SelectedDate="{Binding StartDate}"
                                         Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
                                         Height="37">

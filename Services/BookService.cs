@@ -74,6 +74,7 @@ namespace LibraryManagement.Services
                                               publisher = s.publisher,
                                               yearOfPublication = s.yearOfPublication,
                                               baseBookId = s.baseBookId,
+                                              price = s.Price,
                                               baseBook = new BaseBookDTO
                                               {
                                                   id = s.id,
@@ -120,6 +121,7 @@ namespace LibraryManagement.Services
                                               publisher = s.publisher,
                                               yearOfPublication = s.yearOfPublication,
                                               baseBookId = s.baseBookId,
+                                              price = s.Price,
                                               baseBook = new BaseBookDTO
                                               {
                                                   id = s.id,
@@ -156,7 +158,7 @@ namespace LibraryManagement.Services
             }
         }
 
-        public void CreateBookInfoList(LibraryManagementEntities context, string bookId, int quantity)
+        private void CreateBookInfoList(LibraryManagementEntities context, string bookId, int quantity)
         {
             List<BookInfo> listBookInfoes = new List<BookInfo>();
             string maxBookInfoId = context.BookInfoes.Where(bI => bI.bookId == bookId).Max(bI => bI.id);
@@ -198,6 +200,7 @@ namespace LibraryManagement.Services
                         throw ex;
                     }
                 });
+
                 //Create new book and list book info depend on book quantity
                 var newBookList = bookList.Where(b => b.isNew).Select(b => new Book
                 {
@@ -205,6 +208,7 @@ namespace LibraryManagement.Services
                     publisher = b.publisher,
                     quantity = b.quantity,
                     yearOfPublication = b.yearOfPublication,
+                    Price = b.price,
                 }).ToList();
 
                 if (newBookList.Count() > 0)
@@ -259,6 +263,8 @@ namespace LibraryManagement.Services
                 }
                 book.publisher = updatedBook.publisher;
                 book.yearOfPublication = updatedBook.yearOfPublication;
+                book.Price = updatedBook.price;
+                
                 context.SaveChanges();
                 return (true, "Cập nhật sách thành công!");
 
@@ -300,6 +306,10 @@ namespace LibraryManagement.Services
                 if (bookInfo is null || bookInfo.isDeleted)
                 {
                     return (false, "Sách không tồn tại!");
+                }
+
+                if (bookInfo.status) { 
+                    return (false, "Sách đang được mượn không thể xóa!");
                 }
                 book.quantity--;
                 bookInfo.isDeleted = true;

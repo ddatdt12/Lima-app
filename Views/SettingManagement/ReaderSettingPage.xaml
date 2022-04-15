@@ -1,0 +1,93 @@
+﻿<Page x:Class="LibraryManagement.Views.SettingManagement.ReaderSettingPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      Height="650"
+      Width="1070"
+      x:Name="this"
+      FontFamily="{StaticResource NunitoSans_Regular}"
+      DataContext="{StaticResource SettingVM}">
+
+    <Grid Background="White">
+
+        <StackPanel Margin="20">
+            <TextBlock Text="Đổi mật khẩu"
+                       Foreground="#1B48BA"
+                       FontWeight="Bold"
+                       FontSize="20" />
+
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Margin="0,40,0,0">
+                    <TextBlock Text="Tên đăng nhập"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Margin="0,0,0,20" />
+                    <TextBlock Text="Mật khẩu hiện tại"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Margin="0,0,0,20" />
+                    <TextBlock Text="Mật khẩu mới"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Margin="0,0,0,20" />
+                    <TextBlock Text="Xác nhận mật khẩu mới"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Margin="0,0,0,20" />
+                </StackPanel>
+                <StackPanel Margin="40,40,0,0">
+                    <TextBlock Text="{Binding ElementName=this, Path=DataContext.CurrentUser.username}"
+                               FontSize="20"
+                               Margin="0,0,0,10" />
+                    <PasswordBox materialDesign:HintAssist.Hint="Nhập mật khẩu hiện tại"
+                                 FontSize="20"
+                                 Width="350"
+                                 Name="old"
+                                 Margin="0,0,0,10">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PasswordChanged">
+                                <i:InvokeCommandAction Command="{Binding OldPasswordChangedCM}"
+                                                       CommandParameter="{Binding ElementName=old}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </PasswordBox>
+                    <PasswordBox materialDesign:HintAssist.Hint="Nhập mật khẩu mới"
+                                 FontSize="20"
+                                 Name="new"
+                                 Width="350"
+                                 Margin="0,0,0,10">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PasswordChanged">
+                                <i:InvokeCommandAction Command="{Binding NewPasswordChangedCM}"
+                                                       CommandParameter="{Binding ElementName=new}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </PasswordBox>
+                    <PasswordBox materialDesign:HintAssist.Hint="Xác nhận mật khẩu mới"
+                                 FontSize="20"
+                                 Name="renew"
+                                 Width="350"
+                                 Margin="0,0,0,10">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PasswordChanged">
+                                <i:InvokeCommandAction Command="{Binding ReEnterPasswordChangedCM}"
+                                                       CommandParameter="{Binding ElementName=renew}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </PasswordBox>
+                </StackPanel>
+            </StackPanel>
+
+            <Button Content="Lưu thay đổi"
+                    FontWeight="Bold"
+                    FontSize="20"
+                    Height="50"
+                    Width="160"
+                    materialDesign:ButtonAssist.CornerRadius="12"
+                    Background="#0266FD"
+                    Command="{Binding ResetReaderPassCM}" />
+        </StackPanel>
+
+    </Grid>
+</Page>

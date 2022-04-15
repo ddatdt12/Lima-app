@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:LibraryManagement.Views.ReaderCard"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
@@ -11,6 +10,7 @@
         Width="460"
         WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource ReaderCardVM}"
+        FontFamily="{StaticResource NunitoSans_Regular}"
         AllowsTransparency="True"
         WindowStyle="None"
         ResizeMode="NoResize">
@@ -84,7 +84,7 @@
                         FontWeight="ExtraBold"
                         Command="{Binding RemoveStatusListViewCM}"
                         CommandParameter="{Binding ElementName=lvReaderType}"
-                        Style="{StaticResource MaterialDesignFlatAccentBgButton}"/>
+                        Style="{StaticResource MaterialDesignFlatAccentBgButton}" />
                 <Button Background="#0266FD"
                         BorderBrush="#0266FD"
                         Margin="5,0,0,0"
@@ -116,7 +116,7 @@
                                                CommandParameter="{Binding ElementName=lvReaderType}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-                
+
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem"
                            BasedOn="{StaticResource MaterialDesignGridViewItem}">

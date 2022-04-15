@@ -1,12 +1,12 @@
 ﻿using LibraryManagement.DTOs;
 using LibraryManagement.Services;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Markup;
 
 namespace LibraryManagement.Views.ImportBookPage
 {
@@ -25,6 +25,10 @@ namespace LibraryManagement.Views.ImportBookPage
             InitializeComponent();
 
             AllBookList = new ObservableCollection<BookDTO>(BookService.Ins.GetAllBook());
+            searchList.ItemsSource = AllBookList;
+
+            this.Language = XmlLanguage.GetLanguage("vi-VN");
+            createAt.SelectedDate = DateTime.Now;
         }
 
 
@@ -33,8 +37,7 @@ namespace LibraryManagement.Views.ImportBookPage
             TextBox sd = sender as TextBox;
 
             if (sd.Text.Length <= 0)
-                sd.Text = "1";
-
+                sd.Text = "0";
         }
 
         private static readonly Regex _regex = new Regex("[^0-9]"); //regex that matches disallowed text
@@ -49,16 +52,10 @@ namespace LibraryManagement.Views.ImportBookPage
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (searchList.ItemsSource is null)
-                searchList.ItemsSource = AllBookList;
+
             CollectionViewSource.GetDefaultView(searchList.ItemsSource).Refresh();
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(AllBookList);
             view.Filter = Filter;
-
-            if (searchBox.Text.Length == 0)
-            {
-                searchList.ItemsSource = null;
-            }
         }
         private bool Filter(object item)
         {

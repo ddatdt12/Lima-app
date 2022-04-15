@@ -3,9 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:LibraryManagement.Views.StatisticalManagement"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d"
       Height="780"
       Width="1110"
@@ -18,125 +16,111 @@
 
         <StackPanel>
 
-
-
             <TextBlock Text="Thống kê mượn sách theo thể loại"
                        FontSize="32"
                        Foreground="#1B48BA"
                        FontWeight="Bold"
                        Margin="32,10,0,0" />
 
-            <DockPanel Margin="30,25,0,0">
+            <materialDesign:Card Margin="20"
+                                 Height="690">
+                <StackPanel>
 
-                <Border Background="White"
-                        Width="145"
-                        Height="35"
-                        Padding="5,0,5,0"
-                        BorderBrush="#BFBABA"
-                        BorderThickness="0.5">
-                    <ComboBox BorderThickness="0"
-                              FontSize="18"
-                              SelectedIndex="0"
-                              Foreground="#5C5959"
-                              x:Name="periodbox"
-                              Loaded="periodbox_Loaded"
-                              SelectionChanged="periodbox_SelectionChanged"
-                              SelectedItem="{Binding SelectedGenrePeriod}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Loaded">
-                                <i:InvokeCommandAction Command="{Binding ChangeGenrePeriodCM}" />
-                            </i:EventTrigger>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding ChangeGenrePeriodCM}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        <ComboBoxItem>Theo năm</ComboBoxItem>
-                        <ComboBoxItem>Theo tháng</ComboBoxItem>
-                    </ComboBox>
-                </Border>
-                <Border Background="White"
-                        Width="145"
-                        Height="35"
-                        Padding="5,0,5,0"
-                        HorizontalAlignment="Left"
-                        Margin="30,0,0,0"
-                        BorderBrush="#BFBABA"
-                        BorderThickness="0.5">
-                    <ComboBox BorderThickness="0"
-                              FontSize="18"
-                              SelectedIndex="0"
-                              Foreground="#5C5959"
-                              x:Name="timebox"
-                              SelectedItem="{Binding SelectedGenreTime}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Loaded">
-                                <i:InvokeCommandAction Command="{Binding ChangeGenrePeriodCM}" />
-                            </i:EventTrigger>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding ChangeGenrePeriodCM}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </ComboBox>
-                </Border>
+                    <DockPanel Margin="30,25,0,0">
 
-                <TextBlock Text="100"
-                           Foreground="#5C5959"
-                           DockPanel.Dock="Right"
-                           FontSize="18"
-                           Margin="0,0,20,0"
-                           VerticalAlignment="Center" />
-                <Label Content="Tổng số lượt mượn: "
-                       FontSize="18"
-                       HorizontalAlignment="Right"
-                       Foreground="#5C5959" />
-            </DockPanel>
-
-            <ListView Margin="0,25,0,0"
-                      Height="641"
-                      ItemsSource="{Binding StatisticGenreList}">
-                <ListView.View>
-                    <GridView>
-
-                        <GridViewColumn Header="STT"
-                                        Width="250">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="123"
-                                               Margin="15,0,0,0" />
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="Thể loại"
-                                        Width="250">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="123"
-                                               Margin="15,0,0,0" />
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="Lượt mượn"
-                                        Width="250">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="123"
-                                               Margin="15,0,0,0" />
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="Tỉ lệ"
-                                        Width="250">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="1%"
-                                               Margin="15,0,0,0" />
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-
+                        <Border Background="White"
+                                Width="145"
+                                Height="35"
+                                Padding="5,0,5,0"
+                                BorderBrush="#BFBABA"
+                                BorderThickness="0.5">
+                            <ComboBox BorderThickness="0"
+                                      FontSize="18"
+                                      SelectedIndex="0"
+                                      Foreground="#5C5959"
+                                      x:Name="periodbox"
+                                      Loaded="periodbox_Loaded"
+                                      SelectedItem="{Binding SelectedGenreYear}">
+                            </ComboBox>
+                        </Border>
+                        <Border Background="White"
+                                Width="145"
+                                Height="35"
+                                Padding="5,0,5,0"
+                                HorizontalAlignment="Left"
+                                Margin="30,0,0,0"
+                                BorderBrush="#BFBABA"
+                                BorderThickness="0.5">
+                            <ComboBox BorderThickness="0"
+                                      FontSize="18"
+                                      SelectedIndex="0"
+                                      Foreground="#5C5959"
+                                      x:Name="timebox"
+                                      Loaded="timebox_Loaded"
+                                      SelectedItem="{Binding SelectedGenreMonth}">
+                            </ComboBox>
+                        </Border>
+                        <Button Content="Truy vấn"
+                                materialDesign:ButtonAssist.CornerRadius="8"
+                                Background="#0266FD"
+                                FontWeight="Bold"
+                                Margin="50,0,0,0"
+                                Command="{Binding GetGenreStatCM}" />
+                        <TextBlock Text="{Binding TotalRent}"
+                                   Foreground="#5C5959"
+                                   DockPanel.Dock="Right"
+                                   FontSize="18"
+                                   Margin="0,0,20,0"
+                                   VerticalAlignment="Center" />
+                        <Label Content="Tổng số lượt mượn: "
+                               FontSize="18"
+                               HorizontalAlignment="Right"
+                               Foreground="#5C5959" />
+                    </DockPanel>
+                    <Border CornerRadius="4"
+                            Margin="20"
+                            BorderThickness="1"
+                            BorderBrush="#BFBABA">
+                        <ListView ItemsSource="{Binding StatisticGenreList}"
+                                  Height="590">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Thể loại"
+                                                    Width="250">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Genre.name}"
+                                                           FontSize="20"
+                                                           Margin="15,0,0,0" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Lượt mượn"
+                                                    Width="250">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding NumberOfBorrowings}"
+                                                           FontSize="20"
+                                                           Margin="15,0,0,0" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Tỉ lệ"
+                                                    Width="250">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding rate}"
+                                                           FontSize="20"
+                                                           Margin="15,0,0,0" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Border>
+                </StackPanel>
+            </materialDesign:Card>
         </StackPanel>
 
     </Grid>

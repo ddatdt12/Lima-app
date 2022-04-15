@@ -9,6 +9,8 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
         public ICommand OpenPrintReaderCardCM { get; set; }
         public void LoadPrintReaderCard(PrintReaderCardWindow w)
         {
+            if (SelectedItem is null) 
+                return;
             Name = SelectedItem.name;
             if (SelectedItem.gender == "Nam")
             {
@@ -25,6 +27,7 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             ReaderType = SelectedItem.readerType.name;
             StartDate = SelectedItem.createdAt;
             FinishDate = SelectedItem.expiryDate;
+            w.ShowDialog();
         }
     }
 }

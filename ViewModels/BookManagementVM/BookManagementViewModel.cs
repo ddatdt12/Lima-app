@@ -150,7 +150,6 @@ namespace LibraryManagement.ViewModel.BookManagementVM
         public BookManagementViewModel()
         {
 
-            BaseBookList = new ObservableCollection<BaseBookDTO>(BaseBookService.Ins.GetAllBaseBook());
 
             FirstLoadCM = new RelayCommand<ComboBox>((p) => { return true; }, (p) =>
             {
@@ -162,6 +161,7 @@ namespace LibraryManagement.ViewModel.BookManagementVM
                 p.ItemsSource = ListGenre;
 
                 ListAuthor = new List<AuthorDTO>(AuthorService.Ins.GetAllAuthor());
+                BaseBookList = new ObservableCollection<BaseBookDTO>(BaseBookService.Ins.GetAllBaseBook());
 
             });
             GenreFilterCM = new RelayCommand<ListView>((p) => { return true; }, (p) =>
@@ -267,7 +267,7 @@ namespace LibraryManagement.ViewModel.BookManagementVM
                 else
                     return;
             });
-            UpdateBookCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            UpdateBookCM = new RelayCommand<Window>((p) => { if (SelectedBaseBookDetail is null) return false; else return true; }, (p) =>
             {
                 if (SelectedBaseBookDetail is null) return;
                 if (string.IsNullOrEmpty(Publisher) || YearPublish is null)

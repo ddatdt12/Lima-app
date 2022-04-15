@@ -1,23 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace LibraryManagement.Views.StatisticalManagement
 {
-    /// <summary>
-    /// Interaction logic for GenreStatistic.xaml
-    /// </summary>
     public partial class GenreStatisticPage : Page
     {
         public GenreStatisticPage()
@@ -27,25 +14,11 @@ namespace LibraryManagement.Views.StatisticalManagement
 
         private void periodbox_Loaded(object sender, RoutedEventArgs e)
         {
-            GetYearSource(timebox);
+            GetYearSource(periodbox);
         }
-
-        private void periodbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void timebox_Loaded(object sender, RoutedEventArgs e)
         {
-            ComboBoxItem s = (ComboBoxItem)periodbox.SelectedItem;
-            switch (s.Content.ToString())
-            {
-                case "Theo năm":
-                    {
-                        GetYearSource(timebox);
-                        return;
-                    }
-                case "Theo tháng":
-                    {
-                        GetMonthSource(timebox);
-                        return;
-                    }
-            }
+            GetMonthSource(timebox);
         }
         public void GetYearSource(ComboBox cbb)
         {
@@ -84,5 +57,6 @@ namespace LibraryManagement.Views.StatisticalManagement
             cbb.ItemsSource = l;
             cbb.SelectedIndex = DateTime.Today.Month - 1;
         }
+
     }
 }

@@ -1,15 +1,10 @@
 ﻿using LibraryManagement.DTOs;
-using LibraryManagement.Views.ReaderCard;
 using System;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace LibraryManagement.View.ReaderCard
 {
-    /// <summary>
-    /// Interaction logic for ReaderCardPage.xaml
-    /// </summary>
     public partial class ReaderCardPage : Page
     {
         public ReaderCardPage()

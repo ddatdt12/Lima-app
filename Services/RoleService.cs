@@ -44,6 +44,7 @@ namespace LibraryManagement.Services
                               roleId = rD.roleId,
                               isPermitted = rD.isPermitted,
                               permissionId = rD.permissionId,
+                              permissionName = rD.Permission.name
                           }).ToList()
                      }).ToList();
                 return roles;
@@ -243,12 +244,16 @@ namespace LibraryManagement.Services
             try
             {
                 var context = DataProvider.Ins.DB;
-                var related = context.Accounts.Where(b => b.roleId == roleId).Any();
+                var related = context.Roles.Find(roleId)?.Accounts.Count() > 0;
                 if (related)
                 {
                     return (false, "Đã có tài khoản thuộc vai trò này, không thể xóa!");
                 }
                 var role = context.Roles.Find(roleId);
+                if(role == null)
+                {
+                    return (false, "Vai trò không tồn tại!");
+                }
                 var roleDetails = context.RoleDetails.Where(r => r.roleId == role.id).ToList();
 
                 context.RoleDetails.RemoveRange(roleDetails);

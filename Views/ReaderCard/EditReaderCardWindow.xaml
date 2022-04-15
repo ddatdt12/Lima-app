@@ -14,6 +14,7 @@
         ResizeMode="NoResize"
         Background="Transparent"
         AllowsTransparency="True"
+        FontFamily="{StaticResource NunitoSans_Regular}"
         WindowStyle="None">
     <Border Background="White"
             CornerRadius="30"

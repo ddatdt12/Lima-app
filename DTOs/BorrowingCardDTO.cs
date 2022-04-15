@@ -15,6 +15,7 @@ namespace LibraryManagement.DTOs
         public System.DateTime dueDate { get; set; }
         public string employeeId { get; set; }
         public string bookInfoId { get; set; }
+        public int numberOfDelayReturnDays{ get; set; }
 
         public BookInfoDTO bookInfo { get; set; }
         public ReturnCardDTO returnCard { get; set; }

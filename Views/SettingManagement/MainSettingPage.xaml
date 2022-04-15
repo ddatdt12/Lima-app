@@ -3,13 +3,20 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:LibraryManagement.Views.SettingManagement"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:cvt="clr-namespace:LibraryManagement.Views.Converter"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d"
       Height="780"
       Width="1110"
+      x:Name="this"
       DataContext="{StaticResource SettingVM}"
       FontFamily="{StaticResource NunitoSans_Regular}">
+
+    <Page.Resources>
+        <cvt:EmployeeRoleConverter x:Key="EmployeeConverter" />
+        <cvt:ReaderRoleConverter x:Key="ReaderConverter" />
+    </Page.Resources>
 
     <Grid>
         <StackPanel>
@@ -22,12 +29,16 @@
                         Margin="20,10,0,0">
                 <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
                              Width="200"
+                             Foreground="#1B48BA"
                              IsChecked="True"
                              Content="Phân quyền"
                              FontSize="18"
                              FontWeight="Bold"
                              Command="{Binding OpenRoleSettingPageCM}"
-                             CommandParameter="{Binding ElementName=mainFrame}" />
+                             CommandParameter="{Binding ElementName=mainFrame}"
+                             Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.type.Name, 
+                    Converter={StaticResource EmployeeConverter}}" />
                 <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
                              Foreground="#1B48BA"
                              IsChecked="False"
@@ -36,22 +47,37 @@
                              Width="200"
                              FontWeight="Bold"
                              Command="{Binding OpenGeneralSettingPageCM}"
-                             CommandParameter="{Binding ElementName=mainFrame}" />
+                             CommandParameter="{Binding ElementName=mainFrame}"
+                             Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.type.Name, 
+                    Converter={StaticResource EmployeeConverter}}" />
+                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
+                             Foreground="#1B48BA"
+                             Content="Cài đặt tài khoản"
+                             FontSize="18"
+                             Width="200"
+                             FontWeight="Bold"
+                             IsChecked="True"
+                             Command="{Binding OpenReaderSettingPageCM}"
+                             CommandParameter="{Binding ElementName=mainFrame}"
+                             Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.type.Name, 
+                    Converter={StaticResource ReaderConverter}}" />
             </StackPanel>
-            <Frame x:Name="mainFrame"
-                   Margin="20,0,20,0"
-                   Height="650"
-                   BorderThickness="0.5"
-                   BorderBrush="#BFBABA"
-                   NavigationUIVisibility="Hidden">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Loaded">
-                        <i:InvokeCommandAction Command="{Binding OpenRoleSettingPageCM}"
-                                               CommandParameter="{Binding ElementName=mainFrame}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Frame>
-
+            <materialDesign:Card   Margin="20,0,20,0">
+                <Frame x:Name="mainFrame"
+                       Height="650"
+                       BorderThickness="0.5"
+                       BorderBrush="#BFBABA"
+                       NavigationUIVisibility="Hidden">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Loaded">
+                            <i:InvokeCommandAction Command="{Binding FirstLoadCM}"
+                                                   CommandParameter="{Binding ElementName=mainFrame}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Frame>
+            </materialDesign:Card>
 
         </StackPanel>
     </Grid>

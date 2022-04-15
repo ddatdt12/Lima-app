@@ -31,8 +31,8 @@ namespace LibraryManagement.Services
             try
             {
                 var readerTypes = (from s in DataProvider.Ins.DB.ReaderTypes
-                               where !s.isDeleted
-                               select new ReaderTypeDTO { id = s.id, name = s.name}).ToList();
+                                   where !s.isDeleted
+                                   select new ReaderTypeDTO { id = s.id, name = s.name }).ToList();
                 return readerTypes;
             }
             catch (Exception e)
@@ -112,14 +112,15 @@ namespace LibraryManagement.Services
                     return (false, "Loại độc giả không tồn tại!");
                 }
 
-               var isRef =  context.ReaderCards.Any(r => r.readerTypeId == readerTypeId);
+                var isRef = context.ReaderCards.Any(r => r.readerTypeId == readerTypeId);
                 if (!isRef)
                 {
                     context.ReaderTypes.Remove(readerType);
                 }
                 else
                 {
-                    readerType.isDeleted = true;
+                    return (false, "Đã có độc giả thuộc thể loại này không thể xóa!");
+                    //readerType.isDeleted = true;
                 }
                 context.SaveChanges();
                 return (true, "Xóa loại độc giả thành công");
@@ -127,7 +128,6 @@ namespace LibraryManagement.Services
             catch (DbEntityValidationException e)
             {
                 return (false, e.Message);
-
             }
             catch (DbUpdateException e)
             {
@@ -136,7 +136,7 @@ namespace LibraryManagement.Services
 
         }
 
-      
+
 
     }
 }

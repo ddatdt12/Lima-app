@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:LibraryManagement.Views.BookManagement"
       xmlns:cvt="clr-namespace:LibraryManagement.Views.Converter"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
@@ -148,12 +147,15 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn Header="Tên sách">
+                                    <GridViewColumn Header="Tên sách"
+                                                    Width="320">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding name}"
                                                            Margin="15,0,0,0"
-                                                           FontSize="18" />
+                                                           FontSize="18"
+                                                           ToolTip="{Binding name}"
+                                                           TextTrimming="CharacterEllipsis" />
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
@@ -163,7 +165,9 @@
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding genre.name}"
                                                            FontSize="18"
-                                                           Margin="15,0,0,0" />
+                                                           Margin="15,0,0,0"
+                                                           ToolTip="{Binding genre.name}"
+                                                           TextTrimming="CharacterEllipsis" />
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
@@ -173,7 +177,9 @@
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding authors,Converter={StaticResource ListToStringConverter}}"
                                                            FontSize="18"
-                                                           Margin="15,0,0,0" />
+                                                           Margin="15,0,0,0"
+                                                           ToolTip="{Binding authors}"
+                                                           TextTrimming="CharacterEllipsis" />
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
@@ -209,8 +215,10 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <materialDesign:PackIcon Kind="LeadPencil"
-                                                                         Width="20"
-                                                                         Height="20">
+                                                                         Width="30"
+                                                                         Height="30"
+                                                                         Foreground="Green"
+                                                                         Cursor="Hand">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonUp">
                                                             <i:InvokeCommandAction Command="{Binding ElementName=listview, Path=DataContext.OpenEditBookCM}" />
@@ -224,8 +232,10 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <materialDesign:PackIcon Kind="Bin"
-                                                                         Width="20"
-                                                                         Height="20">
+                                                                         Width="30"
+                                                                         Height="30"
+                                                                         Foreground="Red"
+                                                                         Cursor="Hand">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonDown">
                                                             <i:InvokeCommandAction Command="{Binding ElementName=listview, Path=DataContext.DeleteBaseBookCM}"
