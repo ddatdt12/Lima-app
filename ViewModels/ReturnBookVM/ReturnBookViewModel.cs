@@ -1,17 +1,22 @@
 ﻿using LibraryManagement.DTOs;
 using LibraryManagement.Services;
 using LibraryManagement.ViewModel;
+using LibraryManagement.Views.ReturnBook;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 
 namespace LibraryManagement.ViewModels.ReturnBookVM
 {
     public class ReturnBookViewModel : BaseViewModel
     {
         #region Command
+        public ICommand FirstLoadCM { get; set; }
         public ICommand CheckReaderCardCM { get; set; }
         public ICommand ConfirmCM { get; set; }
         public ICommand RemoveBookCM { get; set; }
@@ -82,9 +87,9 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                         {
                             if (listBorrowingCard[i].bookInfo.id.Contains(IdSearchBook))
                             {
-                                int sumDateRent;
-                                sumDateRent = DateTime.Now.Subtract(listBorrowingCard[i].borrowingDate).Days;
-                                decimal fine = sumDateRent * ParameterService.Ins.GetRuleValue(Utils.Rules.FINE);
+                                int sumDelayDate;
+                                sumDelayDate = DateTime.Now.Subtract(listBorrowingCard[i].dueDate).Days;
+                                decimal fine = sumDelayDate * ParameterService.Ins.GetRuleValue(Utils.Rules.FINE);
                                 Book book = new Book
                                 (
                                     0,
@@ -93,8 +98,9 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                                     listBorrowingCard[i].bookInfo.Book.publisher,
                                     listBorrowingCard[i].bookInfo.Book.yearOfPublication,
                                     listBorrowingCard[i].borrowingDate,
-                                    sumDateRent,
-                                    fine
+                                    sumDelayDate,
+                                    fine,
+                                     listBorrowingCard[i].dueDate
                                     );
                                 RentingBookList.Add(book);
                             }
@@ -114,6 +120,14 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                 }
             }
         }
+
+        private List<Book> currentPrint;
+        public List<Book> CurrentPrint
+        {
+            get { return currentPrint; }
+            set { currentPrint = value; OnPropertyChanged(); }
+        }
+
 
         #endregion
 
@@ -165,31 +179,25 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
             ReturnBookTotal = ReturnBookList.Count;
             CanReturn = false;
 
+            FirstLoadCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                ClearData();
+                ReaderID = string.Empty;
+            });
+
             CheckReaderCardCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 if (string.IsNullOrEmpty(ReaderID))
                 {
                     MessageBox.Show("Vui lòng nhập mã độc giả!");
-                    ReturnBookList.Clear();
-                    RentingBookList.Clear();
-                    ReaderName = null;
-                    TotalDept = null;
-                    TotalPunish = null;
-                    ReturnBookTotal = 0;
-                    CanReturn = false;
+                    ClearData();
                     return;
                 }
                 ReaderCardDTO readerCard = ReaderService.Ins.GetReaderInfo(ReaderID);
                 if (readerCard == null)
                 {
                     MessageBox.Show("Mã độc giả không tồn tại!");
-                    ReturnBookList.Clear();
-                    RentingBookList.Clear();
-                    ReaderName = null;
-                    TotalDept = null;
-                    TotalPunish = null;
-                    ReturnBookTotal = 0;
-                    CanReturn = false;
+                    ClearData();
                     return;
                 }
                 ReaderName = readerCard.name;
@@ -202,12 +210,11 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                 {
                     for (int i = 0; i < listBorrowingCard.Count; i++)
                     {
-                        int sumDateRent;
-                        sumDateRent = DateTime.Now.Subtract(listBorrowingCard[i].borrowingDate).Days;
-                        //if (sumDateRent < 0)
-                        //    sumDateRent = 0;
-                        decimal fine = DateTime.Now.Subtract(listBorrowingCard[i].dueDate).Days * ParameterService.Ins.GetRuleValue(Utils.Rules.FINE);
+                        int sumDelayDate;
+                        sumDelayDate = DateTime.Now.Subtract(listBorrowingCard[i].dueDate).Days;
+                        decimal fine = sumDelayDate * ParameterService.Ins.GetRuleValue(Utils.Rules.FINE);
                         if (fine < 0) fine = 0;
+                        if (sumDelayDate < 0) sumDelayDate = 0;
 
                         Book book = new Book
                         (
@@ -217,8 +224,9 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                             listBorrowingCard[i].bookInfo.Book.publisher,
                             listBorrowingCard[i].bookInfo.Book.yearOfPublication,
                             listBorrowingCard[i].borrowingDate,
-                            sumDateRent,
-                            fine
+                            sumDelayDate,
+                            fine,
+                            listBorrowingCard[i].dueDate
                             );
                         RentingBookList.Add(book);
                     }
@@ -248,14 +256,8 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                 (bool success, string message) = BorrowingReturnService.Ins.CreateReturnCardList(returnCardList);
                 if (success)
                 {
-                    ReaderID = string.Empty;
-                    ReturnBookList.Clear();
-                    RentingBookList.Clear();
-                    ReaderName = null;
-                    TotalDept = null;
-                    TotalPunish = null;
-                    ReturnBookTotal = 0;
-                    CanReturn = false;
+                    OpenPrintWindow(ReturnBookList);
+                    ClearData();
                 }
                 MessageBox.Show(message);
             });
@@ -300,6 +302,60 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
 
             });
 
+        }
+
+        public void ClearData()
+        {
+            ReturnBookList.Clear();
+            RentingBookList.Clear();
+            ReaderName = null;
+            TotalDept = null;
+            TotalPunish = null;
+            ReturnBookTotal = 0;
+            CanReturn = false;
+        }
+
+        public void OpenPrintWindow(ObservableCollection<Book> rt)
+        {
+            //create printer
+            PrintDialog pd = new PrintDialog();
+            if (pd.ShowDialog() != true) return;
+
+            //create document
+            FixedDocument document = new FixedDocument();
+            document.DocumentPaginator.PageSize = new Size(600, 350);
+
+
+
+            foreach (var item in rt)
+            {
+                //create page
+                FixedPage page = new FixedPage();
+                page.Width = document.DocumentPaginator.PageSize.Width;
+                page.Height = document.DocumentPaginator.PageSize.Height;
+
+                PrintWindow w = new PrintWindow();
+                w.rcId.Text = item.RentCardId.ToString();
+                w.date.Text = DateTime.Now.ToString("dd/MM/yyyy");
+                w.reader.Text = ReaderName;
+                CurrentPrint = new List<Book>();
+                CurrentPrint.Add(item);
+                w.lv.ItemsSource = CurrentPrint;
+
+                //remove element from tree
+                Grid parent = w.Print.Parent as Grid;
+                Grid child = w.Print as Grid;
+                parent.Children.Remove(w.Print);
+                page.Children.Add(child);
+
+                // add the page to the document
+                PageContent page1Content = new PageContent();
+                ((IAddChild)page1Content).AddChild(page);
+                document.Pages.Add(page1Content);
+            }
+
+            // and print
+            pd.PrintDocument(document.DocumentPaginator, "Return bill");
 
         }
 
@@ -347,11 +403,11 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                 set { _DateRent = value; }
             }
 
-            private int _SumDateRent;
-            public int SumDateRent
+            private int _sumDelayDate;
+            public int sumDelayDate
             {
-                get { return _SumDateRent; }
-                set { _SumDateRent = value; }
+                get { return _sumDelayDate; }
+                set { _sumDelayDate = value; }
             }
 
             private decimal _Fine;
@@ -361,6 +417,14 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                 set { _Fine = value; }
             }
 
+            private DateTime _dueDate;
+            public DateTime DueDate
+            {
+                get { return _dueDate; }
+                set { _dueDate = value; }
+            }
+
+
             public Book(
             int STT,
             string RentCardId,
@@ -368,8 +432,8 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
             string Publisher,
             int YearPublisher,
             Nullable<System.DateTime> DateRent,
-            int SumDateRent,
-            decimal Fine)
+            int sumDelayDate,
+            decimal Fine, DateTime due)
             {
                 _STT = STT;
                 _RentCardId = RentCardId;
@@ -377,8 +441,9 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                 _Publisher = Publisher;
                 _YearPublisher = YearPublisher;
                 _DateRent = DateRent;
-                _SumDateRent = SumDateRent;
+                _sumDelayDate = sumDelayDate;
                 _Fine = Fine;
+                _dueDate = due;
             }
         }
     }

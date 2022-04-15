@@ -1,68 +1,44 @@
-﻿<Page x:Class="LibraryManagement.Views.SettingManagement.MainSettingPage"
+﻿<Page x:Class="LibraryManagement.Views.HistoryManagement.MainHistoryPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-      xmlns:cvt="clr-namespace:LibraryManagement.Views.Converter"
+      xmlns:local="clr-namespace:LibraryManagement.Views.HistoryManagement"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d"
       Height="800"
       Width="1128"
-      x:Name="this"
-      DataContext="{StaticResource SettingVM}"
+      DataContext="{StaticResource HistoryVM}"
       FontFamily="{StaticResource NunitoSans_Regular}">
-
-    <Page.Resources>
-        <cvt:EmployeeRoleConverter x:Key="EmployeeConverter" />
-        <cvt:ReaderRoleConverter x:Key="ReaderConverter" />
-    </Page.Resources>
 
     <Grid>
         <StackPanel>
-            <TextBlock Text="Cài đặt"
+            <TextBlock Text="Lịch sử"
                        Foreground="#1B48BA"
                        FontSize="32"
                        Margin="32,10,0,0"
                        FontWeight="Bold" />
             <StackPanel Orientation="Horizontal"
-                        Margin="20,10,0,0">
+                        Margin="20,30,0,0">
                 <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
                              Width="200"
                              Foreground="#1B48BA"
                              IsChecked="True"
-                             Content="Phân quyền"
+                             Content="Hoá đơn nhập sách"
                              FontSize="18"
                              FontWeight="Bold"
-                             Command="{Binding OpenRoleSettingPageCM}"
-                             CommandParameter="{Binding ElementName=mainFrame}"
-                             Visibility="{Binding ElementName=this, 
-                    Path=DataContext.CurrentUser.type.Name, 
-                    Converter={StaticResource EmployeeConverter}}" />
+                             Command="{Binding OpenImportReceiptPageCM}"
+                             CommandParameter="{Binding ElementName=mainFrame}" />
                 <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
                              Foreground="#1B48BA"
                              IsChecked="False"
-                             Content="Cài đặt chung"
+                             Content="Mượn trả sách"
                              FontSize="18"
                              Width="200"
                              FontWeight="Bold"
-                             Command="{Binding OpenGeneralSettingPageCM}"
-                             CommandParameter="{Binding ElementName=mainFrame}"
-                             Visibility="{Binding ElementName=this, 
-                    Path=DataContext.CurrentUser.type.Name, 
-                    Converter={StaticResource EmployeeConverter}}" />
-                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
-                             Foreground="#1B48BA"
-                             Content="Cài đặt tài khoản"
-                             FontSize="18"
-                             Width="200"
-                             FontWeight="Bold"
-                             IsChecked="True"
-                             Command="{Binding OpenReaderSettingPageCM}"
-                             CommandParameter="{Binding ElementName=mainFrame}"
-                             Visibility="{Binding ElementName=this, 
-                    Path=DataContext.CurrentUser.type.Name, 
-                    Converter={StaticResource ReaderConverter}}" />
+                             Command="{Binding OpenBorrowReturnPageCM}"
+                             CommandParameter="{Binding ElementName=mainFrame}" />
             </StackPanel>
             <materialDesign:Card   Margin="20,0,20,0">
                 <Frame x:Name="mainFrame"

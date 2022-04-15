@@ -15,6 +15,7 @@ namespace LibraryManagement.Views.BookManagement
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (listview.ItemsSource is null) return;
             CollectionViewSource.GetDefaultView(listview.ItemsSource).Refresh();
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listview.ItemsSource);
             view.Filter = Filter;

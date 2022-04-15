@@ -58,6 +58,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -197,6 +198,8 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\BookManagementVM\BookManagementViewModel.cs" />
     <Compile Include="ViewModels\Genre_AuthorManagementVM\Genre_AuthorManagementViewModel.cs" />
+    <Compile Include="ViewModels\HistoryManagementVM\HistoryViewModel.cs" />
+    <Compile Include="ViewModels\HomeVM\ReaderHomeViewModel.cs" />
     <Compile Include="ViewModels\ImportBookVM\ImportBookViewModel.cs" />
     <Compile Include="ViewModels\LoginVM\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
@@ -237,6 +240,18 @@
     <Compile Include="Views\Genre_AuthorManagement\MainManagementPage.xaml.cs">
       <DependentUpon>MainManagementPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\HistoryManagement\BorrowReturnPage.xaml.cs">
+      <DependentUpon>BorrowReturnPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HistoryManagement\ImportReceiptPage.xaml.cs">
+      <DependentUpon>ImportReceiptPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HistoryManagement\MainHistoryPage.xaml.cs">
+      <DependentUpon>MainHistoryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Home\ReaderHome.xaml.cs">
+      <DependentUpon>ReaderHome.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ImportBook\AddBaseBookPage.xaml.cs">
       <DependentUpon>AddBaseBookPage.xaml</DependentUpon>
     </Compile>
@@ -248,6 +263,9 @@
     </Compile>
     <Compile Include="Views\ImportBook\MainImportBookPage.xaml.cs">
       <DependentUpon>MainImportBookPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ImportBook\PrintWindow.xaml.cs">
+      <DependentUpon>PrintWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Login\ChangePassPage.xaml.cs">
       <DependentUpon>ChangePassPage.xaml</DependentUpon>
@@ -270,6 +288,9 @@
     <Compile Include="Views\MessageBoxCustom.xaml.cs">
       <DependentUpon>MessageBoxCustom.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PunishBook\PrintWindow.xaml.cs">
+      <DependentUpon>PrintWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PunishBook\PunishBookWindow.xaml.cs">
       <DependentUpon>PunishBookWindow.xaml</DependentUpon>
     </Compile>
@@ -288,8 +309,14 @@
     <Compile Include="Views\ReaderCard\ReaderCardPage.xaml.cs">
       <DependentUpon>ReaderCardPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\RentBook\PrintWindow.xaml.cs">
+      <DependentUpon>PrintWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\RentBook\RentBookPage.xaml.cs">
       <DependentUpon>RentBookPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReturnBook\PrintWindow.xaml.cs">
+      <DependentUpon>PrintWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ReturnBook\ReturnBookPage.xaml.cs">
       <DependentUpon>ReturnBookPage.xaml</DependentUpon>
@@ -355,6 +382,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\HistoryManagement\BorrowReturnPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HistoryManagement\ImportReceiptPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HistoryManagement\MainHistoryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Home\ReaderHome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ImportBook\AddBaseBookPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -370,6 +413,10 @@
     <Page Include="Views\ImportBook\MainImportBookPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ImportBook\PrintWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Login\ChangePassPage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -399,6 +446,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\PunishBook\PrintWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PunishBook\PunishBookWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -423,9 +474,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\RentBook\PrintWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\RentBook\RentBookPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ReturnBook\PrintWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ReturnBook\ReturnBookPage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -518,6 +577,35 @@
       <DependentUpon>LibraryManagementModel.edmx</DependentUpon>
       <LastGenOutput>LibraryManagementModel.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>9</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\MaterialDesignThemes.4.4.0\build\MaterialDesignThemes.targets" Condition="Exists('packages\MaterialDesignThemes.4.4.0\build\MaterialDesignThemes.targets')" />

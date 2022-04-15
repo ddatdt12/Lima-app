@@ -2,6 +2,7 @@
 using LibraryManagement.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
@@ -83,11 +84,11 @@ namespace LibraryManagement.Services
                 var borrowingCards =borrowingCardsQuery as IQueryable<Borrowing_ReturnCard>;
                 if (borrowingDate != null)
                 {
-                    borrowingCards = borrowingCardsQuery.Where(b => b.borrowingDate == borrowingDate);
+                    borrowingCards = borrowingCardsQuery.Where(b => DbFunctions.TruncateTime(b.borrowingDate) == borrowingDate);
                 }
                  if (returnDate != null)
                 {
-                    borrowingCards = borrowingCardsQuery.Where(b => b.returnedDate != null && b.returnedDate == returnDate);
+                    borrowingCards = borrowingCardsQuery.Where(b => b.returnedDate != null && DbFunctions.TruncateTime(b.returnedDate) == returnDate);
                 }
 
                 var cardsDTO = borrowingCards.Select(b => new BorrowingCardDTO
@@ -98,6 +99,11 @@ namespace LibraryManagement.Services
                     dueDate = b.dueDate,
                     employeeId = b.borrowing_employeeId,
                     readerCardId = b.readerCardId,
+                    readerCard = new ReaderCardDTO
+                    {
+                        id = b.readerCardId,
+                        name = b.ReaderCard.name,
+                    },
                     bookInfo = new BookInfoDTO
                     {
                         id = b.bookInfoId,
@@ -165,6 +171,7 @@ namespace LibraryManagement.Services
                                 }
                             }
                         },
+                        numberOfDelayReturnDays = DbFunctions.DiffDays(b.dueDate, DateTime.Now) ?? 0,
                     }).ToList();
 
                 return borrowingCards;

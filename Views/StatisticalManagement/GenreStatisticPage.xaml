@@ -6,7 +6,7 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d"
       Height="780"
-      Width="1110"
+      Width="1128"
       DataContext="{StaticResource StatisticalVM}"
       FontFamily="{StaticResource NunitoSans_Regular}"
       VerticalAlignment="Top"
@@ -64,18 +64,37 @@
                                 materialDesign:ButtonAssist.CornerRadius="8"
                                 Background="#0266FD"
                                 FontWeight="Bold"
-                                Margin="50,0,0,0"
+                                Margin="50,0,10,0"
+                                Width="130"
+                                Height="42"
+                                FontSize="16"
                                 Command="{Binding GetGenreStatCM}" />
+                        <Button Background="#37B634"
+                                BorderBrush="Transparent"
+                                materialDesign:ButtonAssist.CornerRadius="8"
+                                Width="145"
+                                Height="42"
+                                Command="{Binding ExportGenreStatCM}">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Export"
+                                                             VerticalAlignment="Center"
+                                                             Margin="0,0,10,0" />
+                                    <TextBlock Text="Xuất file"
+                                               FontWeight="Bold"
+                                               FontSize="16" />
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
                         <TextBlock Text="{Binding TotalRent}"
                                    Foreground="#5C5959"
                                    DockPanel.Dock="Right"
                                    FontSize="18"
-                                   Margin="0,0,20,0"
-                                   VerticalAlignment="Center" />
-                        <Label Content="Tổng số lượt mượn: "
-                               FontSize="18"
-                               HorizontalAlignment="Right"
-                               Foreground="#5C5959" />
+                                   Margin="0,0,20,0" />
+                        <TextBlock Text="Tổng số lượt mượn: "
+                                   FontSize="18"
+                                   HorizontalAlignment="Right"
+                                   Foreground="#5C5959" />
                     </DockPanel>
                     <Border CornerRadius="4"
                             Margin="20"

@@ -16,6 +16,11 @@
       Width="1128"
       DataContext="{StaticResource ReturnBookVM}"
       ShowsNavigationUI="False">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding FirstLoadCM}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -118,11 +123,11 @@
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        <GridViewColumn Header="Số ngày mượn">
+                                        <GridViewColumn Header="Số ngày trễ">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock FontSize="18"
-                                                               Text="{Binding SumDateRent}"
+                                                               Text="{Binding sumDelayDate}"
                                                                Foreground="#000000"
                                                                TextAlignment="Center"
                                                                TextTrimming="CharacterEllipsis"
