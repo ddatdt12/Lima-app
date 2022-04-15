@@ -116,9 +116,10 @@ namespace LibraryManagement.Services
                 };
 
                 readerCard.totalFine -= newFineReceipt.amount;
-
                 context.FineReceipts.Add(newFineReceipt);
                 context.SaveChanges();
+                fineReceipt.id = newFineReceipt.id;
+
                 return (true, "Trả tiền phạt thành công");
             }
             catch (DbEntityValidationException e)
