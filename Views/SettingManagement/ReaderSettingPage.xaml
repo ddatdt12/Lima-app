@@ -4,7 +4,7 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       Height="650"
-      Width="1070"
+      Width="1088"
       x:Name="this"
       FontFamily="{StaticResource NunitoSans_Regular}"
       DataContext="{StaticResource SettingVM}">

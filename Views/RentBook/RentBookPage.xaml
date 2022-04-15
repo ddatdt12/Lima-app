@@ -80,7 +80,6 @@
                                                 Value="Stretch" />
                                     </Style>
                                 </ListView.ItemContainerStyle>
-
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="STT"
@@ -101,9 +100,10 @@
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock FontSize="18"
-                                                               Text="{Binding BookID}"
+                                                               Text="{Binding BookInfoID}"
                                                                Foreground="#000000"
-                                                               TextAlignment="Left" />
+                                                               TextAlignment="Left" 
+                                                               ToolTip="{Binding BookInfoID}"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -360,7 +360,8 @@
                                  Text="{Binding ReaderID, Mode=TwoWay}"
                                  FontSize="18"
                                  BorderBrush="#0266FD"
-                                 Foreground="#5C5959" />
+                                 Foreground="#5C5959"
+                                 CharacterCasing="Upper"/>
                     </Grid>
                     <Button Command="{Binding CheckReaderCardCM}"
                             Width="100"
@@ -467,7 +468,7 @@
                         <TextBlock Width="190"
                                    Margin="50,0,0,0"
                                    VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
+                                   HorizontalAlignment="Right"
                                    Text="{Binding Path=ExpiredBookDate, StringFormat=dd/MM/yyyy}"
                                    FontSize="18"
                                    TextAlignment="Right" />

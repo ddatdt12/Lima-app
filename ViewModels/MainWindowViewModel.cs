@@ -6,9 +6,6 @@ using LibraryManagement.Views.BookManagement;
 using LibraryManagement.Views.Genre_AuthorManagement;
 using LibraryManagement.Views.ImportBookPage;
 using LibraryManagement.View.ReaderCard;
-using System;
-using System.Windows.Controls;
-using System.Windows.Input;
 using LibraryManagement.Views.StaffManagement;
 using LibraryManagement.Views.Login;
 using LibraryManagement.Views.PunishBook;
@@ -17,11 +14,16 @@ using LibraryManagement.Views.ReturnBook;
 using LibraryManagement.Views.SettingManagement;
 using LibraryManagement.Views.StatisticalManagement;
 using System.Windows;
+using LibraryManagement.Views.Home;
+using LibraryManagement.Views.HistoryManagement;
 namespace LibraryManagement.ViewModel
 {
     public class MainWindowViewModel : BaseViewModel
     {
         #region
+        public ICommand OpenReaderCardPageCM { get; set; }
+        public ICommand OpenBookManagementPageCM { get; set; }
+        public ICommand OpenImportBookPage { get; set; }
         public ICommand OpenGenreAuthorManagementPage { get; set; }
         public ICommand OpenGenreStatisticPageCM { get; set; }
         public ICommand OpenLateStatisticPageCM { get; set; }
@@ -34,12 +36,25 @@ namespace LibraryManagement.ViewModel
         public ICommand OpenReaderCardPageCM { get; set; }
         public ICommand OpenBookManagementPageCM { get; set; }
         public ICommand OpenImportBookPage { get; set; }
+        public ICommand FirstLoadCM { get; set; }
+        public ICommand OpenHomePageCM { get; set; }
+        public ICommand OpenHistoryPageCM { get; set; }
         #endregion
 
         public static AccountDTO CurrentUser { get; set; }
 
         public MainWindowViewModel()
         {
+            FirstLoadCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
+            {
+                if (CurrentUser.employee is null)
+                    p.Content = new ReaderHome();
+            });
+            OpenHomePageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
+            {
+                if (CurrentUser.employee is null)
+                    p.Content = new ReaderHome();
+            });
             OpenReaderCardPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new ReaderCardPage();
@@ -94,7 +109,6 @@ namespace LibraryManagement.ViewModel
                 p.Close();
 
             });
-
             try
             {
                 var allData = BorrowingReturnService.Ins.GetBorrowingReturnCards();
@@ -105,6 +119,10 @@ namespace LibraryManagement.ViewModel
             {
 
             }
+            OpenHistoryPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
+            {
+                p.Content = new MainHistoryPage();
+            });
         }
     }
 }

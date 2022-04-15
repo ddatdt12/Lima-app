@@ -13,6 +13,7 @@ namespace LibraryManagement.Views.Genre_AuthorManagement
         }
         private void searchBox1_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (genrelistview.ItemsSource is null) return;
             CollectionViewSource.GetDefaultView(genrelistview.ItemsSource).Refresh();
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(genrelistview.ItemsSource);
             view.Filter = Filter;
@@ -26,6 +27,7 @@ namespace LibraryManagement.Views.Genre_AuthorManagement
 
         private void searchBox2_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (authorlistview.ItemsSource is null) return;
             CollectionViewSource.GetDefaultView(authorlistview.ItemsSource).Refresh();
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(authorlistview.ItemsSource);
             view.Filter = Filter2;

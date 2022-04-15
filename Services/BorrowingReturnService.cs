@@ -99,6 +99,11 @@ namespace LibraryManagement.Services
                     dueDate = b.dueDate,
                     employeeId = b.borrowing_employeeId,
                     readerCardId = b.readerCardId,
+                    readerCard = new ReaderCardDTO
+                    {
+                        id = b.readerCardId,
+                        name = b.ReaderCard.name,
+                    },
                     bookInfo = new BookInfoDTO
                     {
                         id = b.bookInfoId,
@@ -166,6 +171,7 @@ namespace LibraryManagement.Services
                                 }
                             }
                         },
+                        numberOfDelayReturnDays = DbFunctions.DiffDays(b.dueDate, DateTime.Now) ?? 0,
                     }).ToList();
 
                 return borrowingCards;

@@ -312,8 +312,6 @@
                             Foreground="White"
                             FontSize="18"
                             FontWeight="ExtraBold"
-                            Command="{Binding OpenPrintReaderCardCM}"
-                            CommandParameter="{Binding ElementName=printReaderCardWindow}"
                             Style="{StaticResource MaterialDesignFlatAccentBgButton}"
                             Click="Button_Click_1" />
                 </StackPanel>
