@@ -8,6 +8,7 @@
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d"
       Height="800"
+      x:Name="this"
       Width="1128"
       FontFamily="{StaticResource NunitoSans_Regular}"
       DataContext="{StaticResource BookManagementVM}">
@@ -21,6 +22,8 @@
 
     <Page.Resources>
         <cvt:ListToStringConverter x:Key="ListToStringConverter" />
+        <cvt:ChangeIconConverter x:Key="IconConverter" />
+        <cvt:PermissionConverter x:Key="PermissionConverter" />
     </Page.Resources>
 
     <Grid>
@@ -183,38 +186,12 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <!--<GridViewColumn Header="Nhà xuất bản">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding publisher}"
-                                                           FontSize="18"
-                                                           Margin="15,0,0,0" />
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>-->
-                                    <!--<GridViewColumn Header="Năm XB">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding yearOfPublication}"
-                                                           FontSize="18"
-                                                           Margin="15,0,0,0" />
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>-->
-                                    <!--<GridViewColumn Header="Số lượng"
-                                                    Width="120">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding quantity}"
-                                                           FontSize="18"
-                                                           Margin="15,0,0,0" />
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>-->
                                     <GridViewColumn>
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <materialDesign:PackIcon Kind="LeadPencil"
+                                                <materialDesign:PackIcon Kind="{Binding ElementName=listview, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[2].isPermitted, 
+                    Converter={StaticResource IconConverter}}"
                                                                          Width="30"
                                                                          Height="30"
                                                                          Foreground="Green"
@@ -235,7 +212,10 @@
                                                                          Width="30"
                                                                          Height="30"
                                                                          Foreground="Red"
-                                                                         Cursor="Hand">
+                                                                         Cursor="Hand"
+                                                                         Visibility="{Binding ElementName=listview, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[2].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonDown">
                                                             <i:InvokeCommandAction Command="{Binding ElementName=listview, Path=DataContext.DeleteBaseBookCM}"

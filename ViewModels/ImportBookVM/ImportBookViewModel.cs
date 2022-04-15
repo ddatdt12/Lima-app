@@ -10,6 +10,7 @@ using LibraryManagement.Views.ImportBook;
 using LibraryManagement.DTOs;
 using LibraryManagement.Services;
 using LibraryManagement.Views.Genre_AuthorManagement;
+using System.Linq;
 
 namespace LibraryManagement.ViewModel.ImportBookVM
 {
@@ -168,7 +169,7 @@ namespace LibraryManagement.ViewModel.ImportBookVM
             set { totalReceiptPrice = value; OnPropertyChanged(); }
         }
 
-
+        public static AccountDTO CurrentUser { get; set; }
 
 
         #region COMMAND
@@ -536,9 +537,22 @@ namespace LibraryManagement.ViewModel.ImportBookVM
         }
         public void OpenPrintImportReiceipt(ImportReceiptDTO rc)
         {
+            //CREATE RECEIPT ID
+            var context = Models.DataProvider.Ins.DB;
+
+            string maxId = context.ImportReceipts.Max(imR => imR.id);
+
+            if (maxId is null)
+            {
+                maxId = "IPR0001";
+            }
+            string newIdString = $"0000{int.Parse(maxId.Substring(3)) + 1}";
+            maxId = "IPR" + newIdString.Substring(newIdString.Length - 4, 4);
+            // =============================================================
+
             PrintWindow w = new PrintWindow();
             w.supplier.Text = rc.supplier;
-            w.rcId.Text = rc.id;
+            w.rcId.Text = maxId;
             w.date.Text = rc.createdAt.ToString("dd/MM/yyyy");
 
             int total = 0;

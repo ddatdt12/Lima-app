@@ -32,7 +32,7 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
 
 
         private ReaderTypeDTO SelectedReaderType;
-
+        public static AccountDTO CurrentUser { get; set; }
 
         #region
         public ICommand SelectedDateCM { get; set; }
@@ -284,11 +284,11 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             }
 
             double year = CalculateAge(Birthday.Value);
-            if(year < ParameterService.Ins.GetRuleValue(Rules.MIN_AGE) || year > ParameterService.Ins.GetRuleValue(Rules.MAX_AGE))
+            if (year < ParameterService.Ins.GetRuleValue(Rules.MIN_AGE) || year > ParameterService.Ins.GetRuleValue(Rules.MAX_AGE))
             {
                 return (false, "Tuổi độc giả phải trong khoảng " + ParameterService.Ins.GetRuleValue(Rules.MIN_AGE) + " đến " + ParameterService.Ins.GetRuleValue(Rules.MAX_AGE));
             }
-            
+
             if (!Helper.IsValidEmail(Email))
             {
                 return (false, "Email không hợp lệ");

@@ -116,7 +116,8 @@
                     </StackPanel>
                     <!---BOOK-->
                     <TreeView Foreground="#1B48BA"
-                              HorizontalAlignment="Left">
+                              HorizontalAlignment="Left"
+                              x:Name="bookTreeview">
                         <TreeViewItem Width="280"
                                       MinHeight="60">
 
@@ -140,6 +141,7 @@
                     Converter={StaticResource PermissionConverter}}">
                                 <TreeViewItem.Header>
                                     <TextBlock Text="Quản lý sách"
+                                               x:Name="BookManageBtn"
                                                Foreground="#1B48BA"
                                                HorizontalAlignment="Left"
                                                VerticalAlignment="Center"
@@ -155,7 +157,10 @@
                                 </TreeViewItem.Header>
                             </TreeViewItem>
                             <!---IMPORT-->
-                            <TreeViewItem  Margin="30 0 0 0">
+                            <TreeViewItem  Margin="30 0 0 0"
+                                           Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[3].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                                 <TreeViewItem.Header>
                                     <TextBlock Text="Tiếp nhận sách"
                                                Foreground="#1B48BA"
@@ -178,7 +183,10 @@
                     <!---THE LOAI - TAC GIA-->
                     <StackPanel Width="280"
                                 Height="60"
-                                Orientation="Horizontal">
+                                Orientation="Horizontal"
+                                Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[4].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                         <StackPanel.Style>
                             <Style TargetType="StackPanel">
                                 <Style.Triggers>
@@ -213,7 +221,10 @@
                     <!---DOC GIA-->
                     <StackPanel Width="280"
                                 Height="60"
-                                Orientation="Horizontal">
+                                Orientation="Horizontal"
+                                Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[6].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                         <StackPanel.Style>
                             <Style TargetType="StackPanel">
                                 <Style.Triggers>
@@ -247,7 +258,8 @@
                     </StackPanel>
                     <!---PHIEU-->
                     <TreeView Foreground="#1B48BA"
-                              HorizontalAlignment="Left">
+                              HorizontalAlignment="Left"
+                              x:Name="BillTreeView">
                         <TreeViewItem Width="280"
                                       MinHeight="60">
 
@@ -265,7 +277,10 @@
                                 </StackPanel>
                             </TreeViewItem.Header>
                             <!---RENT-->
-                            <TreeViewItem Margin="30 0 0 0">
+                            <TreeViewItem Margin="30 0 0 0"
+                                          Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[10].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                                 <TreeViewItem.Header>
                                     <TextBlock Text="Phiếu mượn sách"
                                                Foreground="#1B48BA"
@@ -283,7 +298,10 @@
                                 </TreeViewItem.Header>
                             </TreeViewItem>
                             <!---RETURN-->
-                            <TreeViewItem Margin="30 0 0 0">
+                            <TreeViewItem Margin="30 0 0 0"
+                                          Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[11].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                                 <TreeViewItem.Header>
                                     <TextBlock Text="Phiếu trả sách"
                                                Foreground="#1B48BA"
@@ -301,7 +319,10 @@
                                 </TreeViewItem.Header>
                             </TreeViewItem>
                             <!--PUNISH-->
-                            <TreeViewItem Margin="30 0 0 0">
+                            <TreeViewItem Margin="30 0 0 0"
+                                          Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[12].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                                 <TreeViewItem.Header>
                                     <TextBlock Text="Phiếu phạt"
                                                Foreground="#1B48BA"
@@ -323,7 +344,7 @@
                     <TreeView Foreground="#1B48BA"
                               HorizontalAlignment="Left"
                               Visibility="{Binding ElementName=this, 
-                    Path=DataContext.CurrentUser.role.roleDetaislList[5].isPermitted, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[13].isPermitted, 
                     Converter={StaticResource PermissionConverter}}">
                         <TreeViewItem Width="280"
                                       MinHeight="60">
@@ -380,7 +401,10 @@
                     <!---LICH SU-->
                     <StackPanel Width="280"
                                 Height="60"
-                                Orientation="Horizontal">
+                                Orientation="Horizontal"
+                                Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[14].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                         <StackPanel.Style>
                             <Style TargetType="StackPanel">
                                 <Style.Triggers>
@@ -415,10 +439,7 @@
                     <!---CAI DAT-->
                     <StackPanel  Width="280"
                                  Height="60"
-                                 Orientation="Horizontal"
-                                 Visibility="{Binding ElementName=this, 
-                    Path=DataContext.CurrentUser.role.roleDetaislList[7].isPermitted, 
-                    Converter={StaticResource PermissionConverter}}">
+                                 Orientation="Horizontal">
                         <StackPanel.Style>
                             <Style TargetType="StackPanel">
                                 <Style.Triggers>

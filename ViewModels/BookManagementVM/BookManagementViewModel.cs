@@ -78,7 +78,7 @@ namespace LibraryManagement.ViewModel.BookManagementVM
             set { selectedGenre = value; OnPropertyChanged(); }
         }
 
-
+        public static AccountDTO CurrentUser { get; set; }
 
 
         #region BINDING

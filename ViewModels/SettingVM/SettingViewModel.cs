@@ -24,16 +24,25 @@ namespace LibraryManagement.ViewModels.SettingVM
 
         public SettingViewModel()
         {
-            RoleList = new ObservableCollection<RoleDTO>(RoleService.Ins.GetAllRoles());
+
 
             FirstLoadCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
+                RoleList = new ObservableCollection<RoleDTO>(RoleService.Ins.GetAllRoles());
+                RoleList[1].roleDetaislList.RemoveRange(2, RoleList[1].roleDetaislList.Count - 2);
                 if (CurrentUser.type.Name == "Employee")
                 {
-                    p.Content = new RoleSettingPage();
+                    if (CurrentUser.role.roleDetaislList[15].isPermitted)
+                        p.Content = new RoleSettingPage();
+                    else
+                        p.Content = new GeneralSettingPage();
                 }
                 else if (CurrentUser.type.Name == "ReaderCard")
                 {
+                    MainSettingPage page = GetWindowParent(p) as MainSettingPage;
+                    page.rolebtn.Visibility = Visibility.Collapsed;
+                    page.rulebtn.Visibility = Visibility.Collapsed;
+
                     p.Content = new ReaderSettingPage();
                 }
             });
@@ -132,6 +141,17 @@ namespace LibraryManagement.ViewModels.SettingVM
                 return;
 
             });
+        }
+        FrameworkElement GetWindowParent(Frame p)
+        {
+            FrameworkElement parent = p;
+
+            while (parent.Parent != null)
+            {
+                parent = parent.Parent as FrameworkElement;
+            }
+
+            return parent;
         }
     }
 }

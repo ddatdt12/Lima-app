@@ -16,6 +16,7 @@
     <Page.Resources>
         <cvt:EmployeeRoleConverter x:Key="EmployeeConverter" />
         <cvt:ReaderRoleConverter x:Key="ReaderConverter" />
+        <cvt:PermissionConverter x:Key="PermissionConverter" />
     </Page.Resources>
 
     <Grid>
@@ -29,6 +30,7 @@
                         Margin="20,10,0,0">
                 <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
                              Width="200"
+                             x:Name="rolebtn"
                              Foreground="#1B48BA"
                              IsChecked="True"
                              Content="Phân quyền"
@@ -37,10 +39,11 @@
                              Command="{Binding OpenRoleSettingPageCM}"
                              CommandParameter="{Binding ElementName=mainFrame}"
                              Visibility="{Binding ElementName=this, 
-                    Path=DataContext.CurrentUser.type.Name, 
-                    Converter={StaticResource EmployeeConverter}}" />
+                    Path=DataContext.CurrentUser.role.roleDetaislList[15].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}" />
                 <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
                              Foreground="#1B48BA"
+                             x:Name="rulebtn"
                              IsChecked="False"
                              Content="Cài đặt chung"
                              FontSize="18"
@@ -49,8 +52,8 @@
                              Command="{Binding OpenGeneralSettingPageCM}"
                              CommandParameter="{Binding ElementName=mainFrame}"
                              Visibility="{Binding ElementName=this, 
-                    Path=DataContext.CurrentUser.type.Name, 
-                    Converter={StaticResource EmployeeConverter}}" />
+                    Path=DataContext.CurrentUser.role.roleDetaislList[16].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}" />
                 <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
                              Foreground="#1B48BA"
                              Content="Cài đặt tài khoản"

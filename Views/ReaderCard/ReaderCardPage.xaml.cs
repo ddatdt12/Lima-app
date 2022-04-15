@@ -29,6 +29,8 @@ namespace LibraryManagement.View.ReaderCard
                     return ((item as ReaderCardDTO).id.ToString().IndexOf(SearchTbx.Text, StringComparison.OrdinalIgnoreCase) >= 0);
                 case "Tên độc giả":
                     return ((item as ReaderCardDTO).name.IndexOf(SearchTbx.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+                case "Loại độc giả":
+                    return ((item as ReaderCardDTO).readerType.name.IndexOf(SearchTbx.Text, StringComparison.OrdinalIgnoreCase) >= 0);
                 default:
                     return ((item as ReaderCardDTO).id.ToString().IndexOf(SearchTbx.Text, StringComparison.OrdinalIgnoreCase) >= 0);
             }

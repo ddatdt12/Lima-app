@@ -18,6 +18,10 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using LibraryManagement.Views.Home;
 using LibraryManagement.Views.HistoryManagement;
+using LibraryManagement.ViewModel.BookManagementVM;
+using LibraryManagement.ViewModel.ImportBookVM;
+using LibraryManagement.ViewModels.Genre_AuthorManagementVM;
+using LibraryManagement.ViewModel.ReaderCardVM;
 
 namespace LibraryManagement.ViewModel
 {
@@ -46,6 +50,11 @@ namespace LibraryManagement.ViewModel
         {
             FirstLoadCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
+                BookManagementViewModel.CurrentUser = CurrentUser;
+                ImportBookViewModel.CurrentUser = CurrentUser;
+                SettingViewModel.CurrentUser = CurrentUser;
+                Genre_AuthorManagementViewModel.CurrentUser = CurrentUser;
+                ReaderCardViewModel.CurrentUser = CurrentUser;
                 if (CurrentUser.employee is null)
                     p.Content = new ReaderHome();
             });
@@ -94,7 +103,6 @@ namespace LibraryManagement.ViewModel
             });
             OpenSettingPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
-                SettingViewModel.CurrentUser = CurrentUser;
                 p.Content = new MainSettingPage();
             });
             SignOutCM = new RelayCommand<Window>((p) => { return true; }, (p) =>

@@ -63,7 +63,7 @@ namespace LibraryManagement.ViewModels.Genre_AuthorManagementVM
             set { birthDate = value; OnPropertyChanged(); }
         }
 
-
+        public static AccountDTO CurrentUser { get; set; }
 
         public ICommand OpenAddGenreWindowCM { get; set; }
         public ICommand AddGenreCM { get; set; }

@@ -191,6 +191,18 @@ namespace LibraryManagement.ViewModels.LoginVM
                             LoginWindow.Hide();
                             MainWindowViewModel.CurrentUser = user;
                             MainWindow wd = new MainWindow();
+                            if (!user.role.roleDetaislList[10].isPermitted && !user.role.roleDetaislList[11].isPermitted && !user.role.roleDetaislList[12].isPermitted)
+                            {
+                                wd.BillTreeView.Visibility = Visibility.Collapsed;
+                            }
+                            if (!user.role.roleDetaislList[1].isPermitted && !user.role.roleDetaislList[2].isPermitted)
+                            {
+                                wd.bookTreeview.Visibility = Visibility.Collapsed;
+                            }
+                            if (user.reader != null)
+                            {
+                                wd.BookManageBtn.Text = "Tra cứu sách";
+                            }
                             wd.Show();
                             LoginWindow.Close();
                         }

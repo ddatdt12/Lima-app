@@ -5,11 +5,17 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:cvt="clr-namespace:LibraryManagement.Views.Converter"
       mc:Ignorable="d"
       FontFamily="{StaticResource NunitoSans_Regular}"
       DataContext="{StaticResource ReaderCardVM}"
       Height="800"
+      x:Name="this"
       Width="1128">
+
+    <Page.Resources>
+        <cvt:PermissionConverter x:Key="PermissionConverter" />
+    </Page.Resources>
 
     <Grid>
         <StackPanel>
@@ -58,6 +64,7 @@
                                   SelectedValuePath="Content">
                             <ComboBoxItem Content="Mã độc giả" />
                             <ComboBoxItem Content="Tên độc giả" />
+                            <ComboBoxItem Content="Loại độc giả" />
                         </ComboBox>
 
                         <Button Margin="30,5,0,0"
@@ -68,7 +75,10 @@
                                 FontSize="16"
                                 Command="{Binding OpenReaderTypeWindowCM}"
                                 materialDesign:ButtonAssist.CornerRadius="8"
-                                Style="{StaticResource MaterialDesignFlatAccentBgButton}">
+                                Style="{StaticResource MaterialDesignFlatAccentBgButton}"
+                                Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[7].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Plus"
@@ -87,7 +97,10 @@
                                 FontSize="16"
                                 Command="{Binding OpenAddReaderCardWindowCM}"
                                 materialDesign:ButtonAssist.CornerRadius="8"
-                                Style="{StaticResource MaterialDesignFlatAccentBgButton}">
+                                Style="{StaticResource MaterialDesignFlatAccentBgButton}"
+                                Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[7].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Plus"
                                                          Margin="0,0,5,0"
@@ -105,7 +118,10 @@
                                 BorderBrush="Transparent"
                                 materialDesign:ButtonAssist.CornerRadius="8"
                                 Command="{Binding OpenPrintReaderCardCM}"
-                                Style="{StaticResource MaterialDesignFlatAccentBgButton}">
+                                Style="{StaticResource MaterialDesignFlatAccentBgButton}"
+                                Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[7].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Printer"
                                                          Margin="0,0,20,0"
@@ -207,7 +223,10 @@
                                     <GridViewColumn>
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Border Cursor="Hand">
+                                                <Border Cursor="Hand"
+                                                        Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[7].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                                                     <materialDesign:PackIcon Kind="LeadPencil"
                                                                              Width="30"
                                                                              Height="30"
@@ -226,7 +245,10 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Border Cursor="Hand"
-                                                        Margin="-20,0,0,0">
+                                                        Margin="-20,0,0,0"
+                                                        Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[7].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                                                     <materialDesign:PackIcon Kind="Bin"
                                                                              Width="30"
                                                                              Height="30"
