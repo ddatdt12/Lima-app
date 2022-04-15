@@ -20,6 +20,9 @@ using LibraryManagement.ViewModel.BookManagementVM;
 using LibraryManagement.ViewModel.ImportBookVM;
 using LibraryManagement.ViewModels.Genre_AuthorManagementVM;
 using LibraryManagement.ViewModel.ReaderCardVM;
+using System.Windows.Controls;
+using System.Windows.Input;
+using LibraryManagement.ViewModels.StaffManagementVM;
 
 namespace LibraryManagement.ViewModel
 {
@@ -38,9 +41,6 @@ namespace LibraryManagement.ViewModel
         public ICommand OpenReturnBookPageCM { get; set; }
         public ICommand OpenPunishBookWindowCM { get; set; }
         public ICommand OpenStaffManagementPageCM { get; set; }
-        public ICommand OpenReaderCardPageCM { get; set; }
-        public ICommand OpenBookManagementPageCM { get; set; }
-        public ICommand OpenImportBookPage { get; set; }
         public ICommand FirstLoadCM { get; set; }
         public ICommand OpenHomePageCM { get; set; }
         public ICommand OpenHistoryPageCM { get; set; }
@@ -57,6 +57,7 @@ namespace LibraryManagement.ViewModel
                 SettingViewModel.CurrentUser = CurrentUser;
                 Genre_AuthorManagementViewModel.CurrentUser = CurrentUser;
                 ReaderCardViewModel.CurrentUser = CurrentUser;
+                StaffManagementViewModel.CurrentUser = CurrentUser;
                 if (CurrentUser.employee is null)
                     p.Content = new ReaderHome();
             });
@@ -116,18 +117,7 @@ namespace LibraryManagement.ViewModel
                 LoginWindow w = new LoginWindow();
                 w.Show();
                 p.Close();
-
             });
-            try
-            {
-                var allData = BorrowingReturnService.Ins.GetBorrowingReturnCards();
-                var allCardsByReturnDate = BorrowingReturnService.Ins.GetBorrowingReturnCards(returnDate: new DateTime(2022, 4, 9));
-                var allCardsByBorrowingDate = BorrowingReturnService.Ins.GetBorrowingReturnCards(borrowingDate: new DateTime(2022, 4, 9));
-            }
-            catch (Exception e)
-            {
-
-            }
             OpenHistoryPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new MainHistoryPage();

@@ -55,8 +55,7 @@
                             FontSize="18"
                             Width="160"
                             SelectedDate="{Binding BirthDate,Mode=OneWayToSource,StringFormat=dd/MM/yyyy}"
-                            HorizontalAlignment="Left"
-                            Focusable="False" />
+                            HorizontalAlignment="Left" />
             </StackPanel>
 
             <StackPanel Orientation="Horizontal"

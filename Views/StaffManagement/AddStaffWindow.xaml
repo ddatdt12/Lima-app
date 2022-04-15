@@ -15,7 +15,7 @@
         Background="Transparent"
         AllowsTransparency="True"
         WindowStyle="None"
-        Title="AddStaffWindow">
+        FontFamily="{StaticResource NunitoSans_Regular}">
     <Border Background="White"
             CornerRadius="30"
             BorderBrush="Black"
@@ -279,7 +279,7 @@
                                   FontSize="15"
                                   ItemsSource="{Binding ListRole}"
                                   DisplayMemberPath="name"
-                                  materialDesign:HintAssist.Hint="Chọn loại độc giả" />
+                                  materialDesign:HintAssist.Hint="Chọn vai trò" />
                     </StackPanel>
                 </WrapPanel>
                 <StackPanel Grid.Row="4"
@@ -298,7 +298,7 @@
                             FontSize="18"
                             FontWeight="ExtraBold"
                             Style="{StaticResource MaterialDesignFlatAccentBgButton}"
-                            Click="Button_Click"/>
+                            Click="Button_Click" />
                     <Button Background="#0266FD"
                             BorderBrush="#0266FD"
                             Margin="32,0,32,0"

@@ -5,9 +5,6 @@ using System.Windows.Data;
 
 namespace LibraryManagement.Views.StaffManagement
 {
-    /// <summary>
-    /// Interaction logic for StaffManagementPage.xaml
-    /// </summary>
     public partial class StaffManagementPage : Page
     {
         public StaffManagementPage()
@@ -32,6 +29,8 @@ namespace LibraryManagement.Views.StaffManagement
                     return ((item as EmployeeDTO).id.ToString().IndexOf(SearchTbx.Text, StringComparison.OrdinalIgnoreCase) >= 0);
                 case "Tên nhân viên":
                     return ((item as EmployeeDTO).name.IndexOf(SearchTbx.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+                case "Vai trò":
+                    return ((item as EmployeeDTO).account.role.name.IndexOf(SearchTbx.Text, StringComparison.OrdinalIgnoreCase) >= 0);
                 default:
                     return ((item as EmployeeDTO).id.ToString().IndexOf(SearchTbx.Text, StringComparison.OrdinalIgnoreCase) >= 0);
             }

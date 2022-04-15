@@ -15,7 +15,7 @@
         Background="Transparent"
         AllowsTransparency="True"
         WindowStyle="None"
-        Title="EditStaffWindow">
+        FontFamily="{StaticResource NunitoSans_Regular}">
     <Border Background="White"
             CornerRadius="30"
             BorderBrush="Black"
@@ -258,7 +258,7 @@
                                   FontSize="15"
                                   ItemsSource="{Binding ListRole}"
                                   DisplayMemberPath="name"
-                                  materialDesign:HintAssist.Hint="Chọn loại độc giả" />
+                                  materialDesign:HintAssist.Hint="Chọn vai trò" />
                     </StackPanel>
                 </WrapPanel>
                 <Grid Grid.Row="4">

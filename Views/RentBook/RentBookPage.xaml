@@ -450,7 +450,6 @@
                                     FontSize="18"
                                     SelectedDateFormat="Short"
                                     BorderBrush="#0266FD"
-                                    Focusable="False"
                                     DisplayDateEnd="{Binding TodayDay}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectedDateChanged">

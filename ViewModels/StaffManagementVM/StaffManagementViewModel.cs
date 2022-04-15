@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace LibraryManagement.ViewModels.StaffManagementVM
@@ -35,10 +36,12 @@ namespace LibraryManagement.ViewModels.StaffManagementVM
             set { _SelectedItem = value; OnPropertyChanged(); }
         }
 
+        public static AccountDTO CurrentUser { get; set; }
 
         public ICommand OpenAddStaffWindowCM { get; set; }
         public ICommand DeleteStaffCM { get; set; }
         public ICommand ExportToExcel { get; set; }
+        public ICommand FirstLoadCM { get; set; }
 
         public void ResetData()
         {
@@ -56,9 +59,18 @@ namespace LibraryManagement.ViewModels.StaffManagementVM
 
         public StaffManagementViewModel()
         {
-            ListStaff = new ObservableCollection<EmployeeDTO>(EmployeeService.Ins.GetAllEmployees());
-            ListRole = new ObservableCollection<RoleDTO>(RoleService.Ins.GetAllRoles());
-            StartDate = DateTime.Now;
+
+            FirstLoadCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                ListStaff = new ObservableCollection<EmployeeDTO>(EmployeeService.Ins.GetAllEmployees());
+                ListRole = new ObservableCollection<RoleDTO>(RoleService.Ins.GetAllRoles());
+
+                for (int i = 0; i < ListRole.Count; i++)
+                    if (ListRole[i].name == "Độc giả")
+                        ListRole.Remove(ListRole[i]);
+
+                StartDate = DateTime.Now;
+            });
             OpenAddStaffWindowCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 AddStaffWindow addStaffWindow = new AddStaffWindow();
@@ -86,6 +98,7 @@ namespace LibraryManagement.ViewModels.StaffManagementVM
             });
             ExportToExcel = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
+                ExportToExcelFunc();
             });
             AddStaffCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
@@ -114,16 +127,16 @@ namespace LibraryManagement.ViewModels.StaffManagementVM
                     {
                         ListStaff.Add(employee);
                         p.Close();
-                        MessageBox.Show(message, "Thông báo", MessageBoxButton.OK);
+                        System.Windows.MessageBox.Show(message, "Thông báo", MessageBoxButton.OK);
                     }
                     else
                     {
-                        MessageBox.Show(message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        System.Windows.MessageBox.Show(message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 else
                 {
-                    MessageBox.Show(error, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    System.Windows.MessageBox.Show(error, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
             UpdateStaffCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
@@ -156,34 +169,34 @@ namespace LibraryManagement.ViewModels.StaffManagementVM
                         var readerCardFound = ListStaff.FirstOrDefault(s => s.id == employee.id);
                         ListStaff[ListStaff.IndexOf(readerCardFound)] = employee;
                         p.Close();
-                        MessageBox.Show(message, "Thông báo", MessageBoxButton.OK);
+                        System.Windows.MessageBox.Show(message, "Thông báo", MessageBoxButton.OK);
                     }
                     else
                     {
-                        MessageBox.Show(message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        System.Windows.MessageBox.Show(message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 else
                 {
-                    MessageBox.Show(error, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    System.Windows.MessageBox.Show(error, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
             DeleteStaffCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                System.Windows.Forms.DialogResult dlg = (System.Windows.Forms.DialogResult)MessageBox.Show("Bạn muốn xóa dữ liệu này không ? Dữ diệu sẽ không phục hồi được sau khi xóa.", "Thông báo", MessageBoxButton.YesNo,MessageBoxImage.Information);
-                if(dlg == System.Windows.Forms.DialogResult.Yes)
+                System.Windows.Forms.DialogResult dlg = (System.Windows.Forms.DialogResult)System.Windows.MessageBox.Show("Bạn muốn xóa dữ liệu này không ? Dữ diệu sẽ không phục hồi được sau khi xóa.", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Information);
+                if (dlg == System.Windows.Forms.DialogResult.Yes)
                 {
                     (bool iss, string mes) = EmployeeService.Ins.DeleteEmployee(SelectedItem.id);
                     if (iss)
                     {
                         ListStaff.Remove(SelectedItem);
-                        MessageBox.Show(mes, "Thông báo", MessageBoxButton.OK);
+                        System.Windows.MessageBox.Show(mes, "Thông báo", MessageBoxButton.OK);
                     }
                     else
                     {
-                        MessageBox.Show(mes, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        System.Windows.MessageBox.Show(mes, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-                }    
+                }
             });
             OpenChangePasswordWindowCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -196,7 +209,7 @@ namespace LibraryManagement.ViewModels.StaffManagementVM
             {
                 if (Password != RePassword)
                 {
-                    MessageBox.Show("Mật khẩu không trùng khớp, vui lòng nhập đúng!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    System.Windows.MessageBox.Show("Mật khẩu không trùng khớp, vui lòng nhập đúng!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
                 ChangePasswordWindow changePasswordWindow = new ChangePasswordWindow();
@@ -205,12 +218,12 @@ namespace LibraryManagement.ViewModels.StaffManagementVM
                 (bool iss, string mes) = EmployeeService.Ins.UpdatePasswordOfEmployee(id, newPass);
                 if (iss)
                 {
-                    MessageBox.Show(mes, "Thông báo", MessageBoxButton.OK);
+                    System.Windows.MessageBox.Show(mes, "Thông báo", MessageBoxButton.OK);
                     p.Close();
                 }
                 else
                 {
-                    MessageBox.Show(mes, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    System.Windows.MessageBox.Show(mes, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
             });
@@ -223,7 +236,7 @@ namespace LibraryManagement.ViewModels.StaffManagementVM
                 return (false, "Thông tin nhân viên thiếu hoặc không hợp lệ! Vui lòng bổ sung");
             }
 
-            if(DateTime.Now.Year - Birthday.Value.Year < 18)
+            if (DateTime.Now.Year - Birthday.Value.Year < 18)
             {
                 return (false, "Nhân viên chưa đủ 18 tuổi");
             }
@@ -238,6 +251,56 @@ namespace LibraryManagement.ViewModels.StaffManagementVM
             }
 
             return (true, null);
+        }
+
+        public void ExportToExcelFunc()
+        {
+            if (ListStaff.Count == 0) return;
+            using (SaveFileDialog sfd = new SaveFileDialog() { Filter = "Excel Workbook|*.xlsx", ValidateNames = true })
+            {
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
+                    Microsoft.Office.Interop.Excel.Application app = new Microsoft.Office.Interop.Excel.Application();
+                    app.Visible = false;
+                    Microsoft.Office.Interop.Excel.Workbook wb = app.Workbooks.Add(1);
+                    Microsoft.Office.Interop.Excel.Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)wb.Worksheets[1];
+
+                    ws.Cells[1, 1] = "Thư viện Lima";
+                    ws.Cells[2, 1] = "Ngày xuất: " + DateTime.Now.ToString("dd/MM/yyyy");
+                    ws.Cells[3, 1] = "Tổng nhân sự: " + ListStaff.Count;
+
+                    ws.Cells[5, 1] = "Mã nhân viên";
+                    ws.Cells[5, 2] = "Họ tên";
+                    ws.Cells[5, 3] = "Ngày sinh";
+                    ws.Cells[5, 4] = "Điện thoại";
+                    ws.Cells[5, 5] = "Giới tính";
+                    ws.Cells[5, 6] = "Ngày bắt đầu";
+                    ws.Cells[5, 7] = "Vai trò";
+
+                    int i2 = 7;
+                    foreach (var item in ListStaff)
+                    {
+
+                        ws.Cells[i2, 1] = item.id;
+                        ws.Cells[i2, 2] = item.name;
+                        ws.Cells[i2, 3] = item.birthDate.Value.ToString("dd/MM/yyyy");
+                        ws.Cells[i2, 4] = item.phoneNumber;
+                        ws.Cells[i2, 5] = item.gender;
+                        ws.Cells[i2, 6] = item.startingDate.Value.ToString("dd/MM/yyyy");
+                        ws.Cells[i2, 7] = item.account.role.name;
+
+                        i2++;
+                    }
+                    ws.SaveAs(sfd.FileName);
+                    wb.Close();
+                    app.Quit();
+
+                    Mouse.OverrideCursor = System.Windows.Input.Cursors.Arrow;
+
+                    System.Windows.MessageBox.Show("Xuất file thành công");
+                }
+            }
         }
     }
 }

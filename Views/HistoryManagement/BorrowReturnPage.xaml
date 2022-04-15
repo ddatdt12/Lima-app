@@ -80,7 +80,6 @@
                                     FontSize="18"
                                     Height="42"
                                     materialDesign:HintAssist.Hint="Chọn ngày"
-                                    Focusable="False"
                                     Foreground="#5C5959"
                                     x:Name="datePicker"
                                     SelectedDate="{Binding SelectedDate}">

@@ -424,7 +424,6 @@
                         <DatePicker SelectedDate="{Binding CreateAt,Mode=TwoWay}"
                                     Foreground="#5C5959"
                                     FontSize="18"
-                                    Focusable="False"
                                     Width="150"
                                     x:Name="createAt"
                                     HorizontalAlignment="Right" />
