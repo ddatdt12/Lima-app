@@ -5,7 +5,11 @@ using System.Collections.ObjectModel;
 using LibraryManagement.DTOs;
 using LibraryManagement.Views.HistoryManagement;
 using LibraryManagement.Services;
-using LibraryManagement.Views.ImportBook;
+using System.Windows.Documents;
+using System.Windows;
+using System.Windows.Markup;
+using static LibraryManagement.ViewModels.ReturnBookVM.ReturnBookViewModel;
+using static LibraryManagement.ViewModels.RentBookVM.RentBookViewModel;
 
 namespace LibraryManagement.ViewModels.HistoryManagementVM
 {
@@ -54,14 +58,15 @@ namespace LibraryManagement.ViewModels.HistoryManagementVM
             set { selectedFilter = value; OnPropertyChanged(); }
         }
 
-
-
         public ICommand FirstLoadCM { get; set; }
         public ICommand ReceiptPageLoadedCM { get; set; }
         public ICommand BorrowReturnPageLoadedCM { get; set; }
         public ICommand OpenImportReceiptPageCM { get; set; }
         public ICommand OpenBorrowReturnPageCM { get; set; }
         public ICommand PrintReceiptCM { get; set; }
+        public ICommand PrintBorrowReturnCM { get; set; }
+        public ICommand PrintBorrowCM { get; set; }
+        public ICommand PrintReturnCM { get; set; }
         public ICommand SelectedDateChangedCM { get; set; }
 
         public HistoryViewModel()
@@ -93,9 +98,36 @@ namespace LibraryManagement.ViewModels.HistoryManagementVM
                 PrintReceiptFunc();
                 SelectedReceipt = null;
             });
+            PrintBorrowReturnCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (SelectedBorrow is null) return;
+                PrintBorrowReturn();
+                SelectedBorrow = null;
+            });
+            PrintBorrowCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (SelectedBorrow is null) return;
+                PrintBorrowFunc();
+                SelectedBorrow = null;
+            }); 
+            PrintReturnCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (SelectedBorrow is null) return;
+                if(SelectedBorrow.returnCard.returnedDate is null)
+                {
+                    MessageBox.Show("Sách này chưa được trả");
+                    return;
+                }
+                PrintReturnFunc();
+                SelectedBorrow = null;
+            });
             SelectedDateChangedCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                if (SelectedDate is null) return;
+                if (SelectedDate is null)
+                {
+                    BorrowReturnList = null;
+                    return;
+                };
                 string filter = SelectedFilter.Content.ToString();
                 switch (filter)
                 {
@@ -127,7 +159,7 @@ namespace LibraryManagement.ViewModels.HistoryManagementVM
 
             if (rc is null) return;
 
-            PrintWindow w = new PrintWindow();
+            Views.ImportBook.PrintWindow w = new Views.ImportBook.PrintWindow();
             w.supplier.Text = rc.supplier;
             w.rcId.Text = rc.id;
             w.date.Text = rc.createdAt.ToString("dd/MM/yyyy");
@@ -142,6 +174,128 @@ namespace LibraryManagement.ViewModels.HistoryManagementVM
 
             w.totalPrice.Text = total.ToString();
             w.ShowDialog();
+        }
+        public void PrintBorrowReturn()
+        {
+            string filter = SelectedFilter.Content.ToString();
+            switch (filter)
+            {
+                case "Mượn sách":
+                    {
+                        PrintBorrowFunc();
+                        return;
+                    }
+                case "Trả sách":
+                    {
+                        PrintReturnFunc();
+                        return;
+                    }
+            }
+        }
+        public void PrintBorrowFunc()
+        {
+            //create printer
+            PrintDialog pd = new PrintDialog();
+            if (pd.ShowDialog() != true) return;
+
+            //create document
+            FixedDocument document = new FixedDocument();
+            document.DocumentPaginator.PageSize = new Size(600, 350);
+
+            //create page
+            FixedPage page = new FixedPage();
+            page.Width = document.DocumentPaginator.PageSize.Width;
+            page.Height = document.DocumentPaginator.PageSize.Height;
+
+            Views.RentBook.PrintWindow w = new Views.RentBook.PrintWindow();
+            w.rcId.Text = SelectedBorrow.id;
+            w.date.Text = SelectedBorrow.borrowingDate.ToString("dd/MM/yyyy");
+            w.reader.Text = SelectedBorrow.readerCard.name;
+
+
+            RentBookVM.RentBookViewModel.Book temp = new RentBookVM.RentBookViewModel.Book
+            {
+                BookInfoID = SelectedBorrow.bookInfoId,
+                Name = SelectedBorrow.bookInfo.Book.baseBook.name,
+                DueDate = SelectedBorrow.dueDate,
+            };
+
+            ObservableCollection<RentBookVM.RentBookViewModel.Book> templist = new ObservableCollection<RentBookVM.RentBookViewModel.Book>();
+            templist.Add(temp);
+            w.lv.ItemsSource = templist;
+
+            //remove element from tree
+            Grid parent = w.Print.Parent as Grid;
+            Grid child = w.Print as Grid;
+            parent.Children.Remove(w.Print);
+            page.Children.Add(child);
+
+            // add the page to the document
+            PageContent page1Content = new PageContent();
+            ((IAddChild)page1Content).AddChild(page);
+            document.Pages.Add(page1Content);
+
+
+            // and print
+            pd.PrintDocument(document.DocumentPaginator, "Rent bill");
+            MessageBox.Show("In phiếu thành thành công");
+        }
+        public void PrintReturnFunc()
+        {
+            //create printer
+            PrintDialog pd = new PrintDialog();
+            if (pd.ShowDialog() != true) return;
+
+            //create document
+            FixedDocument document = new FixedDocument();
+            document.DocumentPaginator.PageSize = new Size(600, 350);
+
+            //create page
+            FixedPage page = new FixedPage();
+            page.Width = document.DocumentPaginator.PageSize.Width;
+            page.Height = document.DocumentPaginator.PageSize.Height;
+
+            Views.ReturnBook.PrintWindow w = new Views.ReturnBook.PrintWindow();
+            w.rcId.Text = SelectedBorrow.id;
+            w.date.Text = SelectedBorrow.returnCard.returnedDate.Value.ToString("dd/MM/yyyy");
+            w.reader.Text = SelectedBorrow.readerCard.name;
+
+
+            ReturnBookVM.ReturnBookViewModel.Book temp = new ReturnBookVM.ReturnBookViewModel.Book(
+                0,
+                SelectedBorrow.id,
+                SelectedBorrow.bookInfoId,
+                "",
+                0,
+                SelectedBorrow.borrowingDate,
+                SelectedBorrow.returnCard.returnedDate.Value.Subtract(SelectedBorrow.dueDate).Days,
+                Fine: SelectedBorrow.returnCard.returnedDate.Value.Subtract(SelectedBorrow.dueDate).Days * ParameterService.Ins.GetRuleValue(Utils.Rules.FINE),
+                SelectedBorrow.dueDate
+                );
+            if (temp.sumDelayDate < 0)
+                temp.sumDelayDate = 0;
+            if (temp.Fine < 0)
+                temp.Fine = 0;
+
+            ObservableCollection<ReturnBookVM.ReturnBookViewModel.Book> templist = new ObservableCollection<ReturnBookVM.ReturnBookViewModel.Book>();
+            templist.Add(temp);
+            w.lv.ItemsSource = templist;
+
+            //remove element from tree
+            Grid parent = w.Print.Parent as Grid;
+            Grid child = w.Print as Grid;
+            parent.Children.Remove(w.Print);
+            page.Children.Add(child);
+
+            // add the page to the document
+            PageContent page1Content = new PageContent();
+            ((IAddChild)page1Content).AddChild(page);
+            document.Pages.Add(page1Content);
+
+
+            // and print
+            pd.PrintDocument(document.DocumentPaginator, "Return bill");
+            MessageBox.Show("In phiếu thành thành công");
         }
     }
 }

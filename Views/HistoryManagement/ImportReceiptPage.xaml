@@ -62,7 +62,7 @@
                 <Button Background="#37B634"
                         BorderBrush="Transparent"
                         materialDesign:ButtonAssist.CornerRadius="8"
-                        Width="145"
+                        Width="130"
                         Height="42"
                         FontSize="16"
                         HorizontalAlignment="Right"

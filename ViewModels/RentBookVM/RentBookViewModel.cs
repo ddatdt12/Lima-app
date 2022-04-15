@@ -547,8 +547,6 @@ namespace LibraryManagement.ViewModels.RentBookVM
 
             // and print
             pd.PrintDocument(document.DocumentPaginator, "Return bill");
-
-
         }
 
 

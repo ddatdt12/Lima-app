@@ -21,13 +21,24 @@ namespace LibraryManagement.Views.HistoryManagement
                 viewModel.SelectedDateChangedCM.Execute(null);
             ComboBoxItem str = cbb.SelectedItem as ComboBoxItem;
             if (str.Content.ToString() == "Toàn bộ")
+            {
                 datePicker.IsEnabled = false;
+                if (btn2 != null && btn1 != null)
+                {
+                    btn2.Visibility = System.Windows.Visibility.Visible;
+                    btn1.Visibility = System.Windows.Visibility.Collapsed;
+                }
+            }
             else
+            {
                 datePicker.IsEnabled = true;
+                btn1.Visibility = System.Windows.Visibility.Visible;
+                btn2.Visibility = System.Windows.Visibility.Collapsed;
+            }
         }
-
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (lv.ItemsSource is null) return;
             CollectionViewSource.GetDefaultView(lv.ItemsSource).Refresh();
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lv.ItemsSource);
             view.Filter = Filter;

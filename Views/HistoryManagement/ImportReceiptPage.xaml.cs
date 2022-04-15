@@ -14,6 +14,7 @@ namespace LibraryManagement.Views.HistoryManagement
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (lv.ItemsSource is null) return;
             CollectionViewSource.GetDefaultView(lv.ItemsSource).Refresh();
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lv.ItemsSource);
             view.Filter = Filter;
