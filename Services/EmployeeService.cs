@@ -116,7 +116,19 @@ namespace LibraryManagement.Services
 
                 context.Employees.Add(newEmployee);
                 context.SaveChanges();
-
+                string roleName = context.Roles.Find(newAccount.roleId)?.name;
+                employee.account = new AccountDTO()
+                {
+                    id = newAccount.id,
+                    username = newAccount.username,
+                    password = newAccount.password,
+                    roleId = newAccount.roleId,
+                    role = new RoleDTO()
+                    {
+                        id = newAccount.roleId,
+                        name = roleName
+                    }
+                };
                 employee.id = newEmployee.id;
                 return (true, "Thêm nhân viên thành công thành công");
             }

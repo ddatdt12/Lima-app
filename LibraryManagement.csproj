@@ -58,6 +58,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -212,6 +213,10 @@
     <Compile Include="ViewModels\SettingVM\ReaderSetting.cs" />
     <Compile Include="ViewModels\SettingVM\RoleSetting.cs" />
     <Compile Include="ViewModels\SettingVM\SettingViewModel.cs" />
+    <Compile Include="ViewModels\StaffManagementVM\AddStaffViewModel.cs" />
+    <Compile Include="ViewModels\StaffManagementVM\ChangePasswordViewModel.cs" />
+    <Compile Include="ViewModels\StaffManagementVM\EditStaffViewModel.cs" />
+    <Compile Include="ViewModels\StaffManagementVM\StaffManagementViewModel.cs" />
     <Compile Include="ViewModels\StatisticalVM\StatisticalViewModel.cs" />
     <Compile Include="Views\BookManagement\BookInforWindow.xaml.cs">
       <DependentUpon>BookInforWindow.xaml</DependentUpon>
@@ -308,6 +313,18 @@
     </Compile>
     <Compile Include="Views\SettingManagement\RoleSettingPage.xaml.cs">
       <DependentUpon>RoleSettingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StaffManagement\AddStaffWindow.xaml.cs">
+      <DependentUpon>AddStaffWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StaffManagement\ChangePasswordWindow.xaml.cs">
+      <DependentUpon>ChangePasswordWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StaffManagement\EditStaffWindow.xaml.cs">
+      <DependentUpon>EditStaffWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StaffManagement\StaffManagementPage.xaml.cs">
+      <DependentUpon>StaffManagementPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StatisticalManagement\GenreStatisticPage.xaml.cs">
       <DependentUpon>GenreStatisticPage.xaml</DependentUpon>
@@ -450,6 +467,22 @@
     <Page Include="Views\SettingManagement\RoleSettingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StaffManagement\AddStaffWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\StaffManagement\ChangePasswordWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\StaffManagement\EditStaffWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\StaffManagement\StaffManagementPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\StatisticalManagement\GenreStatisticPage.xaml">
       <SubType>Designer</SubType>

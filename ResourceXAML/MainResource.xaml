@@ -2,7 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:main="clr-namespace:LibraryManagement.ViewModel"
                     xmlns:staffmanagemnt="clr-namespace:LibraryManagement.ViewModels.StaffManagementVM"
-                    xmlns:readerCardPage="clr-namespace:LibraryManagement.ViewModel.ReaderCardVM"
                     xmlns:login="clr-namespace:LibraryManagement.ViewModels.LoginVM"
                     xmlns:rentBook="clr-namespace:LibraryManagement.ViewModels.RentBookVM"
                     xmlns:returnBook="clr-namespace:LibraryManagement.ViewModels.ReturnBookVM"

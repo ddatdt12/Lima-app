@@ -105,6 +105,7 @@
                                 Width="142"
                                 FontSize="16"
                                 materialDesign:ButtonAssist.CornerRadius="15"
+                                Command="{Binding ExportToExcel}"
                                 Style="{StaticResource MaterialDesignFlatAccentBgButton}">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Export"
@@ -183,7 +184,7 @@
                                     <DataTemplate>
                                         <TextBlock Text="{Binding startingDate,StringFormat=dd/MM/yyyy}"
                                                    FontSize="16"
-                                                   Margin="18,0,0,0" />
+                                                   Margin="40,0,0,0" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
