@@ -113,8 +113,8 @@ namespace LibraryManagement.ViewModel
             try
             {
                 var allData = BorrowingReturnService.Ins.GetBorrowingReturnCards();
-                var allCardsByReturnDate = BorrowingReturnService.Ins.GetBorrowingReturnCards(returnDate: new DateTime(2022, 3, 15));
-                var allCardsByBorrowingDate = BorrowingReturnService.Ins.GetBorrowingReturnCards(borrowingDate: new DateTime(2022, 4, 5));
+                var allCardsByReturnDate = BorrowingReturnService.Ins.GetBorrowingReturnCards(returnDate: new DateTime(2022, 4, 9));
+                var allCardsByBorrowingDate = BorrowingReturnService.Ins.GetBorrowingReturnCards(borrowingDate: new DateTime(2022, 4, 9));
             }
             catch (Exception e)
             {

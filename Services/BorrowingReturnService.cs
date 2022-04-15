@@ -84,11 +84,11 @@ namespace LibraryManagement.Services
                 var borrowingCards =borrowingCardsQuery as IQueryable<Borrowing_ReturnCard>;
                 if (borrowingDate != null)
                 {
-                    borrowingCards = borrowingCardsQuery.Where(b => b.borrowingDate == borrowingDate);
+                    borrowingCards = borrowingCardsQuery.Where(b => DbFunctions.TruncateTime(b.borrowingDate) == borrowingDate);
                 }
                  if (returnDate != null)
                 {
-                    borrowingCards = borrowingCardsQuery.Where(b => b.returnedDate != null && b.returnedDate == returnDate);
+                    borrowingCards = borrowingCardsQuery.Where(b => b.returnedDate != null && DbFunctions.TruncateTime(b.returnedDate) == returnDate);
                 }
 
                 var cardsDTO = borrowingCards.Select(b => new BorrowingCardDTO
