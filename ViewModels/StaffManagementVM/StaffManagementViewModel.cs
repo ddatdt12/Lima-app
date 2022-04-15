@@ -76,11 +76,14 @@ namespace LibraryManagement.ViewModels.StaffManagementVM
             {
                 Sex = p.Content.ToString();
             });
-            GetPasswordCommand = new RelayCommand<PasswordBox>((p) => { return true; },
-                (p) =>
-                {
-                    Password = p.Password;
-                });
+            GetPasswordCommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) =>
+            {
+                Password = p.Password;
+            });
+            GetRePasswordCM = new RelayCommand<PasswordBox>((p) => { return true; }, (p) =>
+            {
+                RePassword = p.Password;
+            });
             AddStaffCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
                 (bool isvalid, string error) = IsValidData();
@@ -136,6 +139,7 @@ namespace LibraryManagement.ViewModels.StaffManagementVM
                         gender = Sex,
                         phoneNumber = Phone,
                         startingDate = StartDate,
+                        accountId = SelectedItem.accountId,
                         account = new AccountDTO()
                         {
                             username = Username,
@@ -182,13 +186,20 @@ namespace LibraryManagement.ViewModels.StaffManagementVM
                     mb.ShowDialog();
                 }
             });
+            OpenChangePasswordWindowCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                ChangePasswordWindow changePasswordWindow = new ChangePasswordWindow();
+                Password = null;
+                RePassword = null;
+                changePasswordWindow.ShowDialog();
+            });
         }
         private (bool valid, string error) IsValidData()
         {
 
             if (string.IsNullOrEmpty(Name) || Sex is null || Birthday is null || string.IsNullOrEmpty(Phone) || string.IsNullOrEmpty(Email))
             {
-                return (false, "Thông tin nhân viên thiếu! Vui lòng bổ sung");
+                return (false, "Thông tin nhân viên thiếu hoặc không hợp lệ! Vui lòng bổ sung");
             }
 
             if (!Helper.IsValidEmail(Email))

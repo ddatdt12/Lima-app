@@ -167,13 +167,20 @@ namespace LibraryManagement.Services
                 acc.password = Helper.MD5Hash(updatedEmployee.account.password);
                 acc.roleId = updatedEmployee.account.roleId;
                 context.SaveChanges();
+
+
+                context.Entry(acc).Reference(a => a.Role).Load();
                 updatedEmployee.account = new AccountDTO()
                 {
                     id = acc.id,
                     username = acc.username,
                     password = acc.password,
                     roleId = acc.roleId,
-
+                    role = new RoleDTO
+                    {
+                        id = acc.Role.id,
+                        name = acc.Role.name
+                    },
                 };
                 return (true, "Cập nhật thành công!");
             }

@@ -247,26 +247,6 @@
                                  Width="200" />
                     </StackPanel>
                     <StackPanel Margin="130,20,0,0">
-                        <TextBlock Text="Mật khẩu"
-                                   FontSize="20"
-                                   Foreground="#0266FD"
-                                   FontWeight="ExtraBold"
-                                   HorizontalAlignment="Left" />
-                        <PasswordBox x:Name="_Matkhau"
-                                     materialDesign:HintAssist.Hint="Nhập mật khẩu"
-                                     Width="220"
-                                     Padding="0,15,0,0"
-                                     FontSize="16"
-                                     Height="38">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="PasswordChanged">
-                                    <i:InvokeCommandAction Command="{Binding GetPasswordCommand, Mode=TwoWay}"
-                                                           CommandParameter="{Binding ElementName=_Matkhau}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </PasswordBox>
-                    </StackPanel>
-                    <StackPanel Margin="70,20,0,0">
                         <TextBlock Text="Vai trò "
                                    Foreground="#0266FD"
                                    FontWeight="ExtraBold"
@@ -281,39 +261,47 @@
                                   materialDesign:HintAssist.Hint="Chọn loại độc giả" />
                     </StackPanel>
                 </WrapPanel>
-                <StackPanel Grid.Row="4"
-                            HorizontalAlignment="Center"
-                            Orientation="Horizontal">
-                    <Button Background="White"
-                            Margin="32,0,32,0"
-                            BorderBrush="#0266FD"
-                            BorderThickness="1.5"
-                            Width="160"
-                            Height="51"
-                            materialDesign:ButtonAssist.CornerRadius="15"
-                            VerticalContentAlignment="Center"
-                            Content="Hủy bỏ"
-                            Foreground="#0266FD"
-                            FontSize="18"
-                            FontWeight="ExtraBold"
-                            Style="{StaticResource MaterialDesignFlatAccentBgButton}"
-                            Click="Button_Click"/>
-                    <Button Background="#0266FD"
-                            BorderBrush="#0266FD"
-                            Margin="32,0,32,0"
-                            BorderThickness="1.5"
-                            Width="160"
-                            Height="51"
-                            materialDesign:ButtonAssist.CornerRadius="15"
-                            VerticalContentAlignment="Center"
-                            Content="Lưu"
-                            Foreground="White"
-                            FontSize="18"
-                            FontWeight="ExtraBold"
-                            Command="{Binding UpdateStaffCM}"
-                            CommandParameter="{Binding ElementName=editStaffWindow}"
-                            Style="{StaticResource MaterialDesignFlatAccentBgButton}" />
-                </StackPanel>
+                <Grid Grid.Row="4">
+                    <TextBlock HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Margin="85,10,0,0"
+                               FontSize="14">
+                    <Hyperlink Command="{Binding OpenChangePasswordWindowCM}">Đổi mật khẩu</Hyperlink>
+                    </TextBlock>
+
+                    <StackPanel HorizontalAlignment="Center"
+                                Orientation="Horizontal">
+                        <Button Background="White"
+                                Margin="32,0,32,0"
+                                BorderBrush="#0266FD"
+                                BorderThickness="1.5"
+                                Width="160"
+                                Height="51"
+                                materialDesign:ButtonAssist.CornerRadius="15"
+                                VerticalContentAlignment="Center"
+                                Content="Hủy bỏ"
+                                Foreground="#0266FD"
+                                FontSize="18"
+                                FontWeight="ExtraBold"
+                                Style="{StaticResource MaterialDesignFlatAccentBgButton}"
+                                Click="Button_Click" />
+                        <Button Background="#0266FD"
+                                BorderBrush="#0266FD"
+                                Margin="32,0,32,0"
+                                BorderThickness="1.5"
+                                Width="160"
+                                Height="51"
+                                materialDesign:ButtonAssist.CornerRadius="15"
+                                VerticalContentAlignment="Center"
+                                Content="Lưu"
+                                Foreground="White"
+                                FontSize="18"
+                                FontWeight="ExtraBold"
+                                Command="{Binding UpdateStaffCM}"
+                                CommandParameter="{Binding ElementName=editStaffWindow}"
+                                Style="{StaticResource MaterialDesignFlatAccentBgButton}" />
+                    </StackPanel>
+                </Grid>
             </Grid>
         </Grid>
     </Border>

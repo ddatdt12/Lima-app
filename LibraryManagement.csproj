@@ -204,6 +204,7 @@
     <Compile Include="ViewModels\SettingVM\RoleSetting.cs" />
     <Compile Include="ViewModels\SettingVM\SettingViewModel.cs" />
     <Compile Include="ViewModels\StaffManagementVM\AddStaffViewModel.cs" />
+    <Compile Include="ViewModels\StaffManagementVM\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\StaffManagementVM\EditStaffViewModel.cs" />
     <Compile Include="ViewModels\StaffManagementVM\StaffManagementViewModel.cs" />
     <Compile Include="ViewModels\StatisticalVM\StatisticalViewModel.cs" />
@@ -277,6 +278,9 @@
     </Compile>
     <Compile Include="Views\StaffManagement\AddStaffWindow.xaml.cs">
       <DependentUpon>AddStaffWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StaffManagement\ChangePasswordWindow.xaml.cs">
+      <DependentUpon>ChangePasswordWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StaffManagement\EditStaffWindow.xaml.cs">
       <DependentUpon>EditStaffWindow.xaml</DependentUpon>
@@ -391,6 +395,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\StaffManagement\AddStaffWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StaffManagement\ChangePasswordWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

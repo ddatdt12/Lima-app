@@ -8,6 +8,7 @@ namespace LibraryManagement.ViewModels.StaffManagementVM
     {
         public ICommand OpenEditStaffCM { get; set; }
         public ICommand UpdateStaffCM { get; set; }
+        public ICommand OpenChangePasswordWindowCM { get; set; }
 
         public void LoadEditStaff(EditStaffWindow w)
         {
@@ -28,7 +29,6 @@ namespace LibraryManagement.ViewModels.StaffManagementVM
             Username = SelectedItem.account.username;
             Password = SelectedItem.account.password;
             Role = SelectedItem.account.role.name;
-            w._Matkhau.Password = SelectedItem.account.password;
         }
     }
 }
