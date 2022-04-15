@@ -326,7 +326,8 @@
                                  FontFamily="{StaticResource NunitoSans_Regular}"
                                  Foreground="#5C5959"
                                  BorderBrush="#0266FD"
-                                 TextAlignment="Right" />
+                                 TextAlignment="Right"
+                                 CharacterCasing="Upper"/>
                     </Grid>
                     <Button Command="{Binding CheckReaderCardCM}"
                             Width="100"

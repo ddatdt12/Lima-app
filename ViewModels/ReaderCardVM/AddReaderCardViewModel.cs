@@ -1,6 +1,5 @@
 ﻿using LibraryManagement.ViewModels;
 using System;
-using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace LibraryManagement.ViewModel.ReaderCardVM

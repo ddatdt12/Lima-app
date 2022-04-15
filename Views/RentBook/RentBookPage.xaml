@@ -360,7 +360,8 @@
                                  Text="{Binding ReaderID, Mode=TwoWay}"
                                  FontSize="18"
                                  BorderBrush="#0266FD"
-                                 Foreground="#5C5959" />
+                                 Foreground="#5C5959"
+                                 CharacterCasing="Upper"/>
                     </Grid>
                     <Button Command="{Binding CheckReaderCardCM}"
                             Width="100"

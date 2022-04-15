@@ -47,7 +47,8 @@
                          FontSize="18"
                          FontFamily="{StaticResource NunitoSans_Regular}"
                          Foreground="#5C5959"
-                         BorderBrush="#0266FD" />
+                         BorderBrush="#0266FD"
+                         CharacterCasing="Upper" />
                 <Button Command="{Binding CheckReaderCardCM}"
                         Width="100"
                         Height="42"
