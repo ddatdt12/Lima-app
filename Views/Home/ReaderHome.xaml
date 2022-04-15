@@ -142,7 +142,7 @@
                                 Height="60"
                                 BorderThickness="1"
                                 Background="#EFF4F4">
-                            <TextBlock Text="Tổng nợ"
+                            <TextBlock Text="Tổng nợ trước đây"
                                        Foreground="#1B48BA"
                                        FontSize="20"
                                        FontWeight="Bold"

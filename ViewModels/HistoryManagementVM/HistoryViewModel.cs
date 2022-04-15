@@ -8,8 +8,6 @@ using LibraryManagement.Services;
 using System.Windows.Documents;
 using System.Windows;
 using System.Windows.Markup;
-using static LibraryManagement.ViewModels.ReturnBookVM.ReturnBookViewModel;
-using static LibraryManagement.ViewModels.RentBookVM.RentBookViewModel;
 
 namespace LibraryManagement.ViewModels.HistoryManagementVM
 {
