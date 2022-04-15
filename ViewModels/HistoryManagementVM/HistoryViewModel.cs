@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
@@ -51,6 +47,13 @@ namespace LibraryManagement.ViewModels.HistoryManagementVM
             set { selectedDate = value; OnPropertyChanged(); }
         }
 
+        private ComboBoxItem selectedFilter;
+        public ComboBoxItem SelectedFilter
+        {
+            get { return selectedFilter; }
+            set { selectedFilter = value; OnPropertyChanged(); }
+        }
+
 
 
         public ICommand FirstLoadCM { get; set; }
@@ -59,6 +62,7 @@ namespace LibraryManagement.ViewModels.HistoryManagementVM
         public ICommand OpenImportReceiptPageCM { get; set; }
         public ICommand OpenBorrowReturnPageCM { get; set; }
         public ICommand PrintReceiptCM { get; set; }
+        public ICommand SelectedDateChangedCM { get; set; }
 
         public HistoryViewModel()
         {
@@ -88,6 +92,31 @@ namespace LibraryManagement.ViewModels.HistoryManagementVM
                 if (SelectedReceipt is null) return;
                 PrintReceiptFunc();
                 SelectedReceipt = null;
+            });
+            SelectedDateChangedCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (SelectedDate is null) return;
+                string filter = SelectedFilter.Content.ToString();
+                switch (filter)
+                {
+                    case "Toàn bộ":
+                        {
+                            BorrowReturnList = new ObservableCollection<BorrowingCardDTO>(BorrowingReturnService.Ins.GetBorrowingReturnCards());
+                            return;
+                        }
+                    case "Mượn sách":
+                        {
+                            BorrowReturnList = new ObservableCollection<BorrowingCardDTO>
+                            (BorrowingReturnService.Ins.GetBorrowingReturnCards(borrowingDate: new DateTime(SelectedDate.Value.Year, SelectedDate.Value.Month, SelectedDate.Value.Day)));
+                            return;
+                        }
+                    case "Trả sách":
+                        {
+                            BorrowReturnList = new ObservableCollection<BorrowingCardDTO>
+                            (BorrowingReturnService.Ins.GetBorrowingReturnCards(returnDate: new DateTime(SelectedDate.Value.Year, SelectedDate.Value.Month, SelectedDate.Value.Day)));
+                            return;
+                        }
+                }
             });
         }
 

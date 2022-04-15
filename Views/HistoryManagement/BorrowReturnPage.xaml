@@ -20,58 +20,120 @@
     <Grid Background="White">
         <StackPanel>
 
-            <StackPanel Margin="30,25,0,0"
-                        Orientation="Horizontal">
+            <Grid Margin="30,25,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
 
-                <Border Background="White"
-                        Width="145"
-                        Height="35"
-                        Padding="5,0,5,0"
-                        BorderBrush="#BFBABA"
-                        BorderThickness="0.5">
-                    <DatePicker BorderThickness="0"
-                                FontSize="18"
-                                materialDesign:HintAssist.Hint="Chọn ngày"
-                                Foreground="#5C5959"
-                                Text="25/03/2001"
-                                SelectedDate="{Binding SelectedDate}">
-                    </DatePicker>
-                </Border>
+                <StackPanel Orientation="Horizontal"
+                            Grid.Column="0">
+                    <StackPanel Orientation="Horizontal">
 
-                <Border Background="White"
-                        Width="145"
-                        Height="35"
-                        Padding="5,0,5,0"
-                        BorderBrush="#BFBABA"
-                        BorderThickness="0.5"
-                        Margin="20,0,0,0">
-                    <ComboBox BorderThickness="0"
-                              FontSize="18"
-                              SelectedIndex="0"
-                              Foreground="#5C5959">
-                        <ComboBoxItem>Toàn bộ</ComboBoxItem>
-                        <ComboBoxItem>Mượn sách</ComboBoxItem>
-                        <ComboBoxItem>Trả sách</ComboBoxItem>
-                    </ComboBox>
-                </Border>
+                        <materialDesign:PackIcon Kind="Search"
+                                                 Width="25"
+                                                 Height="25"
+                                                 VerticalAlignment="Bottom"
+                                                 Foreground="#0266FD" />
 
-                <Button Background="#37B634"
-                        BorderBrush="Transparent"
-                        materialDesign:ButtonAssist.CornerRadius="8"
-                        Width="145"
-                        Height="42"
-                        FontSize="16"
-                        HorizontalAlignment="Right"
-                        Margin="20,0,20,0"
-                        Command="{Binding PrintReceiptCM}"
-                        Content="In hoá đơn" />
-            </StackPanel>
+                        <TextBox FontSize="18"
+                                 TextChanged="TextBox_TextChanged"
+                                 Name="searchBox"
+                                 Width="350"
+                                 Height="25"
+                                 VerticalAlignment="Bottom"
+                                 materialDesign:HintAssist.Hint="Tìm kiếm"
+                                 BorderBrush="#0266FD"
+                                 Padding="0"
+                                 BorderThickness="0,0,0,1">
+                        </TextBox>
+
+                    </StackPanel>
+
+                    <StackPanel Margin="20,0,0,0">
+                        <Label Content="Tìm theo"
+                               Height="16"
+                               Padding="0" />
+                        <ComboBox FontSize="18"
+                                  SelectedIndex="0"
+                                  Foreground="#5C5959"
+                                  Name="FilterBox"
+                                  BorderThickness="0,0,0,1"
+                                  BorderBrush="#0266FD">
+                            <ComboBoxItem>Mã đơn</ComboBoxItem>
+                            <ComboBoxItem>Tên sách</ComboBoxItem>
+                            <ComboBoxItem>Nhân viên</ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Grid.Column="1"
+                            HorizontalAlignment="Right">
+                    <Border Background="White"
+                            Width="145"
+                            Height="42"
+                            VerticalAlignment="Bottom"
+                            Padding="5,0,5,0"
+                            BorderBrush="#BFBABA"
+                            BorderThickness="0.5">
+                        <DatePicker BorderThickness="0"
+                                    FontSize="18"
+                                    Height="42"
+                                    materialDesign:HintAssist.Hint="Chọn ngày"
+                                    Focusable="False"
+                                    Foreground="#5C5959"
+                                    x:Name="datePicker"
+                                    SelectedDate="{Binding SelectedDate}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectedDateChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectedDateChangedCM}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </DatePicker>
+                    </Border>
+                    <Border Background="White"
+                            Width="145"
+                            Height="42"
+                            Padding="5,0,5,0"
+                            BorderBrush="#BFBABA"
+                            BorderThickness="0.5"
+                            Margin="20,0,0,0"
+                            VerticalAlignment="Bottom">
+                        <ComboBox BorderThickness="0"
+                                  FontSize="18"
+                                  Height="42"
+                                  SelectedIndex="0"
+                                  Padding="0,8,0,0"
+                                  x:Name="cbb"
+                                  Foreground="#5C5959"
+                                  SelectionChanged="ComboBox_SelectionChanged"
+                                  SelectedItem="{Binding SelectedFilter}">
+                            <ComboBoxItem>Toàn bộ</ComboBoxItem>
+                            <ComboBoxItem>Mượn sách</ComboBoxItem>
+                            <ComboBoxItem>Trả sách</ComboBoxItem>
+                        </ComboBox>
+                    </Border>
+                    <Button Background="#37B634"
+                            BorderBrush="Transparent"
+                            materialDesign:ButtonAssist.CornerRadius="8"
+                            Width="145"
+                            Height="42"
+                            VerticalAlignment="Bottom"
+                            FontSize="16"
+                            HorizontalAlignment="Right"
+                            Margin="10,0,20,0"
+                            Command="{Binding PrintReceiptCM}"
+                            Content="In hoá đơn" />
+
+                </StackPanel>
+            </Grid>
             <Border CornerRadius="4"
                     Margin="20"
                     BorderThickness="1"
                     BorderBrush="#BFBABA">
                 <ListView ItemsSource="{Binding BorrowReturnList}"
                           SelectedItem="{Binding SelectedBorrow}"
+                          x:Name="lv"
                           Height="540">
                     <ListView.View>
                         <GridView>
@@ -96,7 +158,7 @@
                             <GridViewColumn Header="Ngày mượn">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding borrowingDate}"
+                                        <TextBlock Text="{Binding borrowingDate,StringFormat=dd/MM/yyyy}"
                                                    FontSize="20"
                                                    Margin="15,0,0,0" />
                                     </DataTemplate>
@@ -105,7 +167,7 @@
                             <GridViewColumn Header="Ngày trả">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding returnCard.returnedDate}"
+                                        <TextBlock Text="{Binding returnCard.returnedDate,StringFormat=dd/MM/yyyy}"
                                                    FontSize="20"
                                                    Margin="15,0,0,0" />
                                     </DataTemplate>
@@ -115,6 +177,15 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding returnCard.fine}"
+                                                   FontSize="20"
+                                                   Margin="15,0,0,0" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Nhân viên">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding employee.name}"
                                                    FontSize="20"
                                                    Margin="15,0,0,0" />
                                     </DataTemplate>

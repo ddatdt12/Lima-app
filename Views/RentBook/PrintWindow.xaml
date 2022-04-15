@@ -135,6 +135,7 @@
                     Height="100">
                 <ListView x:Name="lv"
                           Height="100"
+                          Width="518"
                           ItemsSource="{Binding CurrentPrint}"
                           ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                     <ListView.View>
@@ -165,8 +166,7 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Header="Hạn trả"
-                                            Width="100"
-                                            >
+                                            Width="100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding DueDate,StringFormat=dd/MM/yyyy}"

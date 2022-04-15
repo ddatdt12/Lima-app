@@ -1,28 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using LibraryManagement.DTOs;
+using System;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace LibraryManagement.Views.HistoryManagement
 {
-    /// <summary>
-    /// Interaction logic for ImportReceiptPage.xaml
-    /// </summary>
     public partial class ImportReceiptPage : Page
     {
         public ImportReceiptPage()
         {
             InitializeComponent();
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CollectionViewSource.GetDefaultView(lv.ItemsSource).Refresh();
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lv.ItemsSource);
+            view.Filter = Filter;
+        }
+        private bool Filter(object item)
+        {
+            if (string.IsNullOrEmpty(searchBox.Text))
+                return true;
+
+            switch (FilterBox.SelectedIndex)
+            {
+                case 0:
+                    return ((item as ImportReceiptDTO).id.ToString().IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+                case 1:
+                    return ((item as ImportReceiptDTO).supplier.IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+                case 2:
+                    return ((item as ImportReceiptDTO).employee.name.IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+                default:
+                    return ((item as ImportReceiptDTO).id.ToString().IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+            }
+
         }
     }
 }

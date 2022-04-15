@@ -8,6 +8,7 @@
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d"
       Width="1088"
+      Background="White"
       Height="650"
       DataContext="{StaticResource HistoryVM}">
 
@@ -21,6 +22,43 @@
         <StackPanel>
 
             <DockPanel Margin="30,25,0,0">
+                <StackPanel Orientation="Horizontal">
+
+                    <materialDesign:PackIcon Kind="Search"
+                                             Width="25"
+                                             Height="25"
+                                             VerticalAlignment="Bottom"
+                                             Foreground="#0266FD" />
+
+                    <TextBox FontSize="18"
+                             TextChanged="TextBox_TextChanged"
+                             Name="searchBox"
+                             Width="350"
+                             Height="25"
+                             VerticalAlignment="Bottom"
+                             materialDesign:HintAssist.Hint="Tìm kiếm"
+                             BorderBrush="#0266FD"
+                             Padding="0"
+                             BorderThickness="0,0,0,1">
+                    </TextBox>
+
+                </StackPanel>
+
+                <StackPanel Margin="20,0,0,0">
+                    <Label Content="Tìm theo"
+                           Height="16"
+                           Padding="0" />
+                    <ComboBox FontSize="18"
+                              SelectedIndex="0"
+                              Foreground="#5C5959"
+                              Name="FilterBox"
+                              BorderThickness="0,0,0,1"
+                              BorderBrush="#0266FD">
+                        <ComboBoxItem>Mã đơn</ComboBoxItem>
+                        <ComboBoxItem>Nhà cung cấp</ComboBoxItem>
+                        <ComboBoxItem>Nhân viên</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
                 <Button Background="#37B634"
                         BorderBrush="Transparent"
                         materialDesign:ButtonAssist.CornerRadius="8"
@@ -37,6 +75,7 @@
                     BorderThickness="1"
                     BorderBrush="#BFBABA">
                 <ListView ItemsSource="{Binding ImportReceiptList}"
+                          x:Name="lv"
                           SelectedItem="{Binding SelectedReceipt}"
                           Height="540">
                     <ListView.View>
