@@ -340,6 +340,41 @@
                             </TreeViewItem>
                         </TreeViewItem>
                     </TreeView>
+                    <!--QUẢN LÝ NHÂN VIÊN-->
+                    <StackPanel Width="280"
+                                Height="60"
+                                Orientation="Horizontal">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver"
+                                             Value="true">
+                                        <Setter Property="Background"
+                                                Value="#FFE6E6E6" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+
+                        <materialDesign:PackIcon Kind="BookAccount"
+                                                 Width="30"
+                                                 Height="30"
+                                                 Margin="37 0 10 0"
+                                                 VerticalAlignment="Center"
+                                                 Foreground="#1B48BA" />
+                        <TextBlock Text="Quản lý nhân viên"
+                                   Foreground="#1B48BA"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   FontSize="20"
+                                   FontWeight="Bold" />
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenStaffManagementPageCM}"
+                                                       CommandParameter="{Binding ElementName=mainFrame}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </StackPanel>
                     <!---THONG KE-->
                     <TreeView Foreground="#1B48BA"
                               HorizontalAlignment="Left"

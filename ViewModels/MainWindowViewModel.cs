@@ -5,6 +5,8 @@ using LibraryManagement.ViewModels.SettingVM;
 using LibraryManagement.Views.BookManagement;
 using LibraryManagement.Views.Genre_AuthorManagement;
 using LibraryManagement.Views.ImportBookPage;
+using LibraryManagement.View.ReaderCard;
+using LibraryManagement.Views.StaffManagement;
 using LibraryManagement.Views.Login;
 using LibraryManagement.Views.PunishBook;
 using LibraryManagement.Views.RentBook;
@@ -12,10 +14,6 @@ using LibraryManagement.Views.ReturnBook;
 using LibraryManagement.Views.SettingManagement;
 using LibraryManagement.Views.StatisticalManagement;
 using System.Windows;
-using LibraryManagement.View.ReaderCard;
-using System;
-using System.Windows.Controls;
-using System.Windows.Input;
 using LibraryManagement.Views.Home;
 using LibraryManagement.Views.HistoryManagement;
 using LibraryManagement.ViewModel.BookManagementVM;
@@ -39,6 +37,10 @@ namespace LibraryManagement.ViewModel
         public ICommand OpenRentBookPageCM { get; set; }
         public ICommand OpenReturnBookPageCM { get; set; }
         public ICommand OpenPunishBookWindowCM { get; set; }
+        public ICommand OpenStaffManagementPageCM { get; set; }
+        public ICommand OpenReaderCardPageCM { get; set; }
+        public ICommand OpenBookManagementPageCM { get; set; }
+        public ICommand OpenImportBookPage { get; set; }
         public ICommand FirstLoadCM { get; set; }
         public ICommand OpenHomePageCM { get; set; }
         public ICommand OpenHistoryPageCM { get; set; }
@@ -67,7 +69,6 @@ namespace LibraryManagement.ViewModel
             {
                 p.Content = new ReaderCardPage();
             });
-
             OpenBookManagementPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new BookManagementPage();
@@ -88,6 +89,10 @@ namespace LibraryManagement.ViewModel
             OpenImportBookPage = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new MainImportBookPage();
+            });
+            OpenStaffManagementPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
+            {
+                p.Content = new StaffManagementPage();
             });
             OpenGenreAuthorManagementPage = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
@@ -113,6 +118,16 @@ namespace LibraryManagement.ViewModel
                 p.Close();
 
             });
+            try
+            {
+                var allData = BorrowingReturnService.Ins.GetBorrowingReturnCards();
+                var allCardsByReturnDate = BorrowingReturnService.Ins.GetBorrowingReturnCards(returnDate: new DateTime(2022, 4, 9));
+                var allCardsByBorrowingDate = BorrowingReturnService.Ins.GetBorrowingReturnCards(borrowingDate: new DateTime(2022, 4, 9));
+            }
+            catch (Exception e)
+            {
+
+            }
             OpenHistoryPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new MainHistoryPage();
