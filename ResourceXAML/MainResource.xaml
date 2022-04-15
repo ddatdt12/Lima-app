@@ -11,7 +11,8 @@
                     xmlns:genreauthormanage="clr-namespace:LibraryManagement.ViewModels.Genre_AuthorManagementVM"
                     xmlns:statistisgenre="clr-namespace:LibraryManagement.ViewModels.StatisticalVM"
                     xmlns:setting="clr-namespace:LibraryManagement.ViewModels.SettingVM"
-                    xmlns:readerhome="clr-namespace:LibraryManagement.ViewModels.HomeVM">
+                    xmlns:readerhome="clr-namespace:LibraryManagement.ViewModels.HomeVM"
+                    xmlns:history="clr-namespace:LibraryManagement.ViewModels.HistoryManagementVM">
     <main:MainWindowViewModel x:Key="MainWindowVM" />
 
     <login:LoginViewModel x:Key="LoginVM" />
@@ -25,4 +26,5 @@
     <statistisgenre:StatisticalViewModel x:Key="StatisticalVM" />
     <setting:SettingViewModel x:Key="SettingVM" />
     <readerhome:ReaderHomeViewModel x:Key="ReaderHomeVM" />
+    <history:HistoryViewModel x:Key="HistoryVM" />
 </ResourceDictionary>

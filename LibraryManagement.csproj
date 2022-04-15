@@ -198,6 +198,7 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\BookManagementVM\BookManagementViewModel.cs" />
     <Compile Include="ViewModels\Genre_AuthorManagementVM\Genre_AuthorManagementViewModel.cs" />
+    <Compile Include="ViewModels\HistoryManagementVM\HistoryViewModel.cs" />
     <Compile Include="ViewModels\HomeVM\ReaderHomeViewModel.cs" />
     <Compile Include="ViewModels\ImportBookVM\ImportBookViewModel.cs" />
     <Compile Include="ViewModels\LoginVM\LoginViewModel.cs" />
@@ -238,6 +239,15 @@
     </Compile>
     <Compile Include="Views\Genre_AuthorManagement\MainManagementPage.xaml.cs">
       <DependentUpon>MainManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HistoryManagement\BorrowReturnPage.xaml.cs">
+      <DependentUpon>BorrowReturnPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HistoryManagement\ImportReceiptPage.xaml.cs">
+      <DependentUpon>ImportReceiptPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HistoryManagement\MainHistoryPage.xaml.cs">
+      <DependentUpon>MainHistoryPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Home\ReaderHome.xaml.cs">
       <DependentUpon>ReaderHome.xaml</DependentUpon>
@@ -371,6 +381,18 @@
     <Page Include="Views\Genre_AuthorManagement\MainManagementPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\HistoryManagement\BorrowReturnPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HistoryManagement\ImportReceiptPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HistoryManagement\MainHistoryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Home\ReaderHome.xaml">
       <SubType>Designer</SubType>
@@ -535,10 +557,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\HistoryManagementVM\" />
-    <Folder Include="Views\HistoryManagement\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>

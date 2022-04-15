@@ -1,0 +1,96 @@
+﻿<Page x:Class="LibraryManagement.Views.HistoryManagement.ImportReceiptPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:LibraryManagement.Views.HistoryManagement"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      mc:Ignorable="d"
+      Width="1088"
+      Height="650"
+      DataContext="{StaticResource HistoryVM}">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding ReceiptPageLoadedCM}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid>
+        <StackPanel>
+
+            <DockPanel Margin="30,25,0,0">
+                <Button Background="#37B634"
+                        BorderBrush="Transparent"
+                        materialDesign:ButtonAssist.CornerRadius="8"
+                        Width="145"
+                        Height="42"
+                        FontSize="16"
+                        HorizontalAlignment="Right"
+                        Margin="0,0,20,0"
+                        Command="{Binding PrintReceiptCM}"
+                        Content="In hoá đơn" />
+            </DockPanel>
+            <Border CornerRadius="4"
+                    Margin="20"
+                    BorderThickness="1"
+                    BorderBrush="#BFBABA">
+                <ListView ItemsSource="{Binding ImportReceiptList}"
+                          SelectedItem="{Binding SelectedReceipt}"
+                          Height="540">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Mã đơn">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding id}"
+                                                   FontSize="20"
+                                                   Margin="15,0,0,0" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Nhà cung cấp">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding supplier}"
+                                                   FontSize="20"
+                                                   Margin="15,0,0,0" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Ngày nhập">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding createdAt}"
+                                                   FontSize="20"
+                                                   Margin="15,0,0,0" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Nhân viên">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding employee.name}"
+                                                   FontSize="20"
+                                                   Margin="15,0,0,0" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Tổng đơn">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding totalPrice}"
+                                                   FontSize="20"
+                                                   Margin="15,0,0,0" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Border>
+        </StackPanel>
+    </Grid>
+
+</Page>

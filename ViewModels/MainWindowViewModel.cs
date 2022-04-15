@@ -17,6 +17,7 @@ using System;
 using System.Windows.Controls;
 using System.Windows.Input;
 using LibraryManagement.Views.Home;
+using LibraryManagement.Views.HistoryManagement;
 
 namespace LibraryManagement.ViewModel
 {
@@ -106,7 +107,7 @@ namespace LibraryManagement.ViewModel
             });
             OpenHistoryPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
-                //p.Content = new
+                p.Content = new MainHistoryPage();
             });
 
             try

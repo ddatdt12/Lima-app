@@ -133,6 +133,7 @@
                     Height="400">
                 <ListView ItemsSource="{Binding ImportBookList}"
                           Height="400"
+                          x:Name="lv"
                           ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                     <ListView.View>
                         <GridView>
@@ -181,7 +182,7 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Header="Thành tiền"
-                                            Width="100">
+                                            Width="105">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding unitTotal}"

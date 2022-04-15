@@ -6,7 +6,7 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d"
       Height="780"
-      Width="1110"
+      Width="1128"
       DataContext="{StaticResource StatisticalVM}"
       FontFamily="{StaticResource NunitoSans_Regular}"
       VerticalAlignment="Top"
