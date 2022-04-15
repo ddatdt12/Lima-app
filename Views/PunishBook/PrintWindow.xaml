@@ -5,11 +5,219 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LibraryManagement.Views.PunishBook"
         mc:Ignorable="d"
-        WindowStyle="None"
-        ResizeMode="NoResize"
-        Width="550"
-        Height="400">
-    <Grid>
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
 
+        Height="800"
+        Width="600"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        FontFamily="{StaticResource NunitoSans_Regular}"
+        DataContext="{StaticResource PunishBookVM}">
+    <Grid>
+        <Grid x:Name="Print">
+
+            <Grid Background="#EBECF0"
+                  RenderTransformOrigin="0.5,0.5"
+                  Margin="289,-339,141,506">
+                <Grid.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform Angle="-106.004" />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Grid.RenderTransform>
+            </Grid>
+            <Grid Background="#67AEE1"
+                  RenderTransformOrigin="0.5,0.5"
+                  Margin="-363,129,177,473">
+                <Grid.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform Angle="-61.167" />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Grid.RenderTransform>
+            </Grid>
+            <Grid Background="#032A3F"
+                  Height="200"
+                  RenderTransformOrigin="0.5,0.5"
+                  Margin="-334,156,334,444">
+                <Grid.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform Angle="-73.609" />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Grid.RenderTransform>
+            </Grid>
+
+            <Grid Height="220"
+                  VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <Label Margin="20,20,0,0">
+                        <Label.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Library"
+                                                         Foreground="White"
+                                                         Width="50"
+                                                         Height="50" />
+                                <TextBlock Text="Lima"
+                                           FontWeight="Bold"
+                                           Foreground="White"
+                                           FontSize="35" />
+                            </StackPanel>
+                        </Label.Content>
+                    </Label>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1">
+
+                    <StackPanel Margin="0,80,0,0">
+                        <TextBlock Text="PHIẾU PHẠT"
+                                   TextAlignment="Center"
+                                   Foreground="#0266FD"
+                                   FontSize="40"
+                                   FontWeight="Bold" />
+                        <DockPanel Margin="50,0,20,0">
+                            <TextBlock Text="Mã phiếu:"
+                                       FontSize="18"
+                                       FontWeight="Bold" />
+                            <TextBlock FontSize="18"
+                                       HorizontalAlignment="Right"
+                                       Margin="20,0,0,0"
+                                       FontWeight="Bold"
+                                       x:Name="punishCard" />
+                        </DockPanel>
+                        <DockPanel Margin="50,0,20,0">
+                            <TextBlock Text="Ngày nhập:"
+                                       FontSize="18"
+                                       FontWeight="Bold" />
+                            <TextBlock FontSize="18"
+                                       Margin="20,0,0,0"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Right"
+                                       x:Name="date" />
+                        </DockPanel>
+                        <DockPanel Margin="50,0,20,0">
+                            <TextBlock Text="Độc giả:"
+                                       FontSize="18"
+                                       FontWeight="Bold" />
+                            <TextBlock FontSize="18"
+                                       Margin="20,0,0,0"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Right"
+                                       x:Name="name" />
+                        </DockPanel>
+                    </StackPanel>
+
+                </StackPanel>
+            </Grid>
+
+            <Grid Background="Transparent"
+                  VerticalAlignment="Top"
+                  Height="120"
+                  Width="400"
+                  Margin="150 240 0 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Border BorderThickness="1"
+                                BorderBrush="#0266FD">
+                            <TextBlock Text="Tổng nợ"
+                                       FontSize="22"
+                                       TextAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" />
+                        </Border>
+                        
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Border BorderBrush="#0266FD"
+                                BorderThickness="0 1 0 1">
+                            <TextBlock Text="Số tiền thu"
+                                       FontSize="22"
+                                       TextAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" />
+                        </Border>
+                        
+                    </Grid>
+                    <Grid Grid.Column="2">
+                        <Border BorderBrush="#0266FD"
+                                BorderThickness="1">
+                            <TextBlock Text="Còn lại"
+                                       FontSize="22"
+                                       TextAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" />
+                        </Border>
+                      
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Border BorderThickness="1 0 1 1"
+                                BorderBrush="#0266FD">
+                            <TextBlock Text="Tổng nợ"
+                                       FontSize="22"
+                                       TextAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" 
+                                       x:Name="totalDept"/>
+                        </Border>
+
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Border BorderBrush="#0266FD"
+                                BorderThickness="0 0 0 1">
+                            <TextBlock Text="Số tiền thu"
+                                       FontSize="22"
+                                       TextAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" 
+                                       x:Name="paid"/>
+                        </Border>
+
+                    </Grid>
+                    <Grid Grid.Column="2">
+                        <Border BorderBrush="#0266FD"
+                                BorderThickness="1 0 1 1">
+                            <TextBlock Text="Còn lại"
+                                       FontSize="22"
+                                       TextAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" 
+                                       x:Name="remain"/>
+                        </Border>
+
+                    </Grid>
+                </Grid>
+            </Grid>
+
+        </Grid>
     </Grid>
 </Window>
