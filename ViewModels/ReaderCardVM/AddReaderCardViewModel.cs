@@ -31,7 +31,7 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
         public DateTime? Birthday
         {
             get { return _Birthday; }
-            set { _Birthday = value; OnPropertyChanged(); }
+            set {  _Birthday = value; OnPropertyChanged(); }
         }
 
         private string _Email;
