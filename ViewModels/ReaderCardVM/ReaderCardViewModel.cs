@@ -194,8 +194,15 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             });
             OpenPrintReaderCardCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                PrintReaderCardWindow printReaderCardWindow = new PrintReaderCardWindow();
-                LoadPrintReaderCard(printReaderCardWindow);
+                if (SelectedItem != null)
+                {
+                    ReaderCardDTO temp = SelectedItem;
+                    OpenPrintWindow(temp);
+                    ResetData();
+                    MessageBox.Show("In thành công!");
+                }
+                else
+                    MessageBox.Show("Vui lòng chọn độc giả cần in thẻ!");
             });
             UpdateReaderCardCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {

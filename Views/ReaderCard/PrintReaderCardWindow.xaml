@@ -4,318 +4,159 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        DataContext="{StaticResource ReaderCardVM}"
-        Height="520"
-        Width="1020"
-        FontFamily="{StaticResource NunitoSans_Regular}"
-        x:Name="printReaderCardWindow"
+
+        Width="600"
+        Height="800"
+        WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Background="Transparent"
-        AllowsTransparency="True"
-        WindowStyle="None">
+        FontFamily="{StaticResource NunitoSans_Regular}"
+        DataContext="{StaticResource ReaderCardVM}">
 
-    <Border Background="White"
-            CornerRadius="30"
-            BorderBrush="Black"
-            BorderThickness="0,1.5,1.5,1.5">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="20" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Border Background="#0266FD"
-                    CornerRadius="30,0,0,30"
-                    Grid.Column="0" />
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="420" />
-                    <RowDefinition Height="80" />
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0"
-                      x:Name="Print">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="100" />
-                        <RowDefinition Height="100" />
-                        <RowDefinition Height="100" />
-                        <RowDefinition Height="100" />
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0"
-                               Text="THẺ ĐỘC GIẢ"
-                               TextWrapping="Wrap"
-                               FontSize="32"
-                               VerticalAlignment="Top"
-                               HorizontalAlignment="Center"
-                               Margin="50,40,0,0"
-                               Foreground="#1B48BA"
-                               FontWeight="UltraBold" />
-                    <WrapPanel Grid.Row="1"
-                               Margin="50,0,50,0">
-                        <WrapPanel.Resources>
-                            <Style TargetType="TextBox"
-                                   BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
-                                <Setter Property="Height"
-                                        Value="38" />
-                                <Setter Property="FontSize"
-                                        Value="16" />
-                                <Setter Property="Padding"
-                                        Value="0 0 0 0" />
-                                <Setter Property="Foreground"
-                                        Value="Black" />
-                                <Setter Property="Width"
-                                        Value="200" />
-                            </Style>
-                            <Style TargetType="StackPanel">
-                                <Setter Property="Orientation"
-                                        Value="Vertical" />
-                            </Style>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="VerticalAlignment"
-                                        Value="Center" />
-                                <Setter Property="FontSize"
-                                        Value="18" />
-                                <Setter Property="Height"
-                                        Value="25" />
-                                <Setter Property="TextAlignment"
-                                        Value="Center" />
-                            </Style>
-                            <Style TargetType="RadioButton">
-                                <Setter Property="VerticalContentAlignment"
-                                        Value="Center" />
-                                <Setter Property="Width"
-                                        Value="60" />
-                                <Setter Property="FontSize"
-                                        Value="18" />
-                            </Style>
-                        </WrapPanel.Resources>
-                        <StackPanel Margin="0,20,0,0">
-                            <TextBlock Text="Họ và tên"
-                                       FontSize="20"
-                                       Foreground="#0266FD"
-                                       FontWeight="ExtraBold"
-                                       HorizontalAlignment="Left" />
-                            <TextBlock Text="{Binding Name, Mode=TwoWay}"
-                                       Width="250"
-                                       FontSize="20"
-                                       TextAlignment="Left" />
-                        </StackPanel>
-                        <StackPanel Margin="100,20,0,0">
-                            <TextBlock Text="Giới tính"
-                                       Foreground="#0266FD"
-                                       FontWeight="ExtraBold"
-                                       HorizontalAlignment="Left" />
-                            <StackPanel Height="40"
-                                        IsEnabled="False"
-                                        Orientation="Horizontal"
-                                        HorizontalAlignment="Left">
-                                <RadioButton x:Name="Man"
-                                             Content="Nam"
-                                             FontSize="20"
-                                             Command="{Binding CheckedSexCM}"
-                                             CommandParameter="{Binding ElementName=Man}" />
-                                <RadioButton x:Name="Woman"
-                                             Content="Nữ"
-                                             FontSize="20"
-                                             Margin="50,0,0,0"
-                                             Command="{Binding CheckedSexCM}"
-                                             CommandParameter="{Binding ElementName=Woman}" />
-                            </StackPanel>
-                        </StackPanel>
-                        <StackPanel Margin="100,20,0,0">
-                            <TextBlock Text="Ngày sinh"
-                                       Foreground="#0266FD"
-                                       FontWeight="ExtraBold"
-                                       HorizontalAlignment="Left" />
-                            <TextBlock Width="270"
-                                       FontSize="20"
-                                       Text="{Binding Birthday,StringFormat=dd/MM/yyyy}"
-                                       TextAlignment="Left">
-                            </TextBlock>
-                        </StackPanel>
-                    </WrapPanel>
-                    <WrapPanel Grid.Row="2"
-                               Margin="50,0,50,0">
-                        <WrapPanel.Resources>
-                            <Style TargetType="TextBox"
-                                   BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
-                                <Setter Property="Height"
-                                        Value="38" />
-                                <Setter Property="FontSize"
-                                        Value="16" />
-                                <Setter Property="Padding"
-                                        Value="0 0 0 0" />
-                                <Setter Property="Foreground"
-                                        Value="Black" />
-                                <Setter Property="Width"
-                                        Value="200" />
-                            </Style>
-                            <Style TargetType="StackPanel">
-                                <Setter Property="Orientation"
-                                        Value="Vertical" />
-                            </Style>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="VerticalAlignment"
-                                        Value="Center" />
-                                <Setter Property="FontSize"
-                                        Value="18" />
-                                <Setter Property="Height"
-                                        Value="25" />
-                                <Setter Property="TextAlignment"
-                                        Value="Center" />
-                            </Style>
-                            <Style TargetType="RadioButton">
-                                <Setter Property="VerticalContentAlignment"
-                                        Value="Center" />
-                                <Setter Property="Width"
-                                        Value="60" />
-                                <Setter Property="FontSize"
-                                        Value="18" />
-                            </Style>
-                        </WrapPanel.Resources>
-                        <StackPanel Margin="0,20,0,0">
-                            <TextBlock Text="Email"
-                                       FontSize="20"
-                                       Foreground="#0266FD"
-                                       FontWeight="ExtraBold"
-                                       HorizontalAlignment="Left" />
-                            <TextBlock Text="{Binding Email, Mode=TwoWay}"
-                                       Width="220"
-                                       FontSize="20"
-                                       TextAlignment="Left" />
-                        </StackPanel>
-                        <StackPanel Margin="130,20,0,0">
-                            <TextBlock Text="Địa chỉ"
-                                       FontSize="20"
-                                       Foreground="#0266FD"
-                                       FontWeight="ExtraBold"
-                                       HorizontalAlignment="Left" />
-                            <TextBlock Text="{Binding Adress, Mode=TwoWay}"
-                                       Width="200"
-                                       FontSize="20"
-                                       TextAlignment="Left" />
-                        </StackPanel>
-                        <StackPanel Margin="70,20,0,0">
-                            <TextBlock Text="Loại độc giả"
-                                       FontSize="20"
-                                       Foreground="#0266FD"
-                                       FontWeight="ExtraBold"
-                                       HorizontalAlignment="Left" />
-                            <TextBlock Text="{Binding ReaderType, Mode=TwoWay}"
-                                       Margin="0,10,0,0"
-                                       Width="150"
-                                       x:Name="ReaderType"
-                                       FontSize="20"
-                                       TextAlignment="Left" />
-                        </StackPanel>
-                    </WrapPanel>
-                    <WrapPanel Grid.Row="3"
-                               Margin="50,0,50,0">
-                        <WrapPanel.Resources>
-                            <Style TargetType="TextBox"
-                                   BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
-                                <Setter Property="Height"
-                                        Value="38" />
-                                <Setter Property="FontSize"
-                                        Value="16" />
-                                <Setter Property="Padding"
-                                        Value="0 0 0 0" />
-                                <Setter Property="Foreground"
-                                        Value="Black" />
-                                <Setter Property="Width"
-                                        Value="200" />
-                            </Style>
-                            <Style TargetType="StackPanel">
-                                <Setter Property="Orientation"
-                                        Value="Vertical" />
-                            </Style>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="VerticalAlignment"
-                                        Value="Center" />
-                                <Setter Property="FontSize"
-                                        Value="18" />
-                                <Setter Property="Height"
-                                        Value="25" />
-                                <Setter Property="TextAlignment"
-                                        Value="Center" />
-                            </Style>
-                            <Style TargetType="RadioButton">
-                                <Setter Property="VerticalContentAlignment"
-                                        Value="Center" />
-                                <Setter Property="Width"
-                                        Value="60" />
-                                <Setter Property="FontSize"
-                                        Value="18" />
-                            </Style>
-                        </WrapPanel.Resources>
-                        <StackPanel Margin="216,25,0,0">
-                            <TextBlock Text="Hạn sử dụng"
-                                       FontSize="20"
-                                       Foreground="#0266FD"
-                                       FontWeight="ExtraBold"
-                                       HorizontalAlignment="Left" />
+    <Grid Margin="0,0,0,270"
+          Width="600">
+        <Grid x:Name="Print">
+            <Grid Background="#EBECF0"
+                  RenderTransformOrigin="0.5,0.5"
+                  Margin="61,-485,-61,480">
+                <Grid.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform Angle="-98.387" />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Grid.RenderTransform>
+            </Grid>
+            <Grid Background="#67AEE1"
+                  RenderTransformOrigin="0.5,0.5"
+                  Margin="-476,-201,260,201">
+                <Grid.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform Angle="-68.466" />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Grid.RenderTransform>
+            </Grid>
+            <Grid Background="#032A3F"
+                  Height="200"
+                  RenderTransformOrigin="0.5,0.5"
+                  Margin="-339,96,227,234">
+                <Grid.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform Angle="-76.347" />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Grid.RenderTransform>
+            </Grid>
+
+            <Grid Height="150"
+              VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="11*" />
+                    <ColumnDefinition Width="14*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <Label Margin="20,20,0,0">
+                        <Label.Content>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Từ ngày"
-                                           FontSize="18"
-                                           Margin="0,15,0,0"
-                                           HorizontalAlignment="Left" />
-                                <TextBlock Width="150"
-                                           Margin="15,0,0,0"
-                                           Text="{Binding StartDate,StringFormat=dd/MM/yyyy}"
-                                           VerticalAlignment="Bottom"
-                                           FontSize="20"
-                                           TextAlignment="Left">
-
-                                </TextBlock>
-                                <TextBlock Text="Đến ngày"
-                                           FontSize="18"
-                                           Margin="20,15,0,0"
-                                           HorizontalAlignment="Left" />
-                                <TextBlock x:Name="ExpirationDate"
-                                           Width="150"
-                                           Margin="33,0,0,0"
-                                           Text="{Binding FinishDate,StringFormat=dd/MM/yyyy}"
-                                           VerticalAlignment="Bottom"
-                                           FontSize="20"
-                                           TextAlignment="Left" />
+                                <materialDesign:PackIcon Kind="Library"
+                                                         Foreground="White"
+                                                         Width="50"
+                                                         Height="50" />
+                                <TextBlock Text="Lima"
+                                           FontWeight="Bold"
+                                           Foreground="White"
+                                           FontSize="35" />
                             </StackPanel>
-                        </StackPanel>
-                    </WrapPanel>
-                </Grid>
-                <StackPanel Grid.Row="1"
-                            HorizontalAlignment="Center"
-                            Orientation="Horizontal">
-                    <Button Background="White"
-                            Margin="32,0,32,0"
-                            BorderBrush="#0266FD"
-                            BorderThickness="1.5"
-                            Width="160"
-                            Height="51"
-                            materialDesign:ButtonAssist.CornerRadius="15"
-                            VerticalContentAlignment="Center"
-                            Content="Hủy bỏ"
-                            Foreground="#0266FD"
-                            FontSize="18"
-                            FontWeight="ExtraBold"
-                            Style="{StaticResource MaterialDesignFlatAccentBgButton}"
-                            Click="Button_Click" />
-                    <Button Background="#0266FD"
-                            BorderBrush="#0266FD"
-                            Margin="32,0,32,0"
-                            BorderThickness="1.5"
-                            Width="160"
-                            Height="51"
-                            materialDesign:ButtonAssist.CornerRadius="15"
-                            VerticalContentAlignment="Center"
-                            Content="In thẻ"
-                            Foreground="White"
-                            FontSize="18"
-                            FontWeight="ExtraBold"
-                            Style="{StaticResource MaterialDesignFlatAccentBgButton}"
-                            Click="Button_Click_1" />
+                        </Label.Content>
+                    </Label>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1">
+                    <StackPanel Margin="0,80,0,0">
+                        <TextBlock Text="THẺ ĐỘC GIẢ"
+                                   Foreground="#0266FD"
+                                   FontSize="35"
+                                   Margin="0 0 0 0"
+                                   HorizontalAlignment="Right"
+                                   FontWeight="Bold" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+
+            <Grid Margin="140 180 0 0"
+                  VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <StackPanel.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Margin"
+                                    Value="0 5 0 0"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <TextBlock Text="Mã thẻ:"
+                               FontSize="24"
+                               Margin="0 0 0 5"
+                               FontWeight="Bold" 
+                               Foreground="#0266FD"/>
+                    <TextBlock Text="Họ tên:"
+                               FontSize="18" />
+                    <TextBlock Text="Giới tính:"  
+                               FontSize="18" />
+                    <TextBlock Text="Ngày sinh:"
+                               FontSize="18" />
+                    <TextBlock Text="Địa chỉ:"
+                               FontSize="18" />
+                    <TextBlock Text="Email:"
+                               FontSize="18" />
+                    <TextBlock Text="Ngày tạo:"
+                           FontSize="18" />
+                    <TextBlock Text="Ngày hết hạn:"
+                               FontSize="18" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="1"
+                            Margin="80 0 0 0">
+                    <StackPanel.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Margin"
+                                    Value="0 5 0 0"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <TextBlock FontSize="24"
+                               Margin="0 0 0 5"
+                               FontWeight="Bold" 
+                               Foreground="#0266FD"
+                               x:Name="id"/>
+                    <TextBlock FontSize="18"
+                               FontWeight="Bold"
+                               x:Name="name"/>
+                    <TextBlock FontSize="18"                                                                                       
+                               x:Name="gender"/>
+                    <TextBlock FontSize="18"
+                               x:Name="birthdate"/>
+                    <TextBlock FontSize="18"
+                               x:Name="address"/>
+                    <TextBlock FontSize="18"
+                               x:Name="email"/>
+                    <TextBlock FontSize="18"
+                               x:Name="createdate"/>
+                    <TextBlock FontSize="18"
+                               x:Name="expirydate"/>
                 </StackPanel>
             </Grid>
         </Grid>
-    </Border>
+
+    </Grid>
 </Window>
