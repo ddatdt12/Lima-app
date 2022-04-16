@@ -90,19 +90,16 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
                      {
                          ListReaderCard.Add(reader);
                          p.Close();
-                         MessageBoxCustom mb = new MessageBoxCustom("Thông báo", message, MessageType.Success, MessageButtons.OK);
-                         mb.ShowDialog();
+                         MessageBox.Show(message, "Thông báo", MessageBoxButton.OK);
                      }
                      else
                      {
-                         MessageBoxCustom mb = new MessageBoxCustom("Lỗi", message, MessageType.Error, MessageButtons.OK);
-                         mb.ShowDialog();
+                         MessageBox.Show(message, "Lỗi", MessageBoxButton.OK,MessageBoxImage.Error);
                      }
                  }
                  else
                  {
-                     MessageBoxCustom mb = new MessageBoxCustom("Lỗi", error, MessageType.Error, MessageButtons.OK);
-                     mb.ShowDialog();
+                     MessageBox.Show(error, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                  }
              });
             SelectedReaderTypeChangedCM = new RelayCommand<ListView>((p) => { return true; }, (p) =>
@@ -139,15 +136,13 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
                     {
                         var readerTypeFound = ListReaderType.FirstOrDefault(s => s.id == readerTypeDTO.id);
                         ListReaderType[ListReaderType.IndexOf(readerTypeFound)] = readerTypeDTO;
-                        MessageBoxCustom mb = new MessageBoxCustom("Thông báo", mes, MessageType.Success, MessageButtons.OK);
-                        mb.ShowDialog();
+                        MessageBox.Show(mes, "Thông báo", MessageBoxButton.OK);
                         ResetDataAddReaderTypeWindow();
                         return;
                     }
                     else
                     {
-                        MessageBoxCustom mb = new MessageBoxCustom("Lỗi", mes, MessageType.Error, MessageButtons.OK);
-                        mb.ShowDialog();
+                        MessageBox.Show(mes, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                         ResetDataAddReaderTypeWindow();
                         return;
                     }
@@ -156,8 +151,7 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
                 {
                     if (string.IsNullOrEmpty(tempReaderType))
                     {
-                        MessageBoxCustom mb = new MessageBoxCustom("Cảnh báo", "Vui lòng chọn loại độc giả bạn muốn thay đổi hoặc thêm loại độc giả mới", MessageType.Warning, MessageButtons.OK);
-                        mb.ShowDialog();
+                        MessageBox.Show("Cảnh báo", "Vui lòng chọn loại độc giả bạn muốn thay đổi hoặc thêm loại độc giả mới", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return;
                     }
                     else
@@ -168,15 +162,13 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
                         if (Successful)
                         {
                             ListReaderType.Add(reader);
-                            MessageBoxCustom mb = new MessageBoxCustom("Thông báo", message, MessageType.Success, MessageButtons.OK);
-                            mb.ShowDialog();
+                            MessageBox.Show(message, "Thông báo", MessageBoxButton.OK);
                             ResetDataAddReaderTypeWindow();
                             return;
                         }
                         else
                         {
-                            MessageBoxCustom mb = new MessageBoxCustom("Lỗi", message, MessageType.Error, MessageButtons.OK);
-                            mb.ShowDialog();
+                            MessageBox.Show(message, "Lỗi", MessageBoxButton.OK,MessageBoxImage.Error);
                             ResetDataAddReaderTypeWindow();
                             return;
                         }
@@ -202,8 +194,15 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             });
             OpenPrintReaderCardCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                PrintReaderCardWindow printReaderCardWindow = new PrintReaderCardWindow();
-                LoadPrintReaderCard(printReaderCardWindow);
+                if (SelectedItem != null)
+                {
+                    ReaderCardDTO temp = SelectedItem;
+                    OpenPrintWindow(temp);
+                    ResetData();
+                    MessageBox.Show("In thành công!");
+                }
+                else
+                    MessageBox.Show("Vui lòng chọn độc giả cần in thẻ!");
             });
             UpdateReaderCardCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
@@ -231,20 +230,17 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
                     {
                         var readerCardFound = ListReaderCard.FirstOrDefault(s => s.id == reader.id);
                         ListReaderCard[ListReaderCard.IndexOf(readerCardFound)] = reader;
-                        MessageBoxCustom mb = new MessageBoxCustom("Thông báo", message, MessageType.Success, MessageButtons.OK);
-                        mb.ShowDialog();
+                        MessageBox.Show(message, "Thông báo", MessageBoxButton.OK);
                         p.Close();
                     }
                     else
                     {
-                        MessageBoxCustom mb = new MessageBoxCustom("Lỗi", message, MessageType.Error, MessageButtons.OK);
-                        mb.ShowDialog();
+                        MessageBox.Show(message, "Lỗi", MessageBoxButton.OK,MessageBoxImage.Error);
                     }
                 }
                 else
                 {
-                    MessageBoxCustom mb = new MessageBoxCustom("Lỗi", error, MessageType.Error, MessageButtons.OK);
-                    mb.ShowDialog();
+                    MessageBox.Show(error, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
             DeleteEditReaderCardCM = new RelayCommand<object>((p) => { return true; }, (p) =>
