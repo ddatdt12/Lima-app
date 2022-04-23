@@ -468,10 +468,18 @@
                                 materialDesign:ButtonAssist.CornerRadius="12"
                                 Background="#0266FD"
                                 Foreground="White"
-                                Content="Lưu"
                                 FontWeight="Bold"
                                 Command="{Binding UpdateBookCM}"
                                 CommandParameter="{Binding ElementName=this}">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="ContentSave"
+                                                             Width="20"
+                                                             Height="20"
+                                                             Margin="0,4,15,0" />
+                                    <TextBlock Text="Lưu" />
+                                </StackPanel>
+                            </Button.Content>
                             <Button.Style>
                                 <Style TargetType="Button"
                                        BasedOn="{StaticResource MaterialDesignFlatSecondaryButton}">

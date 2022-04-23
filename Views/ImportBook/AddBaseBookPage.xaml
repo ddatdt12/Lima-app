@@ -225,7 +225,7 @@
                     Height="50"
                     Background="#0266FD"
                     Foreground="White"
-                    Content="Lưu đầu sách"
+                    Content="Thêm mới"
                     materialDesign:ButtonAssist.CornerRadius="12"
                     HorizontalAlignment="Right"
                     Command="{Binding AddNewBaseBookCM}" />

@@ -102,8 +102,8 @@
                                                     <TextBlock FontSize="18"
                                                                Text="{Binding BookInfoID}"
                                                                Foreground="#000000"
-                                                               TextAlignment="Left" 
-                                                               ToolTip="{Binding BookInfoID}"/>
+                                                               TextAlignment="Left"
+                                                               ToolTip="{Binding BookInfoID}" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -361,7 +361,7 @@
                                  FontSize="18"
                                  BorderBrush="#0266FD"
                                  Foreground="#5C5959"
-                                 CharacterCasing="Upper"/>
+                                 CharacterCasing="Upper" />
                     </Grid>
                     <Button Command="{Binding CheckReaderCardCM}"
                             Width="100"
@@ -370,7 +370,7 @@
                             Margin="0 24 32 0"
                             Background="#37B634"
                             BorderBrush="Transparent"
-                            materialDesign:ButtonAssist.CornerRadius="8">
+                            materialDesign:ButtonAssist.CornerRadius="12">
                         <TextBlock Text="Kiểm tra"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
@@ -379,17 +379,24 @@
                                    FontSize="16" />
                     </Button>
                     <Grid Height="50">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="87*" />
+                            <ColumnDefinition Width="28*" />
+                        </Grid.ColumnDefinitions>
                         <TextBlock Text="Họ tên độc giả"
                                    VerticalAlignment="Center"
                                    FontSize="18"
                                    Foreground="#5C5959"
-                                   FontWeight="Bold" />
+                                   FontWeight="Bold"
+                                   Grid.ColumnSpan="2" />
                         <TextBlock Width="190"
                                    TextAlignment="Right"
                                    VerticalAlignment="Center"
-                                   HorizontalAlignment="Right"
+                                   HorizontalAlignment="Left"
                                    Text="{Binding ReaderName}"
-                                   FontSize="18" />
+                                   FontSize="18"
+                                   Grid.ColumnSpan="2"
+                                   Margin="155,0,0,0" />
                     </Grid>
                     <Grid Height="50">
                         <TextBlock Text="Hạn thẻ"

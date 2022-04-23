@@ -237,7 +237,7 @@
                 Background="White"
                 Content="Huỷ"
                 Click="Button_Click"
-                Foreground="Black"
+                Foreground="#0266FD"
                 FontWeight="Bold"
                 FontSize="16"
                 HorizontalAlignment="Left"

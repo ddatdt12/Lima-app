@@ -14,19 +14,6 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
         public ICommand OpenPrintReaderCardCM { get; set; }
         public void OpenPrintWindow(ReaderCardDTO readercard)
         {
-            //create printer
-            PrintDialog pd = new PrintDialog();
-            if (pd.ShowDialog() != true) return;
-
-            //create document
-            FixedDocument document = new FixedDocument();
-            document.DocumentPaginator.PageSize = new Size(600, 500);
-
-            //create page
-            FixedPage page = new FixedPage();
-            page.Width = document.DocumentPaginator.PageSize.Width;
-            page.Height = document.DocumentPaginator.PageSize.Height;
-
             PrintReaderCardWindow w = new PrintReaderCardWindow();
             w.id.Text = readercard.id;
             w.name.Text = readercard.name;
@@ -36,21 +23,7 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             w.email.Text = readercard.email;
             w.createdate.Text = readercard.createdAt.ToString("dd/MM/yyyy");
             w.expirydate.Text = readercard.expiryDate.ToString("dd/MM/yyyy");
-
-            //remove element from tree
-            Grid parent = w.Print.Parent as Grid;
-            Grid child = w.Print as Grid;
-            parent.Children.Remove(w.Print);
-            page.Children.Add(child);
-
-            // add the page to the document
-            PageContent page1Content = new PageContent();
-            ((IAddChild)page1Content).AddChild(page);
-            document.Pages.Add(page1Content);
-
-
-            // and print
-            pd.PrintDocument(document.DocumentPaginator, "Reader card");
+            w.ShowDialog();
         }
     }
 }

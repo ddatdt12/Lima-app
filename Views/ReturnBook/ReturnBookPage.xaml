@@ -336,7 +336,7 @@
                             Margin="0 24 32 0"
                             Background="#37B634"
                             BorderBrush="Transparent"
-                            materialDesign:ButtonAssist.CornerRadius="8">
+                            materialDesign:ButtonAssist.CornerRadius="12">
                         <TextBlock Text="Kiểm tra"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"

@@ -199,7 +199,6 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
                     ReaderCardDTO temp = SelectedItem;
                     OpenPrintWindow(temp);
                     ResetData();
-                    MessageBox.Show("In thành công!");
                 }
                 else
                     MessageBox.Show("Vui lòng chọn độc giả cần in thẻ!");

@@ -181,7 +181,7 @@
                     Height="50"
                     Background="#0266FD"
                     Foreground="White"
-                    Content="Hoàn thành"
+                    Content="Thêm mới"
                     materialDesign:ButtonAssist.CornerRadius="12"
                     HorizontalAlignment="Right"
                     Command="{Binding AddBookCM}" />

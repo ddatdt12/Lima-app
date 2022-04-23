@@ -25,6 +25,7 @@ namespace LibraryManagement.Views.ReaderCard
                 if (printDialog.ShowDialog() == true)
                 {
                     printDialog.PrintVisual(Print, "ReaderCard");
+                    MessageBox.Show("In thành công!");
                     this.Close();
                 }
             }

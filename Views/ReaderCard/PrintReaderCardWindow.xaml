@@ -5,38 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-
         Width="600"
-        Height="800"
+        Height="550"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         FontFamily="{StaticResource NunitoSans_Regular}"
         DataContext="{StaticResource ReaderCardVM}">
 
-    <Grid Margin="0,0,0,270"
-          Width="600">
+    <Grid Width="600">
         <Grid x:Name="Print">
             <Grid Background="#EBECF0"
                   RenderTransformOrigin="0.5,0.5"
-                  Margin="61,-485,-61,480">
+                  Margin="61,-546,-61,541">
                 <Grid.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
                         <SkewTransform />
-                        <RotateTransform Angle="-98.387" />
+                        <RotateTransform Angle="-98.292" />
                         <TranslateTransform />
                     </TransformGroup>
                 </Grid.RenderTransform>
             </Grid>
             <Grid Background="#67AEE1"
                   RenderTransformOrigin="0.5,0.5"
-                  Margin="-476,-201,260,201">
+                  Margin="-478,-267,262,267">
                 <Grid.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
                         <SkewTransform />
-                        <RotateTransform Angle="-68.466" />
+                        <RotateTransform Angle="-64.043" />
                         <TranslateTransform />
                     </TransformGroup>
                 </Grid.RenderTransform>
@@ -44,19 +42,19 @@
             <Grid Background="#032A3F"
                   Height="200"
                   RenderTransformOrigin="0.5,0.5"
-                  Margin="-339,96,227,234">
+                  Margin="-344,21,232,309">
                 <Grid.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
                         <SkewTransform />
-                        <RotateTransform Angle="-76.347" />
+                        <RotateTransform Angle="-71.873" />
                         <TranslateTransform />
                     </TransformGroup>
                 </Grid.RenderTransform>
             </Grid>
 
             <Grid Height="150"
-              VerticalAlignment="Top">
+                  VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="11*" />
                     <ColumnDefinition Width="14*" />
@@ -84,7 +82,7 @@
                         <TextBlock Text="THẺ ĐỘC GIẢ"
                                    Foreground="#0266FD"
                                    FontSize="35"
-                                   Margin="0 0 0 0"
+                                   Margin="0 0 20 0"
                                    HorizontalAlignment="Right"
                                    FontWeight="Bold" />
                     </StackPanel>
@@ -102,17 +100,17 @@
                     <StackPanel.Resources>
                         <Style TargetType="TextBlock">
                             <Setter Property="Margin"
-                                    Value="0 5 0 0"/>
+                                    Value="0 5 0 0" />
                         </Style>
                     </StackPanel.Resources>
                     <TextBlock Text="Mã thẻ:"
                                FontSize="24"
                                Margin="0 0 0 5"
-                               FontWeight="Bold" 
-                               Foreground="#0266FD"/>
+                               FontWeight="Bold"
+                               Foreground="#0266FD" />
                     <TextBlock Text="Họ tên:"
                                FontSize="18" />
-                    <TextBlock Text="Giới tính:"  
+                    <TextBlock Text="Giới tính:"
                                FontSize="18" />
                     <TextBlock Text="Ngày sinh:"
                                FontSize="18" />
@@ -121,42 +119,66 @@
                     <TextBlock Text="Email:"
                                FontSize="18" />
                     <TextBlock Text="Ngày tạo:"
-                           FontSize="18" />
+                               FontSize="18" />
                     <TextBlock Text="Ngày hết hạn:"
                                FontSize="18" />
                 </StackPanel>
 
                 <StackPanel Grid.Column="1"
-                            Margin="80 0 0 0">
+                            Margin="0 0 0 0">
                     <StackPanel.Resources>
                         <Style TargetType="TextBlock">
                             <Setter Property="Margin"
-                                    Value="0 5 0 0"/>
+                                    Value="0 5 0 0" />
                         </Style>
                     </StackPanel.Resources>
                     <TextBlock FontSize="24"
                                Margin="0 0 0 5"
-                               FontWeight="Bold" 
+                               FontWeight="Bold"
                                Foreground="#0266FD"
-                               x:Name="id"/>
+                               x:Name="id" />
                     <TextBlock FontSize="18"
                                FontWeight="Bold"
-                               x:Name="name"/>
-                    <TextBlock FontSize="18"                                                                                       
-                               x:Name="gender"/>
+                               x:Name="name" />
                     <TextBlock FontSize="18"
-                               x:Name="birthdate"/>
+                               x:Name="gender" />
                     <TextBlock FontSize="18"
-                               x:Name="address"/>
+                               x:Name="birthdate" />
                     <TextBlock FontSize="18"
-                               x:Name="email"/>
+                               x:Name="address" />
                     <TextBlock FontSize="18"
-                               x:Name="createdate"/>
+                               x:Name="email" />
                     <TextBlock FontSize="18"
-                               x:Name="expirydate"/>
+                               x:Name="createdate" />
+                    <TextBlock FontSize="18"
+                               x:Name="expirydate" />
                 </StackPanel>
             </Grid>
         </Grid>
+
+        <Button VerticalAlignment="Bottom"
+                Width="150"
+                Height="45"
+                materialDesign:ButtonAssist.CornerRadius="8"
+                Background="White"
+                Content="Huỷ"
+                Click="Button_Click"
+                Foreground="#0266FD"
+                FontWeight="Bold"
+                FontSize="16"
+                HorizontalAlignment="Left"
+                Margin="40,0,0,10" />
+        <Button VerticalAlignment="Bottom"
+                Width="150"
+                Height="45"
+                materialDesign:ButtonAssist.CornerRadius="8"
+                Background="#0266FD"
+                Content="In thẻ"
+                FontWeight="Bold"
+                FontSize="16"
+                Click="Button_Click_1"
+                HorizontalAlignment="Right"
+                Margin="0,0,40,10" />
 
     </Grid>
 </Window>
