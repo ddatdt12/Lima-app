@@ -12,7 +12,6 @@
         ResizeMode="NoResize"
         FontFamily="{StaticResource NunitoSans_Regular}"
         DataContext="{StaticResource ReaderCardVM}">
-
     <Grid Width="600">
         <Grid x:Name="Print">
             <Grid Background="#EBECF0"
@@ -157,6 +156,7 @@
         </Grid>
 
         <Button VerticalAlignment="Bottom"
+                x:Name="cancel"
                 Width="150"
                 Height="45"
                 materialDesign:ButtonAssist.CornerRadius="8"
@@ -169,6 +169,7 @@
                 HorizontalAlignment="Left"
                 Margin="40,0,0,10" />
         <Button VerticalAlignment="Bottom"
+                x:Name="print"
                 Width="150"
                 Height="45"
                 materialDesign:ButtonAssist.CornerRadius="8"

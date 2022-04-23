@@ -44,7 +44,8 @@
                            FontWeight="ExtraBold"
                            HorizontalAlignment="Left" />
                 <TextBox Text="{Binding tempReaderType, Mode=TwoWay}"
-                         materialDesign:HintAssist.Hint="Nhập tên loại độc giả">
+                         materialDesign:HintAssist.Hint="Nhập tên loại độc giả"
+                         x:Name="ReaderTypeName">
                     <TextBox.Style>
                         <Style TargetType="TextBox"
                                BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">

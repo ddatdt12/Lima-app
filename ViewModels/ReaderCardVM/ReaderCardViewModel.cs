@@ -151,7 +151,7 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
                 {
                     if (string.IsNullOrEmpty(tempReaderType))
                     {
-                        MessageBox.Show("Cảnh báo", "Vui lòng chọn loại độc giả bạn muốn thay đổi hoặc thêm loại độc giả mới", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show("Vui lòng chọn loại độc giả bạn muốn thay đổi hoặc thêm loại độc giả mới","Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return;
                     }
                     else
