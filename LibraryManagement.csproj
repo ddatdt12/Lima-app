@@ -234,6 +234,7 @@
     <Compile Include="Views\Converter\ChangeIconConverter.cs" />
     <Compile Include="Views\Converter\ListToStringConverter.cs" />
     <Compile Include="Views\Converter\PermissionConverter.cs" />
+    <Compile Include="Views\Converter\VnFormatConverter.cs" />
     <Compile Include="Views\Genre_AuthorManagement\AddAuthorWindow.xaml.cs">
       <DependentUpon>AddAuthorWindow.xaml</DependentUpon>
     </Compile>

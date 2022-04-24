@@ -561,7 +561,7 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                 total += item.unitTotal;
             }
 
-            w.totalPrice.Text = total.ToString();
+            w.totalPrice.Text = Utils.Helper.FormatVNMoney(total);
             w.ShowDialog();
         }
         public void CalculateTotal(ImportReceiptDetailDTO item)

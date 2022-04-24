@@ -21,6 +21,7 @@
     <Window.Resources>
         <cvt:BookStatusConverter x:Key="BookStatusConverter" />
         <cvt:PermissionConverter x:Key="PermissionConverter" />
+        <cvt:VnFormatConverter x:Key="VnFormatConverter" />
     </Window.Resources>
 
     <Border Margin="10">
@@ -372,7 +373,7 @@
                                        FontSize="20"
                                        Foreground="#0266FD"
                                        FontWeight="Bold" />
-                            <TextBlock Text="{Binding SelectedBaseBookDetail.price}"
+                            <TextBlock Text="{Binding SelectedBaseBookDetail.price,Converter={StaticResource VnFormatConverter}}"
                                        FontSize="18"
                                        Margin="20,0,0,0"
                                        VerticalAlignment="Bottom" />

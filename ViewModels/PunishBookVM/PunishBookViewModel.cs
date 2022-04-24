@@ -40,15 +40,15 @@ namespace LibraryManagement.ViewModels.PunishBookVM
             set { _ReaderName = value; OnPropertyChanged(); }
         }
 
-        private Nullable<decimal> _TotalDept;
-        public Nullable<decimal> TotalDept
+        private int _TotalDept;
+        public int TotalDept
         {
             get { return _TotalDept; }
             set { _TotalDept = value; OnPropertyChanged(); }
         }
 
-        private Nullable<decimal> _TotalPaid;
-        public Nullable<decimal> TotalPaid
+        private int _TotalPaid;
+        public int TotalPaid
         {
             get { return _TotalPaid; }
             set
@@ -63,8 +63,8 @@ namespace LibraryManagement.ViewModels.PunishBookVM
             }
         }
 
-        private Nullable<decimal> _TotalLeft;
-        public Nullable<decimal> TotalLeft
+        private int _TotalLeft;
+        public int TotalLeft
         {
             get { return _TotalLeft; }
             set { _TotalLeft = value; OnPropertyChanged(); }
@@ -141,7 +141,7 @@ namespace LibraryManagement.ViewModels.PunishBookVM
                 ReaderName = readerCard.name;
                 TotalDept = readerCard.totalFine;
                 TotalLeft = 0;
-                TotalPaid = null;
+                TotalPaid = 0;
                 ExpiredBookList.Clear();
                 CanPaidFine = true;
             }
@@ -222,9 +222,9 @@ namespace LibraryManagement.ViewModels.PunishBookVM
         public void ClearData()
         {
             ReaderName = null;
-            TotalDept = null;
-            TotalPaid = null;
-            TotalLeft = null;
+            TotalDept = 0;
+            TotalPaid = 0;
+            TotalLeft = 0;
             ExpiredBookTotal = 0;
             ExpiredBookList.Clear();
 
@@ -241,31 +241,31 @@ namespace LibraryManagement.ViewModels.PunishBookVM
             document.DocumentPaginator.PageSize = new Size(600, 420);
 
 
-            
-                //create page
-                FixedPage page = new FixedPage();
-                page.Width = document.DocumentPaginator.PageSize.Width;
-                page.Height = document.DocumentPaginator.PageSize.Height;
 
-                PrintWindow w = new PrintWindow();
-                w.punishCard.Text = fineReceipt.id;
-                w.date.Text = DateTime.Now.ToString("dd/MM/yyyy");
-                w.name.Text = ReaderName;
-                w.totalDept.Text = TotalDept.ToString();
-                w.paid.Text = TotalPaid.ToString();
-                w.remain.Text = TotalLeft.ToString();
+            //create page
+            FixedPage page = new FixedPage();
+            page.Width = document.DocumentPaginator.PageSize.Width;
+            page.Height = document.DocumentPaginator.PageSize.Height;
 
-                //remove element from tree
-                Grid parent = w.Print.Parent as Grid;
-                Grid child = w.Print as Grid;
-                parent.Children.Remove(w.Print);
-                page.Children.Add(child);
+            PrintWindow w = new PrintWindow();
+            w.punishCard.Text = fineReceipt.id;
+            w.date.Text = DateTime.Now.ToString("dd/MM/yyyy");
+            w.name.Text = ReaderName;
+            w.totalDept.Text = Utils.Helper.FormatVNMoney((decimal)TotalDept);
+            w.paid.Text = Utils.Helper.FormatVNMoney((decimal)TotalPaid);
+            w.remain.Text = Utils.Helper.FormatVNMoney((decimal)TotalLeft);
 
-                // add the page to the document
-                PageContent page1Content = new PageContent();
-                ((IAddChild)page1Content).AddChild(page);
-                document.Pages.Add(page1Content);
-            
+            //remove element from tree
+            Grid parent = w.Print.Parent as Grid;
+            Grid child = w.Print as Grid;
+            parent.Children.Remove(w.Print);
+            page.Children.Add(child);
+
+            // add the page to the document
+            PageContent page1Content = new PageContent();
+            ((IAddChild)page1Content).AddChild(page);
+            document.Pages.Add(page1Content);
+
 
             // and print
             pd.PrintDocument(document.DocumentPaginator, "Return bill");

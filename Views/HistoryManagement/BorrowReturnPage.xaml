@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:LibraryManagement.Views.HistoryManagement"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:cvt="clr-namespace:LibraryManagement.Views.Converter"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d"
       Width="1088"
@@ -16,6 +17,10 @@
             <i:InvokeCommandAction Command="{Binding BorrowReturnPageLoadedCM}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
+
+    <Page.Resources>
+        <cvt:VnFormatConverter x:Key="VnFormatConverter" />
+    </Page.Resources>
 
     <Grid Background="White">
         <StackPanel>
@@ -229,7 +234,7 @@
                             <GridViewColumn Header="Tiền phạt">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding returnCard.fine}"
+                                        <TextBlock Text="{Binding returnCard.fine,Converter={StaticResource VnFormatConverter}}"
                                                    FontSize="20"
                                                    Margin="15,0,0,0" />
                                     </DataTemplate>

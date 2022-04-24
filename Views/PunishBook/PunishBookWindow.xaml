@@ -6,6 +6,7 @@
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:cvt="clr-namespace:LibraryManagement.Views.Converter"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -19,7 +20,10 @@
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         x:Name="punishBookWindow">
-
+    <Window.Resources>
+        <cvt:VnFormatConverter x:Key="VnFormatConverter" />
+    </Window.Resources>
+    
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding FirstLoadCM}" />
@@ -100,7 +104,7 @@
                            VerticalAlignment="Center"
                            TextAlignment="Right"
                            HorizontalAlignment="Right"
-                           Text="{Binding TotalDept}"
+                           Text="{Binding TotalDept,Converter={StaticResource VnFormatConverter}}"
                            FontSize="18"
                            FontWeight="Regular"
                            FontFamily="{StaticResource NunitoSans_Regular}"
@@ -146,7 +150,7 @@
                            VerticalAlignment="Center"
                            FontWeight="Regular"
                            HorizontalAlignment="Right"
-                           Text="{Binding TotalLeft,NotifyOnTargetUpdated=True}"
+                           Text="{Binding TotalLeft,NotifyOnTargetUpdated=True,Converter={StaticResource VnFormatConverter}}"
                            TargetUpdated="TextBlock_TargetUpdated"
                            FontSize="18"
                            FontFamily="{StaticResource NunitoSans_Regular}"

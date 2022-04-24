@@ -6,6 +6,7 @@
       mc:Ignorable="d"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:cvt="clr-namespace:LibraryManagement.Views.Converter"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
       TextElement.FontWeight="Regular"
       TextElement.FontSize="13"
@@ -22,6 +23,10 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
+    <Page.Resources>
+        <cvt:VnFormatConverter x:Key="VnFormatConverter" />
+    </Page.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="7*" />
@@ -139,7 +144,7 @@
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock FontSize="18"
-                                                               Text="{Binding Fine}"
+                                                               Text="{Binding Fine,Converter={StaticResource VnFormatConverter}}"
                                                                Foreground="#000000"
                                                                TextAlignment="Center"
                                                                TextTrimming="CharacterEllipsis"
@@ -370,7 +375,7 @@
                                    TextAlignment="Right"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Right"
-                                   Text="{Binding TotalDept}"
+                                   Text="{Binding TotalDept,Converter={StaticResource VnFormatConverter}}"
                                    FontSize="18"
                                    Foreground="#5C5959" />
                     </Grid>
@@ -385,7 +390,7 @@
                                    TextAlignment="Right"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Right"
-                                   Text="{Binding TotalPunish}"
+                                   Text="{Binding TotalPunish,Converter={StaticResource VnFormatConverter}}"
                                    FontSize="18"
                                    Foreground="#5C5959" />
                     </Grid>
