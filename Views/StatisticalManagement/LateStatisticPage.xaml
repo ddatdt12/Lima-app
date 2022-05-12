@@ -69,11 +69,16 @@
                             </Button.Content>
                         </Button>
                     </StackPanel>
+                    <Label Content="Danh sách thống kê sách trễ hạn"
+                           Foreground="#0266FD"
+                           FontWeight="Bold"
+                           Margin="20,20,0,0"
+                           FontSize="20" />
                     <Border CornerRadius="4"
-                            Margin="20"
+                            Margin="20,0,20,20"
                             BorderThickness="1"
                             BorderBrush="#BFBABA">
-                        <ListView Height="590"
+                        <ListView Height="550"
                                   ItemsSource="{Binding StatisticLateList}">
                             <ListView.View>
                                 <GridView>

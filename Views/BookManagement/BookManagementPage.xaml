@@ -43,9 +43,26 @@
                 <StackPanel Height="675">
 
                     <StackPanel Orientation="Horizontal"
-                                Margin="20,20,0,0">
+                                Margin="0,20,0,0">
 
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Margin="20,0,0,0" Orientation="Horizontal">
+                            <Label Content="Tìm theo: "
+                                   FontSize="20"
+                                   Padding="0,10,0,0"/>
+                            <ComboBox FontSize="18"
+                                      SelectedIndex="0"
+                                      Foreground="#5C5959"
+                                      Name="FilterBox"
+                                      Padding="0,10,0,0"
+                                      BorderThickness="0,0,0,1"
+                                      BorderBrush="#0266FD">
+                                <ComboBoxItem>Mã sách</ComboBoxItem>
+                                <ComboBoxItem>Tên sách</ComboBoxItem>
+                                <ComboBoxItem>Tác giả</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="50,0,0,0">
 
                             <materialDesign:PackIcon Kind="Search"
                                                      Width="25"
@@ -66,28 +83,11 @@
                             </TextBox>
 
                         </StackPanel>
-
-                        <StackPanel Margin="20,0,0,0">
-                            <Label Content="Tìm theo"
-                                   Height="16"
-                                   Padding="0" />
-                            <ComboBox FontSize="18"
-                                      SelectedIndex="0"
-                                      Foreground="#5C5959"
-                                      Name="FilterBox"
-                                      BorderThickness="0,0,0,1"
-                                      BorderBrush="#0266FD">
-                                <ComboBoxItem>Mã sách</ComboBoxItem>
-                                <ComboBoxItem>Tên sách</ComboBoxItem>
-                                <ComboBoxItem>Thể loại</ComboBoxItem>
-                                <ComboBoxItem>Tác giả</ComboBoxItem>
-                            </ComboBox>
-                        </StackPanel>
-
+                        
                         <Border Width="145"
                                 Height="33"
                                 Padding="5,0,5,0"
-                                Margin="245,0,0,0"
+                                Margin="290,0,0,0"
                                 BorderThickness="1"
                                 BorderBrush="#BFBABA"
                                 CornerRadius="2">
@@ -125,14 +125,16 @@
                         </Border>-->
 
                     </StackPanel>
-
+                    <Label Content="Danh sách đầu sách"
+                           Foreground="#0266FD"
+                           FontWeight="Bold"
+                           Margin="20,30,0,0"
+                           FontSize="20" />
                     <Border BorderThickness="1"
                             BorderBrush="#BFBABA"
                             CornerRadius="2"
                             Width="1032"
-                            Margin="0,30,0,0"
                             Height="550">
-
                         <ListView Width="1032"
                                   Height="550"
                                   ItemsSource="{Binding BaseBookList}"
@@ -141,7 +143,7 @@
                             <ListView.View>
                                 <GridView>
 
-                                    <GridViewColumn Header="Mã sách">
+                                    <GridViewColumn Header="Mã đầu sách">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding id}"

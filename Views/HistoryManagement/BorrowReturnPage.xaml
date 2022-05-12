@@ -185,14 +185,20 @@
                     </Border>
                 </StackPanel>
             </Grid>
+
+            <Label Content="Danh sách phiếu mượn trả"
+                   Foreground="#0266FD"
+                   FontWeight="Bold"
+                   Margin="10,20,0,0"
+                   FontSize="20" />
             <Border CornerRadius="4"
-                    Margin="20"
+                    Margin="20,0,20,20"
                     BorderThickness="1"
                     BorderBrush="#BFBABA">
                 <ListView ItemsSource="{Binding BorrowReturnList}"
                           SelectedItem="{Binding SelectedBorrow}"
                           x:Name="lv"
-                          Height="540">
+                          Height="510">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Mã phiếu">

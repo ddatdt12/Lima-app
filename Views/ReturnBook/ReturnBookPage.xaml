@@ -105,7 +105,7 @@
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        <GridViewColumn Header="Mã sách">
+                                        <GridViewColumn Header="Mã cuốn sách">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock FontSize="18"

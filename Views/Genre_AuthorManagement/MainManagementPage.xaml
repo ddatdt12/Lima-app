@@ -39,7 +39,7 @@
             <materialDesign:Card Width="530">
                 <StackPanel Margin="10">
 
-                    <TextBlock Text="Quản lý thể loại"
+                    <TextBlock Text="Danh sách thể loại"
                                FontSize="20"
                                FontWeight="Bold"
                                Foreground="#1B48BA" />
@@ -155,7 +155,7 @@
                                  Margin="25,0,0,0">
                 <StackPanel Margin="10">
 
-                    <TextBlock Text="Quản lý tác giả"
+                    <TextBlock Text="Danh sách tác giả"
                                FontSize="20"
                                FontWeight="Bold"
                                Foreground="#1B48BA" />

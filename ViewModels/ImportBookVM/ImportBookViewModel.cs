@@ -114,13 +114,6 @@ namespace LibraryManagement.ViewModel.ImportBookVM
             set { unitprice = value; OnPropertyChanged(); }
         }
 
-        private int? price;
-        public int? Price
-        {
-            get { return price; }
-            set { price = value; OnPropertyChanged(); }
-        }
-
         private int? quantity;
         public int? Quantity
         {
@@ -322,7 +315,6 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                 BaseAuthor = null;
                 SelectedBaseBook = null;
                 UnitPrice = null;
-                Price = null;
                 Quantity = null;
                 Publisher = null;
                 YearPublish = DateTime.Now.Year;
@@ -341,7 +333,6 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                 BaseAuthor = null;
                 SelectedBaseBook = null;
                 UnitPrice = null;
-                Price = null;
                 Quantity = null;
                 Publisher = null;
                 YearPublish = DateTime.Now.Year;
@@ -395,6 +386,14 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                     MessageBox.Show("Danh sách nhập trống!");
                     return;
                 }
+                foreach(var item in importBookList)
+                {
+                    if (item.quantity ==0 )
+                    {
+                        MessageBox.Show("Không được phép nhập số lượng 0!");
+                        return;
+                    }    
+                }    
                 if (string.IsNullOrEmpty(Supplier))
                 {
                     MessageBox.Show("Vui lòng nhập thông tin nhà cung cấp");
@@ -532,7 +531,6 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                 !string.IsNullOrEmpty(Publisher) &&
                 !(YearPublish is null) &&
                 !(UnitPrice is null) &&
-                !(Price is null) &&
                 !(Quantity is null);
         }
         public void OpenPrintImportReiceipt(ImportReceiptDTO rc)
