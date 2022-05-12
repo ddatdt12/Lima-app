@@ -56,15 +56,6 @@ namespace LibraryManagement.Services
         {
             try
             {
-
-                var S = (from s in DataProvider.Ins.DB.Books
-                         where !s.isDeleted
-                         select s).ToList();
-                foreach (var item in S)
-                {
-                    var baseBook = item.BaseBook;
-                    var authors = item.BaseBook.Authors;
-                }
                 List<BookDTO> bookList = (from s in DataProvider.Ins.DB.Books
                                           where !s.isDeleted
                                           select new BookDTO
