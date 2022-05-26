@@ -218,6 +218,33 @@
                 </Grid>
             </Grid>
 
+            <Button VerticalAlignment="Bottom"
+                    x:Name="cancel"
+                    Width="150"
+                    Height="45"
+                    materialDesign:ButtonAssist.CornerRadius="8"
+                    Background="White"
+                    Content="Huỷ"
+                    Foreground="#0266FD"
+                    FontWeight="Bold"
+                    FontSize="16"
+                    Click="cancel_Click"
+                    HorizontalAlignment="Left"
+                    Margin="40,0,0,10" />
+
+            <Button VerticalAlignment="Bottom"
+                    x:Name="print"
+                    Width="150"
+                    Height="45"
+                    materialDesign:ButtonAssist.CornerRadius="8"
+                    Background="#0266FD"
+                    Content="In thẻ"
+                    FontWeight="Bold"
+                    FontSize="16"
+                    Command="{Binding PrintCM}"
+                    HorizontalAlignment="Right"
+                    Margin="0,0,40,10" />
+
         </Grid>
     </Grid>
 </Window>

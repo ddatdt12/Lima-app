@@ -207,6 +207,7 @@
     <Compile Include="ViewModels\ImportBookVM\ImportBookViewModel.cs" />
     <Compile Include="ViewModels\LoginVM\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\PunishBookVM\PrintPunishBookViewModel.cs" />
     <Compile Include="ViewModels\PunishBookVM\PunishBookViewModel.cs" />
     <Compile Include="ViewModels\ReaderCardVM\AddReaderCardViewModel.cs" />
     <Compile Include="ViewModels\ReaderCardVM\AddReaderTypeViewModel.cs" />

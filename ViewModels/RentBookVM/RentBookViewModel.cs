@@ -224,7 +224,6 @@ namespace LibraryManagement.ViewModels.RentBookVM
         public List<Book> CurrentPrint { get; set; }
         List<BookDTO> listBookDTO { get; set; }
 
-
         public RentBookViewModel()
         {
             listBookDTO = new List<BookDTO>();
@@ -475,8 +474,6 @@ namespace LibraryManagement.ViewModels.RentBookVM
             return listBook;
         }
 
-        
-
         public void ClearData()
         {
             listBookDTO.Clear();
@@ -515,8 +512,6 @@ namespace LibraryManagement.ViewModels.RentBookVM
             //create document
             FixedDocument document = new FixedDocument();
             document.DocumentPaginator.PageSize = new Size(600, 350);
-
-
 
             foreach (var item in rl)
             {
