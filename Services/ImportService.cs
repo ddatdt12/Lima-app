@@ -183,7 +183,7 @@ namespace LibraryManagement.Services
             }
             catch (Exception e)
             {
-                var statusCode = e.Data.Keys.Cast<int>().Single();
+                var statusCode = e.Data.Keys.Cast<int>().SingleOrDefault();
 
                 if (statusCode == 400)
                 {

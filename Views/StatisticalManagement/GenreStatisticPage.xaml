@@ -96,12 +96,17 @@
                                    HorizontalAlignment="Right"
                                    Foreground="#5C5959" />
                     </DockPanel>
+                    <Label Content="Danh sách thống kê sách theo thể loại"
+                           Foreground="#0266FD"
+                           FontWeight="Bold"
+                           Margin="20,20,0,0"
+                           FontSize="20" />
                     <Border CornerRadius="4"
-                            Margin="20"
+                            Margin="20,0,20,20"
                             BorderThickness="1"
                             BorderBrush="#BFBABA">
                         <ListView ItemsSource="{Binding StatisticGenreList}"
-                                  Height="590">
+                                  Height="550">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="Thể loại"
