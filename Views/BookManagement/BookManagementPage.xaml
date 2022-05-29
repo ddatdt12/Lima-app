@@ -45,10 +45,10 @@
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,20,0,0">
 
-                        <StackPanel Margin="20,0,0,0" Orientation="Horizontal">
+                        <StackPanel Margin="20,0,0,0">
                             <Label Content="Tìm theo: "
                                    FontSize="20"
-                                   Padding="0,10,0,0"/>
+                                   Padding="0,10,0,0" />
                             <ComboBox FontSize="18"
                                       SelectedIndex="0"
                                       Foreground="#5C5959"
@@ -61,8 +61,9 @@
                                 <ComboBoxItem>Tác giả</ComboBoxItem>
                             </ComboBox>
                         </StackPanel>
-                        
-                        <StackPanel Orientation="Horizontal" Margin="50,0,0,0">
+
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="20,0,0,0">
 
                             <materialDesign:PackIcon Kind="Search"
                                                      Width="25"
@@ -83,14 +84,15 @@
                             </TextBox>
 
                         </StackPanel>
-                        
+
                         <Border Width="145"
                                 Height="33"
                                 Padding="5,0,5,0"
                                 Margin="290,0,0,0"
                                 BorderThickness="1"
                                 BorderBrush="#BFBABA"
-                                CornerRadius="2">
+                                CornerRadius="2"
+                                VerticalAlignment="Bottom">
                             <ComboBox BorderThickness="0"
                                       FontSize="18"
                                       materialDesign:HintAssist.Hint="Thể loại"

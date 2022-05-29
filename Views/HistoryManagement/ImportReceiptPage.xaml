@@ -27,7 +27,23 @@
         <StackPanel>
 
             <DockPanel Margin="30,25,0,0">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Margin="20,0,0,0">
+                    <Label Content="Tìm theo: "
+                           FontSize="20"
+                           Padding="0,10,0,0" />
+                    <ComboBox FontSize="18"
+                              SelectedIndex="0"
+                              Foreground="#5C5959"
+                              Name="FilterBox"
+                              BorderThickness="0,0,0,1"
+                              BorderBrush="#0266FD">
+                        <ComboBoxItem>Mã đơn</ComboBoxItem>
+                        <ComboBoxItem>Nhà cung cấp</ComboBoxItem>
+                        <ComboBoxItem>Nhân viên</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Margin="20,0,0,0">
 
                     <materialDesign:PackIcon Kind="Search"
                                              Width="25"
@@ -47,22 +63,6 @@
                              BorderThickness="0,0,0,1">
                     </TextBox>
 
-                </StackPanel>
-
-                <StackPanel Margin="20,0,0,0">
-                    <Label Content="Tìm theo"
-                           Height="16"
-                           Padding="0" />
-                    <ComboBox FontSize="18"
-                              SelectedIndex="0"
-                              Foreground="#5C5959"
-                              Name="FilterBox"
-                              BorderThickness="0,0,0,1"
-                              BorderBrush="#0266FD">
-                        <ComboBoxItem>Mã đơn</ComboBoxItem>
-                        <ComboBoxItem>Nhà cung cấp</ComboBoxItem>
-                        <ComboBoxItem>Nhân viên</ComboBoxItem>
-                    </ComboBox>
                 </StackPanel>
                 <Button Background="#37B634"
                         BorderBrush="Transparent"
@@ -111,7 +111,7 @@
                             <GridViewColumn Header="Ngày nhập">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding createdAt}"
+                                        <TextBlock Text="{Binding createdAt, StringFormat=dd/MM/yyyy HH:mm}"
                                                    FontSize="20"
                                                    Margin="15,0,0,0" />
                                     </DataTemplate>

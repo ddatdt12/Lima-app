@@ -177,6 +177,11 @@ namespace LibraryManagement.ViewModels.PunishBookVM
                         MessageBox.Show("Số tiền trả không hợp lệ!");
                         return;
                     }
+                    if (TotalPaid == 0)
+                    {
+                        MessageBox.Show("Số tiền trả không hợp lệ!");
+                        return;
+                    }
                     FineReceiptDTO fineReceipt = new FineReceiptDTO();
                     fineReceipt.amount = (int)TotalPaid;
                     fineReceipt.createdAt = DateTime.Now;

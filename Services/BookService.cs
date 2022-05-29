@@ -299,7 +299,7 @@ namespace LibraryManagement.Services
                     return (false, "Sách không tồn tại!");
                 }
 
-                if (bookInfo.status)
+                if (!bookInfo.status)
                 {
                     return (false, "Sách đang được mượn không thể xóa!");
                 }

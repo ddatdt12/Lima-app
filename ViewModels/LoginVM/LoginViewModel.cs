@@ -189,8 +189,6 @@ namespace LibraryManagement.ViewModels.LoginVM
                         if (user != null)
                         {
                             LoginWindow.Hide();
-                            if (user.type.Name == "ReaderCard") 
-                                user.type.Name = "Reader";
                             MainWindowViewModel.CurrentUser = user;
                             MainWindow wd = new MainWindow();
                             if (!user.role.roleDetaislList[10].isPermitted && !user.role.roleDetaislList[11].isPermitted && !user.role.roleDetaislList[12].isPermitted)

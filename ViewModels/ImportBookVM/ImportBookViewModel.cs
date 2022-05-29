@@ -330,7 +330,6 @@ namespace LibraryManagement.ViewModel.ImportBookVM
             {
                 ImportBookWindow.PreEnterBaseBook = p.Text;
                 Genre = null;
-                BaseAuthor = null;
                 SelectedBaseBook = null;
                 UnitPrice = null;
                 Quantity = null;
@@ -386,14 +385,14 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                     MessageBox.Show("Danh sách nhập trống!");
                     return;
                 }
-                foreach(var item in importBookList)
+                foreach (var item in importBookList)
                 {
-                    if (item.quantity ==0 )
+                    if (item.quantity == 0)
                     {
                         MessageBox.Show("Không được phép nhập số lượng 0!");
                         return;
-                    }    
-                }    
+                    }
+                }
                 if (string.IsNullOrEmpty(Supplier))
                 {
                     MessageBox.Show("Vui lòng nhập thông tin nhà cung cấp");
@@ -439,14 +438,15 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                 if (p.SelectedItem is null) return;
 
                 AuthorDTO at = (AuthorDTO)p.SelectedItem;
-                foreach (var item in BaseAuthor)
-                {
-                    if (item.id == at.id)
+                if (BaseAuthor != null)
+                    foreach (var item in BaseAuthor)
                     {
-                        p.SelectedItem = null;
-                        return;
+                        if (item.id == at.id)
+                        {
+                            p.SelectedItem = null;
+                            return;
+                        }
                     }
-                }
                 BaseAuthor.Add(at);
                 p.SelectedItem = null;
 
