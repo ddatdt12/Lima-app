@@ -136,9 +136,9 @@
                             BorderBrush="#BFBABA"
                             CornerRadius="2"
                             Width="1032"
-                            Height="550">
+                            Height="500">
                         <ListView Width="1032"
-                                  Height="550"
+                                  Height="500"
                                   ItemsSource="{Binding BaseBookList}"
                                   x:Name="listview"
                                   SelectedItem="{Binding SelectedItem}">

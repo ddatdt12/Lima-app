@@ -25,7 +25,7 @@
     <Grid Background="White">
         <StackPanel>
 
-            <Grid Margin="30,25,0,0">
+            <Grid Margin="30,15,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
@@ -182,11 +182,12 @@
             <Border CornerRadius="4"
                     Margin="20,0,20,20"
                     BorderThickness="1"
-                    BorderBrush="#BFBABA">
+                    BorderBrush="#BFBABA"
+                    Height="500">
                 <ListView ItemsSource="{Binding BorrowReturnList}"
                           SelectedItem="{Binding SelectedBorrow}"
                           x:Name="lv"
-                          Height="510">
+                          Height="500">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Mã phiếu">

@@ -136,11 +136,12 @@
                     <Border BorderThickness="1"
                             BorderBrush="#BFBABA"
                             CornerRadius="2"
-                            Width="1032">
+                            Width="1032"
+                            Height="500">
                         <ListView Name="lvStaff"
                                   ItemsSource="{Binding ListStaff}"
                                   SelectedItem="{Binding SelectedItem}"
-                                  Height="520">
+                                  Height="500">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="Mã nhân viên">

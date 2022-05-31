@@ -159,11 +159,12 @@
                     <Border BorderThickness="1"
                             BorderBrush="#BFBABA"
                             CornerRadius="2"
+                            Height="500"
                             Width="1032">
                         <ListView Name="lvReader"
                                   ItemsSource="{Binding ListReaderCard}"
                                   SelectedItem="{Binding SelectedItem}"
-                                  Height="520">
+                                  Height="500">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem"
                                        BasedOn="{StaticResource MaterialDesignGridViewItem}">
