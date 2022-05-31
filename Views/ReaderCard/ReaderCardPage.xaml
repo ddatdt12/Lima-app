@@ -15,6 +15,7 @@
 
     <Page.Resources>
         <cvt:PermissionConverter x:Key="PermissionConverter" />
+        <cvt:ChangeIconConverter x:Key="IconConverter" />
     </Page.Resources>
 
     <Grid>
@@ -137,7 +138,7 @@
                                     Command="{Binding OpenPrintReaderCardCM}"
                                     Style="{StaticResource MaterialDesignFlatAccentBgButton}"
                                     Visibility="{Binding ElementName=this, 
-                    Path=DataContext.CurrentUser.role.roleDetaislList[7].isPermitted, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[6].isPermitted, 
                     Converter={StaticResource PermissionConverter}}">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Printer"
@@ -243,21 +244,19 @@
                                     <GridViewColumn>
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Border Cursor="Hand"
-                                                        Visibility="{Binding ElementName=this, 
+                                                <materialDesign:PackIcon Kind="{Binding ElementName=lvReader, 
                     Path=DataContext.CurrentUser.role.roleDetaislList[7].isPermitted, 
-                    Converter={StaticResource PermissionConverter}}">
-                                                    <materialDesign:PackIcon Kind="LeadPencil"
-                                                                             Width="30"
-                                                                             Height="30"
-                                                                             Foreground="Green"
-                                                                             Cursor="Hand" />
+                    Converter={StaticResource IconConverter}}"
+                                                                         Width="30"
+                                                                         Height="30"
+                                                                         Foreground="Green"
+                                                                         Cursor="Hand">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonUp">
                                                             <i:InvokeCommandAction Command="{Binding ElementName=lvReader, Path=DataContext.OpenEditReaderCardCM}" />
                                                         </i:EventTrigger>
                                                     </i:Interaction.Triggers>
-                                                </Border>
+                                                </materialDesign:PackIcon>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>

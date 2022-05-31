@@ -496,6 +496,7 @@
                     <!---CAI DAT-->
                     <StackPanel  Width="280"
                                  Height="60"
+                                 x:Name="settingBtn"
                                  Orientation="Horizontal">
                         <StackPanel.Style>
                             <Style TargetType="StackPanel">

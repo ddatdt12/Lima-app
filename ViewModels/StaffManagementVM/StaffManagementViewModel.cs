@@ -81,6 +81,11 @@ namespace LibraryManagement.ViewModels.StaffManagementVM
             {
                 EditStaffWindow editStaffWindow = new EditStaffWindow();
                 LoadEditStaff(editStaffWindow);
+                if (!CurrentUser.role.roleDetaislList[9].isPermitted)
+                {
+                    editStaffWindow.saveBtn.Visibility = Visibility.Collapsed;
+                    editStaffWindow.Layer.Visibility = Visibility.Visible;
+                }
                 editStaffWindow.ShowDialog();
                 ResetData();
             });

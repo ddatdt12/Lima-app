@@ -27,6 +27,7 @@ namespace LibraryManagement.Views.Converter
         }
     }
 
+
     public class EmployeeRoleConverter : IValueConverter
     {
         // This converts the result object to the foreground.

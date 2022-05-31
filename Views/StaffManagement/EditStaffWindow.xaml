@@ -288,6 +288,7 @@
                         <Button Background="#0266FD"
                                 BorderBrush="#0266FD"
                                 Margin="32,0,32,0"
+                                x:Name="saveBtn"
                                 BorderThickness="1.5"
                                 Width="160"
                                 Height="51"
@@ -303,6 +304,12 @@
                     </StackPanel>
                 </Grid>
             </Grid>
+            <Grid Grid.ColumnSpan="2"
+                  Background="Red"
+                  Opacity="0"
+                  Margin="0,0,0,100"
+                  x:Name="Layer"
+                  Visibility="Collapsed" />
         </Grid>
     </Border>
 </Window>

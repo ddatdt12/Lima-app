@@ -15,6 +15,7 @@
       DataContext="{StaticResource StaffManagemntVM}">
     <Page.Resources>
         <cvt:PermissionConverter x:Key="PermissionConverter" />
+        <cvt:ChangeIconConverter x:Key="IconConverter" />
     </Page.Resources>
 
     <i:Interaction.Triggers>
@@ -45,9 +46,27 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Orientation="Horizontal"
-                                    Grid.Column="0">
+                                    Grid.Column="0"
+                                    Margin="30,0,0,0">
+                            <StackPanel>
+                                <Label Content="Tìm theo:"
+                                       FontSize="20"
+                                       Padding="0,10,0,0" />
+                                <ComboBox x:Name="FilterCbb"
+                                          Height="30"
+                                          Padding="0,8,0,0"
+                                          VerticalAlignment="Bottom"
+                                          FontSize="18"
+                                          SelectedIndex="0"
+                                          SelectedValuePath="Content">
+                                    <ComboBoxItem Content="Mã nhân viên" />
+                                    <ComboBoxItem Content="Tên nhân viên" />
+                                    <ComboBoxItem Content="Vai trò" />
+                                </ComboBox>
+                            </StackPanel>
                             <materialDesign:PackIcon Kind="Search"
                                                      Width="25"
+                                                     Margin="20,0,0,0"
                                                      Height="25"
                                                      VerticalAlignment="Bottom"
                                                      Foreground="#0266FD" />
@@ -61,27 +80,12 @@
                                      BorderBrush="#0266FD"
                                      Padding="0"
                                      BorderThickness="0,0,0,1" />
-                            <ComboBox x:Name="FilterCbb"
-                                      Height="30"
-                                      Width="120"
-                                      Padding="0,8,0,0"
-                                      VerticalAlignment="Bottom"
-                                      FontSize="16"
-                                      Margin="30,0,0,0"
-                                      SelectedIndex="0"
-                                      SelectedValuePath="Content">
-                                <ComboBoxItem Content="Mã nhân viên" />
-                                <ComboBoxItem Content="Tên nhân viên" />
-                                <ComboBoxItem Content="Vai trò" />
-                            </ComboBox>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal"
                                     Grid.Column="1"
-                                    HorizontalAlignment="Right"
-                                    Visibility="{Binding ElementName=this, 
-                    Path=DataContext.CurrentUser.role.roleDetaislList[9].isPermitted, 
-                    Converter={StaticResource PermissionConverter}}">
+                                    VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Right">
                             <Button Margin="0,5,0,0"
                                     Background="#0266FD"
                                     Foreground="White"
@@ -89,6 +93,9 @@
                                     Width="145"
                                     FontSize="16"
                                     FontWeight="Bold"
+                                    Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[9].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}"
                                     materialDesign:ButtonAssist.CornerRadius="8"
                                     Command="{Binding OpenAddStaffWindowCM}"
                                     Style="{StaticResource MaterialDesignFlatAccentBgButton}">
@@ -201,20 +208,18 @@
                                     <GridViewColumn>
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Border Cursor="Hand"
-                                                        Visibility="{Binding ElementName=this, 
+                                                <materialDesign:PackIcon Kind="{Binding ElementName=this, 
                     Path=DataContext.CurrentUser.role.roleDetaislList[9].isPermitted, 
-                    Converter={StaticResource PermissionConverter}}">
-                                                    <materialDesign:PackIcon Kind="LeadPencil"
-                                                                             Width="30"
-                                                                             Height="30"
-                                                                             Foreground="#258E23" />
+                    Converter={StaticResource IconConverter}}"
+                                                                         Width="30"
+                                                                         Height="30"
+                                                                         Foreground="#258E23">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonUp">
                                                             <i:InvokeCommandAction Command="{Binding ElementName=lvStaff, Path=DataContext.OpenEditStaffCM}" />
                                                         </i:EventTrigger>
                                                     </i:Interaction.Triggers>
-                                                </Border>
+                                                </materialDesign:PackIcon>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>

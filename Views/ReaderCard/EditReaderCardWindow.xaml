@@ -297,6 +297,7 @@
                             Style="{StaticResource MaterialDesignFlatAccentBgButton}"
                             Click="Button_Click" />
                     <Button Background="#0266FD"
+                            x:Name="buttonSave"
                             BorderBrush="#0266FD"
                             Margin="32,0,32,0"
                             BorderThickness="1.5"
@@ -313,6 +314,12 @@
                             Style="{StaticResource MaterialDesignFlatAccentBgButton}" />
                 </StackPanel>
             </Grid>
+            <Grid Grid.ColumnSpan="2"
+                  Margin="0,0,0,100"
+                  x:Name="Layer"
+                  Background="Red"
+                  Opacity="0"
+                  Visibility="Collapsed" />
         </Grid>
     </Border>
 </Window>

@@ -199,6 +199,10 @@ namespace LibraryManagement.ViewModels.LoginVM
                             {
                                 wd.bookTreeview.Visibility = Visibility.Collapsed;
                             }
+                            if (!user.role.roleDetaislList[15].isPermitted && !user.role.roleDetaislList[16].isPermitted)
+                            {
+                                wd.settingBtn.Visibility = Visibility.Collapsed;
+                            }
                             if (user.reader != null)
                             {
                                 wd.bookTreeview.Visibility = Visibility.Collapsed;

@@ -94,7 +94,7 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
                      }
                      else
                      {
-                         MessageBox.Show(message, "Lỗi", MessageBoxButton.OK,MessageBoxImage.Error);
+                         MessageBox.Show(message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                      }
                  }
                  else
@@ -151,7 +151,7 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
                 {
                     if (string.IsNullOrEmpty(tempReaderType))
                     {
-                        MessageBox.Show("Vui lòng chọn loại độc giả bạn muốn thay đổi hoặc thêm loại độc giả mới","Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show("Vui lòng chọn loại độc giả bạn muốn thay đổi hoặc thêm loại độc giả mới", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return;
                     }
                     else
@@ -168,7 +168,7 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
                         }
                         else
                         {
-                            MessageBox.Show(message, "Lỗi", MessageBoxButton.OK,MessageBoxImage.Error);
+                            MessageBox.Show(message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                             ResetDataAddReaderTypeWindow();
                             return;
                         }
@@ -189,6 +189,11 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             {
                 EditReaderCardWindow editReaderCardWindow = new EditReaderCardWindow();
                 LoadEditReaderCard(editReaderCardWindow);
+                if (!CurrentUser.role.roleDetaislList[7].isPermitted)
+                {
+                    editReaderCardWindow.Layer.Visibility = Visibility.Visible;
+                    editReaderCardWindow.buttonSave.Visibility = Visibility.Collapsed;
+                }
                 editReaderCardWindow.ShowDialog();
                 ResetData();
             });
@@ -234,7 +239,7 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
                     }
                     else
                     {
-                        MessageBox.Show(message, "Lỗi", MessageBoxButton.OK,MessageBoxImage.Error);
+                        MessageBox.Show(message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 else
