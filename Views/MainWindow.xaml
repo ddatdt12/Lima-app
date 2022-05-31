@@ -56,7 +56,7 @@
                                HorizontalAlignment="Center"
                                LineHeight="22"
                                FontFamily="{StaticResource PatrickHand_Regular}" />
-                    <TextBlock Text="{Binding ElementName=this,Path=DataContext.CurrentUser.type.Name}"
+                    <TextBlock Text="{Binding ElementName=this,Path=DataContext.CurrentUser.role.name}"
                                Foreground="#0B69F5"
                                HorizontalAlignment="Center"
                                FontSize="14"
@@ -177,16 +177,34 @@
                                     </TextBlock>
                                 </TreeViewItem.Header>
                             </TreeViewItem>
-
-                        </TreeViewItem>
-                    </TreeView>
-                    <!---THE LOAI - TAC GIA-->
-                    <StackPanel Width="280"
-                                Height="60"
-                                Orientation="Horizontal"
-                                Visibility="{Binding ElementName=this, 
+                            <!---THE LOAI - TAC GIA-->
+                            <TreeViewItem  Margin="30 0 0 0"
+                                           Visibility="{Binding ElementName=this, 
                     Path=DataContext.CurrentUser.role.roleDetaislList[4].isPermitted, 
                     Converter={StaticResource PermissionConverter}}">
+                                <TreeViewItem.Header>
+                                    <TextBlock Text="Thể loại - Tác giả"
+                                               Foreground="#1B48BA"
+                                               HorizontalAlignment="Left"
+                                               VerticalAlignment="Center"
+                                               FontSize="20"
+                                               FontWeight="Bold">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                <i:InvokeCommandAction Command="{Binding OpenGenreAuthorManagementPage}"
+                                                                       CommandParameter="{Binding ElementName=mainFrame}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBlock>
+                                </TreeViewItem.Header>
+                            </TreeViewItem>
+                        </TreeViewItem>
+                    </TreeView>
+                    <StackPanel x:Name="BookManageBtnreader"
+                                Width="280"
+                                Height="60"
+                                Orientation="Horizontal"
+                                Visibility="Collapsed">
                         <StackPanel.Style>
                             <Style TargetType="StackPanel">
                                 <Style.Triggers>
@@ -205,7 +223,7 @@
                                                  Margin="37 0 10 0"
                                                  VerticalAlignment="Center"
                                                  Foreground="#1B48BA" />
-                        <TextBlock Text="Thể loại - Tác giả"
+                        <TextBlock Text="Tra cứu sách"
                                    Foreground="#1B48BA"
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"
@@ -213,11 +231,12 @@
                                    FontWeight="Bold" />
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding OpenGenreAuthorManagementPage}"
+                                <i:InvokeCommandAction Command="{Binding OpenBookManagementPageCM}"
                                                        CommandParameter="{Binding ElementName=mainFrame}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </StackPanel>
+
                     <!---DOC GIA-->
                     <StackPanel Width="280"
                                 Height="60"
@@ -308,7 +327,7 @@
                                                              Height="30"
                                                              Margin="0 0 10 0"
                                                              VerticalAlignment="Center" />
-                                    <TextBlock Text="Quản lý phiếu"
+                                    <TextBlock Text="Lập phiếu"
                                                Foreground="#1B48BA"
                                                FontSize="20"
                                                FontWeight="Bold" />

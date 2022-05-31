@@ -40,7 +40,24 @@
 
                         <StackPanel Orientation="Horizontal"
                                     Grid.Column="0">
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Margin="20,0,0,0">
+                                <Label Content="Tìm theo: "
+                                       FontSize="20"
+                                       Padding="0,10,0,0" />
+                                <ComboBox x:Name="FilterCbb"
+                                          Height="30"
+                                          Padding="0,8,0,0"
+                                          VerticalAlignment="Bottom"
+                                          FontSize="16"
+                                          SelectedIndex="0"
+                                          SelectedValuePath="Content">
+                                    <ComboBoxItem Content="Mã độc giả" />
+                                    <ComboBoxItem Content="Tên độc giả" />
+                                    <ComboBoxItem Content="Loại độc giả" />
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="20,0,0,0">
                                 <materialDesign:PackIcon Kind="Search"
                                                          Width="25"
                                                          Height="25"
@@ -57,21 +74,10 @@
                                          Padding="0"
                                          BorderThickness="0,0,0,1" />
                             </StackPanel>
-                            <ComboBox x:Name="FilterCbb"
-                                      Height="30"
-                                      Padding="0,8,0,0"
-                                      VerticalAlignment="Bottom"
-                                      FontSize="16"
-                                      Margin="20,0,0,0"
-                                      SelectedIndex="0"
-                                      SelectedValuePath="Content">
-                                <ComboBoxItem Content="Mã độc giả" />
-                                <ComboBoxItem Content="Tên độc giả" />
-                                <ComboBoxItem Content="Loại độc giả" />
-                            </ComboBox>
                         </StackPanel>
 
                         <StackPanel Grid.Column="1"
+                                    VerticalAlignment="Bottom"
                                     Orientation="Horizontal"
                                     HorizontalAlignment="Right">
                             <Button Margin="30,5,0,0"
@@ -144,18 +150,19 @@
                         </StackPanel>
 
                     </Grid>
-
+                    <Label Content="Danh sách độc giả"
+                           Foreground="#0266FD"
+                           FontWeight="Bold"
+                           Margin="10,30,0,0"
+                           FontSize="20" />
                     <Border BorderThickness="1"
                             BorderBrush="#BFBABA"
                             CornerRadius="2"
-                            Width="1032"
-                            Margin="0,30,0,0"
-                            Height="550">
+                            Width="1032">
                         <ListView Name="lvReader"
                                   ItemsSource="{Binding ListReaderCard}"
                                   SelectedItem="{Binding SelectedItem}"
-                                  Width="1032"
-                                  Height="550">
+                                  Height="520">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem"
                                        BasedOn="{StaticResource MaterialDesignGridViewItem}">

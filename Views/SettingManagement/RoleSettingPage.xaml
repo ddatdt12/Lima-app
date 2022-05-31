@@ -113,7 +113,7 @@
         <StackPanel Grid.Column="1"
                     Margin="20,25,20,0">
 
-            <TextBlock Text="Quyền truy cập"
+            <TextBlock Text="Danh sách quyền truy cập"
                        Foreground="#1B48BA"
                        FontWeight="Bold"
                        FontSize="20" />

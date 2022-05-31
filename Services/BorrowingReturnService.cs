@@ -91,7 +91,7 @@ namespace LibraryManagement.Services
                     borrowingCards = borrowingCardsQuery.Where(b => b.returnedDate != null && DbFunctions.TruncateTime(b.returnedDate) == returnDate);
                 }
 
-                var cardsDTO = borrowingCards.Select(b => new BorrowingCardDTO
+                var cardsDTO = borrowingCards.OrderByDescending(c => c.borrowingDate).Select(b => new BorrowingCardDTO
                 {
                     id = b.id,
                     bookInfoId = b.bookInfoId,

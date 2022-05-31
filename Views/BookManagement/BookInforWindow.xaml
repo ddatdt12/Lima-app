@@ -21,6 +21,7 @@
     <Window.Resources>
         <cvt:BookStatusConverter x:Key="BookStatusConverter" />
         <cvt:PermissionConverter x:Key="PermissionConverter" />
+        <cvt:VnFormatConverter x:Key="VnFormatConverter" />
     </Window.Resources>
 
     <Border Margin="10">
@@ -220,6 +221,11 @@
                             </ListView>
                         </Border>
                         <!---LISTVIEW-->
+                        <Label Content="Danh sách sách theo các năm xuất bản của đầu sách"
+                               Foreground="#0266FD"
+                               FontWeight="Bold"
+                               Margin="10,0,0,0"
+                               FontSize="20"/>
                         <StackPanel>
                             <Border CornerRadius="2"
                                     BorderThickness="1"
@@ -228,7 +234,7 @@
                                 <ListView  x:Name="basebookDetailLV"
                                            SelectedItem="{Binding SelectedBaseBookDetail}"
                                            ItemsSource="{Binding BaseBookDetail.books,UpdateSourceTrigger=PropertyChanged}"
-                                           Height="250">
+                                           Height="215">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
                                             <i:InvokeCommandAction Command="{Binding BindingBookInforCM}"
@@ -363,21 +369,10 @@
                             </TextBox>
                         </StackPanel>
                     </StackPanel>
-                    <!---PRICE-->
+                    <!---QTY-->
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,30,0,0">
                         <StackPanel Margin="30,0,0,0"
-                                    Orientation="Horizontal">
-                            <TextBlock Text="Đơn giá"
-                                       FontSize="20"
-                                       Foreground="#0266FD"
-                                       FontWeight="Bold" />
-                            <TextBlock Text="{Binding SelectedBaseBookDetail.price}"
-                                       FontSize="18"
-                                       Margin="20,0,0,0"
-                                       VerticalAlignment="Bottom" />
-                        </StackPanel>
-                        <StackPanel Margin="230,0,0,0"
                                     Orientation="Horizontal">
                             <TextBlock Text="Số lượng"
                                        FontSize="20"
@@ -389,19 +384,23 @@
                                        FontSize="18" />
                         </StackPanel>
                     </StackPanel>
-
+                    <Label Content="Danh sách cuốn sách theo năm xuất bản"
+                           Foreground="#0266FD"
+                           FontWeight="Bold"
+                           Margin="10,0,0,0"
+                           FontSize="20" />
                     <Border CornerRadius="2"
                             BorderThickness="1"
                             BorderBrush="#BFBABA"
                             Margin="10">
                         <ListView  x:Name="listview"
-                                   Height="350"
+                                   Height="320"
                                    SelectedItem="{Binding SelectedBookInfor}"
                                    ItemsSource="{Binding BookInforList}">
                             <ListView.View>
                                 <GridView>
 
-                                    <GridViewColumn Header="Mã sách">
+                                    <GridViewColumn Header="Mã cuốn sách">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding id}"

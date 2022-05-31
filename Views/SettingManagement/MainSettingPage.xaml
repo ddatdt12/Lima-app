@@ -56,6 +56,7 @@
                     Converter={StaticResource PermissionConverter}}" />
                 <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
                              Foreground="#1B48BA"
+                             x:Name="accountbtn"
                              Content="Cài đặt tài khoản"
                              FontSize="18"
                              Width="200"

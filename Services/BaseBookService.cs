@@ -89,6 +89,7 @@ namespace LibraryManagement.Services
                                                 publisher = b.publisher,
                                                 yearOfPublication = b.yearOfPublication,
                                                 baseBookId = b.baseBookId,
+                                                price = b.Price,
                                                 bookInfoes = b.BookInfoes.Where(bI => !bI.isDeleted).Select(bI => new BookInfoDTO
                                                 {
                                                     id = bI.id,

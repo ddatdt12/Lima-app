@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:LibraryManagement.Views.HistoryManagement"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:cvt="clr-namespace:LibraryManagement.Views.Converter"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d"
       Width="1088"
@@ -17,6 +18,10 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
+    <Page.Resources>
+        <cvt:VnFormatConverter x:Key="VnFormatConverter" />
+    </Page.Resources>
+
     <Grid Background="White">
         <StackPanel>
 
@@ -28,7 +33,24 @@
 
                 <StackPanel Orientation="Horizontal"
                             Grid.Column="0">
-                    <StackPanel Orientation="Horizontal">
+
+                    <StackPanel Margin="20,0,0,0">
+                        <Label Content="Tìm theo: "
+                               FontSize="20"
+                               Padding="0,10,0,0" />
+                        <ComboBox FontSize="18"
+                                  SelectedIndex="0"
+                                  Foreground="#5C5959"
+                                  Name="FilterBox"
+                                  BorderThickness="0,0,0,1"
+                                  BorderBrush="#0266FD">
+                            <ComboBoxItem>Mã đơn</ComboBoxItem>
+                            <ComboBoxItem>Tên sách</ComboBoxItem>
+                            <ComboBoxItem>Nhân viên</ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                Margin="20,0,0,0">
 
                         <materialDesign:PackIcon Kind="Search"
                                                  Width="25"
@@ -50,21 +72,6 @@
 
                     </StackPanel>
 
-                    <StackPanel Margin="20,0,0,0">
-                        <Label Content="Tìm theo"
-                               Height="16"
-                               Padding="0" />
-                        <ComboBox FontSize="18"
-                                  SelectedIndex="0"
-                                  Foreground="#5C5959"
-                                  Name="FilterBox"
-                                  BorderThickness="0,0,0,1"
-                                  BorderBrush="#0266FD">
-                            <ComboBoxItem>Mã đơn</ComboBoxItem>
-                            <ComboBoxItem>Tên sách</ComboBoxItem>
-                            <ComboBoxItem>Nhân viên</ComboBoxItem>
-                        </ComboBox>
-                    </StackPanel>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"
                             Grid.Column="1"
@@ -72,6 +79,7 @@
                     <Border Background="White"
                             Width="145"
                             Height="42"
+                            x:Name="datePickerBd"
                             VerticalAlignment="Bottom"
                             Padding="5,0,5,0"
                             BorderBrush="#BFBABA"
@@ -81,7 +89,6 @@
                                     Height="42"
                                     materialDesign:HintAssist.Hint="Chọn ngày"
                                     Foreground="#5C5959"
-                                    x:Name="datePicker"
                                     SelectedDate="{Binding SelectedDate}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectedDateChanged">
@@ -108,23 +115,9 @@
                                   SelectionChanged="ComboBox_SelectionChanged"
                                   SelectedItem="{Binding SelectedFilter}">
                             <ComboBoxItem>Toàn bộ</ComboBoxItem>
-                            <ComboBoxItem>Mượn sách</ComboBoxItem>
-                            <ComboBoxItem>Trả sách</ComboBoxItem>
+                            <ComboBoxItem>Theo ngày</ComboBoxItem>
                         </ComboBox>
                     </Border>
-                    <Button Background="#37B634"
-                            BorderBrush="Transparent"
-                            materialDesign:ButtonAssist.CornerRadius="8"
-                            Width="130"
-                            Height="42"
-                            VerticalAlignment="Bottom"
-                            FontSize="16"
-                            Visibility="Collapsed"
-                            HorizontalAlignment="Right"
-                            Margin="10,0,20,0"
-                            Command="{Binding PrintBorrowReturnCM}"
-                            Content="In hoá đơn"
-                            x:Name="btn1" />
                     <Border  Background="#37B634"
                              x:Name="btn2"
                              CornerRadius="8"
@@ -180,14 +173,20 @@
                     </Border>
                 </StackPanel>
             </Grid>
+
+            <Label Content="Danh sách phiếu mượn trả"
+                   Foreground="#0266FD"
+                   FontWeight="Bold"
+                   Margin="10,20,0,0"
+                   FontSize="20" />
             <Border CornerRadius="4"
-                    Margin="20"
+                    Margin="20,0,20,20"
                     BorderThickness="1"
                     BorderBrush="#BFBABA">
                 <ListView ItemsSource="{Binding BorrowReturnList}"
                           SelectedItem="{Binding SelectedBorrow}"
                           x:Name="lv"
-                          Height="540">
+                          Height="510">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Mã phiếu">
@@ -203,6 +202,15 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding bookInfo.Book.baseBook.name}"
+                                                   FontSize="20"
+                                                   Margin="15,0,0,0" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Độc giả">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding readerCard.name}"
                                                    FontSize="20"
                                                    Margin="15,0,0,0" />
                                     </DataTemplate>
@@ -229,7 +237,7 @@
                             <GridViewColumn Header="Tiền phạt">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding returnCard.fine}"
+                                        <TextBlock Text="{Binding returnCard.fine,Converter={StaticResource VnFormatConverter}}"
                                                    FontSize="20"
                                                    Margin="15,0,0,0" />
                                     </DataTemplate>

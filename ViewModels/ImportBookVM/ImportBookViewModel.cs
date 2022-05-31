@@ -114,13 +114,6 @@ namespace LibraryManagement.ViewModel.ImportBookVM
             set { unitprice = value; OnPropertyChanged(); }
         }
 
-        private int? price;
-        public int? Price
-        {
-            get { return price; }
-            set { price = value; OnPropertyChanged(); }
-        }
-
         private int? quantity;
         public int? Quantity
         {
@@ -322,7 +315,6 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                 BaseAuthor = null;
                 SelectedBaseBook = null;
                 UnitPrice = null;
-                Price = null;
                 Quantity = null;
                 Publisher = null;
                 YearPublish = DateTime.Now.Year;
@@ -338,10 +330,8 @@ namespace LibraryManagement.ViewModel.ImportBookVM
             {
                 ImportBookWindow.PreEnterBaseBook = p.Text;
                 Genre = null;
-                BaseAuthor = null;
                 SelectedBaseBook = null;
                 UnitPrice = null;
-                Price = null;
                 Quantity = null;
                 Publisher = null;
                 YearPublish = DateTime.Now.Year;
@@ -395,6 +385,14 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                     MessageBox.Show("Danh sách nhập trống!");
                     return;
                 }
+                foreach (var item in importBookList)
+                {
+                    if (item.quantity == 0)
+                    {
+                        MessageBox.Show("Không được phép nhập số lượng 0!");
+                        return;
+                    }
+                }
                 if (string.IsNullOrEmpty(Supplier))
                 {
                     MessageBox.Show("Vui lòng nhập thông tin nhà cung cấp");
@@ -440,14 +438,15 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                 if (p.SelectedItem is null) return;
 
                 AuthorDTO at = (AuthorDTO)p.SelectedItem;
-                foreach (var item in BaseAuthor)
-                {
-                    if (item.id == at.id)
+                if (BaseAuthor != null)
+                    foreach (var item in BaseAuthor)
                     {
-                        p.SelectedItem = null;
-                        return;
+                        if (item.id == at.id)
+                        {
+                            p.SelectedItem = null;
+                            return;
+                        }
                     }
-                }
                 BaseAuthor.Add(at);
                 p.SelectedItem = null;
 
@@ -532,7 +531,6 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                 !string.IsNullOrEmpty(Publisher) &&
                 !(YearPublish is null) &&
                 !(UnitPrice is null) &&
-                !(Price is null) &&
                 !(Quantity is null);
         }
         public void OpenPrintImportReiceipt(ImportReceiptDTO rc)
@@ -561,7 +559,7 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                 total += item.unitTotal;
             }
 
-            w.totalPrice.Text = total.ToString();
+            w.totalPrice.Text = Utils.Helper.FormatVNMoney(total);
             w.ShowDialog();
         }
         public void CalculateTotal(ImportReceiptDetailDTO item)

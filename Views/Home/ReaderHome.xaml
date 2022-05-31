@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:LibraryManagement.Views.Home"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:cvt="clr-namespace:LibraryManagement.Views.Converter"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d"
       Height="800"
@@ -16,6 +17,10 @@
             <i:InvokeCommandAction Command="{Binding FirstLoadCM}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
+
+    <Page.Resources>
+        <cvt:VnFormatConverter x:Key="VnFormatConverter" />
+    </Page.Resources>
 
     <Grid>
         <StackPanel>
@@ -166,8 +171,9 @@
                                                          Grid.Column="0"
                                                          HorizontalAlignment="Left"
                                                          VerticalAlignment="Center" />
-                                <StackPanel Grid.Column="1">
-                                    <TextBlock Text="{Binding TotalFine}"
+                                <StackPanel Grid.Column="1"
+                                            VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding TotalFine,Converter={StaticResource VnFormatConverter}}"
                                                MaxWidth="150"
                                                x:Name="fine"
                                                TextTrimming="CharacterEllipsis"
@@ -175,12 +181,6 @@
                                                FontWeight="Bold"
                                                FontSize="40"
                                                ToolTip="{Binding ElementName=fine, Path=Text}"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center" />
-                                    <TextBlock Text="VND"
-                                               Foreground="#1B48BA"
-                                               FontWeight="Bold"
-                                               FontSize="20"
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center" />
                                 </StackPanel>

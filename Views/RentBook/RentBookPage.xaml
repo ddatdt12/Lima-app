@@ -51,7 +51,7 @@
                                      Width="724">
                     <StackPanel>
                         <Grid>
-                            <TextBlock Text="Sách mượn"
+                            <TextBlock Text="Danh sách sách mượn"
                                        FontSize="20"
                                        FontWeight="Bold"
                                        Margin="10"
@@ -95,7 +95,7 @@
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        <GridViewColumn Header="Mã sách"
+                                        <GridViewColumn Header="Mã cuốn sách"
                                                         Width="112">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
@@ -187,13 +187,13 @@
 
                         <StackPanel Orientation="Horizontal"
                                     Grid.Row="0">
-                            <TextBlock Text="Danh sách sách"
+                            <TextBlock Text="Danh sách sách hiện có"
                                        FontSize="20"
                                        FontWeight="Bold"
                                        Foreground="#1B48BA"
                                        Margin="20,10,10,10" />
                             <StackPanel Orientation="Horizontal"
-                                        Margin="210,0,0,0">
+                                        Margin="160,0,0,0">
                                 <materialDesign:PackIcon Kind="Search"
                                                          Width="25"
                                                          Height="25"
@@ -474,7 +474,7 @@
                         <TextBlock Width="190"
                                    Margin="50,0,0,0"
                                    VerticalAlignment="Center"
-                                   HorizontalAlignment="Right"
+                                   HorizontalAlignment="Center"
                                    Text="{Binding Path=ExpiredBookDate, StringFormat=dd/MM/yyyy}"
                                    FontSize="18"
                                    TextAlignment="Right" />

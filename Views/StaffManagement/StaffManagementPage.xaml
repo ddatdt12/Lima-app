@@ -123,17 +123,19 @@
                             </Button>
                         </StackPanel>
                     </Grid>
+                    <Label Content="Danh sách nhân viên"
+                           Foreground="#0266FD"
+                           FontWeight="Bold"
+                           Margin="10,30,0,0"
+                           FontSize="20" />
                     <Border BorderThickness="1"
                             BorderBrush="#BFBABA"
                             CornerRadius="2"
-                            Width="1032"
-                            Margin="0,30,0,0"
-                            Height="550">
+                            Width="1032">
                         <ListView Name="lvStaff"
                                   ItemsSource="{Binding ListStaff}"
                                   SelectedItem="{Binding SelectedItem}"
-                                  Width="1032"
-                                  Height="550">
+                                  Height="520">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="Mã nhân viên">

@@ -40,15 +40,15 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
             set { _ReaderName = value; OnPropertyChanged(); }
         }
 
-        private Decimal? _TotalDept;
-        public Decimal? TotalDept
+        private int? _TotalDept;
+        public int? TotalDept
         {
             get { return _TotalDept; }
             set { _TotalDept = value; OnPropertyChanged(); }
         }
 
-        private Nullable<decimal> _TotalPunish;
-        public Nullable<decimal> TotalPunish
+        private int _TotalPunish;
+        public int TotalPunish
         {
             get { return _TotalPunish; }
             set { _TotalPunish = value; OnPropertyChanged(); }
@@ -89,7 +89,7 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                             {
                                 int sumDelayDate;
                                 sumDelayDate = DateTime.Now.Subtract(listBorrowingCard[i].dueDate).Days;
-                                decimal fine = sumDelayDate * ParameterService.Ins.GetRuleValue(Utils.Rules.FINE);
+                                int fine = sumDelayDate * ParameterService.Ins.GetRuleValue(Utils.Rules.FINE);
                                 Book book = new Book
                                 (
                                     0,
@@ -212,7 +212,7 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                     {
                         int sumDelayDate;
                         sumDelayDate = DateTime.Now.Subtract(listBorrowingCard[i].dueDate).Days;
-                        decimal fine = sumDelayDate * ParameterService.Ins.GetRuleValue(Utils.Rules.FINE);
+                        int fine = sumDelayDate * ParameterService.Ins.GetRuleValue(Utils.Rules.FINE);
                         if (fine < 0) fine = 0;
                         if (sumDelayDate < 0) sumDelayDate = 0;
 
@@ -271,7 +271,7 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                     ReturnBookList.Remove(bookReturn);
                     RentingBookList.Add(bookReturn);
                     ReturnBookTotal = ReturnBookList.Count;
-                    decimal totalPunish = 0;
+                    int totalPunish = 0;
                     for (int i = 0; i < ReturnBookList.Count; i++)
                     {
                         ReturnBookList[i].STT = i + 1;
@@ -291,7 +291,7 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                     ReturnBookList.Add(RentingSelectedBook);
                     RentingBookList.Remove(RentingSelectedBook);
                     ReturnBookTotal = ReturnBookList.Count;
-                    decimal totalPunish = 0;
+                    int totalPunish = 0;
                     for (int i = 0; i < ReturnBookList.Count; i++)
                     {
                         ReturnBookList[i].STT = i + 1;
@@ -310,7 +310,7 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
             RentingBookList.Clear();
             ReaderName = null;
             TotalDept = null;
-            TotalPunish = null;
+            TotalPunish = 0;
             ReturnBookTotal = 0;
             CanReturn = false;
         }
@@ -410,8 +410,8 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                 set { _sumDelayDate = value; }
             }
 
-            private decimal _Fine;
-            public decimal Fine
+            private int _Fine;
+            public int Fine
             {
                 get { return _Fine; }
                 set { _Fine = value; }
@@ -433,7 +433,7 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
             int YearPublisher,
             Nullable<System.DateTime> DateRent,
             int sumDelayDate,
-            decimal Fine, DateTime due)
+            int Fine, DateTime due)
             {
                 _STT = STT;
                 _RentCardId = RentCardId;

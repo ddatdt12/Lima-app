@@ -29,7 +29,14 @@ namespace LibraryManagement.ViewModels.SettingVM
             FirstLoadCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 RoleList = new ObservableCollection<RoleDTO>(RoleService.Ins.GetAllRoles());
-                RoleList[1].roleDetaislList.RemoveRange(2, RoleList[1].roleDetaislList.Count - 2);
+                foreach (var item in RoleList[1].roleDetaislList.ToArray())
+                {
+                    if (item.permissionName == "Truy cập trang chủ" || item.permissionName == "Tra cứu sách")
+                    {
+                        continue;
+                    }
+                    RoleList[1].roleDetaislList.Remove(item);
+                }
                 if (CurrentUser.type.Name == "Employee")
                 {
                     if (CurrentUser.role.roleDetaislList[15].isPermitted)
@@ -37,7 +44,7 @@ namespace LibraryManagement.ViewModels.SettingVM
                     else
                         p.Content = new GeneralSettingPage();
                 }
-                else if (CurrentUser.type.Name == "ReaderCard")
+                else if (CurrentUser.type.Name == "Reader")
                 {
                     MainSettingPage page = GetWindowParent(p) as MainSettingPage;
                     page.rolebtn.Visibility = Visibility.Collapsed;
@@ -90,7 +97,19 @@ namespace LibraryManagement.ViewModels.SettingVM
 
                 if (p != null)
                 {
-                    PermissionList = new ObservableCollection<RoleDetailDTO>(SelectedRole.roleDetaislList);
+                    if (SelectedRole.name == "Độc giả")
+                        PermissionList = new ObservableCollection<RoleDetailDTO>(SelectedRole.roleDetaislList);
+                    else
+                    {
+                        foreach (var item in SelectedRole.roleDetaislList.ToArray())
+                        {
+                            if (item.permissionName == "Truy cập trang chủ")
+                                SelectedRole.roleDetaislList.Remove(item);
+
+                        }
+                        PermissionList = new ObservableCollection<RoleDetailDTO>(SelectedRole.roleDetaislList);
+
+                    }
                     p.IsEnabled = false;
                     isEditPermis = false;
                 }
