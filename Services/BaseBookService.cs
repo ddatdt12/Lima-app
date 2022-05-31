@@ -176,15 +176,22 @@ namespace LibraryManagement.Services
                 var context = DataProvider.Ins.DB;
                 var baseBook = context.BaseBooks.Find(baseBookId);
 
+           
                 if (baseBook == null)
                 {
                     return (false, "Sách không tồn tại!");
                 }
+
+                if (baseBook.Books.Count() > 0)
+                {
+                    return (false, "Đầu sách này đã được nhập không thể xóa!");
+                }
+
                 baseBook.isDeleted = true;
                 context.SaveChanges();
                 return (true, "Xoá đầu sách thành công!");
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return (false, "Lỗi hệ thống!");
             }

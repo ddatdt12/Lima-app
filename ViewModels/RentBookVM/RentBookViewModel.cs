@@ -349,7 +349,7 @@ namespace LibraryManagement.ViewModels.RentBookVM
                 borrowingCard.readerCardId = ReaderID;
                 borrowingCard.borrowingDate = (DateTime)RentDate;
                 borrowingCard.employeeId = MainWindowViewModel.CurrentUser.employee.id;
-                borrowingCard.dueDate = RentDate.Value.AddDays(ParameterService.Ins.GetRuleValue(Utils.Rules.VALIDITY_PERIOD_OF_CARD));
+                borrowingCard.dueDate = RentDate.Value.AddDays(ParameterService.Ins.GetRuleValue(Utils.Rules.MAXIMUM_NUMBER_OF_DAYS_TO_BORROW));
                 var bookInfoList = new List<string>();
                 for (int i = 0; i < RentBookList.Count; i++)
                 {
@@ -439,7 +439,7 @@ namespace LibraryManagement.ViewModels.RentBookVM
             {
                 if (RentDate != null)
                 {
-                    DateTime dateTime = RentDate.Value.AddDays(ParameterService.Ins.GetRuleValue(Utils.Rules.VALIDITY_PERIOD_OF_CARD));
+                    DateTime dateTime = RentDate.Value.AddDays(ParameterService.Ins.GetRuleValue(Utils.Rules.MAXIMUM_NUMBER_OF_DAYS_TO_BORROW));
                     ExpiredBookDate = dateTime;
                 }
 
