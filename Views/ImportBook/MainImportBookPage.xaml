@@ -330,7 +330,8 @@
                             <ListView Name="searchList">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Width="200">
+                                        <GridViewColumn Width="200"
+                                                        Header="Tên sách">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding baseBook.name}"
@@ -340,7 +341,8 @@
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
 
-                                        <GridViewColumn Width="200">
+                                        <GridViewColumn Width="200"
+                                                        Header="NXB">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding publisher}"
@@ -350,10 +352,11 @@
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
 
-                                        <GridViewColumn>
+                                        <GridViewColumn Header="Năm XB">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding yearOfPublication}" />
+                                                    <TextBlock Text="{Binding yearOfPublication}" 
+                                                               Margin="20,0,0,0"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
