@@ -137,7 +137,7 @@ namespace LibraryManagement.ViewModels.SettingVM
             {
                 if (string.IsNullOrEmpty(OldPass) || string.IsNullOrEmpty(NewPass) || string.IsNullOrEmpty(ReEnterNewPass))
                 {
-                    MessageBox.Show("Vui lòng nhập đủ thông tin");
+                    MessageBox.Show("Vui lòng điền đủ thông tin", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
@@ -145,18 +145,24 @@ namespace LibraryManagement.ViewModels.SettingVM
 
                 if (user is null)
                 {
-                    MessageBox.Show("Mật khẩu cũ không chính xác");
+                    MessageBox.Show("Mật khẩu cũ không chính xác", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
                 if (NewPass != ReEnterNewPass)
                 {
-                    MessageBox.Show("Mật khẩu mới không khớp. Vui lòng nhập lại");
+                    MessageBox.Show("Mật khẩu mới không khớp. Vui lòng nhập lại", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
                 (bool isS, string mess) = AuthService.Ins.ResetPassword(CurrentUser.username, ReEnterNewPass);
-                MessageBox.Show(mess);
+
+                if (isS)
+                {
+                    MessageBox.Show(mess, "Thông báo", MessageBoxButton.OK);
+                    return;
+                }
+                MessageBox.Show(mess, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
 
             });

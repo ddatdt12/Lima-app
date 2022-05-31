@@ -133,6 +133,7 @@ namespace LibraryManagement.ViewModels.StaffManagementVM
                         ListStaff.Add(employee);
                         p.Close();
                         System.Windows.MessageBox.Show(message, "Thông báo", MessageBoxButton.OK);
+                        return;
                     }
                     else
                     {
@@ -188,8 +189,8 @@ namespace LibraryManagement.ViewModels.StaffManagementVM
             });
             DeleteStaffCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                System.Windows.Forms.DialogResult dlg = (System.Windows.Forms.DialogResult)System.Windows.MessageBox.Show("Bạn muốn xóa dữ liệu này không ? Dữ diệu sẽ không phục hồi được sau khi xóa.", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Information);
-                if (dlg == System.Windows.Forms.DialogResult.Yes)
+                DialogResult dlg = (DialogResult)System.Windows.MessageBox.Show("Bạn muốn xóa dữ liệu này không ? Dữ diệu sẽ không phục hồi được sau khi xóa.", "Cảnh báo", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (dlg == DialogResult.Yes)
                 {
                     (bool iss, string mes) = EmployeeService.Ins.DeleteEmployee(SelectedItem.id);
                     if (iss)
@@ -214,7 +215,7 @@ namespace LibraryManagement.ViewModels.StaffManagementVM
             {
                 if (Password != RePassword)
                 {
-                    System.Windows.MessageBox.Show("Mật khẩu không trùng khớp, vui lòng nhập đúng!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    System.Windows.MessageBox.Show("Mật khẩu không trùng khớp!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 ChangePasswordWindow changePasswordWindow = new ChangePasswordWindow();
@@ -303,7 +304,7 @@ namespace LibraryManagement.ViewModels.StaffManagementVM
 
                     Mouse.OverrideCursor = System.Windows.Input.Cursors.Arrow;
 
-                    System.Windows.MessageBox.Show("Xuất file thành công");
+                    System.Windows.MessageBox.Show("Xuất file thành công", "Thông báo", MessageBoxButton.OK);
                 }
             }
         }

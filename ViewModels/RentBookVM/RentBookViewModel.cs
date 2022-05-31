@@ -251,14 +251,14 @@ namespace LibraryManagement.ViewModels.RentBookVM
             {
                 if (ReaderID == null)
                 {
-                    MessageBox.Show("Mã độc giả bị trống!");
+                    MessageBox.Show("Mã độc giả bị trống!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     ClearData();
                     return;
                 }
                 ReaderCardDTO readerCard = ReaderService.Ins.GetReaderInfo(ReaderID);
                 if (readerCard == null)
                 {
-                    MessageBox.Show("Mã độc giả không tồn tại!");
+                    MessageBox.Show("Mã độc giả không tồn tại!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     ClearData();
                     return;
                 }
@@ -332,17 +332,17 @@ namespace LibraryManagement.ViewModels.RentBookVM
             {
                 if (RentBookList.Count == 0)
                 {
-                    MessageBox.Show("Danh sách mượn trống!");
+                    MessageBox.Show("Danh sách mượn trống!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 if ((RentBookQuantity + RentBookTotal) > ParameterService.Ins.GetRuleValue(Utils.Rules.ALLOWED_BOOK_MAXIMUM))
                 {
-                    MessageBox.Show("Mượn quá số sách quy định!");
+                    MessageBox.Show("Mượn quá số sách quy định!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 if (RentDate == null)
                 {
-                    MessageBox.Show("Ngày mượn không được để trống!");
+                    MessageBox.Show("Ngày mượn không được để trống!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 BorrowingCardDTO borrowingCard = new BorrowingCardDTO();
@@ -368,12 +368,14 @@ namespace LibraryManagement.ViewModels.RentBookVM
                         }
                         OpenPrintWindow(RentBookList);
                         ClearData();
+                        MessageBox.Show(message, "Thông báo", MessageBoxButton.OK);
+                        return;
                     }
-                    MessageBox.Show(message);
+                    MessageBox.Show(message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    throw;
+                    MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
 
@@ -450,7 +452,7 @@ namespace LibraryManagement.ViewModels.RentBookVM
                 var maxbook = ParameterService.Ins.GetRuleValue(Rules.ALLOWED_BOOK_MAXIMUM);
                 var maxday = ParameterService.Ins.GetRuleValue(Rules.MAXIMUM_NUMBER_OF_DAYS_TO_BORROW);
 
-                p.Text = $"Tối đa {maxbook} sách trong vòng {maxday} ngày";
+                p.Text = $"Quy định: {maxbook} sách trong vòng {maxday} ngày";
             });
 
 

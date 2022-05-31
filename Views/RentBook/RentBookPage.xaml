@@ -451,7 +451,6 @@
                         <DatePicker Width="190"
                                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
                                     HorizontalAlignment="Right"
-                                    VerticalAlignment="Center"
                                     HorizontalContentAlignment="Center"
                                     SelectedDate="{Binding Path=RentDate, Mode=TwoWay,StringFormat=dd/MM/yyyy}"
                                     FontSize="18"
@@ -479,7 +478,7 @@
                                    FontSize="18"
                                    TextAlignment="Right" />
                     </Grid>
-                    <TextBlock Text="Tối đa"
+                    <TextBlock Margin="0,20,0,0"
                                VerticalAlignment="Center"
                                FontSize="18"
                                x:Name="ruleTxtbox"

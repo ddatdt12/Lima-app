@@ -394,6 +394,19 @@
                                    FontSize="18"
                                    Foreground="#5C5959" />
                     </Grid>
+                    <TextBlock Margin="0,20,0,0"
+                               VerticalAlignment="Center"
+                               FontSize="18"
+                               x:Name="ruleTxtbox"
+                               Foreground="#5C5959"
+                               FontWeight="Bold">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Loaded">
+                                <i:InvokeCommandAction Command="{Binding LoadRuleCM}"
+                                                       CommandParameter="{Binding ElementName=ruleTxtbox}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBlock>
                     <Button Background="#0266FD"
                             Width="145"
                             Height="42"

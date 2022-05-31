@@ -113,7 +113,7 @@ namespace LibraryManagement.ViewModels.HistoryManagementVM
                 if (SelectedBorrow is null) return;
                 if (SelectedBorrow.returnCard.returnedDate is null)
                 {
-                    MessageBox.Show("Sách này chưa được trả");
+                    MessageBox.Show("Sách này chưa được trả", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 PrintReturnFunc();
@@ -228,7 +228,7 @@ namespace LibraryManagement.ViewModels.HistoryManagementVM
 
             // and print
             pd.PrintDocument(document.DocumentPaginator, "Rent bill");
-            MessageBox.Show("In phiếu thành thành công");
+            MessageBox.Show("In phiếu thành thành công", "Thông báo", MessageBoxButton.OK);
         }
         public void PrintReturnFunc()
         {
@@ -285,7 +285,7 @@ namespace LibraryManagement.ViewModels.HistoryManagementVM
 
             // and print
             pd.PrintDocument(document.DocumentPaginator, "Return bill");
-            MessageBox.Show("In phiếu thành thành công");
+            MessageBox.Show("In phiếu thành thành công", "Thông báo", MessageBoxButton.OK);
         }
     }
 }

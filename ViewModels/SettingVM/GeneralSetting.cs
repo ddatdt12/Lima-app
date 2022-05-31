@@ -82,7 +82,7 @@ namespace LibraryManagement.ViewModels.SettingVM
             ParameterService.Ins.SetRuleValue(Rules.FINE, FinesAmount);
             ParameterService.Ins.SetRuleValue(Rules.YEAR_PUBLICATION_PERIOD, PublishYear);
 
-            MessageBox.Show("Cập nhật thành công");
+            MessageBox.Show("Cập nhật thành công", "Thông báo", MessageBoxButton.OK);
         }
 
     }

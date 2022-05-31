@@ -45,7 +45,7 @@
                              Foreground="#1B48BA"
                              x:Name="rulebtn"
                              IsChecked="False"
-                             Content="Cài đặt chung"
+                             Content="Thay đổi quy định"
                              FontSize="18"
                              Width="200"
                              FontWeight="Bold"

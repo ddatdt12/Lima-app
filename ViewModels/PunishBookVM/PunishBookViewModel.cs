@@ -167,19 +167,19 @@ namespace LibraryManagement.ViewModels.PunishBookVM
                 {
                     if (TotalDept < TotalPaid)
                     {
-                        MessageBox.Show("Không được trả quá số nợ!");
+                        MessageBox.Show("Không được trả quá số nợ!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
                     decimal temp;
                     bool isMoney = decimal.TryParse(TotalPaid.ToString(), out temp);
                     if (!isMoney)
                     {
-                        MessageBox.Show("Số tiền trả không hợp lệ!");
+                        MessageBox.Show("Số tiền trả không hợp lệ!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
                     if (TotalPaid == 0)
                     {
-                        MessageBox.Show("Số tiền trả không hợp lệ!");
+                        MessageBox.Show("Số tiền trả không hợp lệ!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
                     FineReceiptDTO fineReceipt = new FineReceiptDTO();
@@ -197,12 +197,16 @@ namespace LibraryManagement.ViewModels.PunishBookVM
                         ClearData();
                         ReaderID = null;
                         CanPaidFine = false;
+                        MessageBox.Show(message, "Thông báo", MessageBoxButton.OK);
+                        return;
+
                     }
-                    MessageBox.Show(message);
+                    MessageBox.Show(message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+
                 }
                 catch (Exception e)
                 {
-                    throw e;
+                    MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
                );
@@ -233,13 +237,13 @@ namespace LibraryManagement.ViewModels.PunishBookVM
         {
             if (string.IsNullOrEmpty(ReaderID))
             {
-                MessageBox.Show("Mã độc giả bị trống!");
+                MessageBox.Show("Mã độc giả bị trống!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             ReaderCardDTO readerCard = ReaderService.Ins.GetReaderInfo(ReaderID);
             if (readerCard == null)
             {
-                MessageBox.Show("Mã độc giả không hợp lệ!");
+                MessageBox.Show("Mã độc giả không hợp lệ!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             return true;

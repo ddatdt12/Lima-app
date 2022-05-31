@@ -99,12 +99,12 @@ namespace LibraryManagement.ViewModels.Genre_AuthorManagementVM
                 {
                     if (string.IsNullOrEmpty(TxtGenre))
                     {
-                        MessageBox.Show("Vui lòng điền đủ thông tin");
+                        MessageBox.Show("Vui lòng điền đủ thông tin", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
 
 
-                    if (MessageBox.Show("Bạn có muốn thêm thể loại này không?", "Thêm thể loại", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    if (MessageBox.Show("Bạn có muốn thêm thể loại này không?", "Thêm thể loại", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
                     {
                         GenreDTO newGenre = new GenreDTO { name = TxtGenre };
                         (bool isS, string mes) = GenreService.Ins.CreateNewGenre(newGenre);
@@ -134,11 +134,11 @@ namespace LibraryManagement.ViewModels.Genre_AuthorManagementVM
                 {
                     if (string.IsNullOrEmpty(TxtGenre))
                     {
-                        MessageBox.Show("Vui lòng điền đủ thông tin");
+                        MessageBox.Show("Vui lòng điền đủ thông tin", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
 
-                    if (MessageBox.Show("Bạn có muốn sửa thể loại này không?", "Sửa thể loại", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    if (MessageBox.Show("Bạn có muốn sửa thể loại này không?", "Sửa thể loại", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                     {
                         GenreDTO newGenre = SelectedGenre;
                         newGenre.name = TxtGenre;
@@ -147,9 +147,13 @@ namespace LibraryManagement.ViewModels.Genre_AuthorManagementVM
                         {
                             GenreList = new ObservableCollection<GenreDTO>(GenreService.Ins.GetAllGenre());
                             p.Close();
+                            MessageBox.Show(mes, "Thông báo", MessageBoxButton.OK);
+                            return;
                         }
 
-                        MessageBox.Show(mes);
+
+                        MessageBox.Show(mes, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+
                     }
                     else
                     {
@@ -159,8 +163,7 @@ namespace LibraryManagement.ViewModels.Genre_AuthorManagementVM
                 }
                 catch (Exception e)
                 {
-
-                    MessageBox.Show(e.Message);
+                    MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
             DeleteGenreCM = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -168,13 +171,17 @@ namespace LibraryManagement.ViewModels.Genre_AuthorManagementVM
                 if (SelectedGenre != null)
                     try
                     {
-                        if (MessageBox.Show("Bạn có muốn xoá thể loại này không?", "Cảnh báo", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        if (MessageBox.Show("Bạn có muốn xoá thể loại này không?", "Cảnh báo", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                         {
                             (bool IsS, string mes) = GenreService.Ins.DeleteGenre(SelectedGenre.id);
 
                             if (IsS)
+                            {
                                 GenreList.Remove(SelectedGenre);
-                            MessageBox.Show(mes);
+                                MessageBox.Show(mes, "Thông báo", MessageBoxButton.OK);
+                                return;
+                            }
+                            MessageBox.Show(mes, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                         else
                         {
@@ -184,8 +191,7 @@ namespace LibraryManagement.ViewModels.Genre_AuthorManagementVM
                     }
                     catch (Exception e)
                     {
-
-                        MessageBox.Show(e.Message);
+                        MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
             });
             OpenAddAuthorWindowCM = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -200,11 +206,11 @@ namespace LibraryManagement.ViewModels.Genre_AuthorManagementVM
                 {
                     if (string.IsNullOrEmpty(TxtAuthor) || BirthDate is null)
                     {
-                        MessageBox.Show("Vui lòng điền đủ thông tin");
+                        MessageBox.Show("Vui lòng điền đủ thông tin", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
 
-                    if (MessageBox.Show("Bạn có muốn thêm tác giả này không?", "Thêm tác giả", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    if (MessageBox.Show("Bạn có muốn thêm tác giả này không?", "Thêm tác giả", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
                     {
                         AuthorDTO newAu = new AuthorDTO { name = TxtAuthor, birthDate = (DateTime)BirthDate };
                         (bool isS, string mes) = AuthorService.Ins.CreateNewAuthor(newAu);
@@ -212,8 +218,10 @@ namespace LibraryManagement.ViewModels.Genre_AuthorManagementVM
                         {
                             AuthorList.Add(newAu);
                             p.Close();
+                            MessageBox.Show(mes, "Thông báo", MessageBoxButton.OK);
+                            return;
                         }
-                        MessageBox.Show(mes);
+                        MessageBox.Show(mes, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     else
                     {
@@ -223,8 +231,7 @@ namespace LibraryManagement.ViewModels.Genre_AuthorManagementVM
                 }
                 catch (Exception e)
                 {
-
-                    MessageBox.Show(e.Message);
+                    MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
             DeleteAuthorCM = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -232,13 +239,17 @@ namespace LibraryManagement.ViewModels.Genre_AuthorManagementVM
                 if (SelectedAuthor != null)
                     try
                     {
-                        if (MessageBox.Show("Bạn có muốn xoá tác giả này không?", "Cảnh báo", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        if (MessageBox.Show("Bạn có muốn xoá tác giả này không?", "Cảnh báo", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                         {
                             (bool IsS, string mes) = AuthorService.Ins.DeleteAuthor(SelectedAuthor.id);
 
                             if (IsS)
+                            {
                                 AuthorList.Remove(SelectedAuthor);
-                            MessageBox.Show(mes);
+                                MessageBox.Show(mes, "Thông báo", MessageBoxButton.OK);
+                                return;
+                            }
+                            MessageBox.Show(mes, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                         else
                         {
@@ -248,8 +259,7 @@ namespace LibraryManagement.ViewModels.Genre_AuthorManagementVM
                     }
                     catch (Exception e)
                     {
-
-                        MessageBox.Show(e.Message);
+                        MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
             });
             OpenEditAuthorWindowCM = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -265,11 +275,11 @@ namespace LibraryManagement.ViewModels.Genre_AuthorManagementVM
                 {
                     if (string.IsNullOrEmpty(TxtAuthor) || BirthDate is null)
                     {
-                        MessageBox.Show("Vui lòng điền đủ thông tin");
+                        MessageBox.Show("Vui lòng điền đủ thông tin", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
 
-                    if (MessageBox.Show("Bạn có muốn sửa tác giả này không?", "Sửa tác giả", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    if (MessageBox.Show("Bạn có muốn sửa tác giả này không?", "Sửa tác giả", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                     {
                         AuthorDTO newAu = SelectedAuthor;
                         newAu.name = TxtAuthor;
@@ -279,9 +289,13 @@ namespace LibraryManagement.ViewModels.Genre_AuthorManagementVM
                         {
                             AuthorList = new ObservableCollection<AuthorDTO>(AuthorService.Ins.GetAllAuthor());
                             p.Close();
+                            MessageBox.Show(mes, "Thông báo", MessageBoxButton.OK);
+                            return;
+
                         }
 
-                        MessageBox.Show(mes);
+                        MessageBox.Show(mes, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+
                     }
                     else
                     {
@@ -291,8 +305,7 @@ namespace LibraryManagement.ViewModels.Genre_AuthorManagementVM
                 }
                 catch (Exception e)
                 {
-
-                    MessageBox.Show(e.Message);
+                    MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
         }

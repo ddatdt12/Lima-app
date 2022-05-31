@@ -180,7 +180,7 @@ namespace LibraryManagement.ViewModels.LoginVM
             LoginCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 if (string.IsNullOrEmpty(UserName) || string.IsNullOrEmpty(Password))
-                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin");
+                    MessageBox.Show("Vui lòng điền đủ thông tin", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 else
                     try
                     {
@@ -207,16 +207,18 @@ namespace LibraryManagement.ViewModels.LoginVM
                             {
                                 wd.bookTreeview.Visibility = Visibility.Collapsed;
                                 wd.BookManageBtnreader.Visibility = Visibility.Visible;
+                                wd.settingBtn.Visibility = Visibility.Visible;
                             }
                             wd.Show();
                             LoginWindow.Close();
                         }
                         else
-                            MessageBox.Show(mes);
+                            MessageBox.Show(mes, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+
                     }
                     catch (Exception e)
                     {
-                        MessageBox.Show(e.Message);
+                        MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
             });
 
@@ -248,9 +250,9 @@ namespace LibraryManagement.ViewModels.LoginVM
             ConfirmCodeCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 if (string.IsNullOrEmpty(Code))
-                    MessageBox.Show("Vui lòng nhập mã bảo mật!");
+                    MessageBox.Show("Vui lòng nhập mã bảo mật!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 else if (Code != SecurityCode.ToString())
-                    MessageBox.Show("Mã bảo mật không hợp lệ!");
+                    MessageBox.Show("Mã bảo mật không hợp lệ!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 else
                     MainFrame.Content = new ChangePassPage();
             });
@@ -258,22 +260,25 @@ namespace LibraryManagement.ViewModels.LoginVM
             SaveNewPassCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 if (string.IsNullOrEmpty(NewPass))
-                    MessageBox.Show("Vui lòng nhập mật khẩu mới");
+                    MessageBox.Show("Vui lòng nhập mật khẩu mới", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 try
                 {
                     (bool isS, string mess) = AuthService.Ins.ResetPassword(Account, NewPass);
 
                     if (isS)
                     {
-                        MessageBox.Show(mess);
+                        MessageBox.Show(mess, "Thông báo", MessageBoxButton.OK);
                         MainFrame.Content = new LoginPage();
+                        return;
                     }
                     else
-                        MessageBox.Show(mess);
+                        MessageBox.Show(mess, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(e.Message);
+                    MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+
                 }
             });
         }

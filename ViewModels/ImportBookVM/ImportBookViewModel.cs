@@ -252,12 +252,12 @@ namespace LibraryManagement.ViewModel.ImportBookVM
             {
                 if (!IsValidData())
                 {
-                    MessageBox.Show("Vui lòng điền đủ thông tin");
+                    MessageBox.Show("Vui lòng điền đủ thông tin", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 if ((DateTime.Now.Year - YearPublish) > ParameterService.Ins.GetRuleValue(Utils.Rules.YEAR_PUBLICATION_PERIOD))
                 {
-                    MessageBox.Show("Năm xuất bản sách không thoả quy định");
+                    MessageBox.Show("Năm xuất bản sách không thoả quy định", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
@@ -346,7 +346,7 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                 {
                     if (string.IsNullOrEmpty(TxtGenre)) return;
 
-                    if (MessageBox.Show("Bạn có muốn thêm thể loại này không?", "Thêm thể loại", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    if (MessageBox.Show("Bạn có muốn thêm thể loại này không?", "Thêm thể loại", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
                     {
                         GenreDTO newGenre = new GenreDTO { name = TxtGenre };
                         (bool isS, string mes) = GenreService.Ins.CreateNewGenre(newGenre);
@@ -354,9 +354,11 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                         {
                             ListGenre.Add(newGenre);
                             Genre = newGenre;
+                            MessageBox.Show(mes, "Thông báo", MessageBoxButton.OK);
+                            return;
                         }
 
-                        MessageBox.Show(mes);
+                        MessageBox.Show(mes, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     else
                     {
@@ -366,8 +368,7 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                 }
                 catch (Exception e)
                 {
-
-                    MessageBox.Show(e.Message);
+                    MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
             OpenAddNewAuthorCM = new RelayCommand<ComboBox>((p) => { return true; }, (p) =>
@@ -382,20 +383,28 @@ namespace LibraryManagement.ViewModel.ImportBookVM
             {
                 if (ImportBookList.Count == 0)
                 {
-                    MessageBox.Show("Danh sách nhập trống!");
+                    MessageBox.Show("Danh sách nhập trống!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-                foreach (var item in importBookList)
+                foreach (var item in ImportBookList)
                 {
                     if (item.quantity == 0)
                     {
-                        MessageBox.Show("Không được phép nhập số lượng 0!");
+                        MessageBox.Show("Không được phép nhập số lượng 0!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                }
+                foreach (var item in ImportBookList)
+                {
+                    if ((DateTime.Now.Year - item.book.yearOfPublication) > ParameterService.Ins.GetRuleValue(Utils.Rules.YEAR_PUBLICATION_PERIOD))
+                    {
+                        MessageBox.Show("Năm xuất bản sách không thoả quy định", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
                 }
                 if (string.IsNullOrEmpty(Supplier))
                 {
-                    MessageBox.Show("Vui lòng nhập thông tin nhà cung cấp");
+                    MessageBox.Show("Vui lòng nhập thông tin nhà cung cấp", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
@@ -418,14 +427,14 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                         MainImportBookPage.AllBookList = new ObservableCollection<BookDTO>(BookService.Ins.GetAllBook());
                         TotalQuantity = 0;
                         TotalReceiptPrice = 0;
-
+                        MessageBox.Show(mes, "Thông báo", MessageBoxButton.OK);
+                        return;
                     }
-                    MessageBox.Show(mes);
+                    MessageBox.Show(mes, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 catch (Exception e)
                 {
-
-                    MessageBox.Show(e.Message);
+                    MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
             });
@@ -463,17 +472,17 @@ namespace LibraryManagement.ViewModel.ImportBookVM
             {
                 if (string.IsNullOrEmpty(BaseName))
                 {
-                    MessageBox.Show("Vui lòng nhập đủ thông tin");
+                    MessageBox.Show("Vui lòng điền đủ thông tin", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 if (BaseAuthor.Count == 0)
                 {
-                    MessageBox.Show("Vui lòng nhập tác giả");
+                    MessageBox.Show("Vui lòng nhập tác giả", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 if (Genre is null)
                 {
-                    MessageBox.Show("Vui lòng nhập thể loại");
+                    MessageBox.Show("Vui lòng nhập thể loại", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 try
@@ -496,13 +505,16 @@ namespace LibraryManagement.ViewModel.ImportBookVM
                         Genre = null;
                         TxtGenre = null;
                         BaseAuthor = null;
+                        MessageBox.Show(mess, "Thông báo", MessageBoxButton.OK);
+                        return;
                     }
 
-                    MessageBox.Show(mess);
+                    MessageBox.Show(mess, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(e.Message);
+                    MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
             PriceChangedCM = new RelayCommand<object>((p) => { return true; }, (p) =>

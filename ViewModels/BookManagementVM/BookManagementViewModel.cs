@@ -187,7 +187,7 @@ namespace LibraryManagement.ViewModel.BookManagementVM
             {
                 if (p.SelectedItem is null) return;
 
-                if (MessageBox.Show("Bạn có chắc muốn xoá đầu sách này không?", "Cảnh báo", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show("Bạn có chắc muốn xoá đầu sách này không?", "Cảnh báo", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                 {
                     BaseBookDTO selectedbaseBook = p.SelectedItem as BaseBookDTO;
 
@@ -196,13 +196,18 @@ namespace LibraryManagement.ViewModel.BookManagementVM
                         (bool isSuc, string res) = BaseBookService.Ins.DeleteBaseBook(selectedbaseBook.id);
 
                         if (isSuc)
-                            BaseBookList.Remove(selectedbaseBook);
-                        MessageBox.Show(res);
+                        {
 
+                            BaseBookList.Remove(selectedbaseBook);
+                            MessageBox.Show(res, "Thông báo", MessageBoxButton.OK);
+                            return;
+                        }
+                        MessageBox.Show(res, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     catch (System.Exception e)
                     {
-                        MessageBox.Show(e.Message);
+                        MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+
                     }
 
                 }
@@ -213,7 +218,7 @@ namespace LibraryManagement.ViewModel.BookManagementVM
             {
                 if (SelectedBaseBookDetail is null) return;
 
-                if (MessageBox.Show("Bạn có chắc muốn xoá sách này không?", "Cảnh báo", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show("Bạn có chắc muốn xoá sách này không?", "Cảnh báo", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                 {
                     try
                     {
@@ -226,13 +231,16 @@ namespace LibraryManagement.ViewModel.BookManagementVM
                             YearPublish = null;
                             Quantity = null;
                             BookInforList = null;
+                            MessageBox.Show(res, "Thông báo", MessageBoxButton.OK);
+                            return;
                         }
-                        MessageBox.Show(res);
+                        MessageBox.Show(res, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
 
                     }
                     catch (System.Exception e)
                     {
-                        MessageBox.Show(e.Message);
+                        MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+
                     }
 
                 }
@@ -243,7 +251,7 @@ namespace LibraryManagement.ViewModel.BookManagementVM
             {
                 if (SelectedBookInfor is null) return;
 
-                if (MessageBox.Show("Bạn có chắc muốn xoá sách này không?", "Cảnh báo", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show("Bạn có chắc muốn xoá sách này không?", "Cảnh báo", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                 {
                     try
                     {
@@ -254,13 +262,17 @@ namespace LibraryManagement.ViewModel.BookManagementVM
                             BookInforList.Remove(SelectedBookInfor);
                             BaseBookDetail = BaseBookService.Ins.GetBookDetail(SelectedItem.id);
                             Quantity--;
+                            MessageBox.Show(res, "Thông báo", MessageBoxButton.OK);
+                            return;
                         }
-                        MessageBox.Show(res);
+                        MessageBox.Show(res, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+
 
                     }
                     catch (System.Exception e)
                     {
-                        MessageBox.Show(e.Message);
+                        MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+
                     }
 
                 }
@@ -272,7 +284,7 @@ namespace LibraryManagement.ViewModel.BookManagementVM
                 if (SelectedBaseBookDetail is null) return;
                 if (string.IsNullOrEmpty(Publisher) || YearPublish is null)
                 {
-                    MessageBox.Show("Vui lòng nhập đủ thông tin");
+                    MessageBox.Show("Vui lòng nhập đủ thông tin", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
@@ -295,14 +307,16 @@ namespace LibraryManagement.ViewModel.BookManagementVM
                             if (item.id == id)
                                 SelectedBaseBookDetail = item;
                         }
+                        MessageBox.Show(mes, "Thông báo", MessageBoxButton.OK);
+                        return;
 
                     }
-                    MessageBox.Show(mes);
+                    MessageBox.Show(mes, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
 
                 }
                 catch (System.Exception e)
                 {
-                    MessageBox.Show(e.Message);
+                    MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
             });
@@ -359,7 +373,7 @@ namespace LibraryManagement.ViewModel.BookManagementVM
             {
                 if (BaseAuthor.Count == 0 || BaseGenre is null || string.IsNullOrEmpty(BaseName))
                 {
-                    MessageBox.Show("Vui lòng nhập đủ thông tin");
+                    MessageBox.Show("Vui lòng nhập đủ thông tin", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
@@ -382,13 +396,16 @@ namespace LibraryManagement.ViewModel.BookManagementVM
                     (bool isS, string mess) = BaseBookService.Ins.UpdateBaseBook(bb);
 
                     if (isS)
-                        MessageBox.Show(mess);
+                    {
+                        MessageBox.Show(mess, "Thông báo", MessageBoxButton.OK);
+                        return;
+                    }
+                    MessageBox.Show(mess, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
 
                 }
                 catch (System.Exception e)
                 {
-
-                    MessageBox.Show(e.Message);
+                    MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
             BindingBookInforCM = new RelayCommand<object>((p) => { return true; }, (p) =>

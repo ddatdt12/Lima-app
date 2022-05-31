@@ -59,14 +59,16 @@ namespace LibraryManagement.ViewModels.SettingVM
                 {
                     RoleList = new ObservableCollection<RoleDTO>(RoleService.Ins.GetAllRoles());
                     p.IsEnabled = false;
+                    MessageBox.Show(mes, "Thông báo", MessageBoxButton.OK);
+                    return;
                 }
 
-                MessageBox.Show(mes);
+                MessageBox.Show(mes, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+
             }
             catch (Exception e)
             {
-
-                MessageBox.Show(e.Message);
+                MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         public void DeleteRoleFunc()
@@ -75,11 +77,11 @@ namespace LibraryManagement.ViewModels.SettingVM
 
             if (SelectedRole.id == 1 || SelectedRole.id == 2 || SelectedRole.id == 3)
             {
-                MessageBox.Show("Không thể xoá loại vai trò này");
+                MessageBox.Show("Không thể xoá loại vai trò này", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            if (MessageBox.Show("Bạn có muốn xoá vai trò này không?", "Cảnh báo", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Bạn có muốn xoá vai trò này không?", "Cảnh báo", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 try
                 {
@@ -87,14 +89,14 @@ namespace LibraryManagement.ViewModels.SettingVM
                     if (isS)
                     {
                         RoleList.Remove(SelectedRole);
+                        MessageBox.Show(mes, "Thông báo", MessageBoxButton.OK);
+                        return;
                     }
-                    MessageBox.Show(mes);
+                    MessageBox.Show(mes, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 catch (Exception e)
                 {
-
-                    MessageBox.Show(e.Message);
-
+                    MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -117,16 +119,15 @@ namespace LibraryManagement.ViewModels.SettingVM
                 if (success)
                 {
                     RoleList = new ObservableCollection<RoleDTO>(RoleService.Ins.GetAllRoles());
-                    MessageBox.Show(message);
+                    MessageBox.Show(message, "Thông báo", MessageBoxButton.OK);
                     p.Close();
                     return;
                 }
-                MessageBox.Show(message);
+                MessageBox.Show(message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception e)
             {
-
-                MessageBox.Show(e.Message);
+                MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

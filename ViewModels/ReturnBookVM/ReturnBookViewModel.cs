@@ -1,5 +1,6 @@
 ﻿using LibraryManagement.DTOs;
 using LibraryManagement.Services;
+using LibraryManagement.Utils;
 using LibraryManagement.ViewModel;
 using LibraryManagement.Views.ReturnBook;
 using System;
@@ -21,6 +22,7 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
         public ICommand ConfirmCM { get; set; }
         public ICommand RemoveBookCM { get; set; }
         public ICommand AddBookCM { get; set; }
+        public ICommand LoadRuleCM { get; set; }
 
         #endregion
 
@@ -189,14 +191,14 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
             {
                 if (string.IsNullOrEmpty(ReaderID))
                 {
-                    MessageBox.Show("Vui lòng nhập mã độc giả!");
+                    MessageBox.Show("Vui lòng nhập mã độc giả!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     ClearData();
                     return;
                 }
                 ReaderCardDTO readerCard = ReaderService.Ins.GetReaderInfo(ReaderID);
                 if (readerCard == null)
                 {
-                    MessageBox.Show("Mã độc giả không tồn tại!");
+                    MessageBox.Show("Mã độc giả không tồn tại!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     ClearData();
                     return;
                 }
@@ -239,7 +241,7 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
             {
                 if (ReturnBookTotal == 0)
                 {
-                    MessageBox.Show("Danh sách sách trả đang trống!");
+                    MessageBox.Show("Danh sách sách trả đang trống!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 var returnCardList = new List<ReturnCardDTO>();
@@ -258,8 +260,11 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                 {
                     OpenPrintWindow(ReturnBookList);
                     ClearData();
+                    MessageBox.Show(message, "Thông báo", MessageBoxButton.OK);
+                    return;
+
                 }
-                MessageBox.Show(message);
+                MessageBox.Show(message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             });
 
             RemoveBookCM = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -300,6 +305,13 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                     TotalPunish = totalPunish;
                 }
 
+            });
+
+            LoadRuleCM = new RelayCommand<TextBlock>((p) => { return true; }, (p) =>
+            {
+                if (p is null) return;
+                var fine = ParameterService.Ins.GetRuleValue(Rules.FINE);
+                p.Text = $"Quy định: Phạt {Utils.Helper.FormatVNMoney(fine)}/ngày";
             });
 
         }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows.Forms;
+using System.Windows;
 
 namespace LibraryManagement.ViewModels.StatisticalVM
 {
@@ -69,7 +70,7 @@ namespace LibraryManagement.ViewModels.StatisticalVM
                     (BorrowedGenreReportDTO list, string mes) = StatisticService.Ins.GetBookBorrowingStatisticsReportByGenre(int.Parse(SelectedGenreMonth.Remove(0, 6)), int.Parse(SelectedGenreYear));
                     if (list is null)
                     {
-                        System.Windows.MessageBox.Show(mes);
+                        System.Windows.MessageBox.Show(mes, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
                     StatisticGenreList = new ObservableCollection<BorrowedGenreReportDetailDTO>(list.borrowedGenreReportDetails);
@@ -78,8 +79,7 @@ namespace LibraryManagement.ViewModels.StatisticalVM
                 }
                 catch (Exception e)
                 {
-
-                    System.Windows.MessageBox.Show(e.Message);
+                    System.Windows.MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
             GetLateStatCM = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -89,7 +89,7 @@ namespace LibraryManagement.ViewModels.StatisticalVM
                     (DelayReturnBookReportDTO list, string mes) = StatisticService.Ins.GetDelayBookStatsReport((DateTime)SelectedLateTime);
                     if (list is null || mes != null)
                     {
-                        System.Windows.MessageBox.Show(mes);
+                        System.Windows.MessageBox.Show(mes, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
                     StatisticLateList = new ObservableCollection<DelayReturnBookReportDetailDTO>(list.delayReturnBookReportDetails);
@@ -97,7 +97,7 @@ namespace LibraryManagement.ViewModels.StatisticalVM
                 catch (Exception e)
                 {
 
-                    System.Windows.MessageBox.Show(e.Message);
+                    System.Windows.MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
             ExportGenreStatCM = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -148,7 +148,7 @@ namespace LibraryManagement.ViewModels.StatisticalVM
 
                     Mouse.OverrideCursor = System.Windows.Input.Cursors.Arrow;
 
-                    System.Windows.MessageBox.Show("Xuất file thành công");
+                    System.Windows.MessageBox.Show("Xuất file thành công", "Thông báo", MessageBoxButton.OK);
                 }
             }
         }
@@ -191,7 +191,7 @@ namespace LibraryManagement.ViewModels.StatisticalVM
 
                     Mouse.OverrideCursor = System.Windows.Input.Cursors.Arrow;
 
-                    System.Windows.MessageBox.Show("Xuất file thành công");
+                    System.Windows.MessageBox.Show("Xuất file thành công", "Thông báo", MessageBoxButton.OK);
                 }
             }
         }

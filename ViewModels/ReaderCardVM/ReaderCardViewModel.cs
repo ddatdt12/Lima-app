@@ -91,6 +91,7 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
                          ListReaderCard.Add(reader);
                          p.Close();
                          MessageBox.Show(message, "Thông báo", MessageBoxButton.OK);
+                         return;
                      }
                      else
                      {
@@ -151,7 +152,7 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
                 {
                     if (string.IsNullOrEmpty(tempReaderType))
                     {
-                        MessageBox.Show("Vui lòng chọn loại độc giả bạn muốn thay đổi hoặc thêm loại độc giả mới", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show("Vui lòng chọn loại độc giả bạn muốn thay đổi hoặc thêm loại độc giả mới", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
                     else
@@ -206,7 +207,7 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
                     ResetData();
                 }
                 else
-                    MessageBox.Show("Vui lòng chọn độc giả cần in thẻ!");
+                    MessageBox.Show("Vui lòng chọn độc giả cần in thẻ!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             });
             UpdateReaderCardCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
@@ -218,7 +219,7 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
                         id = SelectedItem.id,
                         name = Name,
                         address = Adress,
-                        employeeId = "NV0001",
+                        employeeId = CurrentUser.employee.id,
                         readerTypeId = (ListReaderType.FirstOrDefault(s => s.name == ReaderType)).id,
                         totalFine = SelectedItem.totalFine,
                         email = Email,
@@ -251,7 +252,7 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             {
                 if (SelectedItem is null) return;
 
-                if (MessageBox.Show("Bạn có chắc muốn xoá độc giả này không?", "Cảnh bảo", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show("Bạn có chắc muốn xoá độc giả này không?", "Cảnh báo", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                 {
                     try
                     {
@@ -260,13 +261,14 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
                         if (isS)
                         {
                             ListReaderCard = new ObservableCollection<ReaderCardDTO>(ReaderService.Ins.GetAllReaderCards());
+                            MessageBox.Show(mes, "Thông báo", MessageBoxButton.OK);
+                            return;
                         }
-                        MessageBox.Show(mes);
+                        MessageBox.Show(mes, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     catch (Exception e)
                     {
-
-                        MessageBox.Show(e.Message);
+                        MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 else
