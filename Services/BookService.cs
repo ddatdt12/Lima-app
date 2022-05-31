@@ -276,6 +276,11 @@ namespace LibraryManagement.Services
                     return (false, "Sách không tồn tại!");
                 }
 
+                if(book.BookInfoes.Count() > 0)
+                {
+                    return (false, "Sách này đã được nhập không thể xóa");
+                }
+
                 book.isDeleted = true;
                 DataProvider.Ins.DB.SaveChanges();
                 return (true, "Xóa sách thành công!");
