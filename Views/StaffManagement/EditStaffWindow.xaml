@@ -263,6 +263,7 @@
                 </WrapPanel>
                 <Grid Grid.Row="4">
                     <TextBlock HorizontalAlignment="Left"
+                               Name="RePassword"
                                VerticalAlignment="Top"
                                Margin="85,10,0,0"
                                FontSize="14">

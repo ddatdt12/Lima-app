@@ -91,6 +91,7 @@
                                    HorizontalAlignment="Left" />
                         <TextBox Text="{Binding Name, Mode=TwoWay}"
                                  Width="250"
+                                 Name="NameStaff"
                                  materialDesign:HintAssist.Hint="Nhập họ tên nhân viên" />
                     </StackPanel>
                     <StackPanel Margin="100,20,0,0">
@@ -99,6 +100,7 @@
                                    FontWeight="ExtraBold"
                                    HorizontalAlignment="Left" />
                         <StackPanel Height="40"
+                                    Name="GenderStaff"
                                     Orientation="Horizontal"
                                     HorizontalAlignment="Left">
                             <RadioButton x:Name="Man"
@@ -118,6 +120,7 @@
                                    FontWeight="ExtraBold"
                                    HorizontalAlignment="Left" />
                         <DatePicker Width="270"
+                                    Name="BirthdayStaff"
                                     FontSize="15"
                                     SelectedDate="{Binding Birthday, StringFormat=dd/MM/yyyy}"
                                     materialDesign:HintAssist.Hint="Nhập ngày sinh"
@@ -182,6 +185,7 @@
                                    FontWeight="ExtraBold"
                                    HorizontalAlignment="Left" />
                         <TextBox Text="{Binding Email, Mode=TwoWay}"
+                                 Name="EmailStaff"
                                  materialDesign:HintAssist.Hint="Nhập email"
                                  Width="220" />
                     </StackPanel>
@@ -191,6 +195,7 @@
                                    FontWeight="ExtraBold"
                                    HorizontalAlignment="Left" />
                         <DatePicker Width="270"
+                                    Name="CreatDay"
                                     FontSize="15"
                                     SelectedDate="{Binding StartDate, StringFormat=dd/MM/yyyy}"
                                     materialDesign:HintAssist.Hint="Nhập ngày bắt đầu"
@@ -244,6 +249,7 @@
                                    FontWeight="ExtraBold"
                                    HorizontalAlignment="Left" />
                         <TextBox Text="{Binding Username, Mode=TwoWay}"
+                                 Name="Username"
                                  materialDesign:HintAssist.Hint="Nhập tên tài khoản"
                                  Width="200" />
                     </StackPanel>
@@ -286,6 +292,7 @@
                             HorizontalAlignment="Center"
                             Orientation="Horizontal">
                     <Button Background="White"
+                            Name="Cancel"
                             Margin="32,0,32,0"
                             BorderBrush="#0266FD"
                             BorderThickness="1.5"
@@ -301,6 +308,7 @@
                             Click="Button_Click" />
                     <Button Background="#0266FD"
                             BorderBrush="#0266FD"
+                            Name="AddStaff"
                             Margin="32,0,32,0"
                             BorderThickness="1.5"
                             Width="160"
