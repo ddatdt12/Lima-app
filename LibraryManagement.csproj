@@ -296,9 +296,6 @@
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MessageBoxCustom.xaml.cs">
-      <DependentUpon>MessageBoxCustom.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\PunishBook\PrintWindow.xaml.cs">
       <DependentUpon>PrintWindow.xaml</DependentUpon>
     </Compile>
@@ -464,10 +461,6 @@
     <Page Include="Views\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MessageBoxCustom.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\PunishBook\PrintWindow.xaml">
       <SubType>Designer</SubType>
