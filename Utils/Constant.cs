@@ -33,9 +33,9 @@
     {
         private AccountType(string name) { Name = name; }
 
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
-        public static AccountType READER_CARD { get { return new AccountType("ReaderCard"); } }
+        public static AccountType READER_CARD { get { return new AccountType("Reader"); } }
         public static AccountType EMPLOYEE { get { return new AccountType("Employee"); } }
     }
 }

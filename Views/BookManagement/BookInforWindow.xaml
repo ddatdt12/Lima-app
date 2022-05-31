@@ -20,6 +20,8 @@
 
     <Window.Resources>
         <cvt:BookStatusConverter x:Key="BookStatusConverter" />
+        <cvt:PermissionConverter x:Key="PermissionConverter" />
+        <cvt:VnFormatConverter x:Key="VnFormatConverter" />
     </Window.Resources>
 
     <Border Margin="10">
@@ -39,191 +41,156 @@
 
             <materialDesign:Card Grid.Column="0"
                                  Margin="15">
-                <StackPanel>
-                    <TextBlock Text="Thông tin đầu sách"
-                               Margin="30,20,0,0"
-                               FontWeight="Bold"
-                               FontSize="32"
-                               Foreground="#1B48BA" />
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="205*" />
+                        <RowDefinition Height="445*" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0">
+                        <TextBlock Text="Thông tin đầu sách"
+                                   Margin="30,20,0,0"
+                                   FontWeight="Bold"
+                                   FontSize="32"
+                                   Foreground="#1B48BA" />
 
-                    <!---BASEBOOK-->
-                    <StackPanel Orientation="Horizontal"
-                                Margin="0,20,0,0">
-                        <!---NAME-->
-                        <StackPanel Margin="30,0,0,0">
-                            <TextBlock Text="Tên đầu sách"
-                                       FontSize="20"
-                                       Foreground="#0266FD"
-                                       FontWeight="Bold" />
-                            <TextBox Text="{Binding BaseName,Mode=TwoWay}"
-                                     FontSize="18"
-                                     Width="430"
-                                     HorizontalAlignment="Left" />
+                        <!---BASEBOOK-->
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0,20,0,0">
+                            <!---NAME-->
+                            <StackPanel Margin="30,0,0,0">
+                                <TextBlock Text="Tên đầu sách"
+                                           FontSize="20"
+                                           Foreground="#0266FD"
+                                           FontWeight="Bold" />
+                                <TextBox Text="{Binding BaseName,Mode=TwoWay}"
+                                         FontSize="18"
+                                         Width="430"
+                                         HorizontalAlignment="Left">
+                                    <TextBox.Style>
+                                        <Style TargetType="TextBox"
+                                               BasedOn="{StaticResource MaterialDesignTextBox}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=authorStck,Path=Visibility}"
+                                                             Value="Collapsed">
+                                                    <Setter Property="IsEnabled"
+                                                            Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+                            </StackPanel>
+                            <!---GENRE-->
+                            <StackPanel Margin="50,0,0,0">
+                                <TextBlock Text="Thể loại"
+                                           FontSize="20"
+                                           Foreground="#0266FD"
+                                           FontWeight="Bold" />
+                                <ComboBox SelectedItem="{Binding BaseGenre}"
+                                          ItemsSource="{Binding ListGenre}"
+                                          Text="{Binding BaseGenre.name}"
+                                          FontSize="18"
+                                          DisplayMemberPath="name"
+                                          x:Name="genre"
+                                          Width="150"
+                                          HorizontalAlignment="Left"
+                                          ToolTip="{Binding ElementName=genre, Path=Text}">
+                                    <ComboBox.Style>
+                                        <Style TargetType="ComboBox"
+                                               BasedOn="{StaticResource MaterialDesignComboBox}">
+                                            <Style.Triggers>
+                                                <DataTrigger  Binding="{Binding ElementName=authorStck,Path=Visibility}"
+                                                              Value="Collapsed">
+                                                    <Setter Property="Focusable"
+                                                            Value="False" />
+                                                    <Setter Property="MaxDropDownHeight"
+                                                            Value="0" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ComboBox.Style>
+                                </ComboBox>
+                            </StackPanel>
                         </StackPanel>
-                        <!---GENRE-->
-                        <StackPanel Margin="50,0,0,0">
-                            <TextBlock Text="Thể loại"
-                                       FontSize="20"
-                                       Foreground="#0266FD"
-                                       FontWeight="Bold" />
-                            <ComboBox SelectedItem="{Binding BaseGenre}"
-                                      ItemsSource="{Binding ListGenre}"
-                                      Text="{Binding BaseGenre.name}"
-                                      FontSize="18"
+                        <StackPanel Orientation="Horizontal"
+                                    x:Name="authorStck"
+                                    Margin="0,20,0,0"
+                                    Visibility="{Binding ElementName=listview, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[2].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
+                            <StackPanel Margin="30,0,0,0"
+                                        VerticalAlignment="Bottom">
+                                <TextBlock Text="Tác giả"
+                                           FontSize="20"
+                                           Foreground="#0266FD"
+                                           FontWeight="Bold" />
+                            </StackPanel>
+                            <ComboBox Width="250"
+                                      Height="28"
+                                      Padding="0"
+                                      FontSize="20"
+                                      IsEditable="True"
+                                      Margin="10,0,0,0"
+                                      ItemsSource="{Binding ListAuthor}"
                                       DisplayMemberPath="name"
-                                      Width="150"
-                                      HorizontalAlignment="Left" />
+                                      VerticalAlignment="Bottom"
+                                      x:Name="authorCBB"
+                                      materialDesign:HintAssist.Hint="Chọn tác giả">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding IncreaseBaseAuthorCM}"
+                                                               CommandParameter="{Binding ElementName=authorCBB}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
+
+                            <Button Margin="170,0,0,0"
+                                    Width="135"
+                                    VerticalAlignment="Bottom"
+                                    Height="42"
+                                    FontSize="16"
+                                    materialDesign:ButtonAssist.CornerRadius="12"
+                                    Background="#0266FD"
+                                    FontWeight="Bold"
+                                    Command="{Binding SaveBaseBookCM}"
+                                    CommandParameter="{Binding ElementName=this}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="ContentSave"
+                                                                 Width="20"
+                                                                 Height="20"
+                                                                 Margin="0,0,15,0" />
+                                        <TextBlock Text="Lưu" />
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
                         </StackPanel>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal"
-                                Margin="0,20,0,0">
-                        <StackPanel Margin="30,0,0,0">
-                            <TextBlock Text="Tác giả"
-                                       FontSize="20"
-                                       Foreground="#0266FD"
-                                       FontWeight="Bold" />
-                        </StackPanel>
-                        <ComboBox Width="250"
-                                  Height="28"
-                                  Padding="0"
-                                  FontSize="20"
-                                  VerticalAlignment="Top"
-                                  IsEditable="True"
-                                  Margin="10,0,0,0"
-                                  ItemsSource="{Binding ListAuthor}"
-                                  DisplayMemberPath="name"
-                                  x:Name="authorCBB"
-                                  materialDesign:HintAssist.Hint="Chọn tác giả">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="SelectionChanged">
-                                    <i:InvokeCommandAction Command="{Binding IncreaseBaseAuthorCM}"
-                                                           CommandParameter="{Binding ElementName=authorCBB}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </ComboBox>
-
-                        <Button Margin="170,0,0,0"
-                                Width="135"
-                                VerticalAlignment="Bottom"
-                                Height="42"
-                                FontSize="16"
-                                materialDesign:ButtonAssist.CornerRadius="12"
-                                Background="#0266FD"
-                                FontWeight="Bold"
-                                Command="{Binding SaveBaseBookCM}"
-                                CommandParameter="{Binding ElementName=this}">
-                            <Button.Content>
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="ContentSave"
-                                                             Width="20"
-                                                             Height="20"
-                                                             Margin="0,0,15,0" />
-                                    <TextBlock Text="Lưu" />
-                                </StackPanel>
-                            </Button.Content>
-                        </Button>
-                    </StackPanel>
-
-                    <!---AUTHOR-->
-                    <Border CornerRadius="2"
-                            BorderThickness="1"
-                            BorderBrush="#BFBABA"
-                            Margin="10">
-                        <ListView Height="150"
-                                  ItemsSource="{Binding BaseAuthor,Mode=TwoWay}"
-                                  x:Name="authorLV">
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn Header="Tên tác giả"
-                                                    Width="250">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding name}"
-                                                           Margin="15,0,0,0" />
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                    <GridViewColumn Header="Ngày sinh">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding birthDate,StringFormat=dd/MM/yyyy}"
-                                                           Margin="15,0,0,0" />
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                    <GridViewColumn>
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <materialDesign:PackIcon Kind="Bin"
-                                                                         Width="30"
-                                                                         Height="30"
-                                                                         Foreground="Red"
-                                                                         Cursor="Hand">
-                                                    <i:Interaction.Triggers>
-                                                        <i:EventTrigger EventName="MouseLeftButtonUp">
-                                                            <i:InvokeCommandAction Command="{Binding ElementName=authorLV, Path=DataContext.DecreaseBaseAuthorCM}"
-                                                                                   CommandParameter="{Binding ElementName=authorLV}" />
-                                                        </i:EventTrigger>
-                                                    </i:Interaction.Triggers>
-                                                </materialDesign:PackIcon>
-
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-                    </Border>
-                    <!---LISTVIEW-->
-                    <StackPanel>
+                    <StackPanel Grid.Row="1">
+                        <!---AUTHOR-->
                         <Border CornerRadius="2"
                                 BorderThickness="1"
                                 BorderBrush="#BFBABA"
                                 Margin="10">
-                            <ListView  x:Name="basebookDetailLV"
-                                       SelectedItem="{Binding SelectedBaseBookDetail}"
-                                       ItemsSource="{Binding BaseBookDetail.books,UpdateSourceTrigger=PropertyChanged}"
-                                       Height="250">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="SelectionChanged">
-                                        <i:InvokeCommandAction Command="{Binding BindingBookInforCM}"
-                                                               CommandParameter="{Binding ElementName=basebookDetailLV}" />
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
+                            <ListView Height="150"
+                                      ItemsSource="{Binding BaseAuthor,Mode=TwoWay}"
+                                      x:Name="authorLV">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Mã sách">
+                                        <GridViewColumn Header="Tên tác giả"
+                                                        Width="250">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding id}"
-                                                               FontSize="18" />
+                                                    <TextBlock Text="{Binding name}"
+                                                               Margin="15,0,0,0" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        <GridViewColumn Header="NXB">
+                                        <GridViewColumn Header="Ngày sinh">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding publisher}"
-                                                               Margin="15,0,0,0"
-                                                               FontSize="18" />
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn Header="Năm XB">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock Text="{Binding yearOfPublication}"
-                                                               Margin="15,0,0,0"
-                                                               FontSize="18" />
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn Header="SL">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock Text="{Binding quantity}"
-                                                               Margin="15,0,0,0"
-                                                               FontSize="18" />
+                                                    <TextBlock Text="{Binding birthDate,StringFormat=dd/MM/yyyy}"
+                                                               Margin="15,0,0,0" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -234,15 +201,18 @@
                                                                              Width="30"
                                                                              Height="30"
                                                                              Foreground="Red"
-                                                                             Cursor="Hand">
+                                                                             Cursor="Hand"
+                                                                             Visibility="{Binding ElementName=authorLV, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[2].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                                                         <i:Interaction.Triggers>
                                                             <i:EventTrigger EventName="MouseLeftButtonUp">
-                                                                <i:InvokeCommandAction Command="{Binding ElementName=basebookDetailLV,Path=DataContext.DeleteBaseBookDetailCM}"
-                                                                                       CommandParameter="{Binding ElementName=basebookDetailLV}" />
+                                                                <i:InvokeCommandAction Command="{Binding ElementName=authorLV, Path=DataContext.DecreaseBaseAuthorCM}"
+                                                                                       CommandParameter="{Binding ElementName=authorLV}" />
                                                             </i:EventTrigger>
                                                         </i:Interaction.Triggers>
-
                                                     </materialDesign:PackIcon>
+
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -250,8 +220,93 @@
                                 </ListView.View>
                             </ListView>
                         </Border>
+                        <!---LISTVIEW-->
+                        <Label Content="Danh sách sách theo các năm xuất bản của đầu sách"
+                               Foreground="#0266FD"
+                               FontWeight="Bold"
+                               Margin="10,0,0,0"
+                               FontSize="20"/>
+                        <StackPanel>
+                            <Border CornerRadius="2"
+                                    BorderThickness="1"
+                                    BorderBrush="#BFBABA"
+                                    Margin="10">
+                                <ListView  x:Name="basebookDetailLV"
+                                           SelectedItem="{Binding SelectedBaseBookDetail}"
+                                           ItemsSource="{Binding BaseBookDetail.books,UpdateSourceTrigger=PropertyChanged}"
+                                           Height="215">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding BindingBookInforCM}"
+                                                                   CommandParameter="{Binding ElementName=basebookDetailLV}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="Mã sách">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding id}"
+                                                                   FontSize="18" />
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="NXB">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding publisher}"
+                                                                   Margin="15,0,0,0"
+                                                                   FontSize="18" />
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="Năm XB">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding yearOfPublication}"
+                                                                   Margin="15,0,0,0"
+                                                                   FontSize="18" />
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="SL">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding quantity}"
+                                                                   Margin="15,0,0,0"
+                                                                   FontSize="18" />
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn>
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <materialDesign:PackIcon Kind="Bin"
+                                                                                 Width="30"
+                                                                                 Height="30"
+                                                                                 Foreground="Red"
+                                                                                 Cursor="Hand"
+                                                                                 Visibility="{Binding ElementName=basebookDetailLV, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[2].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
+                                                            <i:Interaction.Triggers>
+                                                                <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                                    <i:InvokeCommandAction Command="{Binding ElementName=basebookDetailLV,Path=DataContext.DeleteBaseBookDetailCM}"
+                                                                                           CommandParameter="{Binding ElementName=basebookDetailLV}" />
+                                                                </i:EventTrigger>
+                                                            </i:Interaction.Triggers>
+
+                                                        </materialDesign:PackIcon>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </Border>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
+                </Grid>
             </materialDesign:Card>
 
             <materialDesign:Card Grid.Column="1"
@@ -274,7 +329,20 @@
                             <TextBox Text="{Binding Publisher,Mode=TwoWay}"
                                      FontSize="18"
                                      Width="250"
-                                     HorizontalAlignment="Left" />
+                                     HorizontalAlignment="Left">
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox"
+                                           BasedOn="{StaticResource MaterialDesignTextBox}">
+                                        <Style.Triggers>
+                                            <DataTrigger  Binding="{Binding ElementName=authorStck,Path=Visibility}"
+                                                          Value="Collapsed">
+                                                <Setter Property="IsEnabled"
+                                                        Value="False" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
                         </StackPanel>
                         <StackPanel Margin="70,0,0,0">
                             <TextBlock Text="Năm xuất bản"
@@ -285,24 +353,26 @@
                                      FontSize="18"
                                      Width="135"
                                      HorizontalAlignment="Left"
-                                     PreviewTextInput="TextBox_PreviewTextInput" />
+                                     PreviewTextInput="TextBox_PreviewTextInput">
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox"
+                                           BasedOn="{StaticResource MaterialDesignTextBox}">
+                                        <Style.Triggers>
+                                            <DataTrigger  Binding="{Binding ElementName=authorStck,Path=Visibility}"
+                                                          Value="Collapsed">
+                                                <Setter Property="IsEnabled"
+                                                        Value="False" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
                         </StackPanel>
                     </StackPanel>
-                    <!---PRICE-->
+                    <!---QTY-->
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,30,0,0">
                         <StackPanel Margin="30,0,0,0"
-                                    Orientation="Horizontal">
-                            <TextBlock Text="Đơn giá"
-                                       FontSize="20"
-                                       Foreground="#0266FD"
-                                       FontWeight="Bold" />
-                            <TextBlock Text="{Binding SelectedBaseBookDetail.price}"
-                                       FontSize="18"
-                                       Margin="20,0,0,0"
-                                       VerticalAlignment="Bottom" />
-                        </StackPanel>
-                        <StackPanel Margin="230,0,0,0"
                                     Orientation="Horizontal">
                             <TextBlock Text="Số lượng"
                                        FontSize="20"
@@ -314,19 +384,23 @@
                                        FontSize="18" />
                         </StackPanel>
                     </StackPanel>
-
+                    <Label Content="Danh sách cuốn sách theo năm xuất bản"
+                           Foreground="#0266FD"
+                           FontWeight="Bold"
+                           Margin="10,0,0,0"
+                           FontSize="20" />
                     <Border CornerRadius="2"
                             BorderThickness="1"
                             BorderBrush="#BFBABA"
                             Margin="10">
                         <ListView  x:Name="listview"
-                                   Height="350"
+                                   Height="320"
                                    SelectedItem="{Binding SelectedBookInfor}"
                                    ItemsSource="{Binding BookInforList}">
                             <ListView.View>
                                 <GridView>
 
-                                    <GridViewColumn Header="Mã sách">
+                                    <GridViewColumn Header="Mã cuốn sách">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding id}"
@@ -350,7 +424,10 @@
                                                                          Width="30"
                                                                          Height="30"
                                                                          Foreground="Red"
-                                                                         Cursor="Hand">
+                                                                         Cursor="Hand"
+                                                                         Visibility="{Binding ElementName=basebookDetailLV, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[2].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonUp">
                                                             <i:InvokeCommandAction Command="{Binding ElementName=listview,Path=DataContext.DeleteBookInforCM}"
@@ -389,10 +466,32 @@
                                 FontSize="20"
                                 materialDesign:ButtonAssist.CornerRadius="12"
                                 Background="#0266FD"
-                                Content="Lưu"
+                                Foreground="White"
                                 FontWeight="Bold"
                                 Command="{Binding UpdateBookCM}"
-                                CommandParameter="{Binding ElementName=this}" />
+                                CommandParameter="{Binding ElementName=this}">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="ContentSave"
+                                                             Width="20"
+                                                             Height="20"
+                                                             Margin="0,4,15,0" />
+                                    <TextBlock Text="Lưu" />
+                                </StackPanel>
+                            </Button.Content>
+                            <Button.Style>
+                                <Style TargetType="Button"
+                                       BasedOn="{StaticResource MaterialDesignFlatSecondaryButton}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=authorStck,Path=Visibility}"
+                                                     Value="Collapsed">
+                                            <Setter Property="Visibility"
+                                                    Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
                     </StackPanel>
                 </StackPanel>
             </materialDesign:Card>

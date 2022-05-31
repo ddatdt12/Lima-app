@@ -5,11 +5,18 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:cvt="clr-namespace:LibraryManagement.Views.Converter"
       mc:Ignorable="d"
       FontFamily="{StaticResource NunitoSans_Regular}"
       DataContext="{StaticResource ReaderCardVM}"
       Height="800"
+      x:Name="this"
       Width="1128">
+
+    <Page.Resources>
+        <cvt:PermissionConverter x:Key="PermissionConverter" />
+        <cvt:ChangeIconConverter x:Key="IconConverter" />
+    </Page.Resources>
 
     <Grid>
         <StackPanel>
@@ -26,107 +33,137 @@
                                  Margin="32,25,20,0">
                 <StackPanel Height="675">
 
-                    <StackPanel Orientation="Horizontal"
-                                Margin="20,20,0,0">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Search"
-                                                     Width="25"
-                                                     Height="25"
-                                                     VerticalAlignment="Bottom"
-                                                     Foreground="#0266FD" />
-                            <TextBox FontSize="18"
-                                     TextChanged="TextBox_TextChanged"
-                                     Name="SearchTbx"
-                                     Width="350"
-                                     Height="25"
-                                     VerticalAlignment="Bottom"
-                                     materialDesign:HintAssist.Hint="Tìm kiếm"
-                                     BorderBrush="#0266FD"
-                                     Padding="0"
-                                     BorderThickness="0,0,0,1">
-                            </TextBox>
+                    <Grid Margin="20,20,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Orientation="Horizontal"
+                                    Grid.Column="0">
+                            <StackPanel Margin="20,0,0,0">
+                                <Label Content="Tìm theo: "
+                                       FontSize="20"
+                                       Padding="0,10,0,0" />
+                                <ComboBox x:Name="FilterCbb"
+                                          Height="30"
+                                          Padding="0,8,0,0"
+                                          VerticalAlignment="Bottom"
+                                          FontSize="16"
+                                          SelectedIndex="0"
+                                          SelectedValuePath="Content">
+                                    <ComboBoxItem Content="Mã độc giả" />
+                                    <ComboBoxItem Content="Tên độc giả" />
+                                    <ComboBoxItem Content="Loại độc giả" />
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="20,0,0,0">
+                                <materialDesign:PackIcon Kind="Search"
+                                                         Width="25"
+                                                         Height="25"
+                                                         VerticalAlignment="Bottom"
+                                                         Foreground="#0266FD" />
+                                <TextBox FontSize="18"
+                                         TextChanged="TextBox_TextChanged"
+                                         Name="SearchTbx"
+                                         Width="350"
+                                         Height="25"
+                                         VerticalAlignment="Bottom"
+                                         materialDesign:HintAssist.Hint="Tìm kiếm"
+                                         BorderBrush="#0266FD"
+                                         Padding="0"
+                                         BorderThickness="0,0,0,1" />
+                            </StackPanel>
                         </StackPanel>
 
-                        <ComboBox x:Name="FilterCbb"
-                                  Height="30"
-                                  Width="100"
-                                  Padding="0,8,0,0"
-                                  VerticalAlignment="Bottom"
-                                  FontSize="16"
-                                  Margin="30,0,0,0"
-                                  SelectedIndex="0"
-                                  SelectedValuePath="Content">
-                            <ComboBoxItem Content="Mã độc giả" />
-                            <ComboBoxItem Content="Tên độc giả" />
-                        </ComboBox>
-
-                        <Button Margin="30,5,0,0"
-                                Background="#0266FD"
-                                Foreground="White"
-                                Height="42"
-                                Width="148"
-                                FontSize="16"
-                                Command="{Binding OpenReaderTypeWindowCM}"
-                                materialDesign:ButtonAssist.CornerRadius="8"
-                                Style="{StaticResource MaterialDesignFlatAccentBgButton}">
-                            <Button.Content>
+                        <StackPanel Grid.Column="1"
+                                    VerticalAlignment="Bottom"
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Right">
+                            <Button Margin="30,5,0,0"
+                                    Background="#0266FD"
+                                    Foreground="White"
+                                    Height="42"
+                                    Width="148"
+                                    FontSize="16"
+                                    FontWeight="Bold"
+                                    Padding="0"
+                                    Command="{Binding OpenReaderTypeWindowCM}"
+                                    materialDesign:ButtonAssist.CornerRadius="8"
+                                    Style="{StaticResource MaterialDesignFlatAccentBgButton}"
+                                    Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[7].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Plus"
+                                                                 Margin="0,0,5,0"
+                                                                 Height="23"
+                                                                 Width="23" />
+                                        <TextBlock Text="Loại độc giả" />
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                            <Button Margin="20,5,20,0"
+                                    Background="#0266FD"
+                                    Foreground="White"
+                                    Height="42"
+                                    Width="145"
+                                    FontSize="16"
+                                    FontWeight="Bold"
+                                    Command="{Binding OpenAddReaderCardWindowCM}"
+                                    materialDesign:ButtonAssist.CornerRadius="8"
+                                    Style="{StaticResource MaterialDesignFlatAccentBgButton}"
+                                    Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[7].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Plus"
                                                              Margin="0,0,5,0"
                                                              Height="23"
                                                              Width="23" />
-                                    <TextBlock Text="Loại độc giả" />
+                                    <TextBlock Text="Tạo thẻ" />
                                 </StackPanel>
-                            </Button.Content>
-                        </Button>
-                        <Button Margin="30,5,0,0"
-                                Background="#0266FD"
-                                Foreground="White"
-                                Height="42"
-                                Width="145"
-                                FontSize="16"
-                                Command="{Binding OpenAddReaderCardWindowCM}"
-                                materialDesign:ButtonAssist.CornerRadius="8"
-                                Style="{StaticResource MaterialDesignFlatAccentBgButton}">
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Plus"
-                                                         Margin="0,0,5,0"
-                                                         Height="23"
-                                                         Width="23" />
-                                <TextBlock Text="Tạo thẻ" />
-                            </StackPanel>
-                        </Button>
-                        <Button Margin="30,5,0,0"
-                                Background="#37B634"
-                                Foreground="White"
-                                Height="42"
-                                Width="142"
-                                FontSize="16"
-                                BorderBrush="Transparent"
-                                materialDesign:ButtonAssist.CornerRadius="8"
-                                Command="{Binding OpenPrintReaderCardCM}"
-                                Style="{StaticResource MaterialDesignFlatAccentBgButton}">
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Printer"
-                                                         Margin="0,0,20,0"
-                                                         Height="23"
-                                                         Width="23" />
-                                <TextBlock Text="In thẻ" />
-                            </StackPanel>
-                        </Button>
+                            </Button>
+                            <Button Margin="0,5,20,0"
+                                    Background="#37B634"
+                                    Foreground="White"
+                                    Height="42"
+                                    Width="142"
+                                    FontSize="16"
+                                    FontWeight="Bold"
+                                    BorderBrush="Transparent"
+                                    materialDesign:ButtonAssist.CornerRadius="8"
+                                    Command="{Binding OpenPrintReaderCardCM}"
+                                    Style="{StaticResource MaterialDesignFlatAccentBgButton}"
+                                    Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[6].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Printer"
+                                                             Margin="0,0,20,0"
+                                                             Height="23"
+                                                             Width="23" />
+                                    <TextBlock Text="In thẻ" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
 
-                    </StackPanel>
+                    </Grid>
+                    <Label Content="Danh sách độc giả"
+                           Foreground="#0266FD"
+                           FontWeight="Bold"
+                           Margin="10,30,0,0"
+                           FontSize="20" />
                     <Border BorderThickness="1"
                             BorderBrush="#BFBABA"
                             CornerRadius="2"
-                            Width="1032"
-                            Margin="0,30,0,0"
-                            Height="550">
+                            Width="1032">
                         <ListView Name="lvReader"
                                   ItemsSource="{Binding ListReaderCard}"
                                   SelectedItem="{Binding SelectedItem}"
-                                  Width="1032"
-                                  Height="550">
+                                  Height="520">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem"
                                        BasedOn="{StaticResource MaterialDesignGridViewItem}">
@@ -207,18 +244,19 @@
                                     <GridViewColumn>
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Border Cursor="Hand">
-                                                    <materialDesign:PackIcon Kind="LeadPencil"
-                                                                             Width="30"
-                                                                             Height="30"
-                                                                             Foreground="Green"
-                                                                             Cursor="Hand" />
+                                                <materialDesign:PackIcon Kind="{Binding ElementName=lvReader, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[7].isPermitted, 
+                    Converter={StaticResource IconConverter}}"
+                                                                         Width="30"
+                                                                         Height="30"
+                                                                         Foreground="Green"
+                                                                         Cursor="Hand">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonUp">
                                                             <i:InvokeCommandAction Command="{Binding ElementName=lvReader, Path=DataContext.OpenEditReaderCardCM}" />
                                                         </i:EventTrigger>
                                                     </i:Interaction.Triggers>
-                                                </Border>
+                                                </materialDesign:PackIcon>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
@@ -226,7 +264,10 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Border Cursor="Hand"
-                                                        Margin="-20,0,0,0">
+                                                        Margin="-20,0,0,0"
+                                                        Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[7].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                                                     <materialDesign:PackIcon Kind="Bin"
                                                                              Width="30"
                                                                              Height="30"

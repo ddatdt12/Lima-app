@@ -56,15 +56,6 @@ namespace LibraryManagement.Services
         {
             try
             {
-
-                var S = (from s in DataProvider.Ins.DB.Books
-                        where !s.isDeleted
-                        select s).ToList();
-                foreach (var item in S)
-                {
-                    var baseBook = item.BaseBook;
-                    var authors = item.BaseBook.Authors;
-                }
                 List<BookDTO> bookList = (from s in DataProvider.Ins.DB.Books
                                           where !s.isDeleted
                                           select new BookDTO
@@ -264,7 +255,7 @@ namespace LibraryManagement.Services
                 book.publisher = updatedBook.publisher;
                 book.yearOfPublication = updatedBook.yearOfPublication;
                 book.Price = updatedBook.price;
-                
+
                 context.SaveChanges();
                 return (true, "Cập nhật sách thành công!");
 
@@ -308,7 +299,8 @@ namespace LibraryManagement.Services
                     return (false, "Sách không tồn tại!");
                 }
 
-                if (bookInfo.status) { 
+                if (!bookInfo.status)
+                {
                     return (false, "Sách đang được mượn không thể xóa!");
                 }
                 book.quantity--;

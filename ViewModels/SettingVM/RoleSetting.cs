@@ -73,7 +73,7 @@ namespace LibraryManagement.ViewModels.SettingVM
         {
             if (SelectedRole is null) return;
 
-            if (SelectedRole.id == 1 || SelectedRole.id == 2)
+            if (SelectedRole.id == 1 || SelectedRole.id == 2 || SelectedRole.id == 3)
             {
                 MessageBox.Show("Không thể xoá loại vai trò này");
                 return;

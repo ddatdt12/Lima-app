@@ -288,7 +288,7 @@
                             BorderThickness="1.5"
                             Width="160"
                             Height="51"
-                            materialDesign:ButtonAssist.CornerRadius="15"
+                            materialDesign:ButtonAssist.CornerRadius="12"
                             VerticalContentAlignment="Center"
                             Content="Hủy bỏ"
                             Foreground="#0266FD"
@@ -297,12 +297,13 @@
                             Style="{StaticResource MaterialDesignFlatAccentBgButton}"
                             Click="Button_Click" />
                     <Button Background="#0266FD"
+                            x:Name="buttonSave"
                             BorderBrush="#0266FD"
                             Margin="32,0,32,0"
                             BorderThickness="1.5"
                             Width="160"
                             Height="51"
-                            materialDesign:ButtonAssist.CornerRadius="15"
+                            materialDesign:ButtonAssist.CornerRadius="12"
                             VerticalContentAlignment="Center"
                             Content="Lưu"
                             Foreground="White"
@@ -313,6 +314,12 @@
                             Style="{StaticResource MaterialDesignFlatAccentBgButton}" />
                 </StackPanel>
             </Grid>
+            <Grid Grid.ColumnSpan="2"
+                  Margin="0,0,0,100"
+                  x:Name="Layer"
+                  Background="Red"
+                  Opacity="0"
+                  Visibility="Collapsed" />
         </Grid>
     </Border>
 </Window>

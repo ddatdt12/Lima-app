@@ -55,8 +55,7 @@
                             FontSize="18"
                             Width="160"
                             SelectedDate="{Binding BirthDate,Mode=OneWayToSource,StringFormat=dd/MM/yyyy}"
-                            HorizontalAlignment="Left"
-                            Focusable="False" />
+                            HorizontalAlignment="Left" />
             </StackPanel>
 
             <StackPanel Orientation="Horizontal"
@@ -70,7 +69,7 @@
                         BorderBrush="#0266FD"
                         Background="Transparent"
                         Click="Button_Click" />
-                <Button Content="Hoàn thành"
+                <Button Content="Thêm mới"
                         Background="#0266FD"
                         materialDesign:ButtonAssist.CornerRadius="12"
                         Width="145"

@@ -68,7 +68,7 @@ namespace LibraryManagement.ViewModels.HomeVM
             FirstLoadCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 ReaderInfo = ReaderService.Ins.GetReaderInfo(MainWindowViewModel.CurrentUser.reader.id);
-                RuleFine = ParameterService.Ins.GetRuleValue(Utils.Rules.FINE) + "đ/ngày";
+                RuleFine =Utils.Helper.FormatVNMoney(ParameterService.Ins.GetRuleValue(Utils.Rules.FINE)) + "/ngày";
 
                 if (ReaderInfo is null) return;
 

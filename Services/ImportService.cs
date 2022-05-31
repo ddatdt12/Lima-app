@@ -40,7 +40,7 @@ namespace LibraryManagement.Services
             try
             {
                 var context = DataProvider.Ins.DB;
-                var importReceiptList = context.ImportReceipts.Select(imR => new ImportReceiptDTO
+                var importReceiptList = context.ImportReceipts.OrderByDescending(c => c.createdAt).Select(imR => new ImportReceiptDTO
                 {
                     id = imR.id,
                     totalPrice = imR.totalPrice,
@@ -183,7 +183,7 @@ namespace LibraryManagement.Services
             }
             catch (Exception e)
             {
-                var statusCode = e.Data.Keys.Cast<int>().Single();
+                var statusCode = e.Data.Keys.Cast<int>().SingleOrDefault();
 
                 if (statusCode == 400)
                 {

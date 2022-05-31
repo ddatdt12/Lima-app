@@ -1,5 +1,6 @@
 ﻿using LibraryManagement.DTOs;
 using LibraryManagement.Services;
+using LibraryManagement.Utils;
 using LibraryManagement.ViewModel;
 using LibraryManagement.Views.RentBook;
 using System;
@@ -23,6 +24,7 @@ namespace LibraryManagement.ViewModels.RentBookVM
         public ICommand AddBookCM { get; set; }
         public ICommand SelectedDateCM { get; set; }
         public ICommand FirstLoadCM { get; set; }
+        public ICommand LoadRuleCM { get; set; }
 
         #endregion
 
@@ -224,7 +226,6 @@ namespace LibraryManagement.ViewModels.RentBookVM
         public List<Book> CurrentPrint { get; set; }
         List<BookDTO> listBookDTO { get; set; }
 
-
         public RentBookViewModel()
         {
             listBookDTO = new List<BookDTO>();
@@ -361,7 +362,7 @@ namespace LibraryManagement.ViewModels.RentBookVM
                     if (success)
                     {
                         List<BorrowingCardDTO> listBorrowingCard = BorrowingReturnService.Ins.GetBorrowingCardsByReaderId(ReaderID);
-                        for(int i=0; i < RentBookList.Count; i++)
+                        for (int i = 0; i < RentBookList.Count; i++)
                         {
                             RentBookList[i].DueDate = ExpiredBookDate;
                         }
@@ -442,6 +443,16 @@ namespace LibraryManagement.ViewModels.RentBookVM
 
             });
 
+            LoadRuleCM = new RelayCommand<TextBlock>((p) => { return true; }, (p) =>
+            {
+                if (p is null) return;
+
+                var maxbook = ParameterService.Ins.GetRuleValue(Rules.ALLOWED_BOOK_MAXIMUM);
+                var maxday = ParameterService.Ins.GetRuleValue(Rules.MAXIMUM_NUMBER_OF_DAYS_TO_BORROW);
+
+                p.Text = $"Tối đa {maxbook} sách trong vòng {maxday} ngày";
+            });
+
 
         }
 
@@ -474,8 +485,6 @@ namespace LibraryManagement.ViewModels.RentBookVM
             }
             return listBook;
         }
-
-        
 
         public void ClearData()
         {
@@ -515,8 +524,6 @@ namespace LibraryManagement.ViewModels.RentBookVM
             //create document
             FixedDocument document = new FixedDocument();
             document.DocumentPaginator.PageSize = new Size(600, 350);
-
-
 
             foreach (var item in rl)
             {

@@ -120,7 +120,6 @@
                                    HorizontalAlignment="Left" />
                         <DatePicker Width="270"
                                     FontSize="15"
-                                    Focusable="False"
                                     SelectedDate="{Binding Birthday, StringFormat=dd/MM/yyyy}"
                                     materialDesign:HintAssist.Hint="Nhập ngày sinh"
                                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}">
@@ -256,7 +255,6 @@
                                         Margin="15,0,0,0"
                                         FontSize="16"
                                         Padding="0,0,0,0"
-                                        Focusable="False"
                                         SelectedDate="{Binding StartDate}"
                                         Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
                                         Height="37">
@@ -291,7 +289,7 @@
                             BorderThickness="1.5"
                             Width="160"
                             Height="51"
-                            materialDesign:ButtonAssist.CornerRadius="15"
+                            materialDesign:ButtonAssist.CornerRadius="12"
                             VerticalContentAlignment="Center"
                             Content="Hủy bỏ"
                             Foreground="#0266FD"
@@ -305,9 +303,9 @@
                             BorderThickness="1.5"
                             Width="160"
                             Height="51"
-                            materialDesign:ButtonAssist.CornerRadius="15"
+                            materialDesign:ButtonAssist.CornerRadius="12"
                             VerticalContentAlignment="Center"
-                            Content="Hoàn thành"
+                            Content="Thêm mới"
                             Foreground="White"
                             FontSize="18"
                             FontWeight="ExtraBold"

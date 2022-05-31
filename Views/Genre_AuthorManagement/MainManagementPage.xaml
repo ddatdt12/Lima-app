@@ -4,12 +4,18 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:cvt="clr-namespace:LibraryManagement.Views.Converter"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d"
       Height="800"
       Width="1128"
+      x:Name="this"
       FontFamily="{StaticResource NunitoSans_Regular}"
       DataContext="{StaticResource Genre_AuthorManagementVM}">
+
+    <Page.Resources>
+        <cvt:PermissionConverter x:Key="PermissionConverter" />
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -33,7 +39,7 @@
             <materialDesign:Card Width="530">
                 <StackPanel Margin="10">
 
-                    <TextBlock Text="Quản lý thể loại"
+                    <TextBlock Text="Danh sách thể loại"
                                FontSize="20"
                                FontWeight="Bold"
                                Foreground="#1B48BA" />
@@ -63,7 +69,10 @@
                                 Margin="125,0,0,0"
                                 materialDesign:ButtonAssist.CornerRadius="6"
                                 BorderThickness="0"
-                                Command="{Binding OpenAddGenreWindowCM}" />
+                                Command="{Binding OpenAddGenreWindowCM}"
+                                Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[5].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}" />
                     </StackPanel>
                     <Border CornerRadius="2"
                             BorderThickness="1"
@@ -95,11 +104,14 @@
                                     <GridViewColumn>
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <materialDesign:PackIcon Kind="Pencil"
+                                                <materialDesign:PackIcon Kind="LeadPencil"
                                                                          Width="30"
                                                                          Height="30"
                                                                          Foreground="Green"
-                                                                         Cursor="Hand">
+                                                                         Cursor="Hand"
+                                                                         Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[5].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonUp">
                                                             <i:InvokeCommandAction Command="{Binding ElementName=genrelistview,Path=DataContext.OpenEditGenreWindowCM}" />
@@ -116,7 +128,10 @@
                                                                          Width="30"
                                                                          Height="30"
                                                                          Foreground="Red"
-                                                                         Cursor="Hand">
+                                                                         Cursor="Hand"
+                                                                         Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[5].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonUp">
                                                             <i:InvokeCommandAction Command="{Binding ElementName=genrelistview,Path=DataContext.DeleteGenreCM}" />
@@ -140,7 +155,7 @@
                                  Margin="25,0,0,0">
                 <StackPanel Margin="10">
 
-                    <TextBlock Text="Quản lý tác giả"
+                    <TextBlock Text="Danh sách tác giả"
                                FontSize="20"
                                FontWeight="Bold"
                                Foreground="#1B48BA" />
@@ -170,7 +185,10 @@
                                 Margin="125,0,0,0"
                                 materialDesign:ButtonAssist.CornerRadius="6"
                                 BorderThickness="0"
-                                Command="{Binding OpenAddAuthorWindowCM}" />
+                                Command="{Binding OpenAddAuthorWindowCM}"
+                                Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[5].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}" />
                     </StackPanel>
                     <Border CornerRadius="2"
                             BorderThickness="1"
@@ -210,11 +228,14 @@
                                     <GridViewColumn>
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <materialDesign:PackIcon Kind="Pencil"
+                                                <materialDesign:PackIcon Kind="LeadPencil"
                                                                          Width="30"
                                                                          Height="30"
                                                                          Foreground="Green"
-                                                                         Cursor="Hand">
+                                                                         Cursor="Hand"
+                                                                         Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[5].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonUp">
                                                             <i:InvokeCommandAction Command="{Binding ElementName=authorlistview,Path=DataContext.OpenEditAuthorWindowCM}" />
@@ -231,7 +252,10 @@
                                                                          Width="30"
                                                                          Height="30"
                                                                          Foreground="Red"
-                                                                         Cursor="Hand">
+                                                                         Cursor="Hand"
+                                                                         Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[5].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonUp">
                                                             <i:InvokeCommandAction Command="{Binding ElementName=authorlistview,Path=DataContext.DeleteAuthorCM}" />

@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:LibraryManagement.Views.HistoryManagement"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:cvt="clr-namespace:LibraryManagement.Views.Converter"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d"
       Width="1088"
@@ -18,11 +19,31 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
+    <Page.Resources>
+        <cvt:VnFormatConverter x:Key="VnFormatConverter" />
+    </Page.Resources>
+
     <Grid>
         <StackPanel>
 
             <DockPanel Margin="30,25,0,0">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Margin="20,0,0,0">
+                    <Label Content="Tìm theo: "
+                           FontSize="20"
+                           Padding="0,10,0,0" />
+                    <ComboBox FontSize="18"
+                              SelectedIndex="0"
+                              Foreground="#5C5959"
+                              Name="FilterBox"
+                              BorderThickness="0,0,0,1"
+                              BorderBrush="#0266FD">
+                        <ComboBoxItem>Mã đơn</ComboBoxItem>
+                        <ComboBoxItem>Nhà cung cấp</ComboBoxItem>
+                        <ComboBoxItem>Nhân viên</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Margin="20,0,0,0">
 
                     <materialDesign:PackIcon Kind="Search"
                                              Width="25"
@@ -43,22 +64,6 @@
                     </TextBox>
 
                 </StackPanel>
-
-                <StackPanel Margin="20,0,0,0">
-                    <Label Content="Tìm theo"
-                           Height="16"
-                           Padding="0" />
-                    <ComboBox FontSize="18"
-                              SelectedIndex="0"
-                              Foreground="#5C5959"
-                              Name="FilterBox"
-                              BorderThickness="0,0,0,1"
-                              BorderBrush="#0266FD">
-                        <ComboBoxItem>Mã đơn</ComboBoxItem>
-                        <ComboBoxItem>Nhà cung cấp</ComboBoxItem>
-                        <ComboBoxItem>Nhân viên</ComboBoxItem>
-                    </ComboBox>
-                </StackPanel>
                 <Button Background="#37B634"
                         BorderBrush="Transparent"
                         materialDesign:ButtonAssist.CornerRadius="8"
@@ -70,14 +75,19 @@
                         Command="{Binding PrintReceiptCM}"
                         Content="In hoá đơn" />
             </DockPanel>
+            <Label Content="Danh sách hóa đơn nhập sách"
+                   Foreground="#0266FD"
+                   FontWeight="Bold"
+                   Margin="10,20,0,0"
+                   FontSize="20" />
             <Border CornerRadius="4"
-                    Margin="20"
+                    Margin="20,0,20,20"
                     BorderThickness="1"
                     BorderBrush="#BFBABA">
                 <ListView ItemsSource="{Binding ImportReceiptList}"
                           x:Name="lv"
                           SelectedItem="{Binding SelectedReceipt}"
-                          Height="540">
+                          Height="510">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Mã đơn">
@@ -101,7 +111,7 @@
                             <GridViewColumn Header="Ngày nhập">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding createdAt}"
+                                        <TextBlock Text="{Binding createdAt, StringFormat=dd/MM/yyyy HH:mm}"
                                                    FontSize="20"
                                                    Margin="15,0,0,0" />
                                     </DataTemplate>
@@ -119,7 +129,7 @@
                             <GridViewColumn Header="Tổng đơn">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding totalPrice}"
+                                        <TextBlock Text="{Binding totalPrice,Converter={StaticResource VnFormatConverter}}"
                                                    FontSize="20"
                                                    Margin="15,0,0,0" />
                                     </DataTemplate>

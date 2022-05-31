@@ -24,16 +24,32 @@ namespace LibraryManagement.ViewModels.SettingVM
 
         public SettingViewModel()
         {
-            RoleList = new ObservableCollection<RoleDTO>(RoleService.Ins.GetAllRoles());
+
 
             FirstLoadCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
+                RoleList = new ObservableCollection<RoleDTO>(RoleService.Ins.GetAllRoles());
+                foreach (var item in RoleList[1].roleDetaislList.ToArray())
+                {
+                    if (item.permissionName == "Truy cập trang chủ" || item.permissionName == "Tra cứu sách")
+                    {
+                        continue;
+                    }
+                    RoleList[1].roleDetaislList.Remove(item);
+                }
                 if (CurrentUser.type.Name == "Employee")
                 {
-                    p.Content = new RoleSettingPage();
+                    if (CurrentUser.role.roleDetaislList[15].isPermitted)
+                        p.Content = new RoleSettingPage();
+                    else
+                        p.Content = new GeneralSettingPage();
                 }
-                else if (CurrentUser.type.Name == "ReaderCard")
+                else if (CurrentUser.type.Name == "Reader")
                 {
+                    MainSettingPage page = GetWindowParent(p) as MainSettingPage;
+                    page.rolebtn.Visibility = Visibility.Collapsed;
+                    page.rulebtn.Visibility = Visibility.Collapsed;
+
                     p.Content = new ReaderSettingPage();
                 }
             });
@@ -81,7 +97,19 @@ namespace LibraryManagement.ViewModels.SettingVM
 
                 if (p != null)
                 {
-                    PermissionList = new ObservableCollection<RoleDetailDTO>(SelectedRole.roleDetaislList);
+                    if (SelectedRole.name == "Độc giả")
+                        PermissionList = new ObservableCollection<RoleDetailDTO>(SelectedRole.roleDetaislList);
+                    else
+                    {
+                        foreach (var item in SelectedRole.roleDetaislList.ToArray())
+                        {
+                            if (item.permissionName == "Truy cập trang chủ")
+                                SelectedRole.roleDetaislList.Remove(item);
+
+                        }
+                        PermissionList = new ObservableCollection<RoleDetailDTO>(SelectedRole.roleDetaislList);
+
+                    }
                     p.IsEnabled = false;
                     isEditPermis = false;
                 }
@@ -132,6 +160,17 @@ namespace LibraryManagement.ViewModels.SettingVM
                 return;
 
             });
+        }
+        FrameworkElement GetWindowParent(Frame p)
+        {
+            FrameworkElement parent = p;
+
+            while (parent.Parent != null)
+            {
+                parent = parent.Parent as FrameworkElement;
+            }
+
+            return parent;
         }
     }
 }

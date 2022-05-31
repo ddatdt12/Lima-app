@@ -69,7 +69,7 @@
                         BorderBrush="#0266FD"
                         Background="Transparent"
                         Click="Button_Click" />
-                <Button Content="Hoàn thành"
+                <Button Content="Lưu"
                         Background="#0266FD"
                         materialDesign:ButtonAssist.CornerRadius="12"
                         Width="145"

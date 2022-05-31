@@ -8,6 +8,7 @@
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d"
       Height="800"
+      x:Name="this"
       Width="1128"
       FontFamily="{StaticResource NunitoSans_Regular}"
       DataContext="{StaticResource BookManagementVM}">
@@ -21,6 +22,8 @@
 
     <Page.Resources>
         <cvt:ListToStringConverter x:Key="ListToStringConverter" />
+        <cvt:ChangeIconConverter x:Key="IconConverter" />
+        <cvt:PermissionConverter x:Key="PermissionConverter" />
     </Page.Resources>
 
     <Grid>
@@ -40,9 +43,27 @@
                 <StackPanel Height="675">
 
                     <StackPanel Orientation="Horizontal"
-                                Margin="20,20,0,0">
+                                Margin="0,20,0,0">
 
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Margin="20,0,0,0">
+                            <Label Content="Tìm theo: "
+                                   FontSize="20"
+                                   Padding="0,10,0,0" />
+                            <ComboBox FontSize="18"
+                                      SelectedIndex="0"
+                                      Foreground="#5C5959"
+                                      Name="FilterBox"
+                                      Padding="0,10,0,0"
+                                      BorderThickness="0,0,0,1"
+                                      BorderBrush="#0266FD">
+                                <ComboBoxItem>Mã sách</ComboBoxItem>
+                                <ComboBoxItem>Tên sách</ComboBoxItem>
+                                <ComboBoxItem>Tác giả</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="20,0,0,0">
 
                             <materialDesign:PackIcon Kind="Search"
                                                      Width="25"
@@ -64,30 +85,14 @@
 
                         </StackPanel>
 
-                        <StackPanel Margin="20,0,0,0">
-                            <Label Content="Tìm theo"
-                                   Height="16"
-                                   Padding="0" />
-                            <ComboBox FontSize="18"
-                                      SelectedIndex="0"
-                                      Foreground="#5C5959"
-                                      Name="FilterBox"
-                                      BorderThickness="0,0,0,1"
-                                      BorderBrush="#0266FD">
-                                <ComboBoxItem>Mã sách</ComboBoxItem>
-                                <ComboBoxItem>Tên sách</ComboBoxItem>
-                                <ComboBoxItem>Thể loại</ComboBoxItem>
-                                <ComboBoxItem>Tác giả</ComboBoxItem>
-                            </ComboBox>
-                        </StackPanel>
-
                         <Border Width="145"
                                 Height="33"
                                 Padding="5,0,5,0"
-                                Margin="245,0,0,0"
+                                Margin="290,0,0,0"
                                 BorderThickness="1"
                                 BorderBrush="#BFBABA"
-                                CornerRadius="2">
+                                CornerRadius="2"
+                                VerticalAlignment="Bottom">
                             <ComboBox BorderThickness="0"
                                       FontSize="18"
                                       materialDesign:HintAssist.Hint="Thể loại"
@@ -122,14 +127,16 @@
                         </Border>-->
 
                     </StackPanel>
-
+                    <Label Content="Danh sách đầu sách"
+                           Foreground="#0266FD"
+                           FontWeight="Bold"
+                           Margin="20,30,0,0"
+                           FontSize="20" />
                     <Border BorderThickness="1"
                             BorderBrush="#BFBABA"
                             CornerRadius="2"
                             Width="1032"
-                            Margin="0,30,0,0"
                             Height="550">
-
                         <ListView Width="1032"
                                   Height="550"
                                   ItemsSource="{Binding BaseBookList}"
@@ -138,7 +145,7 @@
                             <ListView.View>
                                 <GridView>
 
-                                    <GridViewColumn Header="Mã sách">
+                                    <GridViewColumn Header="Mã đầu sách">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding id}"
@@ -183,38 +190,12 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <!--<GridViewColumn Header="Nhà xuất bản">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding publisher}"
-                                                           FontSize="18"
-                                                           Margin="15,0,0,0" />
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>-->
-                                    <!--<GridViewColumn Header="Năm XB">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding yearOfPublication}"
-                                                           FontSize="18"
-                                                           Margin="15,0,0,0" />
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>-->
-                                    <!--<GridViewColumn Header="Số lượng"
-                                                    Width="120">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding quantity}"
-                                                           FontSize="18"
-                                                           Margin="15,0,0,0" />
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>-->
                                     <GridViewColumn>
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <materialDesign:PackIcon Kind="LeadPencil"
+                                                <materialDesign:PackIcon Kind="{Binding ElementName=listview, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[2].isPermitted, 
+                    Converter={StaticResource IconConverter}}"
                                                                          Width="30"
                                                                          Height="30"
                                                                          Foreground="Green"
@@ -235,7 +216,10 @@
                                                                          Width="30"
                                                                          Height="30"
                                                                          Foreground="Red"
-                                                                         Cursor="Hand">
+                                                                         Cursor="Hand"
+                                                                         Visibility="{Binding ElementName=listview, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[2].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonDown">
                                                             <i:InvokeCommandAction Command="{Binding ElementName=listview, Path=DataContext.DeleteBaseBookCM}"

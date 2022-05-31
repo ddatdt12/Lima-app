@@ -20,8 +20,8 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             set { _FinishDate = value; OnPropertyChanged(); }
         }
 
-        private String _Name;
-        public String Name
+        private string _Name;
+        public string Name
         {
             get { return _Name; }
             set { _Name = value; OnPropertyChanged(); }
@@ -31,7 +31,7 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
         public DateTime? Birthday
         {
             get { return _Birthday; }
-            set { _Birthday = value; OnPropertyChanged(); }
+            set {  _Birthday = value; OnPropertyChanged(); }
         }
 
         private string _Email;

@@ -27,6 +27,7 @@ namespace LibraryManagement.Views.Converter
         }
     }
 
+
     public class EmployeeRoleConverter : IValueConverter
     {
         // This converts the result object to the foreground.
@@ -58,7 +59,7 @@ namespace LibraryManagement.Views.Converter
             // Retrieve the format string and use it to format the value.
             string p = value as string;
 
-            if (p == "ReaderCard")
+            if (p == "Reader")
             {
                 return Visibility.Visible;
             }

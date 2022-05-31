@@ -4,12 +4,17 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:cvt="clr-namespace:LibraryManagement.Views.Converter"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d"
       Height="450"
       Width="800"
+      x:Name="this"
       FontFamily="{StaticResource NunitoSans_Regular}"
       DataContext="{StaticResource ImportBookVM}">
+    <Page.Resources>
+        <cvt:PermissionConverter x:Key="PermissionConverter" />
+    </Page.Resources>
 
     <StackPanel Background="White">
 
@@ -48,6 +53,18 @@
                               FontSize="18"
                               x:Name="genrebox"
                               materialDesign:HintAssist.Hint="Chọn thể loại">
+                        <ComboBox.Style>
+                            <Style TargetType="ComboBox"
+                                   BasedOn="{StaticResource MaterialDesignComboBox}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=icon, Path=Visibility}"
+                                                 Value="Collapsed">
+                                        <Setter Property="IsReadOnly"
+                                                Value="True" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ComboBox.Style>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="LostFocus">
                                 <i:InvokeCommandAction Command="{Binding GenreLostFocusCM}"
@@ -60,7 +77,11 @@
                                                  Foreground="Green"
                                                  Width="25"
                                                  Height="25"
-                                                 Cursor="Hand" />
+                                                 x:Name="icon"
+                                                 Cursor="Hand"
+                                                 Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[5].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}" />
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseLeftButtonDown">
                                 <i:InvokeCommandAction Command="{Binding AddNewGenreCM}" />
@@ -69,8 +90,8 @@
                     </Border>
                 </StackPanel>
                 <TextBlock Text="Vui lòng nhập thể loại"
-                           Foreground="Red" 
-                           Visibility="{Binding IsError}"/>
+                           Foreground="Red"
+                           Visibility="{Binding IsError}" />
             </StackPanel>
 
         </StackPanel>
@@ -93,6 +114,18 @@
                               Padding="0,5,0,0"
                               x:Name="authorCBB"
                               IsEditable="True">
+                        <ComboBox.Style>
+                            <Style TargetType="ComboBox"
+                                   BasedOn="{StaticResource MaterialDesignComboBox}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=icon, Path=Visibility}"
+                                                 Value="Collapsed">
+                                        <Setter Property="IsReadOnly"
+                                                Value="True" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ComboBox.Style>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
                                 <i:InvokeCommandAction Command="{Binding IncreaseBaseAuthorCM}"
@@ -105,7 +138,10 @@
                                                  Foreground="Green"
                                                  Width="25"
                                                  Height="25"
-                                                 Cursor="Hand" />
+                                                 Cursor="Hand"
+                                                 Visibility="{Binding ElementName=this, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[5].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}" />
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseLeftButtonDown">
                                 <i:InvokeCommandAction Command="{Binding OpenAddNewAuthorCM}"
@@ -189,7 +225,7 @@
                     Height="50"
                     Background="#0266FD"
                     Foreground="White"
-                    Content="Lưu đầu sách"
+                    Content="Thêm mới"
                     materialDesign:ButtonAssist.CornerRadius="12"
                     HorizontalAlignment="Right"
                     Command="{Binding AddNewBaseBookCM}" />

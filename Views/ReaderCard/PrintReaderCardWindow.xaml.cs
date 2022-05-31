@@ -8,6 +8,7 @@ namespace LibraryManagement.Views.ReaderCard
         public PrintReaderCardWindow()
         {
             InitializeComponent();
+            this.Language = System.Windows.Markup.XmlLanguage.GetLanguage("vi-Vn");
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -24,6 +25,7 @@ namespace LibraryManagement.Views.ReaderCard
                 if (printDialog.ShowDialog() == true)
                 {
                     printDialog.PrintVisual(Print, "ReaderCard");
+                    MessageBox.Show("In thành công!");
                     this.Close();
                 }
             }

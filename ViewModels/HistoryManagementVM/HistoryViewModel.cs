@@ -107,11 +107,11 @@ namespace LibraryManagement.ViewModels.HistoryManagementVM
                 if (SelectedBorrow is null) return;
                 PrintBorrowFunc();
                 SelectedBorrow = null;
-            }); 
+            });
             PrintReturnCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 if (SelectedBorrow is null) return;
-                if(SelectedBorrow.returnCard.returnedDate is null)
+                if (SelectedBorrow.returnCard.returnedDate is null)
                 {
                     MessageBox.Show("Sách này chưa được trả");
                     return;
@@ -121,11 +121,6 @@ namespace LibraryManagement.ViewModels.HistoryManagementVM
             });
             SelectedDateChangedCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                if (SelectedDate is null)
-                {
-                    BorrowReturnList = null;
-                    return;
-                };
                 string filter = SelectedFilter.Content.ToString();
                 switch (filter)
                 {
@@ -134,16 +129,13 @@ namespace LibraryManagement.ViewModels.HistoryManagementVM
                             BorrowReturnList = new ObservableCollection<BorrowingCardDTO>(BorrowingReturnService.Ins.GetBorrowingReturnCards());
                             return;
                         }
-                    case "Mượn sách":
+                    case "Theo ngày":
                         {
+                            if (SelectedDate is null)
+                                return;
+
                             BorrowReturnList = new ObservableCollection<BorrowingCardDTO>
                             (BorrowingReturnService.Ins.GetBorrowingReturnCards(borrowingDate: new DateTime(SelectedDate.Value.Year, SelectedDate.Value.Month, SelectedDate.Value.Day)));
-                            return;
-                        }
-                    case "Trả sách":
-                        {
-                            BorrowReturnList = new ObservableCollection<BorrowingCardDTO>
-                            (BorrowingReturnService.Ins.GetBorrowingReturnCards(returnDate: new DateTime(SelectedDate.Value.Year, SelectedDate.Value.Month, SelectedDate.Value.Day)));
                             return;
                         }
                 }

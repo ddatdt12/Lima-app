@@ -23,5 +23,10 @@ namespace LibraryManagement.Views.PunishBook
         {
             InitializeComponent();
         }
+
+        private void cancel_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

@@ -116,7 +116,19 @@ namespace LibraryManagement.Services
 
                 context.Employees.Add(newEmployee);
                 context.SaveChanges();
-
+                string roleName = context.Roles.Find(newAccount.roleId)?.name;
+                employee.account = new AccountDTO()
+                {
+                    id = newAccount.id,
+                    username = newAccount.username,
+                    password = newAccount.password,
+                    roleId = newAccount.roleId,
+                    role = new RoleDTO()
+                    {
+                        id = newAccount.roleId,
+                        name = roleName
+                    }
+                };
                 employee.id = newEmployee.id;
                 return (true, "Thêm nhân viên thành công thành công");
             }
@@ -165,8 +177,22 @@ namespace LibraryManagement.Services
 
                 acc.username = updatedEmployee.account.username;
                 acc.roleId = updatedEmployee.account.roleId;
-
                 context.SaveChanges();
+
+
+                context.Entry(acc).Reference(a => a.Role).Load();
+                updatedEmployee.account = new AccountDTO()
+                {
+                    id = acc.id,
+                    username = acc.username,
+                    password = acc.password,
+                    roleId = acc.roleId,
+                    role = new RoleDTO
+                    {
+                        id = acc.Role.id,
+                        name = acc.Role.name
+                    },
+                };
                 return (true, "Cập nhật thành công!");
             }
             catch (DbEntityValidationException e)
