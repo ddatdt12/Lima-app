@@ -85,6 +85,7 @@
                             <Button Margin="0,5,0,0"
                                     Background="#0266FD"
                                     Foreground="White"
+                                    Name="AddStaff"
                                     Height="42"
                                     Width="145"
                                     FontSize="16"
@@ -103,6 +104,7 @@
                             <Button Margin="20,5,20,0"
                                     Background="#37B634"
                                     Foreground="White"
+                                    Name="ExportExcel"
                                     Height="42"
                                     FontWeight="Bold"
                                     Width="145"
@@ -200,6 +202,7 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Border Cursor="Hand"
+                                                        Name="EditStaff"
                                                         Visibility="{Binding ElementName=this, 
                     Path=DataContext.CurrentUser.role.roleDetaislList[9].isPermitted, 
                     Converter={StaticResource PermissionConverter}}">
@@ -220,6 +223,7 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Border Cursor="Hand"
+                                                        Name="DeleteStaff"
                                                         Margin="-20,0,0,0"
                                                         Visibility="{Binding ElementName=this, 
                     Path=DataContext.CurrentUser.role.roleDetaislList[9].isPermitted, 
