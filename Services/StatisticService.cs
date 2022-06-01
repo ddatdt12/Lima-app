@@ -227,7 +227,7 @@ namespace LibraryManagement.Services
                     (c.returnedDate == null || date < c.returnedDate)).ToList().Select(c => new DelayReturnBookReportDetail
                     {
                         borrowingReturnCardId = c.id,
-                        numberOfDelayReturn = (c.returnedDate == null ? now.Subtract(c.dueDate).Days : c.returnedDate?.Subtract(c.dueDate).Days) ?? 0,
+                        numberOfDelayReturn = (c.returnedDate == null ? date.Date.Subtract(c.dueDate.Date).Days : c.returnedDate?.Date.Subtract(c.dueDate.Date).Days) ?? 0,
                         delayReturnBookReportId = report.id,
                     }).ToList();
 
@@ -288,8 +288,12 @@ namespace LibraryManagement.Services
             try
             {
                 date = date.Date;
-
                 var dateNow = DateTime.Now.Date;
+
+                if (date > dateNow)
+                {
+                    return (null, "Chưa có dữ liệu trong tương lai!");
+                }
                 var report = context.DelayReturnBookReports.Where(r => r.reportDate == date).FirstOrDefault();
 
                 if (report is null)
@@ -297,10 +301,6 @@ namespace LibraryManagement.Services
                     return (CreateDelayBookStatsReport(date), null);
                 }
 
-                if (date > dateNow)
-                {
-                    return (null, "Chưa có dữ liệu trong tương lai!");
-                }
 
                 var reportDTO = new DelayReturnBookReportDTO
                 {

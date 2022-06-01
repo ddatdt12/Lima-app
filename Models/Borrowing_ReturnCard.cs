@@ -11,7 +11,7 @@ namespace LibraryManagement.Models
 {
     using System;
     using System.Collections.Generic;
-
+    
     public partial class Borrowing_ReturnCard
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,7 +19,7 @@ namespace LibraryManagement.Models
         {
             this.DelayReturnBookReportDetails = new HashSet<DelayReturnBookReportDetail>();
         }
-
+    
         public string id { get; set; }
         public string readerCardId { get; set; }
         public System.DateTime borrowingDate { get; set; }
@@ -29,13 +29,12 @@ namespace LibraryManagement.Models
         public Nullable<System.DateTime> returnedDate { get; set; }
         public string return_employeeId { get; set; }
         public int fine { get; set; }
-
+    
         public virtual BookInfo BookInfo { get; set; }
-        public virtual Employee Employee { get; set; }
-        public virtual Employee Employee1 { get; set; }
+        public virtual ReaderCard ReaderCard { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DelayReturnBookReportDetail> DelayReturnBookReportDetails { get; set; }
-        public virtual ReaderCard ReaderCard { get; set; }
-
+        public virtual Employee Employee { get; set; }
+        public virtual Employee Employee1 { get; set; }
     }
 }

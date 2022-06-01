@@ -308,6 +308,12 @@ namespace LibraryManagement.Services
                 {
                     return (false, "Sách đang được mượn không thể xóa!");
                 }
+
+                if (bookInfo.Borrowing_ReturnCard.Count() > 0)
+                {
+                    return (false, "Sách đã từng được mượn không thể xóa!");
+                }
+
                 book.quantity--;
                 bookInfo.isDeleted = true;
                 DataProvider.Ins.DB.SaveChanges();

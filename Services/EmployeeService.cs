@@ -241,6 +241,16 @@ namespace LibraryManagement.Services
                 {
                     return (false, "Nhân viên không tồn tại");
                 }
+
+                if (employee.Borrowing_ReturnCard.Count() > 0
+                    || employee.Borrowing_ReturnCard1.Count() > 0
+                    || employee.FineReceipts.Count() > 0
+                    || employee.ImportReceipts.Count() > 0
+                    || employee.ReaderCards.Count() > 0)
+                {
+                    return (false, "Nhân viên đã hoạt động không thể xóa!");
+                }
+
                 employee.isDeleted = true;
                 context.SaveChanges();
                 return (true, "Xóa nhân viên thành công");

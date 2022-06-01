@@ -38,9 +38,9 @@ namespace LibraryManagement.Models
         public virtual Account Account { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Borrowing_ReturnCard> Borrowing_ReturnCard { get; set; }
-        public virtual Employee Employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FineReceipt> FineReceipts { get; set; }
         public virtual ReaderType ReaderType { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

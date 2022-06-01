@@ -226,6 +226,15 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
+                            <GridViewColumn Header="Hạn trả" Width="150">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding dueDate,StringFormat=dd/MM/yyyy}"
+                                                   FontSize="20"
+                                                   Margin="15,0,0,0" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                             <GridViewColumn Header="Ngày trả">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>

@@ -73,7 +73,7 @@
                         HorizontalAlignment="Right"
                         Margin="0,0,20,0"
                         Command="{Binding PrintReceiptCM}"
-                        Content="In hoá đơn" />
+                        Content="Xem hoá đơn" />
             </DockPanel>
             <Label Content="Danh sách hóa đơn nhập sách"
                    Foreground="#0266FD"

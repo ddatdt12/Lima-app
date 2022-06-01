@@ -102,7 +102,7 @@
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                     <GridViewColumn Header="Ngày mượn"
-                                                    Width="250">
+                                                    Width="200">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding BorrowingReturnCard.borrowingDate,StringFormat=dd/MM/yyyy}"
@@ -111,12 +111,22 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
+                                    <GridViewColumn Header="Hạn trả"
+                                                    Width="170">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding BorrowingReturnCard.dueDate,StringFormat=dd/MM/yyyy}"
+                                                           FontSize="20"
+                                                           Margin="0,0,0,0" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
                                     <GridViewColumn Header="Số ngày trễ">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding numberOfDelayReturn}"
                                                            FontSize="20"
-                                                           Margin="15,0,0,0" />
+                                                           Margin="45,0,0,0" />
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>

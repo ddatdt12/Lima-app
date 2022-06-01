@@ -26,8 +26,8 @@ namespace LibraryManagement.Models
         public System.DateTime createdAt { get; set; }
         public string employeeId { get; set; }
     
-        public virtual Employee Employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ImportReceiptDetail> ImportReceiptDetails { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

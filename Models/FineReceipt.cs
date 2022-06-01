@@ -20,7 +20,7 @@ namespace LibraryManagement.Models
         public string employeeId { get; set; }
         public string readerCardId { get; set; }
     
-        public virtual Employee Employee { get; set; }
         public virtual ReaderCard ReaderCard { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

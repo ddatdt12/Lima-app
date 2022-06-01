@@ -35,16 +35,16 @@ namespace LibraryManagement.Models
         public virtual DbSet<Borrowing_ReturnCard> Borrowing_ReturnCard { get; set; }
         public virtual DbSet<DelayReturnBookReport> DelayReturnBookReports { get; set; }
         public virtual DbSet<DelayReturnBookReportDetail> DelayReturnBookReportDetails { get; set; }
-        public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<FineReceipt> FineReceipts { get; set; }
         public virtual DbSet<Genre> Genres { get; set; }
         public virtual DbSet<ImportReceipt> ImportReceipts { get; set; }
         public virtual DbSet<ImportReceiptDetail> ImportReceiptDetails { get; set; }
         public virtual DbSet<Parameter> Parameters { get; set; }
         public virtual DbSet<Permission> Permissions { get; set; }
+        public virtual DbSet<ReaderCard> ReaderCards { get; set; }
         public virtual DbSet<ReaderType> ReaderTypes { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<RoleDetail> RoleDetails { get; set; }
-        public virtual DbSet<ReaderCard> ReaderCards { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
     }
 }
