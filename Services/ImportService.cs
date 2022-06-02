@@ -2,6 +2,7 @@
 using LibraryManagement.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 
@@ -35,12 +36,20 @@ namespace LibraryManagement.Services
         }
 
 
-        public List<ImportReceiptDTO> GetAllImportReceipt()
+        public List<ImportReceiptDTO> GetAllImportReceipt(DateTime? date = null)
         {
             try
             {
                 var context = DataProvider.Ins.DB;
-                var importReceiptList = context.ImportReceipts.OrderByDescending(c => c.createdAt).Select(imR => new ImportReceiptDTO
+                var importReceiptListQuery = context.ImportReceipts;
+
+                if(date != null)
+                {
+                    var compareDate = date?.Date ?? DateTime.Now.Date;
+                    importReceiptListQuery.Where(iR => DbFunctions.TruncateTime(iR.createdAt) == compareDate);
+                }
+
+                var importReceiptList = importReceiptListQuery.OrderByDescending(c => c.createdAt).Select(imR => new ImportReceiptDTO
                 {
                     id = imR.id,
                     totalPrice = imR.totalPrice,
