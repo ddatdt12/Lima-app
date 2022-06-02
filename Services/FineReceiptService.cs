@@ -77,6 +77,11 @@ namespace LibraryManagement.Services
                     },
                     createdAt = f.createdAt,
                     amount = f.amount,
+                    employee = new EmployeeDTO
+                    {
+                        name = f.Employee.name,
+                        id = f.Employee.id
+                    }
                 }).ToList();
 
 
