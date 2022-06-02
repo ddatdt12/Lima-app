@@ -41,7 +41,6 @@ namespace LibraryManagement.Services
         {
             try
             {
-
                 var context = DataProvider.Ins.DB;
                 ReaderCard reader = context.ReaderCards.Find(readerId);
                 if (reader is null || reader.isDeleted)
@@ -75,7 +74,6 @@ namespace LibraryManagement.Services
                         email = reader.Employee.email,
                         gender = reader.gender,
                     },
-
                 };
                 readerCard.haveDelayBook = reader.Borrowing_ReturnCard.Count(b => b.returnedDate == null && b.dueDate < DateTime.Now) > 0;
                 readerCard.numberOfBorrowingBooks = reader.Borrowing_ReturnCard.Count(b => b.returnedDate == null);
@@ -91,38 +89,47 @@ namespace LibraryManagement.Services
         {
             try
             {
-                List<ReaderCardDTO> employees = (from s in DataProvider.Ins.DB.ReaderCards
-                                                 select new ReaderCardDTO
-                                                 {
-                                                     id = s.id,
-                                                     name = s.name,
-                                                     address = s.address,
-                                                     expiryDate = s.expiryDate,
-                                                     employeeId = s.employeeId,
-                                                     readerTypeId = s.readerTypeId,
-                                                     totalFine = s.totalFine ?? 0,
-                                                     readerType = new ReaderTypeDTO { id = s.ReaderType.id, name = s.ReaderType.name },
-                                                     email = s.email,
-                                                     createdAt = s.createdAt,
-                                                     gender = s.gender,
-                                                     birthDate = s.birthDate,
-                                                     employee = new EmployeeDTO
-                                                     {
-                                                         id = s.Employee.id,
-                                                         email = s.Employee.email,
-                                                         name = s.Employee.name,
-                                                         birthDate = s.Employee.birthDate,
-                                                         gender = s.Employee.gender,
-                                                         phoneNumber = s.Employee.phoneNumber,
-                                                     },
-                                                 }).ToList();
-                return employees;
+                var context = DataProvider.Ins.DB;
+                List<ReaderCardDTO> readerCards = (from s in context.ReaderCards
+                                                   select new ReaderCardDTO
+                                                   {
+                                                       id = s.id,
+                                                       name = s.name,
+                                                       address = s.address,
+                                                       expiryDate = s.expiryDate,
+                                                       employeeId = s.employeeId,
+                                                       readerTypeId = s.readerTypeId,
+                                                       totalFine = s.totalFine ?? 0,
+                                                       readerType = new ReaderTypeDTO { id = s.ReaderType.id, name = s.ReaderType.name },
+                                                       email = s.email,
+                                                       createdAt = s.createdAt,
+                                                       gender = s.gender,
+                                                       birthDate = s.birthDate,
+                                                       employee = new EmployeeDTO
+                                                       {
+                                                           id = s.Employee.id,
+                                                           email = s.Employee.email,
+                                                           name = s.Employee.name,
+                                                           birthDate = s.Employee.birthDate,
+                                                           gender = s.Employee.gender,
+                                                           phoneNumber = s.Employee.phoneNumber,
+                                                       },
+                                                       renewalHistories = s.RenewalHistories.Select(h => new RenewalHistoryDTO
+                                                       {
+                                                           id = h.id,
+                                                           renewalDate = h.renewalDate,
+                                                           createdAt = h.createdAt,
+                                                           endDate = h.endDate,
+                                                           readerId = h.readerId,
+                                                       }).ToList(),
+                                                   }).ToList();
+
+                return readerCards;
             }
             catch (Exception e)
             {
                 throw e;
             }
-
         }
 
         public (bool, string message) CreateNewReaderCard(ReaderCardDTO readerCard)
@@ -169,6 +176,19 @@ namespace LibraryManagement.Services
                     };
 
                     context.ReaderCards.Add(newReaderCard);
+
+                    //Renewal History
+
+                    var renewalHistory = new RenewalHistory
+                    {
+                        readerId = readerCardId,
+                        renewalDate = newReaderCard.createdAt,
+                        endDate = newReaderCard.expiryDate,
+                        createdAt = DateTime.Now
+                    };
+
+                    context.RenewalHistories.Add(renewalHistory);
+
                     context.SaveChanges();
                     transaction.Commit();
                     readerCard.id = newReaderCard.id;
@@ -194,6 +214,42 @@ namespace LibraryManagement.Services
             }
 
         }
+        public (bool, string message) RenewReaderCardTime(string readerCardId, DateTime renewalDate, DateTime endDate)
+        {
+            try
+            {
+                LibraryManagementEntities context = DataProvider.Ins.DB;
+                var reader = context.ReaderCards.Find(readerCardId);
+                if (reader is null)
+                {
+                    return (false, "Độc giả không tồn tại!");
+                }
+
+                reader.expiryDate = endDate;
+
+                var renewal = new RenewalHistory
+                {
+                    readerId = readerCardId,
+                    createdAt = DateTime.Now,
+                    renewalDate = renewalDate,
+                    endDate = endDate,
+                };
+
+                context.RenewalHistories.Add(renewal);
+                context.SaveChanges();
+                return (true, "Gia hạn thẻ độc giả thành công");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (false, e.Message);
+
+            }
+            catch (DbUpdateException e)
+            {
+                return (false, e.Message);
+            }
+        }
+
 
         public (bool, string message) UpdateReaderCard(ReaderCardDTO updatedReaderCard)
         {

@@ -24,7 +24,7 @@ namespace LibraryManagement.DTOs
         public EmployeeDTO employee { get; set; }
         public ReaderTypeDTO readerType { get; set; }
         public AccountDTO account { get; set; }
-
+        public  List<RenewalHistoryDTO> renewalHistories { get; set; }
 
         public bool haveDelayBook { get; set; }
         public int numberOfBorrowingBooks { get; set; }

@@ -292,30 +292,18 @@ namespace LibraryManagement.Services
                 return (false, "Lỗi hệ thống!");
             }
         }
-        public (bool isSuccess, string message) UpdateBookInfoStatus(string bookInfoId)
+        public (bool isSuccess, string message) UpdateBookInfoStatus(string bookInfoId, BookInfoStatus status)
         {
             try
             {
                 var bookInfo = DataProvider.Ins.DB.BookInfoes.Find(bookInfoId);
 
-                var book = DataProvider.Ins.DB.Books.Find(bookInfo.bookId);
                 if (bookInfo is null || bookInfo.isDeleted)
                 {
                     return (false, "Sách không tồn tại!");
                 }
 
-                if (bookInfo.status == (int)BookInfoStatus.BORROWING)
-                {
-                    return (false, "Sách đang được mượn không thể xóa!");
-                }
-
-                if (bookInfo.Borrowing_ReturnCard.Count() > 0)
-                {
-                    return (false, "Sách đã từng được mượn không thể xóa!");
-                }
-
-                book.quantity--;
-                bookInfo.isDeleted = true;
+                bookInfo.status = (int)status;
                 DataProvider.Ins.DB.SaveChanges();
                 return (true, "Xóa sách thành công!");
             }

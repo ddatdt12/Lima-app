@@ -86,6 +86,7 @@
     </ApplicationDefinition>
     <Compile Include="DTOs\DelayReturnBookReportDTO.cs" />
     <Compile Include="DTOs\BorrowedGenreReportDTO.cs" />
+    <Compile Include="DTOs\RewalHistoryDTO.cs" />
     <Compile Include="DTOs\ReturnCardDTO.cs" />
     <Compile Include="DTOs\BorrowingCardDTO.cs" />
     <Compile Include="DTOs\ReaderTypeDTO.cs" />

@@ -82,12 +82,12 @@ namespace LibraryManagement.Services
                 var context = DataProvider.Ins.DB;
 
                 var borrowingCardsQuery = context.Borrowing_ReturnCard;
-                var borrowingCards =borrowingCardsQuery as IQueryable<Borrowing_ReturnCard>;
+                var borrowingCards = borrowingCardsQuery as IQueryable<Borrowing_ReturnCard>;
                 if (borrowingDate != null)
                 {
                     borrowingCards = borrowingCardsQuery.Where(b => DbFunctions.TruncateTime(b.borrowingDate) == borrowingDate);
                 }
-                 if (returnDate != null)
+                if (returnDate != null)
                 {
                     borrowingCards = borrowingCardsQuery.Where(b => b.returnedDate != null && DbFunctions.TruncateTime(b.returnedDate) == returnDate);
                 }
@@ -127,7 +127,7 @@ namespace LibraryManagement.Services
                     },
                     returnCard = new ReturnCardDTO
                     {
-                        fine= b.fine,
+                        fine = b.fine,
                         returnedDate = b.returnedDate,
                         employee = new EmployeeDTO
                         {
@@ -244,7 +244,7 @@ namespace LibraryManagement.Services
             }
         }
 
-        public (bool, string message) CreateReturnCardList(List<ReturnCardDTO> returnCardList)
+        public (bool, string message) CreateReturnCardList(List<ReturnCardDTO> returnCardList,List<string> spoiledBookIds)
         {
             try
             {
@@ -252,6 +252,7 @@ namespace LibraryManagement.Services
 
                 var borrowingCardIdList = returnCardList.Select(r => r.borrowingCardId).ToList();
                 var returnCardDictionary = returnCardList.ToDictionary(r => r.id, r => r);
+                var spoiledBooksDictionary = spoiledBookIds.ToDictionary(b => b, b => b);
 
                 var borrowingCardQuery = context.Borrowing_ReturnCard.Where(b => borrowingCardIdList.Contains(b.id) && b.returnedDate == null);
 
@@ -285,7 +286,14 @@ namespace LibraryManagement.Services
                 var bookInfoes = context.BookInfoes.Where(b => bookInfoIdList.Contains(b.id)).ToList();
                 foreach (var bI in bookInfoes)
                 {
-                    bI.status = (int)BookInfoStatus.AVAILABLE;
+                    if (spoiledBooksDictionary.ContainsKey(readerCardId))
+                    {
+                        bI.status = (int)BookInfoStatus.SPOILED;
+                    }
+                    else
+                    {
+                        bI.status = (int)BookInfoStatus.AVAILABLE;
+                    }
                 }
                 context.ReaderCards.Find(readerCardId).totalFine += totalFine;
 
