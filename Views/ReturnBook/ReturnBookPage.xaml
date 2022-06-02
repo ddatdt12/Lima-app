@@ -26,7 +26,7 @@
     <Page.Resources>
         <cvt:VnFormatConverter x:Key="VnFormatConverter" />
     </Page.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="7*" />
@@ -149,6 +149,14 @@
                                                                TextAlignment="Center"
                                                                TextTrimming="CharacterEllipsis"
                                                                Margin="0 0 15 0" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Hỏng/Mất">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <CheckBox Margin="40,0,0,0"
+                                                              materialDesign:CheckBoxAssist.CheckBoxSize="25"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -332,7 +340,7 @@
                                  Foreground="#5C5959"
                                  BorderBrush="#0266FD"
                                  TextAlignment="Right"
-                                 CharacterCasing="Upper"/>
+                                 CharacterCasing="Upper" />
                     </Grid>
                     <Button Command="{Binding CheckReaderCardCM}"
                             Width="100"

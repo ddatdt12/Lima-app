@@ -39,6 +39,15 @@
                              FontWeight="Bold"
                              Command="{Binding OpenBorrowReturnPageCM}"
                              CommandParameter="{Binding ElementName=mainFrame}" />
+                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
+                             Foreground="#1B48BA"
+                             IsChecked="False"
+                             Content="Hóa đơn phạt"
+                             FontSize="18"
+                             Width="200"
+                             FontWeight="Bold"
+                             Command="{Binding OpenFinePageCM}"
+                             CommandParameter="{Binding ElementName=mainFrame}" />
             </StackPanel>
             <materialDesign:Card   Margin="20,0,20,0">
                 <Frame x:Name="mainFrame"

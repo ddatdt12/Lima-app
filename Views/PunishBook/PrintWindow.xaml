@@ -98,7 +98,7 @@
                                        x:Name="punishCard" />
                         </DockPanel>
                         <DockPanel Margin="50,0,20,0">
-                            <TextBlock Text="Ngày nhập:"
+                            <TextBlock Text="Ngày lập:"
                                        FontSize="18"
                                        FontWeight="Bold" />
                             <TextBlock FontSize="18"
@@ -238,10 +238,10 @@
                     Height="45"
                     materialDesign:ButtonAssist.CornerRadius="8"
                     Background="#0266FD"
-                    Content="In thẻ"
+                    Content="In hóa đơn"
                     FontWeight="Bold"
                     FontSize="16"
-                    Command="{Binding PrintCM}"
+                    Click="print_Click"
                     HorizontalAlignment="Right"
                     Margin="0,0,40,10" />
 

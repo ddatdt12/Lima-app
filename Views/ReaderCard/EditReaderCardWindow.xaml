@@ -16,6 +16,7 @@
         AllowsTransparency="True"
         FontFamily="{StaticResource NunitoSans_Regular}"
         WindowStyle="None">
+
     <Border Background="White"
             CornerRadius="30"
             BorderBrush="Black"
@@ -23,12 +24,14 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20" />
-                <ColumnDefinition />
+                <ColumnDefinition Width="998.5" />
+                <ColumnDefinition Width="400" />
             </Grid.ColumnDefinitions>
             <Border Background="#0266FD"
                     CornerRadius="30,0,0,30"
                     Grid.Column="0" />
-            <Grid Grid.Column="1">
+            <Grid Grid.Column="1"
+                  MouseDown="Grid_MouseDown">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100" />
                     <RowDefinition Height="100" />
@@ -239,43 +242,50 @@
                                     Value="18" />
                         </Style>
                     </WrapPanel.Resources>
-                    <StackPanel Margin="216,25,0,0">
+                    <StackPanel Margin="0,10,0,0">
                         <TextBlock Text="Hạn sử dụng"
                                    FontSize="20"
                                    Foreground="#0266FD"
                                    FontWeight="ExtraBold"
                                    HorizontalAlignment="Left" />
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Từ ngày"
-                                       FontSize="18"
-                                       Margin="0,15,0,0"
-                                       HorizontalAlignment="Left" />
-                            <DatePicker Width="150"
-                                        Margin="15,0,0,0"
-                                        FontSize="16"
-                                        Padding="0,0,0,0"
-                                        SelectedDate="{Binding StartDate}"
-                                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
-                                        Height="37">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="SelectedDateChanged">
-                                        <i:InvokeCommandAction Command="{Binding SelectedDateCM}" />
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </DatePicker>
-                            <TextBlock Text="Đến ngày"
-                                       FontSize="18"
-                                       Margin="20,15,0,0"
-                                       HorizontalAlignment="Left" />
-                            <DatePicker x:Name="ExpirationDate"
-                                        Width="150"
-                                        Margin="33,0,0,0"
-                                        FontSize="16"
-                                        Padding="0,0,0,0"
-                                        Height="37"
-                                        IsEnabled="False"
-                                        SelectedDate="{Binding FinishDate}"
-                                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                            <StackPanel Margin="0,0,200,0">
+                                <TextBlock Text="Đăng ký"
+                                           FontSize="18"
+                                           HorizontalAlignment="Left" />
+                                <DatePicker Width="150"
+                                            FontSize="16"
+                                            IsEnabled="False"
+                                            Padding="0"
+                                            SelectedDate="{Binding CreateAt}"
+                                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
+                                            Height="37" />
+                            </StackPanel>
+                            <StackPanel Margin="0,0,120,0">
+                                <TextBlock Text="Từ ngày"
+                                           FontSize="18"
+                                           HorizontalAlignment="Left" />
+                                <DatePicker Width="150"
+                                            FontSize="16"
+                                            IsEnabled="False"
+                                            Padding="0"
+                                            SelectedDate="{Binding StartDate}"
+                                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
+                                            Height="37" />
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Đến ngày"
+                                           FontSize="18"
+                                           HorizontalAlignment="Left" />
+                                <DatePicker x:Name="ExpirationDate"
+                                            Width="150"
+                                            FontSize="16"
+                                            Height="37"
+                                            Padding="0"
+                                            IsEnabled="False"
+                                            SelectedDate="{Binding FinishDate}"
+                                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                            </StackPanel>
                         </StackPanel>
                     </StackPanel>
                 </WrapPanel>
@@ -320,6 +330,67 @@
                   Background="Red"
                   Opacity="0"
                   Visibility="Collapsed" />
+            <!--BUTTON LỊCH SỬ GIA HẠN-->
+            <Border Grid.Column="1"
+                    BorderThickness="2,0,0,0"
+                    BorderBrush="#1B48BA"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Right">
+                <Label VerticalAlignment="Center">
+                    <Label.Content>
+                        <materialDesign:PackIcon Kind="ArrowRightDropCircle"
+                                                 Width="30"
+                                                 Height="30"
+                                                 x:Name="RotateIcon"
+                                                 Cursor="Hand"
+                                                 Foreground="#1B48BA"
+                                                 MouseLeftButtonUp="PackIcon_MouseLeftButtonUp" />
+
+                    </Label.Content>
+                </Label>
+            </Border>
+            <StackPanel Grid.Column="2"
+                        x:Name="rightside"
+                        Visibility="Collapsed"
+                        Margin="0,40,20,0">
+                <TextBlock Text="Lịch sử gia hạn thẻ"
+                           FontSize="32"
+                           Foreground="#1B48BA"
+                           FontWeight="Bold" />
+                <Border BorderThickness="1"
+                        CornerRadius="2"
+                        BorderBrush="LightGray"
+                        Height="420">
+                    <ListView ItemsSource="{Binding CardHistoryList,Mode=OneWay}"
+                              Height="420">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Lần gia hạn">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Ngày gia hạn">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Ngày hết hạn">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Border>
+            </StackPanel>
         </Grid>
     </Border>
 </Window>

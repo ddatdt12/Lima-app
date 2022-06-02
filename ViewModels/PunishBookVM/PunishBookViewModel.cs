@@ -5,10 +5,7 @@ using LibraryManagement.Views.PunishBook;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Markup;
 
 namespace LibraryManagement.ViewModels.PunishBookVM
 {
@@ -91,12 +88,6 @@ namespace LibraryManagement.ViewModels.PunishBookVM
             set { _FineReceipt = value; OnPropertyChanged(); }
         }
 
-        private PrintWindow _printWindow;
-        public PrintWindow printWindow
-        {
-            get { return _printWindow; }
-            set { _printWindow = value; OnPropertyChanged(); }
-        }
 
         private ObservableCollection<Book> _ExpiredBookList;
         public ObservableCollection<Book> ExpiredBookList
@@ -140,8 +131,7 @@ namespace LibraryManagement.ViewModels.PunishBookVM
                     ExpiredBookList.Remove(SelectedExpiredBook);
                     ExpiredBookTotal = ExpiredBookList.Count;
                 }
-            }
-               );
+            });
 
             CheckReaderCardCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -158,8 +148,7 @@ namespace LibraryManagement.ViewModels.PunishBookVM
                 TotalPaid = 0;
                 ExpiredBookList.Clear();
                 CanPaidFine = true;
-            }
-               );
+            });
 
             ConfirmCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -208,8 +197,7 @@ namespace LibraryManagement.ViewModels.PunishBookVM
                 {
                     MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-            }
-               );
+            });
 
             CloseWindowCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
@@ -224,13 +212,7 @@ namespace LibraryManagement.ViewModels.PunishBookVM
                         return;
                     }
                 }
-            }
-               );
-            PrintCM = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                OpenPrintWindow(FineReceipt, printWindow);
-            }
-              );
+            });
         }
 
         public bool IsReaderCardValid()

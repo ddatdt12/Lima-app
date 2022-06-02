@@ -52,6 +52,7 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             ReaderType = null;
             StartDate = null;
             FinishDate = null;
+            CardHistoryList = null;
         }
 
 

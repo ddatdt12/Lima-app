@@ -35,7 +35,7 @@ namespace LibraryManagement.Services
         }
 
 
-        public List<ImportReceiptDTO> GetAllImportReceipt()
+        public List<ImportReceiptDTO> GetAllImportReceipt(DateTime? date = null)
         {
             try
             {

@@ -1,11 +1,19 @@
 ﻿using LibraryManagement.ViewModels;
 using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace LibraryManagement.ViewModel.ReaderCardVM
 {
     public partial class ReaderCardViewModel : BaseViewModel
     {
+        private DateTime? _CreateAt;
+        public DateTime? CreateAt
+        {
+            get { return _CreateAt; }
+            set { _CreateAt = value; OnPropertyChanged(); }
+        }
+
         private DateTime? _StartDate;
         public DateTime? StartDate
         {
@@ -31,7 +39,7 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
         public DateTime? Birthday
         {
             get { return _Birthday; }
-            set {  _Birthday = value; OnPropertyChanged(); }
+            set { _Birthday = value; OnPropertyChanged(); }
         }
 
         private string _Email;
@@ -61,6 +69,14 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             get { return _ReaderType; }
             set { _ReaderType = value; OnPropertyChanged(); }
         }
+
+        private ObservableCollection<string> _CardHistoryList;
+        public ObservableCollection<string> CardHistoryList
+        {
+            get { return _CardHistoryList; }
+            set { _CardHistoryList = value; OnPropertyChanged(); }
+        }
+
 
         public ICommand CheckedSexCM { get; set; }
         public ICommand AddReaderCardCM { get; set; }

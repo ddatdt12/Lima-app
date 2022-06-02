@@ -25,7 +25,9 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             Email = SelectedItem.email;
             Adress = SelectedItem.address;
             ReaderType = SelectedItem.readerType.name;
-            StartDate = SelectedItem.createdAt;
+            CreateAt = SelectedItem.createdAt;
+            //StartDate = SelectedItem.;//fixx
+            //CardHistoryList = SelectedItem 
             FinishDate = SelectedItem.expiryDate;
         }
     }

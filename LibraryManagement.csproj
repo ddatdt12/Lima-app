@@ -257,6 +257,9 @@
     <Compile Include="Views\HistoryManagement\BorrowReturnPage.xaml.cs">
       <DependentUpon>BorrowReturnPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\HistoryManagement\FinePage.xaml.cs">
+      <DependentUpon>FinePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HistoryManagement\ImportReceiptPage.xaml.cs">
       <DependentUpon>ImportReceiptPage.xaml</DependentUpon>
     </Compile>
@@ -406,6 +409,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\HistoryManagement\BorrowReturnPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HistoryManagement\FinePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

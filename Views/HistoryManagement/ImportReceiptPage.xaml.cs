@@ -1,4 +1,5 @@
 ﻿using LibraryManagement.DTOs;
+using LibraryManagement.ViewModels.HistoryManagementVM;
 using System;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -36,6 +37,22 @@ namespace LibraryManagement.Views.HistoryManagement
                     return ((item as ImportReceiptDTO).id.ToString().IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
             }
 
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var viewModel = (HistoryViewModel)DataContext;
+            if (viewModel.SelectedDateChangedCM.CanExecute(null))
+                viewModel.SelectedDateChangedCM.Execute(null);
+            ComboBoxItem str = cbb.SelectedItem as ComboBoxItem;
+            if (str.Content.ToString() == "Toàn bộ")
+            {
+                datePickerBd.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                datePickerBd.Visibility = System.Windows.Visibility.Visible;
+            }
         }
     }
 }

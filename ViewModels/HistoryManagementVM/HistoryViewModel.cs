@@ -8,6 +8,7 @@ using LibraryManagement.Services;
 using System.Windows.Documents;
 using System.Windows;
 using System.Windows.Markup;
+using LibraryManagement.Views.PunishBook;
 
 namespace LibraryManagement.ViewModels.HistoryManagementVM
 {
@@ -27,6 +28,13 @@ namespace LibraryManagement.ViewModels.HistoryManagementVM
             set { borrowReturnList = value; OnPropertyChanged(); }
         }
 
+        private ObservableCollection<FineReceiptDTO> fineReceiptList;
+        public ObservableCollection<FineReceiptDTO> FineReceiptList
+        {
+            get { return fineReceiptList; }
+            set { fineReceiptList = value; OnPropertyChanged(); }
+        }
+
         private ImportReceiptDTO selectedReceipt;
         public ImportReceiptDTO SelectedReceipt
         {
@@ -39,6 +47,13 @@ namespace LibraryManagement.ViewModels.HistoryManagementVM
         {
             get { return selectedBorrow; }
             set { selectedBorrow = value; OnPropertyChanged(); }
+        }
+
+        private FineReceiptDTO _SelectedFine;
+        public FineReceiptDTO SelectedFine
+        {
+            get { return _SelectedFine; }
+            set { _SelectedFine = value; OnPropertyChanged(); }
         }
 
 
@@ -59,12 +74,15 @@ namespace LibraryManagement.ViewModels.HistoryManagementVM
         public ICommand FirstLoadCM { get; set; }
         public ICommand ReceiptPageLoadedCM { get; set; }
         public ICommand BorrowReturnPageLoadedCM { get; set; }
+        public ICommand FinePageLoadedCM { get; set; }
         public ICommand OpenImportReceiptPageCM { get; set; }
         public ICommand OpenBorrowReturnPageCM { get; set; }
+        public ICommand OpenFinePageCM { get; set; }
         public ICommand PrintReceiptCM { get; set; }
         public ICommand PrintBorrowReturnCM { get; set; }
         public ICommand PrintBorrowCM { get; set; }
         public ICommand PrintReturnCM { get; set; }
+        public ICommand PrintFineCM { get; set; }
         public ICommand SelectedDateChangedCM { get; set; }
 
         public HistoryViewModel()
@@ -82,6 +100,10 @@ namespace LibraryManagement.ViewModels.HistoryManagementVM
             {
                 BorrowReturnList = new ObservableCollection<BorrowingCardDTO>(BorrowingReturnService.Ins.GetBorrowingReturnCards());
             });
+            FinePageLoadedCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
+            {
+                FineReceiptList = new ObservableCollection<FineReceiptDTO>(FineReceiptService.Ins.GetFineReceipts());
+            });
             OpenImportReceiptPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new ImportReceiptPage();
@@ -89,6 +111,10 @@ namespace LibraryManagement.ViewModels.HistoryManagementVM
             OpenBorrowReturnPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new BorrowReturnPage();
+            });
+            OpenFinePageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
+            {
+                p.Content = new FinePage();
             });
             PrintReceiptCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -119,6 +145,12 @@ namespace LibraryManagement.ViewModels.HistoryManagementVM
                 PrintReturnFunc();
                 SelectedBorrow = null;
             });
+            PrintFineCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (SelectedFine is null) return;
+                PrintFineFunc();
+                SelectedFine = null;
+            });
             SelectedDateChangedCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 string filter = SelectedFilter.Content.ToString();
@@ -127,6 +159,8 @@ namespace LibraryManagement.ViewModels.HistoryManagementVM
                     case "Toàn bộ":
                         {
                             BorrowReturnList = new ObservableCollection<BorrowingCardDTO>(BorrowingReturnService.Ins.GetBorrowingReturnCards());
+                            ImportReceiptList = new ObservableCollection<ImportReceiptDTO>(ImportService.Ins.GetAllImportReceipt());
+                            FineReceiptList = new ObservableCollection<FineReceiptDTO>(FineReceiptService.Ins.GetFineReceipts());
                             return;
                         }
                     case "Theo ngày":
@@ -136,12 +170,27 @@ namespace LibraryManagement.ViewModels.HistoryManagementVM
 
                             BorrowReturnList = new ObservableCollection<BorrowingCardDTO>
                             (BorrowingReturnService.Ins.GetBorrowingReturnCards(borrowingDate: new DateTime(SelectedDate.Value.Year, SelectedDate.Value.Month, SelectedDate.Value.Day)));
+                            ImportReceiptList = new ObservableCollection<ImportReceiptDTO>
+                           (ImportService.Ins.GetAllImportReceipt(SelectedDate));
+                            FineReceiptList = new ObservableCollection<FineReceiptDTO>(FineReceiptService.Ins.GetFineReceipts(SelectedDate));
                             return;
                         }
                 }
             });
         }
 
+        private void PrintFineFunc()
+        {
+            PrintWindow w = new PrintWindow();
+            w.punishCard.Text = SelectedFine.id;
+            w.date.Text = SelectedFine.createdAt.ToString("dd/MM/yyyy");
+            w.name.Text = SelectedFine.readerCard.name;
+            w.totalDept.Text = Utils.Helper.FormatVNMoney((decimal)SelectedFine.readerCard.totalFine);
+            w.paid.Text = Utils.Helper.FormatVNMoney((decimal)SelectedFine.amount);
+            var totalLeft = (decimal)(SelectedFine.readerCard.totalFine - SelectedFine.amount);
+            w.remain.Text = Utils.Helper.FormatVNMoney((totalLeft < 0) ? 0 : totalLeft);
+            w.ShowDialog();
+        }
 
         public void PrintReceiptFunc()
         {
