@@ -255,14 +255,16 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                     returnCard.fine = (int)ReturnBookList[i].Fine;
                     returnCardList.Add(returnCard);
                 }
-                (bool success, string message) = BorrowingReturnService.Ins.CreateReturnCardList(returnCardList);
+                
+
+                //Add list spoiled book info
+                (bool success, string message) = BorrowingReturnService.Ins.CreateReturnCardList(returnCardList, new List<string>());
                 if (success)
                 {
                     OpenPrintWindow(ReturnBookList);
                     ClearData();
                     MessageBox.Show(message, "Thông báo", MessageBoxButton.OK);
                     return;
-
                 }
                 MessageBox.Show(message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             });
