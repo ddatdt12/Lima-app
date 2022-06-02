@@ -30,11 +30,11 @@ namespace LibraryManagement.Models
         public string return_employeeId { get; set; }
         public int fine { get; set; }
     
-        public virtual BookInfo BookInfo { get; set; }
         public virtual ReaderCard ReaderCard { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DelayReturnBookReportDetail> DelayReturnBookReportDetails { get; set; }
         public virtual Employee Employee { get; set; }
         public virtual Employee Employee1 { get; set; }
+        public virtual BookInfo BookInfo { get; set; }
     }
 }

@@ -57,8 +57,8 @@
           </Key>
           <Property Name="id" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="bookId" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="status" Type="bit" Nullable="false" />
           <Property Name="isDeleted" Type="bit" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="BorrowedGenreReport">
           <Key>
@@ -197,6 +197,16 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="100" />
           <Property Name="isDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RenewalHistory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="readerId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="renewalDate" Type="date" Nullable="false" />
+          <Property Name="endDate" Type="date" Nullable="false" />
+          <Property Name="createdAt" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -467,6 +477,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__RenewalHi__reade__02FC7413">
+          <End Role="ReaderCard" Type="Self.ReaderCard" Multiplicity="1" />
+          <End Role="RenewalHistory" Type="Self.RenewalHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReaderCard">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RenewalHistory">
+              <PropertyRef Name="readerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__RoleDetai__permi__74AE54BC">
           <End Role="Permission" Type="Self.Permission" Multiplicity="1" />
           <End Role="RoleDetail" Type="Self.RoleDetail" Multiplicity="*" />
@@ -536,6 +558,7 @@
           <EntitySet Name="Permission" EntityType="Self.Permission" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReaderCard" EntityType="Self.ReaderCard" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReaderType" EntityType="Self.ReaderType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RenewalHistory" EntityType="Self.RenewalHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoleDetail" EntityType="Self.RoleDetail" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Account__roleId__5EBF139D" Association="Self.FK__Account__roleId__5EBF139D">
@@ -622,6 +645,10 @@
             <End Role="ReaderType" EntitySet="ReaderType" />
             <End Role="ReaderCard" EntitySet="ReaderCard" />
           </AssociationSet>
+          <AssociationSet Name="FK__RenewalHi__reade__02FC7413" Association="Self.FK__RenewalHi__reade__02FC7413">
+            <End Role="ReaderCard" EntitySet="ReaderCard" />
+            <End Role="RenewalHistory" EntitySet="RenewalHistory" />
+          </AssociationSet>
           <AssociationSet Name="FK__RoleDetai__permi__74AE54BC" Association="Self.FK__RoleDetai__permi__74AE54BC">
             <End Role="Permission" EntitySet="Permission" />
             <End Role="RoleDetail" EntitySet="RoleDetail" />
@@ -648,7 +675,6 @@
           <EntitySet Name="Authors" EntityType="LibraryManagementModel.Author" />
           <EntitySet Name="BaseBooks" EntityType="LibraryManagementModel.BaseBook" />
           <EntitySet Name="Books" EntityType="LibraryManagementModel.Book" />
-          <EntitySet Name="BookInfoes" EntityType="LibraryManagementModel.BookInfo" />
           <EntitySet Name="BorrowedGenreReports" EntityType="LibraryManagementModel.BorrowedGenreReport" />
           <EntitySet Name="BorrowedGenreReportDetails" EntityType="LibraryManagementModel.BorrowedGenreReportDetail" />
           <EntitySet Name="Borrowing_ReturnCard" EntityType="LibraryManagementModel.Borrowing_ReturnCard" />
@@ -683,14 +709,6 @@
           <AssociationSet Name="FK__ImportRec__bookI__5812160E" Association="LibraryManagementModel.FK__ImportRec__bookI__5812160E">
             <End Role="Book" EntitySet="Books" />
             <End Role="ImportReceiptDetail" EntitySet="ImportReceiptDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BOOKINFO_BOOK" Association="LibraryManagementModel.FK_BOOKINFO_BOOK">
-            <End Role="Book" EntitySet="Books" />
-            <End Role="BookInfo" EntitySet="BookInfoes" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Borrowing__bookI__5FB337D6" Association="LibraryManagementModel.FK__Borrowing__bookI__5FB337D6">
-            <End Role="BookInfo" EntitySet="BookInfoes" />
-            <End Role="Borrowing_ReturnCard" EntitySet="Borrowing_ReturnCard" />
           </AssociationSet>
           <AssociationSet Name="FK__BorrowedG__borro__1AD3FDA4" Association="LibraryManagementModel.FK__BorrowedG__borro__1AD3FDA4">
             <End Role="BorrowedGenreReport" EntitySet="BorrowedGenreReports" />
@@ -761,6 +779,20 @@
             <End Role="Employee" EntitySet="Employees" />
             <End Role="ReaderCard" EntitySet="ReaderCards" />
           </AssociationSet>
+          <EntitySet Name="RenewalHistories" EntityType="LibraryManagementModel.RenewalHistory" />
+          <AssociationSet Name="FK__RenewalHi__reade__02FC7413" Association="LibraryManagementModel.FK__RenewalHi__reade__02FC7413">
+            <End Role="ReaderCard" EntitySet="ReaderCards" />
+            <End Role="RenewalHistory" EntitySet="RenewalHistories" />
+          </AssociationSet>
+          <EntitySet Name="BookInfoes" EntityType="LibraryManagementModel.BookInfo" />
+          <AssociationSet Name="FK_BOOKINFO_BOOK" Association="LibraryManagementModel.FK_BOOKINFO_BOOK">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="BookInfo" EntitySet="BookInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Borrowing__bookI__66603565" Association="LibraryManagementModel.FK__Borrowing__bookI__66603565">
+            <End Role="BookInfo" EntitySet="BookInfoes" />
+            <End Role="Borrowing_ReturnCard" EntitySet="Borrowing_ReturnCard" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Account">
           <Key>
@@ -810,17 +842,6 @@
           <NavigationProperty Name="ImportReceiptDetails" Relationship="LibraryManagementModel.FK__ImportRec__bookI__5812160E" FromRole="Book" ToRole="ImportReceiptDetail" />
           <NavigationProperty Name="BookInfoes" Relationship="LibraryManagementModel.FK_BOOKINFO_BOOK" FromRole="Book" ToRole="BookInfo" />
         </EntityType>
-        <EntityType Name="BookInfo">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="bookId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="status" Type="Boolean" Nullable="false" />
-          <Property Name="isDeleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Book" Relationship="LibraryManagementModel.FK_BOOKINFO_BOOK" FromRole="BookInfo" ToRole="Book" />
-          <NavigationProperty Name="Borrowing_ReturnCard" Relationship="LibraryManagementModel.FK__Borrowing__bookI__5FB337D6" FromRole="BookInfo" ToRole="Borrowing_ReturnCard" />
-        </EntityType>
         <EntityType Name="BorrowedGenreReport">
           <Key>
             <PropertyRef Name="id" />
@@ -854,11 +875,11 @@
           <Property Name="returnedDate" Type="DateTime" Precision="3" />
           <Property Name="return_employeeId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="fine" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="BookInfo" Relationship="LibraryManagementModel.FK__Borrowing__bookI__5FB337D6" FromRole="Borrowing_ReturnCard" ToRole="BookInfo" />
           <NavigationProperty Name="ReaderCard" Relationship="LibraryManagementModel.FK__Borrowing__reade__5EBF139D" FromRole="Borrowing_ReturnCard" ToRole="ReaderCard" />
           <NavigationProperty Name="DelayReturnBookReportDetails" Relationship="LibraryManagementModel.FK__DelayRetu__borro__208CD6FA" FromRole="Borrowing_ReturnCard" ToRole="DelayReturnBookReportDetail" />
           <NavigationProperty Name="Employee" Relationship="LibraryManagementModel.FK__Borrowing__borro__6754599E" FromRole="Borrowing_ReturnCard" ToRole="Employee" />
           <NavigationProperty Name="Employee1" Relationship="LibraryManagementModel.FK__Borrowing__retur__693CA210" FromRole="Borrowing_ReturnCard" ToRole="Employee" />
+          <NavigationProperty Name="BookInfo" Relationship="LibraryManagementModel.FK__Borrowing__bookI__66603565" FromRole="Borrowing_ReturnCard" ToRole="BookInfo" />
         </EntityType>
         <EntityType Name="DelayReturnBookReport">
           <Key>
@@ -961,6 +982,7 @@
           <NavigationProperty Name="FineReceipts" Relationship="LibraryManagementModel.FK__FineRecei__reade__6477ECF3" FromRole="ReaderCard" ToRole="FineReceipt" />
           <NavigationProperty Name="ReaderType" Relationship="LibraryManagementModel.FK__ReaderCar__reade__3E52440B" FromRole="ReaderCard" ToRole="ReaderType" />
           <NavigationProperty Name="Employee" Relationship="LibraryManagementModel.FK__ReaderCar__emplo__72C60C4A" FromRole="ReaderCard" ToRole="Employee" />
+          <NavigationProperty Name="RenewalHistories" Relationship="LibraryManagementModel.FK__RenewalHi__reade__02FC7413" FromRole="ReaderCard" ToRole="RenewalHistory" />
         </EntityType>
         <EntityType Name="ReaderType">
           <Key>
@@ -1049,30 +1071,6 @@
             </Principal>
             <Dependent Role="ImportReceiptDetail">
               <PropertyRef Name="bookId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BOOKINFO_BOOK">
-          <End Type="LibraryManagementModel.Book" Role="Book" Multiplicity="1" />
-          <End Type="LibraryManagementModel.BookInfo" Role="BookInfo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Book">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="BookInfo">
-              <PropertyRef Name="bookId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Borrowing__bookI__5FB337D6">
-          <End Type="LibraryManagementModel.BookInfo" Role="BookInfo" Multiplicity="1" />
-          <End Type="LibraryManagementModel.Borrowing_ReturnCard" Role="Borrowing_ReturnCard" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BookInfo">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Borrowing_ReturnCard">
-              <PropertyRef Name="bookInfoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1292,6 +1290,64 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="RenewalHistory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="readerId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="renewalDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="endDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="createdAt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ReaderCard" Relationship="LibraryManagementModel.FK__RenewalHi__reade__02FC7413" FromRole="RenewalHistory" ToRole="ReaderCard" />
+        </EntityType>
+        <Association Name="FK__RenewalHi__reade__02FC7413">
+          <End Type="LibraryManagementModel.ReaderCard" Role="ReaderCard" Multiplicity="1" />
+          <End Type="LibraryManagementModel.RenewalHistory" Role="RenewalHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReaderCard">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RenewalHistory">
+              <PropertyRef Name="readerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="BookInfo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="bookId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="isDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Book" Relationship="LibraryManagementModel.FK_BOOKINFO_BOOK" FromRole="BookInfo" ToRole="Book" />
+          <NavigationProperty Name="Borrowing_ReturnCard" Relationship="LibraryManagementModel.FK__Borrowing__bookI__66603565" FromRole="BookInfo" ToRole="Borrowing_ReturnCard" />
+        </EntityType>
+        <Association Name="FK_BOOKINFO_BOOK">
+          <End Type="LibraryManagementModel.Book" Role="Book" Multiplicity="1" />
+          <End Type="LibraryManagementModel.BookInfo" Role="BookInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="BookInfo">
+              <PropertyRef Name="bookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Borrowing__bookI__66603565">
+          <End Type="LibraryManagementModel.BookInfo" Role="BookInfo" Multiplicity="1" />
+          <End Type="LibraryManagementModel.Borrowing_ReturnCard" Role="Borrowing_ReturnCard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BookInfo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Borrowing_ReturnCard">
+              <PropertyRef Name="bookInfoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1336,16 +1392,6 @@
                 <ScalarProperty Name="publisher" ColumnName="publisher" />
                 <ScalarProperty Name="yearOfPublication" ColumnName="yearOfPublication" />
                 <ScalarProperty Name="baseBookId" ColumnName="baseBookId" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BookInfoes">
-            <EntityTypeMapping TypeName="LibraryManagementModel.BookInfo">
-              <MappingFragment StoreEntitySet="BookInfo">
-                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="bookId" ColumnName="bookId" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1521,6 +1567,27 @@
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RenewalHistories">
+            <EntityTypeMapping TypeName="LibraryManagementModel.RenewalHistory">
+              <MappingFragment StoreEntitySet="RenewalHistory">
+                <ScalarProperty Name="createdAt" ColumnName="createdAt" />
+                <ScalarProperty Name="endDate" ColumnName="endDate" />
+                <ScalarProperty Name="renewalDate" ColumnName="renewalDate" />
+                <ScalarProperty Name="readerId" ColumnName="readerId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BookInfoes">
+            <EntityTypeMapping TypeName="LibraryManagementModel.BookInfo">
+              <MappingFragment StoreEntitySet="BookInfo">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="bookId" ColumnName="bookId" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

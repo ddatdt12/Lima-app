@@ -29,7 +29,6 @@ namespace LibraryManagement.Models
         public virtual DbSet<Author> Authors { get; set; }
         public virtual DbSet<BaseBook> BaseBooks { get; set; }
         public virtual DbSet<Book> Books { get; set; }
-        public virtual DbSet<BookInfo> BookInfoes { get; set; }
         public virtual DbSet<BorrowedGenreReport> BorrowedGenreReports { get; set; }
         public virtual DbSet<BorrowedGenreReportDetail> BorrowedGenreReportDetails { get; set; }
         public virtual DbSet<Borrowing_ReturnCard> Borrowing_ReturnCard { get; set; }
@@ -46,5 +45,7 @@ namespace LibraryManagement.Models
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<RoleDetail> RoleDetails { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<RenewalHistory> RenewalHistories { get; set; }
+        public virtual DbSet<BookInfo> BookInfoes { get; set; }
     }
 }

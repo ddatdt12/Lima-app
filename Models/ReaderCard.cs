@@ -19,6 +19,7 @@ namespace LibraryManagement.Models
         {
             this.Borrowing_ReturnCard = new HashSet<Borrowing_ReturnCard>();
             this.FineReceipts = new HashSet<FineReceipt>();
+            this.RenewalHistories = new HashSet<RenewalHistory>();
         }
     
         public string id { get; set; }
@@ -42,5 +43,7 @@ namespace LibraryManagement.Models
         public virtual ICollection<FineReceipt> FineReceipts { get; set; }
         public virtual ReaderType ReaderType { get; set; }
         public virtual Employee Employee { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RenewalHistory> RenewalHistories { get; set; }
     }
 }

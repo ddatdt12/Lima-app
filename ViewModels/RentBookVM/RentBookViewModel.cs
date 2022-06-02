@@ -145,7 +145,7 @@ namespace LibraryManagement.ViewModels.RentBookVM
                                 //Lấy danh sách bookInfoId chưa mượn
                                 for (int j = 0; j < listBookDTO[i].bookInfoes.Count; j++)
                                 {
-                                    if (listBookDTO[i].bookInfoes[j].status)
+                                    if (listBookDTO[i].bookInfoes[j].status == (int)BookInfoStatus.AVAILABLE)
                                     {
                                         book.ListBookInfoId.Add(listBookDTO[i].bookInfoes[j].id);
                                     }
@@ -311,7 +311,7 @@ namespace LibraryManagement.ViewModels.RentBookVM
                         //Lấy danh sách bookInfoId chưa mượn
                         for (int j = 0; j < listBookDTO[i].bookInfoes.Count; j++)
                         {
-                            if (listBookDTO[i].bookInfoes[j].status)
+                            if (listBookDTO[i].bookInfoes[j].status == (int)BookInfoStatus.AVAILABLE)
                             {
                                 book.ListBookInfoId.Add(listBookDTO[i].bookInfoes[j].id);
                             }

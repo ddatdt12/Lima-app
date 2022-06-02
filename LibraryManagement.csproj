@@ -176,6 +176,9 @@
     <Compile Include="Models\ReaderType.cs">
       <DependentUpon>LibraryManagementModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\RenewalHistory.cs">
+      <DependentUpon>LibraryManagementModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Role.cs">
       <DependentUpon>LibraryManagementModel.tt</DependentUpon>
     </Compile>

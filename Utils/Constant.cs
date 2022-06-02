@@ -14,6 +14,12 @@
         CaiDat
     }
 
+    public enum BookInfoStatus
+    {
+        SPOILED = -1,
+        BORROWING = 0,
+        AVAILABLE = 1,
+    }
     public class Rules
     {
         private Rules(string name) { Name = name; }

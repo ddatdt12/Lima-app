@@ -1,5 +1,6 @@
 ﻿using LibraryManagement.DTOs;
 using LibraryManagement.Models;
+using LibraryManagement.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -101,10 +102,11 @@ namespace LibraryManagement.Services
         }
         public List<BookDTO> GetAllAvailableBook()
         {
+            int availableStatus = (int)BookInfoStatus.AVAILABLE;
             try
             {
                 List<BookDTO> bookList = (from s in DataProvider.Ins.DB.Books
-                                          where !s.isDeleted && s.BookInfoes.Any(b => b.status)
+                                          where !s.isDeleted && s.BookInfoes.Any(b => b.status == availableStatus)
                                           select new BookDTO
                                           {
                                               id = s.id,
@@ -130,7 +132,7 @@ namespace LibraryManagement.Services
                                                   }).ToList(),
                                               },
                                               bookInfoes = s.BookInfoes
-                                              .Where(bI => !bI.isDeleted && bI.status)
+                                              .Where(bI => !bI.isDeleted && bI.status == availableStatus)
                                               .Select(bI =>
                                               new BookInfoDTO
                                               {
@@ -148,7 +150,6 @@ namespace LibraryManagement.Services
                 throw e;
             }
         }
-
         private void CreateBookInfoList(LibraryManagementEntities context, string bookId, int quantity)
         {
             List<BookInfo> listBookInfoes = new List<BookInfo>();
@@ -161,7 +162,7 @@ namespace LibraryManagement.Services
                 {
                     id = CreateBookInfoId(bookId, cIndex),
                     bookId = bookId,
-                    status = true,
+                    status = (int)BookInfoStatus.AVAILABLE,
                 }
                 );
             }
@@ -291,7 +292,38 @@ namespace LibraryManagement.Services
                 return (false, "Lỗi hệ thống!");
             }
         }
+        public (bool isSuccess, string message) UpdateBookInfoStatus(string bookInfoId)
+        {
+            try
+            {
+                var bookInfo = DataProvider.Ins.DB.BookInfoes.Find(bookInfoId);
 
+                var book = DataProvider.Ins.DB.Books.Find(bookInfo.bookId);
+                if (bookInfo is null || bookInfo.isDeleted)
+                {
+                    return (false, "Sách không tồn tại!");
+                }
+
+                if (bookInfo.status == (int)BookInfoStatus.BORROWING)
+                {
+                    return (false, "Sách đang được mượn không thể xóa!");
+                }
+
+                if (bookInfo.Borrowing_ReturnCard.Count() > 0)
+                {
+                    return (false, "Sách đã từng được mượn không thể xóa!");
+                }
+
+                book.quantity--;
+                bookInfo.isDeleted = true;
+                DataProvider.Ins.DB.SaveChanges();
+                return (true, "Xóa sách thành công!");
+            }
+            catch (Exception)
+            {
+                return (false, "Lỗi hệ thống!");
+            }
+        }
         public (bool isSuccess, string message) DeleteBookInfo(string bookInfoId)
         {
             try
@@ -304,7 +336,7 @@ namespace LibraryManagement.Services
                     return (false, "Sách không tồn tại!");
                 }
 
-                if (!bookInfo.status)
+                if (bookInfo.status == (int)BookInfoStatus.BORROWING)
                 {
                     return (false, "Sách đang được mượn không thể xóa!");
                 }

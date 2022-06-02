@@ -1,5 +1,6 @@
 ﻿using LibraryManagement.DTOs;
 using LibraryManagement.Models;
+using LibraryManagement.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -208,12 +209,12 @@ namespace LibraryManagement.Services
 
                 foreach (var b in bookInfoList)
                 {
-                    if (!b.status)
+                    if (b.status == (int)BookInfoStatus.BORROWING)
                     {
                         return (false, $"{b.Book.BaseBook.name} đã được mượn!");
                     }
 
-                    b.status = false;
+                    b.status = (int)BookInfoStatus.BORROWING;
                     var borrowingCard = new Borrowing_ReturnCard()
                     {
                         id = nextId,
@@ -284,7 +285,7 @@ namespace LibraryManagement.Services
                 var bookInfoes = context.BookInfoes.Where(b => bookInfoIdList.Contains(b.id)).ToList();
                 foreach (var bI in bookInfoes)
                 {
-                    bI.status = true;
+                    bI.status = (int)BookInfoStatus.AVAILABLE;
                 }
                 context.ReaderCards.Find(readerCardId).totalFine += totalFine;
 

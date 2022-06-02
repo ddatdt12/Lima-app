@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibraryManagement.Utils;
+using System;
 using System.Globalization;
 using System.Windows.Data;
 
@@ -11,11 +12,13 @@ namespace LibraryManagement.Views.Converter
             object parameter, CultureInfo language)
         {
             // Retrieve the format string and use it to format the value.
-            bool Param = (bool)value;
+            int Param = (int)value;
 
-            if (Param == true)
+            if (Param == (int)BookInfoStatus.AVAILABLE)
                 return "Khả dụng";
-            return "Đang mượn";
+            else if(Param == (int)BookInfoStatus.BORROWING)
+                return "Đang mượn";
+            return "Đã hỏng";
 
         }
 
