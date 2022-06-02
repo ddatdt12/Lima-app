@@ -59,7 +59,7 @@ namespace LibraryManagement.Services
                     fineReceiptQuery = fineReceiptQuery.Where(f => (DbFunctions.TruncateTime(f.createdAt) == compareDate));
                 }
 
-                var fineReceipts = fineReceiptQuery.Select(f => new FineReceiptDTO
+                var fineReceipts = fineReceiptQuery.OrderByDescending(f => f.createdAt).Select(f => new FineReceiptDTO
                 {
                     id = f.id,
                     readerCard = new ReaderCardDTO

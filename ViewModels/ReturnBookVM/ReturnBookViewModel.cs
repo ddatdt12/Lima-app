@@ -255,10 +255,19 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
                     returnCard.fine = (int)ReturnBookList[i].Fine;
                     returnCardList.Add(returnCard);
                 }
-                
+
 
                 //Add list spoiled book info
-                (bool success, string message) = BorrowingReturnService.Ins.CreateReturnCardList(returnCardList, new List<string>());
+                var spoiledList = new List<string>();
+                foreach (var item in ReturnBookList)
+                {
+                    if (item.IsChecked)
+                    {
+                        spoiledList.Add(item.BookId);
+                    }
+                }
+
+                (bool success, string message) = BorrowingReturnService.Ins.CreateReturnCardList(returnCardList, spoiledList);
                 if (success)
                 {
                     OpenPrintWindow(ReturnBookList);
@@ -436,6 +445,13 @@ namespace LibraryManagement.ViewModels.ReturnBookVM
             {
                 get { return _dueDate; }
                 set { _dueDate = value; }
+            }
+
+            private bool isChecked;
+            public bool IsChecked
+            {
+                get { return isChecked; }
+                set { isChecked = value; OnPropertyChanged(); }
             }
 
 

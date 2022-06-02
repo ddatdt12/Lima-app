@@ -18,7 +18,7 @@ namespace LibraryManagement.Views.Converter
                 return "Khả dụng";
             else if(Param == (int)BookInfoStatus.BORROWING)
                 return "Đang mượn";
-            return "Đã hỏng";
+            return "Hỏng/mất";
 
         }
 

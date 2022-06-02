@@ -1,0 +1,69 @@
+﻿<Window x:Class="LibraryManagement.Views.BookManagement.BookInfoStatusWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LibraryManagement.Views.ReaderCard"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Height="320"
+        Width="600"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
+        FontFamily="{StaticResource NunitoSans_Regular}"
+        DataContext="{StaticResource BookManagementVM}"
+        Name="this">
+
+    <Border Margin="10">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="5"
+                              ShadowDepth="2"
+                              Opacity="1"
+                              Color="Gray"
+                              Direction="-45" />
+        </Border.Effect>
+
+        <StackPanel  Background="White">
+            <TextBlock Text="Cập nhật trạng thái sách"
+                       FontSize="32"
+                       FontWeight="Bold"
+                       Margin="20,20,0,0"
+                       Foreground="#0266FD" />
+            <StackPanel Orientation="Horizontal"
+                        Margin="20,60,0,0">
+                <RadioButton Content="Khả dụng"
+                             FontSize="25"
+                             IsChecked="{Binding AvalibleChecked}"/>
+                <RadioButton Content="Hỏng/mất"
+                             Margin="50,0,0,0"
+                             FontSize="25"
+                             IsChecked="{Binding SpoiledChecked}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Margin="0,50,0,0"
+                        HorizontalAlignment="Center">
+                <Button Content="Thoát"
+                        FontSize="18"
+                        Height="42"
+                        Width="120"
+                        Background="Transparent"
+                        Foreground="#0266FD"
+                        BorderBrush="#0266FD"
+                        Click="Button_Click"
+                        materialDesign:ButtonAssist.CornerRadius="8" />
+                <Button Content="Xác nhận"
+                        Margin="50,0,0,0"
+                        FontSize="18"
+                        Width="120"
+                        Height="42"
+                        Background="#0266FD"
+                        BorderBrush="#0266FD"
+                        Command="{Binding UpdateBookInforStatusCM}"
+                        CommandParameter="{Binding ElementName=this}"
+                        materialDesign:ButtonAssist.CornerRadius="8" />
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</Window>

@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LibraryManagement.ViewModels;
 
 namespace LibraryManagement.DTOs
 {
-    public class BookInfoDTO
+    public class BookInfoDTO : BaseViewModel
     {
         public string id { get; set; }
         public string BookId { get; set; }
-        public int status { get; set; }
+        private int _status;
+        public int status
+        {
+            get { return _status; }
+            set { _status = value; OnPropertyChanged(); }
+        }
         //1 - có thể mượn; 0 - đang mượn; -1: đã hỏng
         public BookDTO Book { get; set; }
     }

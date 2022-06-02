@@ -363,21 +363,30 @@
                                  Foreground="#5C5959"
                                  CharacterCasing="Upper" />
                     </Grid>
-                    <Button Command="{Binding CheckReaderCardCM}"
-                            Width="100"
-                            Height="42"
-                            HorizontalAlignment="Right"
-                            Margin="0 24 32 0"
-                            Background="#37B634"
-                            BorderBrush="Transparent"
-                            materialDesign:ButtonAssist.CornerRadius="12">
-                        <TextBlock Text="Kiểm tra"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   FontFamily="{StaticResource NunitoSans_ExtraBold}"
-                                   Foreground="#FFFFFF"
-                                   FontSize="16" />
-                    </Button>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <Button Command="{Binding RenewalReaderCardCM}"
+                                Width="100"
+                                Height="42"
+                                HorizontalAlignment="Right"
+                                Background="#0266FD"
+                                Visibility="Collapsed"
+                                x:Name="giahanBtn"
+                                BorderBrush="Transparent"
+                                materialDesign:ButtonAssist.CornerRadius="12"
+                                Content="Gia hạn"
+                                FontWeight="Bold" />
+                        <Button Command="{Binding CheckReaderCardCM}"
+                                CommandParameter="{Binding ElementName=giahanBtn}"
+                                Width="100"
+                                Height="42"
+                                HorizontalAlignment="Right"
+                                Background="#37B634"
+                                BorderBrush="Transparent"
+                                materialDesign:ButtonAssist.CornerRadius="12"
+                                Content="Kiểm tra"
+                                FontWeight="Bold" />
+                    </StackPanel>
                     <Grid Height="50">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="87*" />

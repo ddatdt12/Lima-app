@@ -225,7 +225,7 @@
                                Foreground="#0266FD"
                                FontWeight="Bold"
                                Margin="10,0,0,0"
-                               FontSize="20"/>
+                               FontSize="20" />
                         <StackPanel>
                             <Border CornerRadius="2"
                                     BorderThickness="1"
@@ -384,11 +384,18 @@
                                        FontSize="18" />
                         </StackPanel>
                     </StackPanel>
-                    <Label Content="Danh sách cuốn sách theo năm xuất bản"
-                           Foreground="#0266FD"
-                           FontWeight="Bold"
-                           Margin="10,0,0,0"
-                           FontSize="20" />
+                    <DockPanel>
+                        <Label Content="Danh sách cuốn sách theo năm xuất bản"
+                               Foreground="#0266FD"
+                               FontWeight="Bold"
+                               Margin="10,0,0,0"
+                               FontSize="20" />
+                        <Button Content="Báo hỏng"
+                                FontWeight="Bold"
+                                Width="100"
+                                Command="{Binding OpenBookInforStatusCM}"
+                                materialDesign:ButtonAssist.CornerRadius="8" />
+                    </DockPanel>
                     <Border CornerRadius="2"
                             BorderThickness="1"
                             BorderBrush="#BFBABA"

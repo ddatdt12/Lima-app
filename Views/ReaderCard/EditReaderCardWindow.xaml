@@ -286,6 +286,15 @@
                                             SelectedDate="{Binding FinishDate}"
                                             Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
                             </StackPanel>
+                            <Button Background="#0266FD"
+                                    BorderBrush="Transparent"
+                                    Content="Gia hạn"
+                                    FontSize="18"
+                                    VerticalAlignment="Bottom"
+                                    Margin="20,0,0,0"
+                                    Command="{Binding OpenRenewalHistoryWindowCM}"
+                                    CommandParameter="{Binding ElementName=EditReaderWindow}"
+                                    materialDesign:ButtonAssist.CornerRadius="8" />
                         </StackPanel>
                     </StackPanel>
                 </WrapPanel>
@@ -365,24 +374,28 @@
                               Height="420">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Lần gia hạn">
+                                <GridViewColumn Header="Lần"
+                                                Width="90">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding}" />
+                                            <TextBlock Text="{Binding Index}"
+                                                       Margin="20,0,0,0" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn Header="Ngày gia hạn">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding}" />
+                                            <TextBlock Text="{Binding renewalDate,StringFormat=dd/MM/yyyy}"
+                                                       Margin="20,0,0,0" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn Header="Ngày hết hạn">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding}" />
+                                            <TextBlock Text="{Binding endDate,StringFormat=dd/MM/yyyy}"
+                                                       Margin="20,0,0,0" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>

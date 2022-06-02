@@ -2,6 +2,7 @@
 using LibraryManagement.Services;
 using LibraryManagement.Utils;
 using LibraryManagement.ViewModel;
+using LibraryManagement.Views.ReaderCard;
 using LibraryManagement.Views.RentBook;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,8 @@ namespace LibraryManagement.ViewModels.RentBookVM
         public ICommand SelectedDateCM { get; set; }
         public ICommand FirstLoadCM { get; set; }
         public ICommand LoadRuleCM { get; set; }
+        public ICommand RenewalReaderCardCM { get; set; }
+        public ICommand UpdateRenewalCM { get; set; }
 
         #endregion
 
@@ -247,12 +250,13 @@ namespace LibraryManagement.ViewModels.RentBookVM
 
             });
 
-            CheckReaderCardCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            CheckReaderCardCM = new RelayCommand<Button>((p) => { return true; }, (p) =>
             {
                 if (ReaderID == null)
                 {
                     MessageBox.Show("Mã độc giả bị trống!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     ClearData();
+                    p.Visibility = Visibility.Collapsed;
                     return;
                 }
                 ReaderCardDTO readerCard = ReaderService.Ins.GetReaderInfo(ReaderID);
@@ -260,8 +264,10 @@ namespace LibraryManagement.ViewModels.RentBookVM
                 {
                     MessageBox.Show("Mã độc giả không tồn tại!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     ClearData();
+                    p.Visibility = Visibility.Collapsed;
                     return;
                 }
+                p.Visibility = Visibility.Visible;
                 CanRent = true;
                 RentBookList.Clear();
                 BookList.Clear();
@@ -455,7 +461,47 @@ namespace LibraryManagement.ViewModels.RentBookVM
                 p.Text = $"Quy định: {maxbook} sách trong vòng {maxday} ngày";
             });
 
+            RenewalReaderCardCM = new RelayCommand<Object>((p) => { return true; }, (p) =>
+            {
+                RenewalWindowRent w = new RenewalWindowRent();
+                var rule = ParameterService.Ins.GetRuleValue(Rules.VALIDITY_PERIOD_OF_CARD);
+                w.ruleCardExpired.Text = $"Quy định: Gia hạn thêm {rule} tháng";
+                w.renewDay.Text = DateTime.Now.ToString("dd/MM/yyyy");
 
+                calculateReaderCardExpiredDate(w);
+
+                w.ShowDialog();
+            });
+
+            UpdateRenewalCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                ReaderCardDTO readerCard = ReaderService.Ins.GetReaderInfo(ReaderID);
+                DateTime EndDate;
+                if (readerCard.expiryDate > DateTime.Now)
+                {
+                    EndDate = readerCard.expiryDate.AddMonths(ParameterService.Ins.GetRuleValue(Rules.VALIDITY_PERIOD_OF_CARD));
+                }
+                else
+                    EndDate = DateTime.Now.AddMonths(ParameterService.Ins.GetRuleValue(Rules.VALIDITY_PERIOD_OF_CARD));
+                try
+                {
+                    (bool isS, string mes) = ReaderService.Ins.RenewReaderCardTime(ReaderID, DateTime.Now, EndDate);
+                    if (isS)
+                    {
+                        ExpiredDate = EndDate;
+                        MessageBox.Show(mes, "Thông báo", MessageBoxButton.OK);
+                        p.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show(mes, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            });
         }
 
         public List<BookDTO> FilterListBook(List<BookDTO> listBook)
@@ -556,6 +602,18 @@ namespace LibraryManagement.ViewModels.RentBookVM
 
             // and print
             pd.PrintDocument(document.DocumentPaginator, "Return bill");
+        }
+
+        private void calculateReaderCardExpiredDate(RenewalWindowRent w)
+        {
+            ReaderCardDTO readerCard = ReaderService.Ins.GetReaderInfo(ReaderID);
+            if (readerCard != null)
+                if (readerCard.expiryDate > DateTime.Now)
+                {
+                    w.NewDay.Text = readerCard.expiryDate.AddMonths(ParameterService.Ins.GetRuleValue(Rules.VALIDITY_PERIOD_OF_CARD)).ToString("dd/MM/yyyy");
+                }
+                else
+                    w.NewDay.Text = DateTime.Now.AddMonths(ParameterService.Ins.GetRuleValue(Rules.VALIDITY_PERIOD_OF_CARD)).ToString("dd/MM/yyyy");
         }
 
 

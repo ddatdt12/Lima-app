@@ -1,4 +1,5 @@
-﻿using LibraryManagement.ViewModels;
+﻿using LibraryManagement.DTOs;
+using LibraryManagement.ViewModels;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -70,8 +71,8 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
             set { _ReaderType = value; OnPropertyChanged(); }
         }
 
-        private ObservableCollection<string> _CardHistoryList;
-        public ObservableCollection<string> CardHistoryList
+        private ObservableCollection<RenewalHistoryDTO> _CardHistoryList;
+        public ObservableCollection<RenewalHistoryDTO> CardHistoryList
         {
             get { return _CardHistoryList; }
             set { _CardHistoryList = value; OnPropertyChanged(); }

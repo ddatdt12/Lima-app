@@ -1,5 +1,6 @@
 ﻿using LibraryManagement.DTOs;
 using LibraryManagement.Services;
+using LibraryManagement.Utils;
 using LibraryManagement.ViewModels;
 using LibraryManagement.Views.BookManagement;
 using System.Collections.Generic;
@@ -124,6 +125,20 @@ namespace LibraryManagement.ViewModel.BookManagementVM
             set { quantity = value; OnPropertyChanged(); }
         }
 
+        private bool _AvalibleChecked;
+        public bool AvalibleChecked
+        {
+            get { return _AvalibleChecked; }
+            set { _AvalibleChecked = value; OnPropertyChanged(); }
+        }
+
+        private bool _SpoiledChecked;
+        public bool SpoiledChecked
+        {
+            get { return _SpoiledChecked; }
+            set { _SpoiledChecked = value; OnPropertyChanged(); }
+        }
+
 
         #endregion
 
@@ -144,6 +159,8 @@ namespace LibraryManagement.ViewModel.BookManagementVM
         public ICommand DecreaseBaseAuthorCM { get; set; }
         public ICommand SaveBaseBookCM { get; set; }
         public ICommand BindingBookInforCM { get; set; }
+        public ICommand UpdateBookInforStatusCM { get; set; }
+        public ICommand OpenBookInforStatusCM { get; set; }
         #endregion
 
 
@@ -416,6 +433,61 @@ namespace LibraryManagement.ViewModel.BookManagementVM
                 YearPublish = SelectedBaseBookDetail.yearOfPublication;
                 Quantity = SelectedBaseBookDetail.quantity;
                 BookInforList = new ObservableCollection<BookInfoDTO>(SelectedBaseBookDetail.bookInfoes);
+            });
+            UpdateBookInforStatusCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+
+                try
+                {
+                    var status = (AvalibleChecked) ? BookInfoStatus.AVAILABLE : BookInfoStatus.SPOILED;
+                    (bool isSuccess, string message) = BookService.Ins.UpdateBookInfoStatus(SelectedBookInfor.id, status);
+                    if (isSuccess)
+                    {
+                        foreach (var item in BookInforList)
+                        {
+                            if (item.id == SelectedBookInfor.id)
+                            {
+                                item.status = (int)status;
+                                break;
+                            }
+                        }
+                        MessageBox.Show("Cập nhật thành công", "Thông báo", MessageBoxButton.OK);
+                        return;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Lỗi hệ thống", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+
+                }
+                catch (System.Exception e)
+                {
+                    MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            });
+            OpenBookInforStatusCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (SelectedBookInfor is null) return;
+
+                if (SelectedBookInfor.status == (int)BookInfoStatus.BORROWING)
+                {
+                    MessageBox.Show("Không thể sửa đổi cuốn sách này!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                if (SelectedBookInfor.status == (int)BookInfoStatus.AVAILABLE)
+                {
+                    AvalibleChecked = true;
+                    SpoiledChecked = false;
+                }
+                else
+                {
+                    SpoiledChecked = true;
+                    AvalibleChecked = false;
+                }
+
+                BookInfoStatusWindow w = new BookInfoStatusWindow();
+                w.ShowDialog();
             });
         }
     }

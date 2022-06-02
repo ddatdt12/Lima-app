@@ -3,7 +3,6 @@ using LibraryManagement.Services;
 using LibraryManagement.Utils;
 using LibraryManagement.View.ReaderCard;
 using LibraryManagement.ViewModels;
-using LibraryManagement.Views;
 using LibraryManagement.Views.ReaderCard;
 using System;
 using System.Collections.ObjectModel;
@@ -261,7 +260,6 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
 
                         if (isS)
                         {
-                            ListReaderCard = new ObservableCollection<ReaderCardDTO>(ReaderService.Ins.GetAllReaderCards());
                             MessageBox.Show(mes, "Thông báo", MessageBoxButton.OK);
                             return;
                         }
@@ -276,6 +274,43 @@ namespace LibraryManagement.ViewModel.ReaderCardVM
                     return;
 
 
+            });
+            OpenRenewalHistoryWindowCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                OpenRenewalFunc();
+                p.Hide();
+                OpenEditReaderCardCM.Execute(null);
+                p.Close();
+            });
+            UpdateRenewalCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                DateTime EndDate;
+                if (SelectedItem.expiryDate > DateTime.Now)
+                {
+                    EndDate = SelectedItem.expiryDate.AddMonths(ParameterService.Ins.GetRuleValue(Rules.VALIDITY_PERIOD_OF_CARD));
+                }
+                else
+                    EndDate = DateTime.Now.AddMonths(ParameterService.Ins.GetRuleValue(Rules.VALIDITY_PERIOD_OF_CARD));
+                try
+                {
+                    (bool isS, string mes) = ReaderService.Ins.RenewReaderCardTime(SelectedItem.id, DateTime.Now, EndDate);
+                    if (isS)
+                    {
+                        string currentSelectedId = SelectedItem.id;
+                        ListReaderCard = new ObservableCollection<ReaderCardDTO>(ReaderService.Ins.GetAllReaderCards());
+                        SelectedItem = ListReaderCard.Where(s => s.id == currentSelectedId).FirstOrDefault();
+                        MessageBox.Show(mes, "Thông báo", MessageBoxButton.OK);
+                        p.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show(mes, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             });
         }
         private (bool valid, string error) IsValidData()

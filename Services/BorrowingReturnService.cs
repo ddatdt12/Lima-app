@@ -286,7 +286,7 @@ namespace LibraryManagement.Services
                 var bookInfoes = context.BookInfoes.Where(b => bookInfoIdList.Contains(b.id)).ToList();
                 foreach (var bI in bookInfoes)
                 {
-                    if (spoiledBooksDictionary.ContainsKey(readerCardId))
+                    if (spoiledBooksDictionary.ContainsKey(bI.id))
                     {
                         bI.status = (int)BookInfoStatus.SPOILED;
                     }

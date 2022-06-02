@@ -156,7 +156,8 @@
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <CheckBox Margin="40,0,0,0"
-                                                              materialDesign:CheckBoxAssist.CheckBoxSize="25"/>
+                                                              IsChecked="{Binding IsChecked,Mode=TwoWay}"
+                                                              materialDesign:CheckBoxAssist.CheckBoxSize="25" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
