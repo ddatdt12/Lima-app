@@ -12,13 +12,72 @@
     <Grid Background="White">
 
         <StackPanel Margin="20">
-            <TextBlock Text="Đổi mật khẩu"
-                       Foreground="#1B48BA"
-                       FontWeight="Bold"
-                       FontSize="20" />
 
-            <StackPanel Orientation="Horizontal">
-                <StackPanel Margin="0,40,0,0">
+            <StackPanel Orientation="Horizontal"
+                        Margin="12,12,0,0">
+                <TextBlock Text="Thông tin chung"
+                           FontSize="20"
+                           Foreground="#1B48BA"
+                           FontWeight="Bold" />
+                <Border BorderThickness="1"
+                        BorderBrush="#BFBABA"
+                        Width="880"
+                        Height="1"
+                        VerticalAlignment="Top"
+                        Margin="5,14,0,0" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Margin="0,20,0,0">
+                <StackPanel>
+                    <TextBlock Text="Tên độc giả"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Margin="0,0,0,20" />
+                    <TextBlock Text="Ngày sinh"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Margin="0,0,0,20" />
+                    <TextBlock Text="Địa chỉ"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Margin="0,0,0,20" />
+                    <TextBlock Text="Hạn thẻ"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Margin="0,0,0,20" />
+                </StackPanel>
+                <StackPanel Margin="150,0,0,0">
+                    <TextBlock Text="{Binding CurrentReader.name}"
+                               FontSize="20"
+                               Margin="0,0,0,20" />
+                    <TextBlock Text="{Binding CurrentReader.birthDate,StringFormat=dd/MM/yyyy}"
+                               FontSize="20"
+                               Margin="0,0,0,20" />
+                    <TextBlock Text="{Binding CurrentReader.address}"
+                               FontSize="20"
+                               Margin="0,0,0,20" />
+                    <TextBlock Text="{Binding CurrentReader.expiryDate,StringFormat=dd/MM/yyyy}"
+                               FontSize="20"
+                               Margin="0,0,0,10" />
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal"
+                        Margin="12,12,0,0">
+                <TextBlock Text="Đổi mật khẩu"
+                           FontSize="20"
+                           Foreground="#1B48BA"
+                           FontWeight="Bold" />
+                <Border BorderThickness="1"
+                        BorderBrush="#BFBABA"
+                        Width="900"
+                        Height="1"
+                        VerticalAlignment="Top"
+                        Margin="5,14,0,0" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Margin="0,20,0,0">
+                <StackPanel>
                     <TextBlock Text="Tên đăng nhập"
                                FontSize="20"
                                FontWeight="Bold"
@@ -36,7 +95,7 @@
                                FontWeight="Bold"
                                Margin="0,0,0,20" />
                 </StackPanel>
-                <StackPanel Margin="40,40,0,0">
+                <StackPanel Margin="40,0,0,0">
                     <TextBlock Text="{Binding ElementName=this, Path=DataContext.CurrentUser.username}"
                                FontSize="20"
                                Margin="0,0,0,10" />
@@ -88,6 +147,5 @@
                     Background="#0266FD"
                     Command="{Binding ResetReaderPassCM}" />
         </StackPanel>
-
     </Grid>
 </Page>

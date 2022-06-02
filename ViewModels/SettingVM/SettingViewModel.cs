@@ -13,7 +13,6 @@ namespace LibraryManagement.ViewModels.SettingVM
         public ICommand FirstLoadCM { get; set; }
         public ICommand OpenRoleSettingPageCM { get; set; }
         public ICommand OpenGeneralSettingPageCM { get; set; }
-        public ICommand OpenReaderSettingPageCM { get; set; }
         public ICommand GeneralFirstLoadCM { get; set; }
         public ICommand SaveGeneralSettingCM { get; set; }
         public ICommand DisableRoleStackCM { get; set; }
@@ -21,6 +20,7 @@ namespace LibraryManagement.ViewModels.SettingVM
 
         bool isEditPermis = false;
         public static AccountDTO CurrentUser { get; set; }
+        public ReaderCardDTO CurrentReader { get; set; }
 
         public SettingViewModel()
         {
@@ -50,6 +50,7 @@ namespace LibraryManagement.ViewModels.SettingVM
                     page.rolebtn.Visibility = Visibility.Collapsed;
                     page.rulebtn.Visibility = Visibility.Collapsed;
 
+                    CurrentReader = ReaderService.Ins.GetReaderInfo(CurrentUser.reader.id);
                     p.Content = new ReaderSettingPage();
                 }
             });
@@ -64,10 +65,6 @@ namespace LibraryManagement.ViewModels.SettingVM
             OpenGeneralSettingPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new GeneralSettingPage();
-            });
-            OpenReaderSettingPageCM = new RelayCommand<Frame>((p) => { return true; }, (p) =>
-            {
-                p.Content = new ReaderSettingPage();
             });
             EnableRoleStackCM = new RelayCommand<StackPanel>((p) => { return true; }, (p) =>
             {

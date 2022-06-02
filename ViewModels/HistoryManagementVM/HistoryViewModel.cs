@@ -168,10 +168,8 @@ namespace LibraryManagement.ViewModels.HistoryManagementVM
                             if (SelectedDate is null)
                                 return;
 
-                            BorrowReturnList = new ObservableCollection<BorrowingCardDTO>
-                            (BorrowingReturnService.Ins.GetBorrowingReturnCards(borrowingDate: new DateTime(SelectedDate.Value.Year, SelectedDate.Value.Month, SelectedDate.Value.Day)));
-                            ImportReceiptList = new ObservableCollection<ImportReceiptDTO>
-                           (ImportService.Ins.GetAllImportReceipt(SelectedDate));
+                            BorrowReturnList = new ObservableCollection<BorrowingCardDTO>(BorrowingReturnService.Ins.GetBorrowingReturnCards(borrowingDate: new DateTime(SelectedDate.Value.Year, SelectedDate.Value.Month, SelectedDate.Value.Day)));
+                            ImportReceiptList = new ObservableCollection<ImportReceiptDTO>(ImportService.Ins.GetAllImportReceipt(SelectedDate));
                             FineReceiptList = new ObservableCollection<FineReceiptDTO>(FineReceiptService.Ins.GetFineReceipts(SelectedDate));
                             return;
                         }

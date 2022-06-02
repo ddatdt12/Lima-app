@@ -41,12 +41,12 @@ namespace LibraryManagement.Services
             try
             {
                 var context = DataProvider.Ins.DB;
-                var importReceiptListQuery = context.ImportReceipts;
+                var importReceiptListQuery = context.ImportReceipts.AsQueryable();
 
-                if(date != null)
+                if (date != null)
                 {
                     var compareDate = date?.Date ?? DateTime.Now.Date;
-                    importReceiptListQuery.Where(iR => DbFunctions.TruncateTime(iR.createdAt) == compareDate);
+                    importReceiptListQuery = importReceiptListQuery.Where(iR => DbFunctions.TruncateTime(iR.createdAt) == compareDate);
                 }
 
                 var importReceiptList = importReceiptListQuery.OrderByDescending(c => c.createdAt).Select(imR => new ImportReceiptDTO
