@@ -93,7 +93,7 @@
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                     <GridViewColumn Header="Tên sách"
-                                                    Width="450">
+                                                    Width="400">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding BorrowingReturnCard.bookInfo.Book.baseBook.name}"
@@ -103,7 +103,7 @@
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                     <GridViewColumn Header="Ngày mượn"
-                                                    Width="200">
+                                                    Width="180">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding BorrowingReturnCard.borrowingDate,StringFormat=dd/MM/yyyy}"
@@ -113,7 +113,7 @@
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                     <GridViewColumn Header="Hạn trả"
-                                                    Width="170">
+                                                    Width="150">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding BorrowingReturnCard.dueDate,StringFormat=dd/MM/yyyy}"
