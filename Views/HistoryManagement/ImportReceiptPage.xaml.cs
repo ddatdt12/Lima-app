@@ -11,6 +11,7 @@ namespace LibraryManagement.Views.HistoryManagement
         public ImportReceiptPage()
         {
             InitializeComponent();
+            this.Language = System.Windows.Markup.XmlLanguage.GetLanguage("vi-Vn");
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
