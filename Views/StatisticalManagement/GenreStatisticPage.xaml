@@ -110,7 +110,7 @@
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="Thể loại"
-                                                    Width="250">
+                                                    Width="450">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding Genre.name}"

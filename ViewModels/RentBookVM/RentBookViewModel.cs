@@ -372,9 +372,14 @@ namespace LibraryManagement.ViewModels.RentBookVM
                         {
                             RentBookList[i].DueDate = ExpiredBookDate;
                         }
-                        OpenPrintWindow(RentBookList);
+
+                        var result = MessageBox.Show("Lập phiếu mượn sách thành công! Bạn có muốn in phiếu?", "Thông báo", MessageBoxButton.YesNo);
+
+                        if (result == MessageBoxResult.Yes)
+                        {
+                            OpenPrintWindow(RentBookList);
+                        }
                         ClearData();
-                        MessageBox.Show(message, "Thông báo", MessageBoxButton.OK);
                         return;
                     }
                     MessageBox.Show(message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -476,6 +481,10 @@ namespace LibraryManagement.ViewModels.RentBookVM
             UpdateRenewalCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
                 ReaderCardDTO readerCard = ReaderService.Ins.GetReaderInfo(ReaderID);
+                if (readerCard is null)
+                {
+                    return;
+                }
                 DateTime EndDate;
                 if (readerCard.expiryDate > DateTime.Now)
                 {
@@ -602,6 +611,7 @@ namespace LibraryManagement.ViewModels.RentBookVM
 
             // and print
             pd.PrintDocument(document.DocumentPaginator, "Return bill");
+            MessageBox.Show("In phiếu thành công", "Thông báo", MessageBoxButton.OK);
         }
 
         private void calculateReaderCardExpiredDate(RenewalWindowRent w)
