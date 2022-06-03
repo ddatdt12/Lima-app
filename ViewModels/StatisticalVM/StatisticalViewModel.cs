@@ -62,6 +62,7 @@ namespace LibraryManagement.ViewModels.StatisticalVM
         {
             StatisticGenreList = new ObservableCollection<BorrowedGenreReportDetailDTO>();
             StatisticLateList = new ObservableCollection<DelayReturnBookReportDetailDTO>();
+            selectedLateTime = DateTime.Now;
 
             GetGenreStatCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {

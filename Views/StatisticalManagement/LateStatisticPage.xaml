@@ -41,6 +41,7 @@
                                         FontSize="18"
                                         Foreground="#5C5959"
                                         x:Name="timebox"
+                                        DisplayDateEnd="{Binding SelectedLateTime}"
                                         materialDesign:HintAssist.Hint="Chọn ngày"
                                         SelectedDate="{Binding SelectedLateTime}"
                                         Focusable="False">
