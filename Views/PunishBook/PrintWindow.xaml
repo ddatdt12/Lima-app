@@ -57,7 +57,7 @@
             <Grid Height="220"
                   VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="250"/>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
@@ -82,11 +82,11 @@
 
                     <StackPanel Margin="0,80,0,0">
                         <TextBlock Text="PHIẾU PHẠT"
-                                   TextAlignment="Center"
+                                   TextAlignment="Left"
                                    Foreground="#0266FD"
                                    FontSize="40"
                                    FontWeight="Bold" />
-                        <DockPanel Margin="50,0,20,0">
+                        <DockPanel Margin="20,0,20,0">
                             <TextBlock Text="Mã phiếu:"
                                        FontSize="18"
                                        FontWeight="Bold" />
@@ -96,7 +96,7 @@
                                        FontWeight="Bold"
                                        x:Name="punishCard" />
                         </DockPanel>
-                        <DockPanel Margin="50,0,20,0">
+                        <DockPanel Margin="20,0,20,0">
                             <TextBlock Text="Ngày lập:"
                                        FontSize="18"
                                        FontWeight="Bold" />
@@ -106,7 +106,7 @@
                                        HorizontalAlignment="Right"
                                        x:Name="date" />
                         </DockPanel>
-                        <DockPanel Margin="50,0,20,0">
+                        <DockPanel Margin="20,0,20,0">
                             <TextBlock Text="Độc giả:"
                                        FontSize="18"
                                        FontWeight="Bold" />
