@@ -18,12 +18,11 @@ namespace LibraryManagement.ViewModels.PunishBookVM
         public void OpenDemoPrintWindow(FineReceiptDTO fineReceipt)
         {
             PrintWindow w = new PrintWindow();
+            w.Height = 500;
             w.punishCard.Text = fineReceipt.id;
             w.date.Text = DateTime.Now.ToString("dd/MM/yyyy");
             w.name.Text = ReaderName;
-            w.totalDept.Text = Utils.Helper.FormatVNMoney((decimal)TotalDept);
             w.paid.Text = Utils.Helper.FormatVNMoney((decimal)TotalPaid);
-            w.remain.Text = Utils.Helper.FormatVNMoney((decimal)TotalLeft);
             w.ShowDialog();
             
         }
