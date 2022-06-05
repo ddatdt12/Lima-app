@@ -392,6 +392,9 @@
                                FontSize="20" />
                         <Button Content="Báo hỏng"
                                 FontWeight="Bold"
+                                Visibility="{Binding ElementName=listview, 
+                    Path=DataContext.CurrentUser.role.roleDetaislList[2].isPermitted, 
+                    Converter={StaticResource PermissionConverter}}"
                                 Width="100"
                                 Command="{Binding OpenBookInforStatusCM}"
                                 materialDesign:ButtonAssist.CornerRadius="8" />
